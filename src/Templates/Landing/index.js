@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {navigate} from 'gatsby';
+import * as Ant from 'antd';
 import ReactLogo from '../../Components/ReactLogo';
 
 function Landing(props) {
@@ -8,7 +9,9 @@ function Landing(props) {
     <Wrapper>
       <ReactLogo />
       <h2>Landing Page</h2>
-      <button onClick={() => navigate('/test')}>Go To Test</button>
+      <Ant.Button type="primary" onClick={() => navigate('/test')}>
+        Go To Test
+      </Ant.Button>
     </Wrapper>
   );
 }
