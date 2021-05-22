@@ -1,5 +1,5 @@
 import React from 'react';
-import { StaticImage } from "gatsby-plugin-image"
+import {StaticImage} from 'gatsby-plugin-image';
 
 export function ReactLogo() {
   return (
@@ -11,7 +11,7 @@ export function ReactLogo() {
       width={200}
       height={200}
     />
-  )
+  );
 }
 
 export default ReactLogo;

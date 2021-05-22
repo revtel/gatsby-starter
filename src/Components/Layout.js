@@ -1,9 +1,9 @@
-import React from "react"
-import styled from "styled-components"
-import { Helmet } from "react-helmet"
-import "./Layout.css"
+import React from 'react';
+import styled from 'styled-components';
+import {Helmet} from 'react-helmet';
+import './Layout.css';
 
-function Layout({ children, location }) {
+function Layout({children, location}) {
   return (
     <>
       <Helmet>
@@ -11,9 +11,9 @@ function Layout({ children, location }) {
       </Helmet>
       <Wrapper>{children}</Wrapper>
     </>
-  )
+  );
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div``;
 
-export default Layout
+export default Layout;
