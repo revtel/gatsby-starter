@@ -26,5 +26,12 @@ module.exports = {
         icon: `static/favicon.ico`,
       },
     },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images/`,
+      },
+    },
   ],
 }
