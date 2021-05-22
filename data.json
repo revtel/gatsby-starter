@@ -1,0 +1,6 @@
+{
+  "authHost": "https://auth.revtel-api.com/v4",
+  "jstoreHost": "https://jstorage.revtel-api.com/v1",
+  "uploadHost": "https://storage.revtel-api.com/v3",
+  "articleEditorHost": "https://console-prod.netlify.com/article/editor"
+}
