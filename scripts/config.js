@@ -2,7 +2,7 @@ const fs = require('fs');
 
 function config() {
   const data = {};
-  if (process.env.YAS_ENV === 'stg') {
+  if (process.env.REV_ENV === 'stg') {
     data.authHost = 'https://auth-stg.revtel-api.com/v4';
     data.jstoreHost = 'https://jstorage-stg.revtel-api.com/v1';
     data.uploadHost = 'https://storage-stg.revtel-api.com/v3';

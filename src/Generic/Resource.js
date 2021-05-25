@@ -28,7 +28,7 @@ const specFormat = {
 };
 
 function Resource(props) {
-  const {spec, location, renderDetail} = props;
+  const {spec, location, renderDetail, onCreate, onGoToDetail} = props;
   const params = queryString.parse(location.search);
   const {action, id} = params;
   const [records, setRecords] = React.useState([]);
@@ -99,9 +99,13 @@ function Resource(props) {
         key: 'action',
         render: (_, record) => (
           <Button
-            onClick={() =>
-              navigate(`${spec.path}?action=detail&id=${record.id}`)
-            }>
+            onClick={() => {
+              if (onGoToDetail) {
+                onGoToDetail(record);
+              } else {
+                navigate(`${spec.path}?action=detail&id=${record.id}`);
+              }
+            }}>
             詳情
           </Button>
         ),
@@ -112,7 +116,14 @@ function Resource(props) {
       <Wrapper>
         <Row>
           <h1 style={{marginRight: 10}}>{`我的${spec.name}`}</h1>
-          <Button onClick={() => navigate(`${spec.path}?action=create`)}>
+          <Button
+            onClick={() => {
+              if (onCreate) {
+                onCreate();
+              } else {
+                navigate(`${spec.path}?action=create`);
+              }
+            }}>
             +
           </Button>
         </Row>

@@ -23,7 +23,7 @@ function Landing(props) {
         <div style={{flex: 1}}></div>
         {user ? (
           <div style={{display: 'flex', alignItems: 'center'}}>
-            <Button type="text" onClick={() => navigate('/dashboard')}>
+            <Button type="text" onClick={() => navigate('/admin')}>
               DASHBOARD
             </Button>
             <Button onClick={() => actions.logout()}>LOGOUT</Button>

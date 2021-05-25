@@ -41,7 +41,7 @@ function Dashboard(props) {
   return (
     <Generic.Resource
       spec={{
-        path: '/dashboard',
+        path: '/admin',
         name: '產品',
         primaryKey: 'id',
         actions: {

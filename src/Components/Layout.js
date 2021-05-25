@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import {Helmet} from 'react-helmet';
 import 'antd/dist/antd.less';
 import './Layout.css';
-import DashboardLayout from './DashboardLayout';
+import AdminLayout from './AdminLayout';
 
 function Layout({children, location}) {
-  if (location.pathname.indexOf('dashboard') > -1) {
-    return <DashboardLayout location={location}>{children}</DashboardLayout>;
+  if (location.pathname.indexOf('admin') > -1) {
+    return <AdminLayout location={location}>{children}</AdminLayout>;
   }
 
   return (

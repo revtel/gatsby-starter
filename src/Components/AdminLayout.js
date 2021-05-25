@@ -12,11 +12,12 @@ const SiteInfo = {
 };
 
 const Routes = [
-  {name: '首頁', path: '/dashboard'},
-  {name: '設定', path: '/dashboard/settings'},
+  {name: '首頁', path: '/admin'},
+  {name: '文章', path: '/admin/articles'},
+  {name: '設定', path: '/admin/settings'},
 ];
 
-function AppLayout(props) {
+function AdminLayout(props) {
   const {children, location} = props;
   const [actions] = useOutlet('actions');
   const [dimension] = useOutlet('dimension');
@@ -180,4 +181,4 @@ const MobileMainMenu = styled.button`
   justify-content: center;
 `;
 
-export default withLoginRequired(AppLayout);
+export default withLoginRequired(AdminLayout);

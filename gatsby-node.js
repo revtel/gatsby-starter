@@ -13,14 +13,20 @@ exports.createPages = async ({graphql, actions}) => {
   });
 
   createPage({
-    path: `/dashboard`,
-    component: path.resolve(`src/Templates/Dashboard/index.js`),
+    path: `/admin`,
+    component: path.resolve(`src/Templates/Admin/index.js`),
     context: {...commonContext},
   });
 
   createPage({
-    path: `/dashboard/settings`,
-    component: path.resolve(`src/Templates/Settings/index.js`),
+    path: `/admin/settings`,
+    component: path.resolve(`src/Templates/AdminSettings/index.js`),
+    context: {...commonContext},
+  });
+
+  createPage({
+    path: `/admin/articles`,
+    component: path.resolve(`src/Templates/AdminArticles/index.js`),
     context: {...commonContext},
   });
 };
