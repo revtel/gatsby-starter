@@ -1,4 +1,5 @@
 import React from 'react';
+import './App';
 import * as AppContext from './AppContext';
 import Layout from './Components/Layout';
 
