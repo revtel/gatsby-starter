@@ -28,7 +28,15 @@ const specFormat = {
 };
 
 function Resource(props) {
-  const {spec, location, renderDetail, onCreate, onGoToDetail} = props;
+  const {
+    spec,
+    location,
+    renderDetail,
+    renderCreateButton,
+    renderDetailButton,
+    onCreate,
+    onGoToDetail,
+  } = props;
   const params = queryString.parse(location.search);
   const {action, id} = params;
   const [records, setRecords] = React.useState([]);
@@ -69,6 +77,14 @@ function Resource(props) {
     fetchData();
   }, [setLoading, fetchRecords, fetchRecordById, action, id]);
 
+  const hasCreateButton =
+    typeof renderCreateButton === 'undefined' ||
+    typeof renderCreateButton === 'function';
+
+  const hasDetailButton =
+    typeof renderDetailButton === 'undefined' ||
+    typeof renderDetailButton === 'function';
+
   if (action === 'create') {
     return (
       <Wrapper>
@@ -92,40 +108,48 @@ function Resource(props) {
       </Wrapper>
     );
   } else {
-    const columns = [
-      ...spec.columns,
-      {
+    const columns = [...spec.columns];
+
+    if (hasDetailButton) {
+      columns.push({
         title: '',
         key: 'action',
-        render: (_, record) => (
-          <Button
-            onClick={() => {
-              if (onGoToDetail) {
-                onGoToDetail(record);
-              } else {
-                navigate(`${spec.path}?action=detail&id=${record.id}`);
-              }
-            }}>
-            詳情
-          </Button>
-        ),
-      },
-    ];
+        render: renderDetailButton
+          ? (_, record) => renderDetailButton(record)
+          : (_, record) => (
+              <Button
+                onClick={() => {
+                  if (onGoToDetail) {
+                    onGoToDetail(record);
+                  } else {
+                    navigate(`${spec.path}?action=detail&id=${record.id}`);
+                  }
+                }}>
+                詳情
+              </Button>
+            ),
+      });
+    }
 
     return (
       <Wrapper>
         <Row>
           <h1 style={{marginRight: 10}}>{`我的${spec.name}`}</h1>
-          <Button
-            onClick={() => {
-              if (onCreate) {
-                onCreate();
-              } else {
-                navigate(`${spec.path}?action=create`);
-              }
-            }}>
-            +
-          </Button>
+          {hasCreateButton &&
+            (renderCreateButton ? (
+              renderCreateButton()
+            ) : (
+              <Button
+                onClick={() => {
+                  if (onCreate) {
+                    onCreate();
+                  } else {
+                    navigate(`${spec.path}?action=create`);
+                  }
+                }}>
+                +
+              </Button>
+            ))}
         </Row>
         <Table
           dataSource={records}
