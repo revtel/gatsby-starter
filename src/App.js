@@ -1,6 +1,7 @@
 import {getOutlet} from 'reconnect.js';
-import Config from '../data.json';
 import jwtDecode from 'jwt-decode';
+import Config from '../data.json';
+import {req} from './Utils/ApiUtils';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const Actions = {};
@@ -29,26 +30,21 @@ function initApp() {
   };
 
   Actions.fetchArticles = async () => {
-    const resp = await (
-      await fetch(
-        `${Config.jstoreHost}/document/Article_Default/find?token=${
-          getOutlet('user').getValue().token
-        }`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+    const resp = await req(
+      `${Config.jstoreHost}/document/Article_Default/find?token=${
+        getOutlet('user').getValue().token
+      }`,
+      {
+        method: 'POST',
+        data: {
+          query: {},
+          paging: {
+            offset: 0,
+            limit: 10,
           },
-          body: JSON.stringify({
-            query: {},
-            paging: {
-              offset: 0,
-              limit: 10,
-            },
-          }),
         },
-      )
-    ).json();
+      },
+    );
     // TODO: Resource Component should support JStorage find API feature, such as paging and search
     return resp.results;
   };
@@ -57,17 +53,9 @@ function initApp() {
     if (typeof window !== undefined) {
       const token = window.localStorage.getItem('token');
       if (token) {
-        const resp = await (
-          await fetch(
-            `${Config.authHost}/management/access?refresh_token=${token}`,
-            {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            },
-          )
-        ).json();
+        const resp = await req(
+          `${Config.authHost}/management/access?refresh_token=${token}`,
+        );
 
         const decoded = jwtDecode(resp.token);
         UserOutlet.update({username: decoded.sub, ...resp, ...decoded});
@@ -78,15 +66,10 @@ function initApp() {
   };
 
   Actions.login = async ({username, password}) => {
-    const resp = await (
-      await fetch(`${Config.authHost}/management/sign-in`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({username, password}),
-      })
-    ).json();
+    const resp = await req(`${Config.authHost}/management/sign-in`, {
+      method: 'POST',
+      data: {username, password},
+    });
 
     const decoded = jwtDecode(resp.token);
 
