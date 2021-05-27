@@ -1,15 +1,24 @@
-async function req(url, {method = 'GET', headers = {}, data = {}} = {}) {
+async function req(
+  url,
+  {method = 'GET', headers = {}, data, ...restOptions} = {},
+) {
   const resp = await fetch(url, {
     method,
     headers: {
       'Content-Type': 'application/json',
       ...headers,
     },
-    ...(method !== 'GET' && {body: JSON.stringify(data)}),
+    ...(method !== 'GET' && data ? {body: JSON.stringify(data)} : {}),
+    ...restOptions,
   });
 
   if (200 <= resp.status && resp.status < 400) {
-    return resp.json();
+    try {
+      return await resp.json();
+    } catch (ex) {
+      // bypass
+    }
+    return null;
   }
 
   const err = {status: resp.status};
