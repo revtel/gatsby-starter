@@ -9,24 +9,26 @@ function SortMenu(props) {
   return (
     <>
       <label style={{margin: '0px 10px'}}>排序</label>
-      <Dropdown
-        overlay={
-          <Menu>
-            {options.map((option) => {
-              return (
-                <Menu.Item
-                  key={option.name}
-                  onClick={() => {
-                    updateSort(option.name);
-                  }}>
-                  {option.display}
-                </Menu.Item>
-              );
-            })}
-          </Menu>
-        }>
-        <div>{sort || '---'}</div>
-      </Dropdown>
+      <div style={{marginRight: 10}}>
+        <Dropdown
+          overlay={
+            <Menu>
+              {options.map((option) => {
+                return (
+                  <Menu.Item
+                    key={option.name}
+                    onClick={() => {
+                      updateSort(option.name);
+                    }}>
+                    {option.display}
+                  </Menu.Item>
+                );
+              })}
+            </Menu>
+          }>
+          <div>{sort || '請選擇'}</div>
+        </Dropdown>
+      </div>
     </>
   );
 }

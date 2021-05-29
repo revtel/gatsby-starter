@@ -12,7 +12,6 @@ function FilterMenu(props) {
 
   return (
     <Menu
-      onClick={console.log}
       style={{width: 256}}
       defaultSelectedKeys={cat ? [cat] : []}
       defaultOpenKeys={['sub1']}

@@ -4,7 +4,7 @@ import './App';
 import ActivityIndicator from './Components/ActivityIndicator';
 import LoginModal from './Components/LoginModal';
 
-const Dimension = getOutlet('dimension', {}, {autoDelete: false});
+const Dimension = getOutlet('dimension', {rwd: 'mobile'}, {autoDelete: false});
 
 function Provider(props) {
   const detectDimension = React.useCallback(() => {

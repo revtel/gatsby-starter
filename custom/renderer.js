@@ -2,7 +2,6 @@ import React from 'react';
 
 function renderCustomSection(props) {
   const {route, sectionId, params} = props;
-  console.log(route, sectionId, params);
 
   if (route === '/products') {
     return (
