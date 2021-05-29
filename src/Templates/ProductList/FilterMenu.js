@@ -11,11 +11,7 @@ function FilterMenu(props) {
   };
 
   return (
-    <Menu
-      style={{width: 256}}
-      defaultSelectedKeys={cat ? [cat] : []}
-      defaultOpenKeys={['sub1']}
-      mode="inline">
+    <Menu style={{width: 256}} selectedKeys={cat ? [cat] : []} mode="inline">
       {categories.map((topLevel) => {
         if (topLevel.items?.length > 0) {
           return (
