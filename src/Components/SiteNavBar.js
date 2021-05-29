@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import {navigate} from 'gatsby';
 
 function SiteNavBar(props) {
   return (
     <Wrapper>
       <div className="content">
-        <h2>RevtelTech</h2>
+        <h2 onClick={() => navigate('/')}>RevtelTech</h2>
       </div>
     </Wrapper>
   );
