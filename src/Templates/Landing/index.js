@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Button} from 'antd';
-import {navigate} from 'gatsby';
+import {navigate, Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import useBreakpoint from '../../Hooks/useBreakPoint';
@@ -20,6 +20,13 @@ function Landing(props) {
         bgColor={passBreakpoint ? 'white' : 'transparent'}
         style={{height: 64}}>
         <h2>RevtelTech</h2>
+        <Button type="text">
+          <Link to="/products">全站商品</Link>
+        </Button>
+        <Button type="text">
+          <Link to="/products?cat=A">Cat A</Link>
+        </Button>
+
         <div style={{flex: 1}}></div>
         {user ? (
           <div style={{display: 'flex', alignItems: 'center'}}>

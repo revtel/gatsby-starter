@@ -2,13 +2,48 @@ import {getOutlet} from 'reconnect.js';
 import jwtDecode from 'jwt-decode';
 import Config from '../data.json';
 import {req} from './Utils/ApiUtils';
+import {buildCatDisplayMap} from './Utils/buildCatDisplayMap';
+import * as CustomRenderer from '../custom/renderer';
+import * as CustomCategories from '../custom/categories';
+import * as CustomSortOptions from '../custom/sortOptions';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const Actions = {};
 
 function initApp() {
   const UserOutlet = getOutlet('user', null, {autoDelete: false});
-  const LoadingOutlet = getOutlet('loading', false, {autoDelete: false});
+  const LoadingOutlet = getOutlet('loading', null, {autoDelete: false});
+  const ActionOutlet = getOutlet('actions', null, {autoDelete: false});
+  const LoginModalOutlet = getOutlet('login-modal', null, {autoDelete: false});
+  const CategoriesOutlet = getOutlet('categories', null, {autoDelete: false});
+  const CategoryDisplayOutlet = getOutlet('categoryDisplayMap', null, {
+    autoDelete: false,
+  });
+  const SortOptionsOutlet = getOutlet('sortOptions', null, {autoDelete: false});
+
+  const categories = CustomCategories.getCategories();
+  const categoryDisplayMap = buildCatDisplayMap(categories);
+  const sortOptions = CustomSortOptions.getSortOptions();
+
+  LoadingOutlet.update(false);
+  LoginModalOutlet.update(false);
+  CategoriesOutlet.update(categories);
+  CategoryDisplayOutlet.update(categoryDisplayMap);
+  SortOptionsOutlet.update(sortOptions);
+
+  Actions.renderCustomSection = (props) => {
+    return CustomRenderer.renderCustomSection(props);
+  };
+
+  Actions.fetchProducts = async ({cat, sort, search}) => {
+    await delay(600);
+    return Array.from({length: 24}).map((_, i) => {
+      return {
+        id: `${cat || ''}_${sort || ''}_${i}`,
+        name: `${cat || ''}_${sort || ''}_${i}`,
+      };
+    });
+  };
 
   Actions.fetchRecords = async () => {
     await delay(600);
@@ -93,8 +128,7 @@ function initApp() {
     }, 0);
   };
 
-  getOutlet('actions', Actions, {autoDelete: false});
-  getOutlet('login-modal', false, {autoDelete: false});
+  ActionOutlet.update(Actions);
 
   console.log('App initialized');
 }

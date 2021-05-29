@@ -29,4 +29,10 @@ exports.createPages = async ({graphql, actions}) => {
     component: path.resolve(`src/Templates/AdminArticles/index.js`),
     context: {...commonContext},
   });
+
+  createPage({
+    path: `/products`,
+    component: path.resolve(`src/Templates/ProductList/index.js`),
+    context: {...commonContext},
+  });
 };

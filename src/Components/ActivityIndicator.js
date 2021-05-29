@@ -29,7 +29,7 @@ const CoverAll = styled.div`
 `;
 
 const Wrapper = styled(CoverAll)`
-  z-index: 2;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,7 +62,7 @@ const Wrapper = styled(CoverAll)`
 `;
 
 const Backdrop = styled(CoverAll)`
-  z-index: 1;
+  z-index: 9999;
   transition: 200ms;
   background-color: ${(props) =>
     props.visible ? 'rgba(0,0,0,0.5)' : 'transparent'};
