@@ -3,13 +3,16 @@ import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 
 function ProductGrid(props) {
-  const {products} = props;
+  const {products, onItemClick} = props;
   const [dimension] = useOutlet('dimension');
   const mobile = dimension.rwd === 'mobile';
   return (
     <Wrapper mobile={mobile}>
       {products.map((product, i) => (
-        <Item key={i} mobile={mobile}>
+        <Item
+          key={i}
+          mobile={mobile}
+          onClick={(evt) => onItemClick(product, evt)}>
           <h3>{product.name}</h3>
         </Item>
       ))}

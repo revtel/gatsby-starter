@@ -13,6 +13,7 @@ import qs from 'query-string';
 
 function ProductList(props) {
   const prefixPath = '/products';
+  const detailPrefixPath = '/product';
   const [actions] = useOutlet('actions');
   const [dimension] = useOutlet('dimension');
   const [products, setProducts] = React.useState([]);
@@ -53,6 +54,10 @@ function ProductList(props) {
     });
 
     navigate(`${prefixPath}${nextQueryString}`);
+  }
+
+  function onItemClick(item, evt) {
+    navigate(`${detailPrefixPath}?id=${item.id}`);
   }
 
   return (
@@ -102,7 +107,7 @@ function ProductList(props) {
 
             {renderCustomSection('G')}
 
-            <ProductGrid products={products} />
+            <ProductGrid products={products} onItemClick={onItemClick} />
 
             {renderCustomSection('H')}
           </div>

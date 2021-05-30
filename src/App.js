@@ -45,6 +45,25 @@ function initApp() {
     });
   };
 
+  Actions.fetchProductById = async (id) => {
+    await delay(600);
+    return {
+      id,
+      name: 'product-name',
+      title: '產品名稱',
+      subtitle: '系列',
+      price: 1000,
+      description:
+        '鋁金屬錶殼身形輕盈，採用 100% 再生航太等級合金材質製成。編織單圈錶環採用再生紗繩與矽膠線編織而成，無錶扣無扣環的延展性設計，配戴超舒適。',
+      intro:
+        '[INTRO] 鋁金屬錶殼身形輕盈，採用 100% 再生航太等級合金材質製成。編織單圈錶環採用再生紗繩與矽膠線編織而成，無錶扣無扣環的延展性設計，配戴超舒適。',
+      spec:
+        '[SPEC] 鋁金屬錶殼身形輕盈，採用 100% 再生航太等級合金材質製成。編織單圈錶環採用再生紗繩與矽膠線編織而成，無錶扣無扣環的延展性設計，配戴超舒適。',
+      remark:
+        '[REMARK] 鋁金屬錶殼身形輕盈，採用 100% 再生航太等級合金材質製成。編織單圈錶環採用再生紗繩與矽膠線編織而成，無錶扣無扣環的延展性設計，配戴超舒適。',
+    };
+  };
+
   Actions.fetchRecords = async () => {
     await delay(600);
     return [
