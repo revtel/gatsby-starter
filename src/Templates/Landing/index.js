@@ -21,19 +21,18 @@ function Landing(props) {
         style={{height: 64}}>
         <h2>RevtelTech</h2>
         <Button type="text">
-          <Link to="/products">全站商品</Link>
+          <Link to="/products">商品</Link>
         </Button>
         <Button type="text">
-          <Link to="/articles">最新文章</Link>
+          <Link to="/articles">文章</Link>
         </Button>
 
         <div style={{flex: 1}}></div>
         {user ? (
           <div style={{display: 'flex', alignItems: 'center'}}>
-            <Button type="text" onClick={() => navigate('/admin')}>
-              DASHBOARD
+            <Button type="text" onClick={() => navigate('/profile')}>
+              Profile
             </Button>
-            <Button onClick={() => actions.logout()}>LOGOUT</Button>
           </div>
         ) : (
           <Button onClick={() => showLoginModal(true)}>LOGIN</Button>

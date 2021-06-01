@@ -4,11 +4,21 @@ import {Helmet} from 'react-helmet';
 import 'antd/dist/antd.less';
 import './Layout.css';
 import AdminLayout from './AdminLayout';
+import ProfileLayout from './ProfileLayout';
 import SiteNavBar from './SiteNavBar';
 
 function Layout({children, location}) {
   if (location.pathname.indexOf('admin') > -1) {
     return <AdminLayout location={location}>{children}</AdminLayout>;
+  }
+
+  if (location.pathname.indexOf('profile') > -1) {
+    return (
+      <Wrapper>
+        <SiteNavBar />
+        <ProfileLayout location={location}>{children}</ProfileLayout>
+      </Wrapper>
+    );
   }
 
   let hasSiteNavBar = true;
