@@ -83,6 +83,36 @@ function initApp() {
     };
   };
 
+  Actions.clientFetchArticles = async () => {
+    const resp = await req(
+      `${Config.jstoreHost}/document/Article_Default/find?client_id=${Config.clientId}`,
+      {
+        method: 'POST',
+        data: {
+          query: {},
+          paging: {
+            offset: 0,
+            limit: 100,
+          },
+          sorting: ['-created'],
+        },
+      },
+    );
+    return resp.results;
+  };
+
+  Actions.clientFetchArticleById = async (id) => {
+    return await req(
+      `${Config.jstoreHost}/document/Article_Default/find-one?client_id=${Config.clientId}`,
+      {
+        method: 'POST',
+        data: {
+          query: {id},
+        },
+      },
+    );
+  };
+
   Actions.fetchArticles = async () => {
     const resp = await req(
       `${Config.jstoreHost}/document/Article_Default/find?token=${

@@ -24,7 +24,7 @@ function Landing(props) {
           <Link to="/products">全站商品</Link>
         </Button>
         <Button type="text">
-          <Link to="/products?cat=A">Cat A</Link>
+          <Link to="/articles">最新文章</Link>
         </Button>
 
         <div style={{flex: 1}}></div>
