@@ -30,9 +30,7 @@ function Landing(props) {
         <div style={{flex: 1}}></div>
         {user ? (
           <div style={{display: 'flex', alignItems: 'center'}}>
-            <Button type="text" onClick={() => navigate('/profile')}>
-              Profile
-            </Button>
+            <Button onClick={() => navigate('/profile')}>Profile</Button>
           </div>
         ) : (
           <Button onClick={() => showLoginModal(true)}>LOGIN</Button>
