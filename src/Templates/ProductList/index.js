@@ -8,7 +8,7 @@ import BreadcrumbBar from './BreadcrumbBar';
 import SearchInput from './SearchInput';
 import SortMenu from './SortMenu';
 import ProductGrid from './ProductGrid';
-import {updateQuries} from '../../Utils/updateQuries';
+import {updateQueries} from '../../Utils/updateQueries';
 import qs from 'query-string';
 
 function ProductList(props) {
@@ -47,7 +47,7 @@ function ProductList(props) {
   }
 
   function updateRoute(options) {
-    const nextQueryString = updateQuries({
+    const nextQueryString = updateQueries({
       keys: ['cat', 'sort', 'search'],
       params,
       options,

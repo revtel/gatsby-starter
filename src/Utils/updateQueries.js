@@ -1,4 +1,4 @@
-function updateQuries({keys, params, options}) {
+function updateQueries({keys, params, options}) {
   const nextParams = {...params};
   const queries = [];
 
@@ -25,4 +25,4 @@ function updateQuries({keys, params, options}) {
   return '';
 }
 
-export {updateQuries};
+export {updateQueries};
