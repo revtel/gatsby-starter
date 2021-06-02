@@ -113,6 +113,20 @@ function initApp() {
     );
   };
 
+  Actions.fetchOrders = async () => {
+    await delay(600);
+    return [
+      {id: 1, name: 'order 1', amount: 300},
+      {id: 2, name: 'order 2', amount: 600},
+      {id: 3, name: 'order 3', amount: 900},
+    ];
+  };
+
+  Actions.fetchOrderById = async (id) => {
+    await delay(600);
+    return {id, name: `order ${id}`, amount: 300};
+  };
+
   Actions.fetchArticles = async () => {
     const resp = await req(
       `${Config.jstoreHost}/document/Article_Default/find?token=${

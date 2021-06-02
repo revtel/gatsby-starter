@@ -36,6 +36,7 @@ function Resource(props) {
     renderDetailButton,
     onCreate,
     onGoToDetail,
+    style = {},
   } = props;
   const params = queryString.parse(location.search);
   const {action, id} = params;
@@ -87,7 +88,7 @@ function Resource(props) {
 
   if (action === 'create') {
     return (
-      <Wrapper>
+      <Wrapper style={style}>
         <Row>
           <Button onClick={() => navigate(spec.path)}>返回列表</Button>
           <h1 style={{marginLeft: 10}}>{`創建${spec.name}`}</h1>
@@ -98,7 +99,7 @@ function Resource(props) {
     );
   } else if (action === 'detail') {
     return (
-      <Wrapper>
+      <Wrapper style={style}>
         <Row>
           <Button onClick={() => navigate(spec.path)}>返回列表</Button>
           <h1 style={{marginLeft: 10}}>{`${spec.name}詳情`}</h1>
@@ -132,7 +133,7 @@ function Resource(props) {
     }
 
     return (
-      <Wrapper>
+      <Wrapper style={style}>
         <Row>
           <h1 style={{marginRight: 10}}>{`我的${spec.name}`}</h1>
           {hasCreateButton &&
@@ -168,6 +169,8 @@ const Wrapper = styled.div`
     font-size: 32px;
     margin: 0px;
   }
+
+  ${(props) => props.css}
 `;
 
 const Row = styled.div`

@@ -7,7 +7,7 @@ import {Theme as AntDTheme} from '@rjsf/antd';
 const RjsForm = withTheme(AntDTheme);
 
 function Form(props) {
-  const {schema, uiSchema, instance, onSubmit = () => 0} = props;
+  const {schema, uiSchema, instance, onSubmit = null} = props;
   const [values, setValues] = React.useState(instance || {});
   const submitBtnRef = React.useRef();
 
@@ -29,13 +29,15 @@ function Form(props) {
           console.log('errors', errors);
         }}>
         <div className="submit-buttons-bar">
-          <Button
-            type="primary"
-            onClick={() => {
-              submitBtnRef.current.click();
-            }}>
-            確認
-          </Button>
+          {onSubmit && (
+            <Button
+              type="primary"
+              onClick={() => {
+                submitBtnRef.current.click();
+              }}>
+              確認
+            </Button>
+          )}
 
           <button type="submit" ref={submitBtnRef}></button>
         </div>
