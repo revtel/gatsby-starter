@@ -29,10 +29,19 @@ function renderCustomSection(props) {
     );
   }
 
-  if (route === '/cart') {
+  if (route.indexOf('/checkout') === 0) {
+    const subRoute = route.split('/')[2];
+    let current = 0;
+
+    if (subRoute === 'info') {
+      current = 1;
+    } else if (subRoute === 'review') {
+      current = 2;
+    }
+
     if (sectionId === 'B') {
       return (
-        <Steps current={0} style={{marginBottom: 20}}>
+        <Steps current={current} style={{marginBottom: 20}}>
           <Steps.Step title="購物車" />
           <Steps.Step title="寄送資訊" />
           <Steps.Step title="付款" />

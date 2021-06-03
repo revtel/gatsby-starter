@@ -67,8 +67,20 @@ exports.createPages = async ({graphql, actions}) => {
   });
 
   createPage({
-    path: `/cart`,
+    path: `/checkout`,
     component: path.resolve(`src/Templates/Cart/index.js`),
+    context: {...commonContext},
+  });
+
+  createPage({
+    path: `/checkout/info`,
+    component: path.resolve(`src/Templates/CheckoutInfo/index.js`),
+    context: {...commonContext},
+  });
+
+  createPage({
+    path: `/checkout/review`,
+    component: path.resolve(`src/Templates/CheckoutReview/index.js`),
     context: {...commonContext},
   });
 };

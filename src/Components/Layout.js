@@ -18,7 +18,7 @@ function Layout({children, location}) {
         <ProfileLayout location={location}>{children}</ProfileLayout>
       </Wrapper>
     );
-  } else if (['/cart'].indexOf(location.pathname) > -1) {
+  } else if (location.pathname.indexOf('checkout') > -1) {
     return (
       <Wrapper>
         <SiteNavBar />

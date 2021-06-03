@@ -13,7 +13,7 @@ function ProfileMenu(props) {
       <Menu.Item key={'info'} onClick={() => navigate('/profile')}>
         個人資訊
       </Menu.Item>
-      <Menu.Item key={'cart'} onClick={() => navigate('/cart')}>
+      <Menu.Item key={'checkout'} onClick={() => navigate('/checkout')}>
         購物車
       </Menu.Item>
       <Menu.Item key={'orders'} onClick={() => navigate('/profile/orders')}>

@@ -39,6 +39,12 @@ function initApp() {
   SortOptionsOutlet.update(sortOptions);
   CartOutlet.update({
     items: [],
+    config: {
+      name: 'whitedog',
+      addr: 'office address',
+      mobile: '0911222333',
+      email: 'whitedogg13@gmail.com',
+    },
   });
 
   Actions.fetchCart = async (item) => {
@@ -46,8 +52,20 @@ function initApp() {
     await delay(600);
   };
 
+  Actions.updateCartConfig = async (cartConfig) => {
+    await delay(600);
+    const cartValue = CartOutlet.getValue();
+    const nextCartValue = {
+      ...cartValue,
+      config: {
+        ...cartValue.config,
+        ...cartConfig,
+      },
+    };
+    CartOutlet.update(nextCartValue);
+  };
+
   Actions.addItemToCart = async (item) => {
-    console.log('addItemToCart', item);
     await delay(600);
     const cartValue = CartOutlet.getValue();
     const nextCartValue = {

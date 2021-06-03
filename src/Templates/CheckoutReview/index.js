@@ -2,14 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import {navigate} from 'gatsby';
 import {useOutlet} from 'reconnect.js';
-import {Button} from 'antd';
-import qs from 'query-string';
+import {Button, Input, PageHeader} from 'antd';
 import CartItem from '../../Components/CartItem';
+import qs from 'query-string';
 
-function Cart(props) {
+function CheckoutInfo(props) {
   const [actions] = useOutlet('actions');
   const [cart] = useOutlet('cart');
   const [dimension] = useOutlet('dimension');
+
+  const getInputProps = (field) => {
+    return {
+      value: cart.config[field],
+      disabled: true,
+    };
+  };
+
   const params = qs.parse(props.location.search);
   const mobile = dimension.rwd === 'mobile';
 
@@ -21,10 +29,26 @@ function Cart(props) {
     });
   }
 
+  function allowNextStep() {
+    return (
+      cart.items.length > 0 &&
+      cart.config.name &&
+      cart.config.addr &&
+      cart.config.mobile &&
+      cart.config.email
+    );
+  }
+
   return (
     <Wrapper mobile={mobile}>
       <LeftSection>
-        <h2>購物車</h2>
+        <PageHeader
+          title="返回購物車"
+          onBack={() => navigate('/checkout/info')}
+          style={{padding: 0}}
+        />
+
+        <h2>您的商品</h2>
 
         {cart.items.length === 0 && (
           <div>
@@ -34,8 +58,30 @@ function Cart(props) {
         )}
 
         {cart.items.map((cartItem, idx) => (
-          <CartItem item={cartItem} itemIdx={idx} key={idx} />
+          <CartItem item={cartItem} itemIdx={idx} key={idx} disabled={true} />
         ))}
+
+        <h2>寄送資訊</h2>
+
+        <InputField>
+          <label>收件人</label>
+          <Input {...getInputProps('name')} />
+        </InputField>
+
+        <InputField>
+          <label>地址</label>
+          <Input.TextArea {...getInputProps('addr')} />
+        </InputField>
+
+        <InputField>
+          <label>行動電話</label>
+          <Input {...getInputProps('mobile')} />
+        </InputField>
+
+        <InputField>
+          <label>電子郵件</label>
+          <Input {...getInputProps('email')} />
+        </InputField>
 
         {renderCustomSection('_A')}
       </LeftSection>
@@ -49,10 +95,9 @@ function Cart(props) {
           <Button
             size="large"
             type="primary"
-            disabled={cart.items.length === 0}
-            style={{marginTop: 10, width: '100%'}}
-            onClick={() => navigate('/checkout/info')}>
-            下一步
+            disabled={!allowNextStep()}
+            style={{marginTop: 10, width: '100%'}}>
+            付款
           </Button>
         </Summary>
         {renderCustomSection('_B')}
@@ -85,4 +130,13 @@ const Summary = styled.div`
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 `;
 
-export default Cart;
+const InputField = styled.div`
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  & > label {
+    margin-right: 10px;
+  }
+`;
+
+export default CheckoutInfo;
