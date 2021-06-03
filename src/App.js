@@ -1,4 +1,4 @@
-import {getOutlet} from 'reconnect.js';
+import {getNewOutlet, getOutlet} from 'reconnect.js';
 import jwtDecode from 'jwt-decode';
 import Config from '../data.json';
 import {req} from './Utils/ApiUtils';
@@ -11,15 +11,21 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const Actions = {};
 
 function initApp() {
-  const UserOutlet = getOutlet('user', null, {autoDelete: false});
-  const LoadingOutlet = getOutlet('loading', null, {autoDelete: false});
-  const ActionOutlet = getOutlet('actions', null, {autoDelete: false});
-  const LoginModalOutlet = getOutlet('login-modal', null, {autoDelete: false});
-  const CategoriesOutlet = getOutlet('categories', null, {autoDelete: false});
-  const CategoryDisplayOutlet = getOutlet('categoryDisplayMap', null, {
+  const UserOutlet = getNewOutlet('user', null, {autoDelete: false});
+  const LoadingOutlet = getNewOutlet('loading', null, {autoDelete: false});
+  const ActionOutlet = getNewOutlet('actions', null, {autoDelete: false});
+  const LoginModalOutlet = getNewOutlet('login-modal', null, {
     autoDelete: false,
   });
-  const SortOptionsOutlet = getOutlet('sortOptions', null, {autoDelete: false});
+  const CategoriesOutlet = getNewOutlet('categories', null, {
+    autoDelete: false,
+  });
+  const CategoryDisplayOutlet = getNewOutlet('categoryDisplayMap', null, {
+    autoDelete: false,
+  });
+  const SortOptionsOutlet = getNewOutlet('sortOptions', null, {
+    autoDelete: false,
+  });
 
   const categories = CustomCategories.getCategories();
   const categoryDisplayMap = buildCatDisplayMap(categories);

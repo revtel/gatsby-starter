@@ -1,10 +1,14 @@
 import React from 'react';
-import {getOutlet} from 'reconnect.js';
+import {getNewOutlet, getOutlet} from 'reconnect.js';
 import './App';
 import ActivityIndicator from './Components/ActivityIndicator';
 import LoginModal from './Components/LoginModal';
 
-const Dimension = getOutlet('dimension', {rwd: 'mobile'}, {autoDelete: false});
+const Dimension = getNewOutlet(
+  'dimension',
+  {rwd: 'mobile'},
+  {autoDelete: false},
+);
 
 function Provider(props) {
   const detectDimension = React.useCallback(() => {
