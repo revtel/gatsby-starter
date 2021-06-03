@@ -26,6 +26,7 @@ function initApp() {
   const SortOptionsOutlet = getNewOutlet('sortOptions', null, {
     autoDelete: false,
   });
+  const CartOutlet = getNewOutlet('cart', null, {autoDelete: false});
 
   const categories = CustomCategories.getCategories();
   const categoryDisplayMap = buildCatDisplayMap(categories);
@@ -36,6 +37,47 @@ function initApp() {
   CategoriesOutlet.update(categories);
   CategoryDisplayOutlet.update(categoryDisplayMap);
   SortOptionsOutlet.update(sortOptions);
+  CartOutlet.update({
+    items: [],
+  });
+
+  Actions.fetchCart = async (item) => {
+    console.log('fetchCart', item);
+    await delay(600);
+  };
+
+  Actions.addItemToCart = async (item) => {
+    console.log('addItemToCart', item);
+    await delay(600);
+    const cartValue = CartOutlet.getValue();
+    const nextCartValue = {
+      ...cartValue,
+      items: [...cartValue.items],
+    };
+    nextCartValue.items = [...nextCartValue.items, item];
+    CartOutlet.update(nextCartValue);
+  };
+
+  Actions.removeItemFromCart = async (itemIdx) => {
+    await delay(600);
+    const cartValue = CartOutlet.getValue();
+    const nextCartValue = {
+      ...cartValue,
+      items: [...cartValue.items],
+    };
+    nextCartValue.items.splice(itemIdx, 1);
+    CartOutlet.update(nextCartValue);
+  };
+
+  Actions.clearCart = async (itemIdx) => {
+    await delay(600);
+    const cartValue = CartOutlet.getValue();
+    const nextCartValue = {
+      ...cartValue,
+      items: [],
+    };
+    CartOutlet.update(nextCartValue);
+  };
 
   Actions.renderCustomSection = (props) => {
     return CustomRenderer.renderCustomSection(props);

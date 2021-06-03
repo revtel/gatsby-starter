@@ -5,18 +5,24 @@ import 'antd/dist/antd.less';
 import './Layout.css';
 import AdminLayout from './AdminLayout';
 import ProfileLayout from './ProfileLayout';
+import CheckoutLayout from './CheckoutLayout';
 import SiteNavBar from './SiteNavBar';
 
 function Layout({children, location}) {
   if (location.pathname.indexOf('admin') > -1) {
     return <AdminLayout location={location}>{children}</AdminLayout>;
-  }
-
-  if (location.pathname.indexOf('profile') > -1) {
+  } else if (location.pathname.indexOf('profile') > -1) {
     return (
       <Wrapper>
         <SiteNavBar />
         <ProfileLayout location={location}>{children}</ProfileLayout>
+      </Wrapper>
+    );
+  } else if (['/cart'].indexOf(location.pathname) > -1) {
+    return (
+      <Wrapper>
+        <SiteNavBar />
+        <CheckoutLayout location={location}>{children}</CheckoutLayout>
       </Wrapper>
     );
   }

@@ -1,12 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import {navigate} from 'gatsby';
+import {useOutlet} from 'reconnect.js';
+import {Button} from 'antd';
 
 function SiteNavBar(props) {
+  const [user] = useOutlet('user');
+
   return (
     <Wrapper>
       <div className="content">
         <h2 onClick={() => navigate('/')}>RevtelTech</h2>
+        <div style={{flex: 1}} />
+        {user && <Button onClick={() => navigate('/profile')}>Profile</Button>}
       </div>
     </Wrapper>
   );

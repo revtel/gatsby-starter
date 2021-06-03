@@ -8,6 +8,7 @@ function ProductDetail(props) {
   const prefixPath = '/product';
   const [activeSummaryTab, setActiveSummaryTab] = React.useState('intro');
   const [product, setProduct] = React.useState(null);
+  const [quantity, setQuantity] = React.useState(1);
   const [actions] = useOutlet('actions');
   const [dimension] = useOutlet('dimension');
   const params = qs.parse(props.location.search);
@@ -18,6 +19,7 @@ function ProductDetail(props) {
       try {
         actions.setLoading(true);
         setProduct(await actions.fetchProductById(id));
+        setQuantity(1);
       } catch (ex) {
         console.warn(ex);
       } finally {
@@ -35,6 +37,20 @@ function ProductDetail(props) {
       params,
       data,
     });
+  }
+
+  async function addToCart() {
+    try {
+      actions.setLoading(true);
+      await actions.addItemToCart({
+        product,
+        config: {
+          quantity,
+        },
+      });
+    } finally {
+      actions.setLoading(false);
+    }
   }
 
   if (!product) {
@@ -85,14 +101,15 @@ function ProductDetail(props) {
             <InputField>
               <label>數量</label>
               <Select
-                defaultValue="1"
+                defaultValue={quantity}
+                value={quantity}
                 style={{width: 120}}
-                onChange={console.log}>
-                <Select.Option value="1">1</Select.Option>
-                <Select.Option value="2">2</Select.Option>
-                <Select.Option value="3">3</Select.Option>
-                <Select.Option value="4">4</Select.Option>
-                <Select.Option value="5">5</Select.Option>
+                onChange={setQuantity}>
+                <Select.Option value={1}>1</Select.Option>
+                <Select.Option value={2}>2</Select.Option>
+                <Select.Option value={3}>3</Select.Option>
+                <Select.Option value={4}>4</Select.Option>
+                <Select.Option value={5}>5</Select.Option>
               </Select>
             </InputField>
 
@@ -133,7 +150,7 @@ function ProductDetail(props) {
             </InputField>
 
             <InputField style={{justifyContent: 'flex-end'}}>
-              <Button size="large" type="primary">
+              <Button size="large" type="primary" onClick={addToCart}>
                 加入購物車
               </Button>
             </InputField>
