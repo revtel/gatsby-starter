@@ -1,4 +1,7 @@
 const path = require('path');
+const fs = require('fs');
+const util = require('util');
+const readFile = util.promisify(fs.readFile);
 
 exports.createPages = async ({graphql, actions}) => {
   const {createPage} = actions;
@@ -83,4 +86,35 @@ exports.createPages = async ({graphql, actions}) => {
     component: path.resolve(`src/Templates/CheckoutReview/index.js`),
     context: {...commonContext},
   });
+
+  const promoPages = (
+    await graphql(
+      `
+        query MyQuery {
+          allFile(filter: {relativeDirectory: {eq: "promo"}}) {
+            edges {
+              node {
+                id
+                name
+                dir
+                ext
+                absolutePath
+              }
+            }
+          }
+        }
+      `,
+    )
+  ).data.allFile.edges;
+
+  for (const {node} of promoPages) {
+    const {path: promoPath, ...extraCtx} = JSON.parse(
+      (await readFile(node.absolutePath)).toString(),
+    );
+    createPage({
+      path: `/promo/${promoPath}`,
+      component: path.resolve(`src/Templates/PromoLanding/index.js`),
+      context: extraCtx,
+    });
+  }
 };

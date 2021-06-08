@@ -28,7 +28,10 @@ function Layout({children, location}) {
   }
 
   let hasSiteNavBar = true;
-  if (location.pathname === '/') {
+  if (
+    ['/'].indexOf(location.pathname) > -1 ||
+    location.pathname.indexOf('/promo') === 0
+  ) {
     hasSiteNavBar = false;
   }
 

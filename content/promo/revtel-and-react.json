@@ -1,0 +1,157 @@
+{
+  "path": "revtel-and-react",
+  "contact": {
+    "email": "whitedogg13@gmail.com",
+    "mobile": "0911222333",
+    "tel": "0911222333",
+    "addr": "Some where in Taipei City"
+  },
+  "nav": {
+    "action": "mailto://whitedogg13@gmail.com"
+  },
+  "sections": [
+    {
+      "type": "hero",
+      "bg": "https://wallpaperaccess.com/full/3949083.jpg",
+      "image": "https://icons-for-free.com/iconfiles/png/512/design+development+facebook+framework+mobile+react+icon-1320165723839064798.png",
+      "color": "white",
+      "subColor": "white",
+      "title": "RevtelTech ❤ React",
+      "subtitle": "The best choice for your next React / React Native project ",
+      "action": "https://reactconf.tv",
+      "actionText": "DEMO"
+    },
+    {
+      "type": "feature",
+      "effect": "slide-in-left",
+      "bgColor": "lightblue",
+      "color": "black",
+      "subColor": "grey",
+      "title": "Our Features",
+      "subtitle": "Our Fearutes is listed below",
+      "items": [
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Feature",
+          "subtitle": "Feature description... Feature description... Feature description... "
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Feature",
+          "subtitle": "Feature description... Feature description... Feature description... "
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Feature",
+          "subtitle": "Feature description... Feature description... Feature description... "
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "direction": "left",
+      "effect": "slide-in-right",
+      "bgColor": "white",
+      "image": "https://icons-for-free.com/iconfiles/png/512/design+development+facebook+framework+mobile+react+icon-1320165723839064798.png",
+      "color": "black",
+      "subColor": "grey",
+      "title": "Row Banner",
+      "subtitle": "Row banner subtitle... Row banner subtitle... Row banner subtitle... Row banner subtitle... "
+    },
+    {
+      "type": "row",
+      "direction": "right",
+      "bgColor": "white",
+      "image": "https://icons-for-free.com/iconfiles/png/512/design+development+facebook+framework+mobile+react+icon-1320165723839064798.png",
+      "color": "black",
+      "subColor": "grey",
+      "title": "Row Banner",
+      "subtitle": "Row banner subtitle... Row banner subtitle... Row banner subtitle... Row banner subtitle... "
+    },
+    {
+      "type": "row",
+      "direction": "left",
+      "bgColor": "white",
+      "image": "https://icons-for-free.com/iconfiles/png/512/design+development+facebook+framework+mobile+react+icon-1320165723839064798.png",
+      "color": "black",
+      "subColor": "grey",
+      "title": "Row Banner",
+      "subtitle": "Row banner subtitle... Row banner subtitle... Row banner subtitle... Row banner subtitle... "
+    },
+    {
+      "type": "article",
+      "id": "a4383103-76f6-4cb9-b2f8-e0dc57e8daca"
+    },
+    {
+      "type": "row",
+      "direction": "right",
+      "bgColor": "white",
+      "image": "https://icons-for-free.com/iconfiles/png/512/design+development+facebook+framework+mobile+react+icon-1320165723839064798.png",
+      "color": "black",
+      "subColor": "grey",
+      "title": "Row Banner",
+      "subtitle": "Row banner subtitle... Row banner subtitle... Row banner subtitle... Row banner subtitle... "
+    },
+    {
+      "type": "row",
+      "direction": "left",
+      "bgColor": "white",
+      "image": "https://icons-for-free.com/iconfiles/png/512/design+development+facebook+framework+mobile+react+icon-1320165723839064798.png",
+      "color": "black",
+      "subColor": "grey",
+      "title": "Row Banner",
+      "subtitle": "Row banner subtitle... Row banner subtitle... Row banner subtitle... Row banner subtitle... "
+    },
+    {
+      "type": "row",
+      "direction": "right",
+      "effect": "slide-in-left",
+      "bgColor": "white",
+      "image": "https://icons-for-free.com/iconfiles/png/512/design+development+facebook+framework+mobile+react+icon-1320165723839064798.png",
+      "color": "black",
+      "subColor": "grey",
+      "title": "Row Banner",
+      "subtitle": "Row banner subtitle... Row banner subtitle... Row banner subtitle... Row banner subtitle... "
+    },
+
+    {
+      "type": "feature",
+      "bgColor": "lightblue",
+      "color": "black",
+      "subColor": "grey",
+      "title": "Our Customers",
+      "subtitle": "Our customers is listed below",
+      "items": [
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        }
+      ]
+    },
+    {
+      "type": "hero",
+      "bg": "https://wallpaperaccess.com/full/3949083.jpg",
+      "color": "white",
+      "subColor": "gray",
+      "title": "馬上行動",
+      "action": "mailto:whitedogg13@gmail.com",
+      "actionText": "Contact Us"
+    }
+  ]
+}
