@@ -49,6 +49,7 @@ function Dashboard(props) {
           fetchRecords: actions.fetchRecords,
           fetchRecordById: actions.fetchRecordById,
         },
+        searchFields: [],
         columns: [
           {
             title: '名稱',
@@ -59,6 +60,7 @@ function Dashboard(props) {
             title: '價錢',
             key: 'price',
             dataIndex: 'price',
+            sorter: (a, b) => a.price - b.price,
           },
           {
             title: '庫存',

@@ -130,7 +130,7 @@ function initApp() {
     };
   };
 
-  Actions.fetchRecords = async () => {
+  Actions.fetchRecords = async (queryConfigs = null) => {
     await delay(600);
     return [
       {id: '1', name: 'Item 1', price: 100, stock: 10},
