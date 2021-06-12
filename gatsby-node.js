@@ -1,7 +1,4 @@
 const path = require('path');
-const fs = require('fs');
-const util = require('util');
-const readFile = util.promisify(fs.readFile);
 const onCreateNode = require('./gatsby/onCreateNode');
 
 exports.createPages = async ({graphql, actions}) => {
