@@ -36,8 +36,32 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `promo`,
+        name: `content`,
         path: `${__dirname}/content/`,
+      },
+    },
+    // this is required for promo page generation, which uses json format
+    `gatsby-transformer-json`,
+    // this is for markdown files
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              // TODO: not sure why this doesn't work... for now we will compensate
+              // the offset in BlogDetail page manually
+              offsetY: 80,
+            },
+          },
+          {
+            resolve: `gatsby-remark-prismjs`,
+            options: {
+              showLineNumbers: true,
+            },
+          },
+        ],
       },
     },
     `gatsby-plugin-image`,

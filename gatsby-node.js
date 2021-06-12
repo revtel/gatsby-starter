@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const util = require('util');
 const readFile = util.promisify(fs.readFile);
+const onCreateNode = require('./gatsby/onCreateNode');
 
 exports.createPages = async ({graphql, actions}) => {
   const {createPage} = actions;
@@ -87,34 +88,61 @@ exports.createPages = async ({graphql, actions}) => {
     context: {...commonContext},
   });
 
-  const promoPages = (
+  const promoPageNodes = (
     await graphql(
       `
-        query MyQuery {
+        {
           allFile(filter: {relativeDirectory: {eq: "promo"}}) {
             edges {
               node {
-                id
-                name
-                dir
-                ext
-                absolutePath
+                internal {
+                  content
+                }
               }
             }
           }
         }
       `,
     )
-  ).data.allFile.edges;
+  ).data.allFile.edges.map(({node}) => node);
 
-  for (const {node} of promoPages) {
-    const {path: promoPath, ...extraCtx} = JSON.parse(
-      (await readFile(node.absolutePath)).toString(),
-    );
+  for (const node of promoPageNodes) {
+    const {
+      internal: {content},
+    } = node;
+    const {path: subPath, ...extraCtx} = JSON.parse(content);
     createPage({
-      path: `/promo/${promoPath}`,
+      path: `/promo/${subPath}`,
       component: path.resolve(`src/Templates/PromoLanding/index.js`),
       context: extraCtx,
     });
   }
+
+  const allMdNodes = (
+    await graphql(
+      `
+        {
+          allMarkdownRemark(limit: 1000) {
+            edges {
+              node {
+                fields {
+                  slug
+                }
+              }
+            }
+          }
+        }
+      `,
+    )
+  ).data.allMarkdownRemark.edges.map(({node}) => node);
+
+  for (const node of allMdNodes) {
+    createPage({
+      path: node.fields.slug,
+      component: path.resolve(`src/Templates/BlogDetail/index.js`),
+      context: {slug: node.fields.slug},
+    });
+  }
 };
+
+exports.onCreateNode = onCreateNode;
