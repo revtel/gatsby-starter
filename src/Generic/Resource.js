@@ -10,8 +10,8 @@ const specFormat = {
   primaryKey: 'id',
   actions: {
     setLoading: () => null,
-    fetchList: () => [],
-    fetchById: () => ({}),
+    fetchRecords: () => [],
+    fetchRecordById: () => ({}),
   },
   columns: [
     {
@@ -52,6 +52,7 @@ function Resource(props) {
     `);
   }
 
+  const {searchFields} = spec;
   const {setLoading, fetchRecords, fetchRecordById} = spec.actions;
 
   React.useEffect(() => {
@@ -77,6 +78,65 @@ function Resource(props) {
 
     fetchData();
   }, [setLoading, fetchRecords, fetchRecordById, action, id]);
+
+  const _onTableChange = React.useCallback(
+    async (
+      pagination, // {current: 1, pageSize: 3}
+      filters,
+      sorter,
+      extra, // currentDataSource: [], action: paginate | sort | filter
+    ) => {
+      let _configs = {
+        paging: {
+          offset: 0,
+          limit: 20,
+        },
+        sorting: [],
+      };
+
+      if (extra.action === 'filter') {
+        let _queries = [];
+        for (let key of Object.keys(filters)) {
+          if (filters[key] && filters[key].length > 0) {
+            if (searchFields.indexOf(key) !== -1) {
+              let _resultTypeQuery = {
+                $or: filters[key].map((v) => ({[key]: {$regex: `.*${v}.*`}})),
+              };
+              _queries.push(_resultTypeQuery);
+            } else {
+              let _resultTypeQuery = {
+                $or: filters[key].map((v) => ({[key]: v})),
+              };
+              _queries.push(_resultTypeQuery);
+            }
+          }
+        }
+
+        _configs.query = _queries.length > 0 ? {$and: _queries} : {};
+      }
+
+      if (extra.action === 'paginate') {
+        _configs.paging.offset = (pagination.current - 1) * pagination.pageSize;
+      }
+
+      if (extra.action === 'sort') {
+        if (sorter && sorter.field && sorter.order) {
+          _configs.sorting = [
+            `${sorter.order === 'ascend' ? '+' : '-'}${sorter.field}`,
+          ];
+        } else {
+          _configs.sorting = [];
+        }
+      }
+
+      setLoading(true);
+      try {
+        setRecords(await fetchRecords(_configs));
+      } catch (err) {}
+      setLoading(false);
+    },
+    [fetchRecords, searchFields],
+  );
 
   const hasCreateButton =
     typeof renderCreateButton === 'undefined' ||
@@ -156,6 +216,7 @@ function Resource(props) {
           dataSource={records}
           columns={columns}
           rowKey={spec.primaryKey}
+          onChange={_onTableChange}
         />
       </Wrapper>
     );
