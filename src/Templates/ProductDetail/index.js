@@ -1,25 +1,39 @@
 import React from 'react';
 import styled from 'styled-components';
+import {navigate} from 'gatsby';
 import {Tabs, Button, Select, Checkbox} from 'antd';
 import {useOutlet} from 'reconnect.js';
 import qs from 'query-string';
+import RichTextPreview from '../../Components/RichTextPreview';
+import BreadcrumbBar from '../../Templates/ProductList/BreadcrumbBar';
+import {mapLineBreak} from '../../Utils/TextUtil';
 
 function ProductDetail(props) {
   const prefixPath = '/product';
   const [activeSummaryTab, setActiveSummaryTab] = React.useState('intro');
   const [product, setProduct] = React.useState(null);
   const [quantity, setQuantity] = React.useState(1);
+  const [article, setArticle] = React.useState(null);
+  const [imgIdx, setImgIdx] = React.useState(0);
   const [actions] = useOutlet('actions');
   const [dimension] = useOutlet('dimension');
   const params = qs.parse(props.location.search);
   const {id} = params;
 
-  React.useState(() => {
+  React.useEffect(() => {
     async function fetchData() {
       try {
         actions.setLoading(true);
-        setProduct(await actions.fetchProductById(id));
+        const resp = await actions.clientFetchProductById(id);
+        setProduct(resp);
         setQuantity(1);
+        setImgIdx(0);
+        actions.setLoading(false);
+
+        // don't show global spinner for article fetching
+        if (resp.article) {
+          setArticle(await actions.clientFetchArticleById(resp.article));
+        }
       } catch (ex) {
         console.warn(ex);
       } finally {
@@ -71,28 +85,67 @@ function ProductDetail(props) {
       <div className="content">
         {renderCustomSection('B', {product})}
 
+        {product.labels && product.labels[0] && (
+          <div style={{marginTop: 15}}>
+            <BreadcrumbBar
+              cat={product.labels[0]}
+              updateCat={(nextCat) => {
+                navigate(`/products?cat=${nextCat}`);
+              }}
+            />
+          </div>
+        )}
+
         <TopSection>
           <Gallery dimension={dimension} size={gallerySize}>
-            <h2>Gallery</h2>
+            {product.images && product.images[imgIdx] && (
+              <img src={product.images[imgIdx]} alt="product" />
+            )}
+
+            {product.images && (
+              <MiniImageList>
+                {product.images.map((image, idx) => (
+                  <MiniImageItem
+                    src={image}
+                    alt="mini"
+                    key={idx}
+                    selected={idx === imgIdx}
+                    onClick={() => setImgIdx(idx)}
+                  />
+                ))}
+              </MiniImageList>
+            )}
           </Gallery>
 
           <div style={{flexBasis: 20}} />
 
           <Summary>
             {renderCustomSection('C', {product})}
-            <h3>{product.subtitle}</h3>
-            <h2>{product.title}</h2>
+            <h3>{(product.labels && product.labels[0]) || ''}</h3>
+            <h2>{product.name}</h2>
             <p>{product.description}</p>
             {renderCustomSection('D', {product})}
             <Tabs activeKey={activeSummaryTab} onChange={setActiveSummaryTab}>
               <Tabs.TabPane tab="介紹" key="intro">
-                <p>{product.intro}</p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: mapLineBreak(product.intro),
+                  }}
+                />
               </Tabs.TabPane>
               <Tabs.TabPane tab="規格" key="spec">
-                <p>{product.spec}</p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: mapLineBreak(product.spec),
+                  }}
+                />
               </Tabs.TabPane>
               <Tabs.TabPane tab="備註" key="remark">
-                <p>{product.remark}</p>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: mapLineBreak(product.remark),
+                  }}
+                />
               </Tabs.TabPane>
             </Tabs>
 
@@ -146,7 +199,7 @@ function ProductDetail(props) {
             <LineSeperator />
 
             <InputField style={{justifyContent: 'flex-end'}}>
-              <h2>$1000</h2>
+              <h2>${product.price}</h2>
             </InputField>
 
             <InputField style={{justifyContent: 'flex-end'}}>
@@ -159,9 +212,11 @@ function ProductDetail(props) {
 
         {renderCustomSection('E', {product})}
 
-        <ProductArticle>
-          <h2>Product Article</h2>
-        </ProductArticle>
+        {article && (
+          <ProductArticle>
+            <RichTextPreview content={article.content} />
+          </ProductArticle>
+        )}
 
         {renderCustomSection('F', {product})}
       </div>
@@ -195,13 +250,18 @@ const Gallery = styled.div`
   width: ${(props) => props.size}px;
   min-height: ${(props) => props.size}px;
   margin-bottom: 20px;
-  background-color: pink;
   ${(props) =>
     props.dimension?.innerWidth > 1000 &&
     `
   position: sticky;
   top: calc(20px + var(--topNavBarHeight));
   `}
+
+  & > img:first-child {
+    width: ${(props) => props.size}px;
+    height: ${(props) => props.size}px;
+    object-fit: contain;
+  }
 `;
 
 const Summary = styled.div`
@@ -237,8 +297,22 @@ const InputField = styled.div`
 `;
 
 const ProductArticle = styled.div`
-  background-color: lightblue;
   min-height: 700px;
+`;
+
+const MiniImageList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const MiniImageItem = styled.img`
+  width: 64px;
+  height: 64px;
+  margin: 10px;
+  border: 2px solid ${(props) => (props.selected ? '#ccc' : 'transparent')};
+  border-radius: 4px;
+  object-fit: contain;
+  cursor: pointer;
 `;
 
 export default ProductDetail;

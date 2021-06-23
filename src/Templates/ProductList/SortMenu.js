@@ -6,6 +6,8 @@ function SortMenu(props) {
   const [options] = useOutlet('sortOptions');
   const {sort, updateSort} = props;
 
+  const selectedOption = options.find((opt) => opt.name === sort);
+
   return (
     <>
       <label style={{margin: '0px 10px'}}>排序</label>
@@ -26,7 +28,7 @@ function SortMenu(props) {
               })}
             </Menu>
           }>
-          <div>{sort || '請選擇'}</div>
+          <div>{(selectedOption && selectedOption.display) || '請選擇'}</div>
         </Dropdown>
       </div>
     </>

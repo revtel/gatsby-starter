@@ -13,7 +13,9 @@ const SiteInfo = {
 
 const Routes = [
   {name: '首頁', path: '/admin'},
+  {name: '商品', path: '/admin/products'},
   {name: '文章', path: '/admin/articles'},
+  {name: '圖片', path: '/admin/images'},
   {name: '設定', path: '/admin/settings'},
 ];
 
@@ -55,7 +57,10 @@ function AdminLayout(props) {
       </Layout>
 
       <Layout.Sider theme="light" style={siderStyle}>
-        <AppHeader style={{marginBottom: 40}} />
+        <AppHeader
+          style={{marginBottom: 40, cursor: 'pointer'}}
+          onClick={() => navigate('/')}
+        />
 
         {Routes.map(({name, path}) => (
           <MenuItem key={path} {...getMenuProps(path)}>
@@ -103,10 +108,10 @@ function AdminLayout(props) {
 }
 
 function AppHeader(props) {
-  const {style = {}} = props;
+  const {style = {}, onClick} = props;
 
   return (
-    <AppHeaderWrapper style={style}>
+    <AppHeaderWrapper style={style} onClick={onClick}>
       <figure>
         <img src={SiteInfo.icon} alt="site icon" />
       </figure>
@@ -158,11 +163,16 @@ const MenuItemWrapper = styled.button`
     props.selected ? 'rgba(225,129,53,0.10)' : 'transparent'};
   color: ${(props) => (props.selected ? '#E18135' : '#ccc')};
   border-radius: 4px;
+  border: 1px solid transparent;
   padding: 10px 15px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   text-align: left;
+
+  &:hover {
+    border: 1px solid #ccc;
+  }
 `;
 
 const MobileMainMenu = styled.button`

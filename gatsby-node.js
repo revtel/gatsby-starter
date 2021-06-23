@@ -14,24 +14,6 @@ exports.createPages = async ({graphql, actions}) => {
   });
 
   createPage({
-    path: `/admin`,
-    component: path.resolve(`src/Templates/Admin/index.js`),
-    context: {...commonContext},
-  });
-
-  createPage({
-    path: `/admin/settings`,
-    component: path.resolve(`src/Templates/AdminSettings/index.js`),
-    context: {...commonContext},
-  });
-
-  createPage({
-    path: `/admin/articles`,
-    component: path.resolve(`src/Templates/AdminArticles/index.js`),
-    context: {...commonContext},
-  });
-
-  createPage({
     path: `/products`,
     component: path.resolve(`src/Templates/ProductList/index.js`),
     context: {...commonContext},
@@ -55,6 +37,12 @@ exports.createPages = async ({graphql, actions}) => {
     context: {...commonContext},
   });
 
+  /**
+   * **************************************************
+   * Profile routes
+   * **************************************************
+   */
+
   createPage({
     path: `/profile`,
     component: path.resolve(`src/Templates/Profile/index.js`),
@@ -66,6 +54,12 @@ exports.createPages = async ({graphql, actions}) => {
     component: path.resolve(`src/Templates/OrderList/index.js`),
     context: {...commonContext},
   });
+
+  /**
+   * **************************************************
+   * Checkout routes
+   * **************************************************
+   */
 
   createPage({
     path: `/checkout`,
@@ -84,6 +78,48 @@ exports.createPages = async ({graphql, actions}) => {
     component: path.resolve(`src/Templates/CheckoutReview/index.js`),
     context: {...commonContext},
   });
+
+  /**
+   * **************************************************
+   * Admin routes
+   * **************************************************
+   */
+
+  createPage({
+    path: `/admin`,
+    component: path.resolve(`src/Templates/Admin/index.js`),
+    context: {...commonContext},
+  });
+
+  createPage({
+    path: `/admin/settings`,
+    component: path.resolve(`src/Templates/AdminSettings/index.js`),
+    context: {...commonContext},
+  });
+
+  createPage({
+    path: `/admin/articles`,
+    component: path.resolve(`src/Templates/AdminArticles/index.js`),
+    context: {...commonContext},
+  });
+
+  createPage({
+    path: `/admin/products`,
+    component: path.resolve(`src/Templates/AdminProductList/index.js`),
+    context: {...commonContext},
+  });
+
+  createPage({
+    path: `/admin/images`,
+    component: path.resolve(`src/Templates/AdminImageList/index.js`),
+    context: {...commonContext},
+  });
+
+  /**
+   * **************************************************
+   * Promo JSON generated routes
+   * **************************************************
+   */
 
   const promoPageNodes = (
     await graphql(
@@ -114,6 +150,12 @@ exports.createPages = async ({graphql, actions}) => {
       context: extraCtx,
     });
   }
+
+  /**
+   * **************************************************
+   * Markdown generated routes
+   * **************************************************
+   */
 
   const allMdNodes = (
     await graphql(

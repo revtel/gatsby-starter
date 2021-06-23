@@ -26,7 +26,7 @@ function ProductList(props) {
     async function fetchProducts() {
       try {
         actions.setLoading(true);
-        setProducts(await actions.fetchProducts({cat, sort, search}));
+        setProducts(await actions.clientFetchProducts({cat, sort, search}));
         setMobileFilterVisible(false);
       } catch (ex) {
         console.warn(ex);

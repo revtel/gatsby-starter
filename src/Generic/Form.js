@@ -47,7 +47,7 @@ function Form(props) {
 }
 
 const Wrapper = styled.div`
-  width: 480px;
+  max-width: 800px;
   & .submit-buttons-bar {
     display: flex;
     justify-content: flex-end;

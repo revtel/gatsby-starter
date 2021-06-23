@@ -1,4 +1,31 @@
 import React from 'react';
+import styled from 'styled-components';
+
+function AdminPage(props) {
+  return (
+    <Wrapper>
+      <h1>首頁</h1>
+    </Wrapper>
+  );
+}
+
+const Wrapper = styled.div`
+  padding: 20px;
+
+  & > h1 {
+    font-size: 32px;
+  }
+`;
+
+export default AdminPage;
+
+/**
+ * if you need some template for generic resources list to detail,
+ * use following template codes
+ */
+
+/*
+import React from 'react';
 import {useOutlet} from 'reconnect.js';
 import * as Generic from '../../Generic';
 
@@ -69,10 +96,11 @@ function Dashboard(props) {
           },
         ],
       }}
-      renderDetail={Form}
+      renderDetail={(props) => <Form {...props}/>}
       {...props}
     />
   );
 }
 
 export default Dashboard;
+*/

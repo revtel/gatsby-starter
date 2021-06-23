@@ -18,6 +18,7 @@ function BreadcrumbBar(props) {
   return (
     <Breadcrumb>
       <Breadcrumb.Item
+        style={{cursor: 'pointer'}}
         onClick={() => {
           updateCat('');
         }}>
@@ -25,7 +26,10 @@ function BreadcrumbBar(props) {
       </Breadcrumb.Item>
       {catItems.map((_, idx) => {
         return (
-          <Breadcrumb.Item key={idx} onClick={onCatClick(idx)}>
+          <Breadcrumb.Item
+            key={idx}
+            onClick={onCatClick(idx)}
+            style={{cursor: 'pointer'}}>
             {getCatDisplay(idx)}
           </Breadcrumb.Item>
         );

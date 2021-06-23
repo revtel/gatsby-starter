@@ -68,7 +68,12 @@ function Resource(props) {
       } else {
         try {
           setRecords([]);
-          setRecords(await fetchRecords());
+          const resp = await fetchRecords();
+          if (Array.isArray(resp)) {
+            setRecords(resp);
+          } else if (Array.isArray(resp.results)) {
+            setRecords(resp.results);
+          }
         } catch (ex) {
           console.warn(ex);
         }
@@ -135,7 +140,7 @@ function Resource(props) {
       } catch (err) {}
       setLoading(false);
     },
-    [fetchRecords, searchFields],
+    [fetchRecords, searchFields, setLoading],
   );
 
   const hasCreateButton =
