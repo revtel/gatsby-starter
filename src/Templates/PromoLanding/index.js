@@ -1,18 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import {useOutlet} from 'reconnect.js';
 import ReactDelighters from '../../Components/ReactDelighters';
-import NavBar from './NavBar';
+import SiteNavBar from '../../Components/SiteNavBar';
 import HeroBanner from './HeroBanner';
 import FeatureGrid from './FeatureGrid';
 import RowBanner from './RowBanner';
 import ArticleSection from './ArticleSection';
 
 function PromoLanding(props) {
-  const {nav, contact, sections} = props.pageContext;
+  const [actions] = useOutlet('actions');
+  const {contact, sections} = props.pageContext;
+
+  function renderCustomSection(sectionId) {
+    return actions.renderCustomSection({
+      route: '/',
+      sectionId,
+    });
+  }
 
   return (
     <ReactDelighters>
-      <NavBar nav={nav} />
+      <SiteNavBar />
 
       <Wrapper>
         {sections.map((section, idx) => {
@@ -24,6 +33,8 @@ function PromoLanding(props) {
             return <RowBanner key={idx} row={section} />;
           } else if (section.type === 'article') {
             return <ArticleSection key={idx} id={section.id} />;
+          } else if (section.type === 'custom') {
+            return <div key={idx}>{renderCustomSection(section.id)}</div>;
           }
           return null;
         })}
@@ -55,10 +66,41 @@ const Wrapper = styled.div`
     overflow-x: hidden;
   }
 
+  & .landing-fade {
+    opacity: 0;
+    transition: 350ms;
+  }
+
+  & .landing-fade.delighter.started {
+    opacity: 1;
+  }
+
+  & .landing-zoom {
+    opacity: 0;
+    transform: scale(0);
+    transition: 350ms;
+  }
+
+  & .landing-zoom.delighter.started {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  & .landing-slide-up {
+    opacity: 0;
+    transform: translateY(200px);
+    transition: 200ms;
+  }
+
+  & .landing-slide-up.delighter.started {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+
   & .landing-slide-in-right {
     opacity: 0;
-    transform: translateX(2000px);
-    transition: 350ms;
+    transform: translateX(500px);
+    transition: 250ms;
   }
 
   & .landing-slide-in-right.delighter.started {
@@ -68,8 +110,8 @@ const Wrapper = styled.div`
 
   & .landing-slide-in-left {
     opacity: 0;
-    transform: translateX(-2000px);
-    transition: 350ms;
+    transform: translateX(-500px);
+    transition: 250ms;
   }
 
   & .landing-slide-in-left.delighter.started {

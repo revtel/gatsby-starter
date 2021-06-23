@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import ActionBtn from './ActionBtn';
+import * as Style from './Style';
 
 function FeatureGrid(props) {
   const {feature} = props;
   return (
-    <section style={{padding: '40px 0', backgroundColor: feature.bgColor}}>
+    <Wrapper bg={feature.bg || feature.bgColor || '#ffffff'}>
       {feature.title && (
         <h2 style={{color: feature.color, textAlign: 'center'}}>
           {feature.title}
@@ -40,9 +41,14 @@ function FeatureGrid(props) {
           ))}
         </div>
       </FlexItemSection>
-    </section>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  padding: 40px 0;
+  ${Style.Bg}
+`;
 
 const FlexItemSection = styled.section`
   padding: 40px;

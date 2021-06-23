@@ -17,7 +17,7 @@ function HeroBanner(props) {
       <h2 style={{color: hero.color}}>{hero.title}</h2>
       {hero.subtitle && <p style={{color: hero.subColor}}>{hero.subtitle}</p>}
 
-      <ActionBtn link={hero.action} text={hero.actionText} />
+      <ActionBtn link={hero.action} text={hero.actionText} size="large" />
     </HeroBannerSection>
   );
 }
