@@ -85,98 +85,99 @@ function Landing(props) {
             </FlexItem>
           </div>
         </FlexItemSection>
-
-        <RowBannerSection
-          style={{backgroundColor: '#eff'}}
-          className="landing-slide-in-right"
-          data-delighter="start:0.5;">
-          <div className="content">
-            <img
-              src="/images/revicon_512.png"
-              alt="Logo"
-              style={{width: 120, height: 120, objectFit: 'contain'}}
-            />
-            <div className="description" style={{marginLeft: 20}}>
-              <h2>RevtelTech</h2>
-              <p>Subtitle</p>
+        <section>
+          <RowBannerSection
+            style={{backgroundColor: '#eff'}}
+            className="landing-slide-in-right"
+            data-delighter="start:0.5;">
+            <div className="content">
+              <img
+                src="/images/revicon_512.png"
+                alt="Logo"
+                style={{width: 120, height: 120, objectFit: 'contain'}}
+              />
+              <div className="description" style={{marginLeft: 20}}>
+                <h2>RevtelTech</h2>
+                <p>Subtitle</p>
+              </div>
             </div>
-          </div>
-        </RowBannerSection>
+          </RowBannerSection>
 
-        <RowBannerSection>
-          <div className="content" style={{flexDirection: 'row-reverse'}}>
-            <img
-              src="/images/revicon_512.png"
-              alt="Logo"
-              style={{width: 150, height: 150, objectFit: 'contain'}}
-            />
+          <RowBannerSection>
+            <div className="content" style={{flexDirection: 'row-reverse'}}>
+              <img
+                src="/images/revicon_512.png"
+                alt="Logo"
+                style={{width: 150, height: 150, objectFit: 'contain'}}
+              />
 
-            <div className="description" style={{marginRight: 20}}>
-              <h2>RevtelTech</h2>
-              <p>Subtitle</p>
+              <div className="description" style={{marginRight: 20}}>
+                <h2>RevtelTech</h2>
+                <p>Subtitle</p>
+              </div>
             </div>
-          </div>
-        </RowBannerSection>
+          </RowBannerSection>
 
-        <RowBannerSection>
-          <div className="content">
-            <img
-              src="/images/revicon_512.png"
-              alt="Logo"
-              style={{width: 150, height: 150, objectFit: 'contain'}}
-            />
-            <div className="description" style={{marginLeft: 20}}>
-              <h2>RevtelTech</h2>
-              <p>Subtitle</p>
+          <RowBannerSection>
+            <div className="content">
+              <img
+                src="/images/revicon_512.png"
+                alt="Logo"
+                style={{width: 150, height: 150, objectFit: 'contain'}}
+              />
+              <div className="description" style={{marginLeft: 20}}>
+                <h2>RevtelTech</h2>
+                <p>Subtitle</p>
+              </div>
             </div>
-          </div>
-        </RowBannerSection>
+          </RowBannerSection>
 
-        <RowBannerSection>
-          <div className="content" style={{flexDirection: 'row-reverse'}}>
-            <img
-              src="/images/revicon_512.png"
-              alt="Logo"
-              style={{width: 150, height: 150, objectFit: 'contain'}}
-            />
+          <RowBannerSection>
+            <div className="content" style={{flexDirection: 'row-reverse'}}>
+              <img
+                src="/images/revicon_512.png"
+                alt="Logo"
+                style={{width: 150, height: 150, objectFit: 'contain'}}
+              />
 
-            <div className="description" style={{marginRight: 20}}>
-              <h2>RevtelTech</h2>
-              <p>Subtitle</p>
+              <div className="description" style={{marginRight: 20}}>
+                <h2>RevtelTech</h2>
+                <p>Subtitle</p>
+              </div>
             </div>
-          </div>
-        </RowBannerSection>
+          </RowBannerSection>
 
-        <RowBannerSection>
-          <div className="content">
-            <img
-              src="/images/revicon_512.png"
-              alt="Logo"
-              style={{width: 150, height: 150, objectFit: 'contain'}}
-            />
-            <div className="description" style={{marginLeft: 20}}>
-              <h2>RevtelTech</h2>
-              <p>Subtitle</p>
+          <RowBannerSection>
+            <div className="content">
+              <img
+                src="/images/revicon_512.png"
+                alt="Logo"
+                style={{width: 150, height: 150, objectFit: 'contain'}}
+              />
+              <div className="description" style={{marginLeft: 20}}>
+                <h2>RevtelTech</h2>
+                <p>Subtitle</p>
+              </div>
             </div>
-          </div>
-        </RowBannerSection>
+          </RowBannerSection>
 
-        <RowBannerSection
-          style={{backgroundColor: '#eff'}}
-          className="landing-slide-in-left"
-          data-delighter="start:0.5;">
-          <div className="content" style={{flexDirection: 'row-reverse'}}>
-            <img
-              src="/images/revicon_512.png"
-              alt="Logo"
-              style={{width: 120, height: 120, objectFit: 'contain'}}
-            />
-            <div className="description" style={{marginRight: 20}}>
-              <h2>RevtelTech</h2>
-              <p>Subtitle</p>
+          <RowBannerSection
+            style={{backgroundColor: '#eff'}}
+            className="landing-slide-in-left"
+            data-delighter="start:0.5;">
+            <div className="content" style={{flexDirection: 'row-reverse'}}>
+              <img
+                src="/images/revicon_512.png"
+                alt="Logo"
+                style={{width: 120, height: 120, objectFit: 'contain'}}
+              />
+              <div className="description" style={{marginRight: 20}}>
+                <h2>RevtelTech</h2>
+                <p>Subtitle</p>
+              </div>
             </div>
-          </div>
-        </RowBannerSection>
+          </RowBannerSection>
+        </section>
 
         <FlexItemSection
           style={{padding: '100px 40px', backgroundColor: '#eee'}}>
