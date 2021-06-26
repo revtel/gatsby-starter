@@ -3,17 +3,13 @@ import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import {Button} from 'antd';
 import * as Generic from '../../Generic';
-import Config from '../../../data.json';
 import ImageUpload from '../../Components/ImageUpload';
 
 function AdminImageList(props) {
   const [actions] = useOutlet('actions');
   const [updater, setUpdater] = React.useState(0);
 
-  const buildFullPath = (filename) =>
-    `https://${Config.clientId}${
-      Config.stage === 'stg' ? '-stg' : ''
-    }.s3-ap-northeast-1.amazonaws.com/${filename}`;
+  const buildFullPath = (filename) => filename;
 
   function onFinished() {
     console.log('updated');
