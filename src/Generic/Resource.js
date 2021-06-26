@@ -1,31 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import {navigate} from 'gatsby';
-import {Table, Button} from 'antd';
+import {Table, Button, Select, Input, Pagination} from 'antd';
 import queryString from 'query-string';
-
-const specFormat = {
-  path: '/dashboard',
-  name: '產品',
-  primaryKey: 'id',
-  actions: {
-    setLoading: () => null,
-    fetchRecords: () => [],
-    fetchRecordById: () => ({}),
-  },
-  columns: [
-    {
-      title: '名稱',
-      key: 'name',
-      dataIndex: 'name',
-    },
-    {
-      title: '價錢',
-      key: 'price',
-      dataIndex: 'price',
-    },
-  ],
-};
+import {useOutlet} from 'reconnect.js';
 
 function Resource(props) {
   const {
@@ -36,24 +14,115 @@ function Resource(props) {
     renderDetailButton,
     onCreate,
     onGoToDetail,
+    querySpec = {},
     style = {},
   } = props;
   const params = queryString.parse(location.search);
   const {action, id} = params;
   const [records, setRecords] = React.useState([]);
   const [selectedRecord, setSelectedRecord] = React.useState(null);
+  const [totalRecords, setTotalRecords] = React.useState(0);
 
-  if (!spec || !location || !renderDetail) {
-    throw new Error(`Must pass recource, location and renderDetail. Resource looks like this: ${JSON.stringify(
-      specFormat,
-      null,
-      2,
-    )}
-    `);
-  }
+  // all params related to how we perform query, such as search, sort, and paging
+  const {
+    pageSizeOptions = null,
+    sortOptions = null,
+    canSearch = false,
+    outletKey,
+  } = querySpec;
 
-  const {searchFields} = spec;
+  // use a special outlet to "remember" the query state,
+  // so when use go back from the detail page, the query states can be preserved.
+  const [queryState, setQueryState] = useOutlet(
+    outletKey,
+    {
+      keyword: '',
+      sort: sortOptions ? sortOptions[0].value : '',
+      pageSize: (pageSizeOptions && pageSizeOptions[0]) || 0,
+      paging: {
+        offset: 0,
+        limit: (pageSizeOptions && pageSizeOptions[0]) || 0,
+      },
+    },
+    {autoDelete: false},
+  );
+
+  // generate all setters from the outlet
+  const setKeyword = (keyword) => {
+    setQueryState((prevQueryState) => {
+      const nextState = {...prevQueryState};
+      return {
+        ...nextState,
+        keyword,
+      };
+    });
+  };
+
+  const setSort = (sort) => {
+    setQueryState((prevQueryState) => {
+      const nextState = {...prevQueryState};
+      return {
+        ...nextState,
+        sort,
+      };
+    });
+  };
+
+  const setPageSize = (pageSize) => {
+    setQueryState((prevQueryState) => {
+      const nextState = {...prevQueryState};
+      return {
+        ...nextState,
+        pageSize,
+      };
+    });
+  };
+
+  const setPaging = (paging) => {
+    setQueryState((prevQueryState) => {
+      const nextState = {...prevQueryState};
+      return {
+        ...nextState,
+        paging,
+      };
+    });
+  };
+
+  // generate all values from the outlet
+  const {keyword, sort, pageSize, paging} = queryState;
+  // derive the keywordTmp from keyword
+  const [keywordTmp, setKeywordTmp] = React.useState(keyword);
+
+  // check if we can render sort or pagine UI,
+  // please notice that we already have a dedicated "canSearch" prop for search UI
+  const canSort = !!sortOptions;
+  const canPaging = !!pageSizeOptions;
+
   const {setLoading, fetchRecords, fetchRecordById} = spec.actions;
+
+  const fetchNextRecords = React.useCallback(
+    async ({sort, keyword, paging}) => {
+      setRecords([]);
+      const params = {};
+      if (canSort) {
+        params.sort = sort;
+      }
+      if (canPaging) {
+        params.paging = paging;
+      }
+      if (canSearch) {
+        params.keyword = keyword;
+      }
+      const resp = await fetchRecords(params);
+      if (Array.isArray(resp)) {
+        setRecords(resp);
+      } else {
+        setRecords(resp.results);
+        setTotalRecords(resp.total);
+      }
+    },
+    [fetchRecords, canSort, canPaging, canSearch],
+  );
 
   React.useEffect(() => {
     async function fetchData() {
@@ -67,13 +136,7 @@ function Resource(props) {
         }
       } else {
         try {
-          setRecords([]);
-          const resp = await fetchRecords();
-          if (Array.isArray(resp)) {
-            setRecords(resp);
-          } else if (Array.isArray(resp.results)) {
-            setRecords(resp.results);
-          }
+          await fetchNextRecords({sort, keyword, paging});
         } catch (ex) {
           console.warn(ex);
         }
@@ -82,66 +145,16 @@ function Resource(props) {
     }
 
     fetchData();
-  }, [setLoading, fetchRecords, fetchRecordById, action, id]);
-
-  const _onTableChange = React.useCallback(
-    async (
-      pagination, // {current: 1, pageSize: 3}
-      filters,
-      sorter,
-      extra, // currentDataSource: [], action: paginate | sort | filter
-    ) => {
-      let _configs = {
-        paging: {
-          offset: 0,
-          limit: 20,
-        },
-        sorting: [],
-      };
-
-      if (extra.action === 'filter') {
-        let _queries = [];
-        for (let key of Object.keys(filters)) {
-          if (filters[key] && filters[key].length > 0) {
-            if (searchFields.indexOf(key) !== -1) {
-              let _resultTypeQuery = {
-                $or: filters[key].map((v) => ({[key]: {$regex: `.*${v}.*`}})),
-              };
-              _queries.push(_resultTypeQuery);
-            } else {
-              let _resultTypeQuery = {
-                $or: filters[key].map((v) => ({[key]: v})),
-              };
-              _queries.push(_resultTypeQuery);
-            }
-          }
-        }
-
-        _configs.query = _queries.length > 0 ? {$and: _queries} : {};
-      }
-
-      if (extra.action === 'paginate') {
-        _configs.paging.offset = (pagination.current - 1) * pagination.pageSize;
-      }
-
-      if (extra.action === 'sort') {
-        if (sorter && sorter.field && sorter.order) {
-          _configs.sorting = [
-            `${sorter.order === 'ascend' ? '+' : '-'}${sorter.field}`,
-          ];
-        } else {
-          _configs.sorting = [];
-        }
-      }
-
-      setLoading(true);
-      try {
-        setRecords(await fetchRecords(_configs));
-      } catch (err) {}
-      setLoading(false);
-    },
-    [fetchRecords, searchFields, setLoading],
-  );
+  }, [
+    setLoading,
+    fetchRecordById,
+    action,
+    id,
+    sort,
+    keyword,
+    paging,
+    fetchNextRecords,
+  ]);
 
   const hasCreateButton =
     typeof renderCreateButton === 'undefined' ||
@@ -217,12 +230,115 @@ function Resource(props) {
               </Button>
             ))}
         </Row>
+
+        {(canPaging || canSort || canSearch) && (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              margin: '10px 0',
+            }}>
+            {canPaging > 0 && (
+              <div style={{width: 80}}>
+                <div>每頁顯示</div>
+                <Select
+                  value={pageSize}
+                  onChange={(nextPageSize) => {
+                    setPageSize(nextPageSize);
+                    setPaging({offset: 0, limit: nextPageSize});
+                  }}>
+                  {pageSizeOptions.map((opt) => (
+                    <Select.Option key={opt} value={opt}>
+                      {opt}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </div>
+            )}
+
+            {canSort && (
+              <div style={{width: 120}}>
+                <div>排序</div>
+                <Select
+                  value={sort}
+                  onChange={(nextSort) => {
+                    setSort(nextSort);
+                    setPaging({offset: 0, limit: pageSize});
+                  }}>
+                  {sortOptions.map((opt) => (
+                    <Select.Option key={opt.value} value={opt.value}>
+                      {opt.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </div>
+            )}
+
+            {canSearch && (
+              <div style={{width: 300, marginLeft: 10}}>
+                <div>搜尋 {keyword ? `"${keyword}"` : ''}</div>
+                <Input.Search
+                  value={keywordTmp}
+                  onChange={(e) => setKeywordTmp(e.target.value)}
+                  onSearch={() => {
+                    setKeyword(keywordTmp);
+                    setPaging({offset: 0, limit: pageSize});
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        )}
+
+        {canPaging > 0 && (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row-reverse',
+              marginBottom: 10,
+            }}>
+            <Pagination
+              total={totalRecords}
+              current={paging.offset / pageSize + 1}
+              pageSize={pageSize}
+              showQuickJumper
+              showTotal={(total) => '共 ' + total + ' 筆'}
+              onChange={(page, pageSize) => {
+                setPaging({
+                  offset: (page - 1) * pageSize,
+                  limit: pageSize,
+                });
+              }}
+              style={{marginTop: 20}}
+            />
+          </div>
+        )}
+
         <Table
           dataSource={records}
           columns={columns}
           rowKey={spec.primaryKey}
-          onChange={_onTableChange}
+          pagination={false}
         />
+
+        <div style={{display: 'flex', alignItems: 'center', padding: '20px 0'}}>
+          <Button
+            size="large"
+            onClick={async () => {
+              try {
+                setLoading(true);
+                await fetchNextRecords({sort, keyword, paging});
+              } catch (ex) {
+                console.warn(ex);
+              } finally {
+                setLoading(false);
+              }
+            }}
+            style={{margin: 10}}>
+            重新整理
+          </Button>
+        </div>
       </Wrapper>
     );
   }

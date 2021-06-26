@@ -327,6 +327,7 @@ Actions.fetchAllUploads = async () => {
 Actions.fetchDocuments = async (
   collection,
   query = {},
+  sorting = [],
   paging = {offset: 0, limit: 100},
 ) => {
   return await req(
@@ -335,7 +336,7 @@ Actions.fetchDocuments = async (
     }`,
     {
       method: 'POST',
-      data: {query, paging},
+      data: {query, sorting, paging},
     },
   );
 };

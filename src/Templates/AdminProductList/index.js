@@ -118,13 +118,27 @@ function Dashboard(props) {
 
   return (
     <Generic.Resource
+      location={props.location}
       spec={{
         path: '/admin/products',
         name: '產品',
         primaryKey: 'id',
         actions: {
           setLoading: actions.setLoading,
-          fetchRecords: () => actions.fetchDocuments('product'),
+          fetchRecords: ({sort, keyword, paging}) =>
+            actions.fetchDocuments(
+              'product',
+              keyword
+                ? {
+                    searchText: {
+                      $regex: `${keyword}`,
+                      $options: 'g',
+                    },
+                  }
+                : {},
+              sort ? [sort] : [],
+              paging,
+            ),
           fetchRecordById: (id) => actions.fetchOneDocument('product', {id}),
         },
         searchFields: [],
@@ -147,8 +161,16 @@ function Dashboard(props) {
           },
         ],
       }}
+      querySpec={{
+        pageSizeOptions: [2, 5, 10, 30, 50],
+        sortOptions: [
+          {name: '價錢低到高', value: 'price'},
+          {name: '價錢高到低', value: '-price'},
+        ],
+        canSearch: true,
+        outletKey: 'productQueryState',
+      }}
       renderDetail={(props) => <Form {...props} />}
-      {...props}
     />
   );
 }
