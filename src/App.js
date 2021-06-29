@@ -16,6 +16,9 @@ const ActionOutlet = getNewOutlet('actions', null, {autoDelete: false});
 const LoginModalOutlet = getNewOutlet('login-modal', null, {
   autoDelete: false,
 });
+const ContactModalOutlet = getNewOutlet('contact-modal', null, {
+  autoDelete: false,
+});
 const CategoriesOutlet = getNewOutlet('categories', null, {
   autoDelete: false,
 });
@@ -33,6 +36,7 @@ const sortOptions = CustomSortOptions.getSortOptions();
 
 LoadingOutlet.update(false);
 LoginModalOutlet.update(false);
+ContactModalOutlet.update(false);
 CategoriesOutlet.update(categories);
 CategoryDisplayOutlet.update(categoryDisplayMap);
 SortOptionsOutlet.update(sortOptions);
@@ -379,7 +383,7 @@ Actions.updateDocument = async (collection, query, data) => {
 
 /**
  * **************************************************
- * Mock APIs
+ * Project Specific APIs
  * **************************************************
  */
 

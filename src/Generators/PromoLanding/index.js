@@ -1,27 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useOutlet} from 'reconnect.js';
+import Helmet from 'react-helmet';
 import ReactDelighters from '../../Components/ReactDelighters';
-import SiteNavBar from '../../Components/SiteNavBar';
+import NavBar from './NavBar';
 import HeroBanner from './HeroBanner';
 import FeatureGrid from './FeatureGrid';
 import RowBanner from './RowBanner';
 import ArticleSection from './ArticleSection';
+import Fab from './Fab';
 
 function PromoLanding(props) {
-  const [actions] = useOutlet('actions');
-  const {contact, sections} = props.pageContext;
-
-  function renderCustomSection(sectionId) {
-    return actions.renderCustomSection({
-      route: '/',
-      sectionId,
-    });
-  }
+  const {nav, contact, sections, fab} = props.pageContext;
 
   return (
     <ReactDelighters>
-      <SiteNavBar />
+      <Helmet title={nav.title || 'RevtelTech'}>
+        <meta property="og:title" content={nav.title || 'RevtelTech'} />
+        <meta
+          property="og:description"
+          content={nav.description || 'RevtelTech'}
+        />
+      </Helmet>
+      <NavBar nav={nav} />
 
       <Wrapper>
         {sections.map((section, idx) => {
@@ -33,8 +33,6 @@ function PromoLanding(props) {
             return <RowBanner key={idx} row={section} />;
           } else if (section.type === 'article') {
             return <ArticleSection key={idx} id={section.id} />;
-          } else if (section.type === 'custom') {
-            return <div key={idx}>{renderCustomSection(section.id)}</div>;
           }
           return null;
         })}
@@ -46,7 +44,7 @@ function PromoLanding(props) {
           <div className="content">
             <FlexItem>
               <div className="description">
-                <h3>Contact</h3>
+                <h3>聯絡資訊</h3>
                 {contact.email && <p>Email: {contact.email}</p>}
                 {contact.mobile && <p>手機: {contact.mobile}</p>}
                 {contact.tel && <p>市話: {contact.tel}</p>}
@@ -55,6 +53,8 @@ function PromoLanding(props) {
             </FlexItem>
           </div>
         </FlexItemSection>
+
+        <Fab fab={fab} />
       </Wrapper>
     </ReactDelighters>
   );

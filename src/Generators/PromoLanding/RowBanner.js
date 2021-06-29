@@ -2,12 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import ActionBtn from './ActionBtn';
 import * as Style from './Style';
+import RectRowBanner from './RectRowBanner';
 
 function RowBanner(props) {
   const {row} = props;
+
+  if (row.subType === 'rect') {
+    return <RectRowBanner {...props} />;
+  }
+
   const extraProps = {};
   if (row.effect) {
-    extraProps['data-delighter'] = 'start:0.66;';
+    extraProps['data-delighter'] = 'start:0.75;';
     extraProps['className'] = `content landing-${row.effect}`;
   } else {
     extraProps['className'] = `content`;
@@ -31,7 +37,12 @@ function RowBanner(props) {
             {row.subtitle && (
               <p style={{color: row.subColor}}>{row.subtitle}</p>
             )}
-            <ActionBtn link={row.action} text={row.actionText} />
+            <ActionBtn
+              link={row.action}
+              text={row.actionText}
+              type={row.actionType}
+              size={row.actionSize}
+            />
           </div>
         </div>
       </div>
@@ -41,6 +52,7 @@ function RowBanner(props) {
 
 const RowBannerSection = styled.section`
   padding: 40px 20px;
+  overflow: hidden;
 
   ${Style.Bg}
 

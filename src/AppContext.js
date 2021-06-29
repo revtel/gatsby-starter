@@ -3,6 +3,7 @@ import {getNewOutlet, getOutlet} from 'reconnect.js';
 import './App';
 import ActivityIndicator from './Components/ActivityIndicator';
 import LoginModal from './Components/LoginModal';
+import ContactModal from './Components/ContactModal';
 
 const Dimension = getNewOutlet(
   'dimension',
@@ -65,6 +66,7 @@ function Provider(props) {
       {props.children}
 
       <LoginModal />
+      <ContactModal />
       <ActivityIndicator />
     </>
   );

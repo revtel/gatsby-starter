@@ -1,15 +1,11 @@
 import React from 'react';
-import {navigate} from 'gatsby';
 import styled from 'styled-components';
 import useBreakpoint from '../../Hooks/useBreakPoint';
-import {Button} from 'antd';
-import {useOutlet, useOutletSetter} from 'reconnect.js';
-import {AccountCircle} from '@styled-icons/material';
+import ActionBtn from './ActionBtn';
 
 function NavBar(props) {
-  const [user] = useOutlet('user');
-  const showLoginModal = useOutletSetter('login-modal');
   const {passBreakpoint} = useBreakpoint(100);
+  const {nav} = props;
 
   return (
     <NavBarWrapper
@@ -25,16 +21,13 @@ function NavBar(props) {
         RevtelTech
       </h2>
       <div style={{flex: 1}}></div>
-      {user ? (
-        <AccountCircle
-          size={32}
-          color="orange"
-          style={{cursor: 'pointer'}}
-          onClick={() => navigate('/profile')}
-        />
-      ) : (
-        <Button onClick={() => showLoginModal(true)}>登入</Button>
-      )}
+      <ActionBtn
+        link={nav.action}
+        text={nav.actionText}
+        type={nav.actionType}
+        size={nav.actionSize}
+        style={{marginTop: 0}}
+      />
     </NavBarWrapper>
   );
 }

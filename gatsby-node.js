@@ -174,10 +174,10 @@ exports.createPages = async ({graphql, actions}) => {
     const {
       internal: {content},
     } = node;
-    const {path: subPath, ...extraCtx} = JSON.parse(content);
+    const {path: promoPath, ...extraCtx} = JSON.parse(content);
     createPage({
-      path: `/promo/${subPath}`,
-      component: path.resolve(`src/Templates/PromoLanding/index.js`),
+      path: promoPath,
+      component: path.resolve(`src/Generators/PromoLanding/index.js`),
       context: extraCtx,
     });
   }

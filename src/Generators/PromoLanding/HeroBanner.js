@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ActionBtn from './ActionBtn';
+import * as Style from './Style';
 
 function HeroBanner(props) {
   const {hero, first} = props;
@@ -17,7 +18,12 @@ function HeroBanner(props) {
       <h2 style={{color: hero.color}}>{hero.title}</h2>
       {hero.subtitle && <p style={{color: hero.subColor}}>{hero.subtitle}</p>}
 
-      <ActionBtn link={hero.action} text={hero.actionText} size="large" />
+      <ActionBtn
+        link={hero.action}
+        text={hero.actionText}
+        type={hero.actionType}
+        size={hero.actionSize}
+      />
     </HeroBannerSection>
   );
 }
@@ -29,18 +35,8 @@ const HeroBannerSection = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
 
-  ${(props) =>
-    props.bg?.indexOf('#') === 0
-      ? `
-background-color: ${props.bg};
-`
-      : `
-background-image: url(${props.bg});
-`}
+  ${Style.Bg}
 `;
 
 export default HeroBanner;

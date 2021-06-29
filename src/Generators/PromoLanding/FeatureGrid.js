@@ -36,7 +36,12 @@ function FeatureGrid(props) {
                 </p>
               </div>
 
-              <ActionBtn link={item.action} text={item.actionText} />
+              <ActionBtn
+                link={item.action}
+                text={item.actionText}
+                type={item.actionType}
+                size={item.actionSize}
+              />
             </FlexItem>
           ))}
         </div>
