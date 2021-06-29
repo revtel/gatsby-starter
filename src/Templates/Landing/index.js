@@ -86,11 +86,10 @@ function Landing(props) {
           </div>
         </FlexItemSection>
 
-        <RowBannerSection
-          style={{backgroundColor: '#eff'}}
-          className="landing-slide-in-right"
-          data-delighter="start:0.5;">
-          <div className="content">
+        <RowBannerSection style={{backgroundColor: '#eff'}}>
+          <div
+            className="content landing-slide-in-right"
+            data-delighter="start:0.5;">
             <img
               src="/images/revicon_512.png"
               alt="Logo"
@@ -161,11 +160,11 @@ function Landing(props) {
           </div>
         </RowBannerSection>
 
-        <RowBannerSection
-          style={{backgroundColor: '#eff'}}
-          className="landing-slide-in-left"
-          data-delighter="start:0.5;">
-          <div className="content" style={{flexDirection: 'row-reverse'}}>
+        <RowBannerSection style={{backgroundColor: '#eff'}}>
+          <div
+            className="content landing-slide-in-left"
+            data-delighter="start:0.5;"
+            style={{flexDirection: 'row-reverse'}}>
             <img
               src="/images/revicon_512.png"
               alt="Logo"
