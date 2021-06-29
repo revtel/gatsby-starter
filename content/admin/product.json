@@ -1,0 +1,73 @@
+{
+  "path": "/admin/products",
+  "name": "產品",
+  "collection": "product",
+  "primaryKey": "id",
+  "searchField": "searchText",
+  "columns": [
+    {
+      "title": "名稱",
+      "key": "name",
+      "dataIndex": "name"
+    },
+    {
+      "title": "公開",
+      "key": "public",
+      "dataType": "boolean"
+    },
+    {
+      "title": "價錢",
+      "key": "price",
+      "dataIndex": "price"
+    }
+  ],
+  "querySpec": {
+    "pageSizeOptions": [2, 5, 10, 30, 50],
+    "sortOptions": [
+      {"name": "價錢低到高", "value": "price"},
+      {"name": "價錢高到低", "value": "-price"}
+    ],
+    "canSearch": true,
+    "outletKey": "productQueryState"
+  },
+  "formSpec": {
+    "schema": {
+      "title": "",
+      "type": "object",
+      "required": ["name", "price"],
+      "properties": {
+        "name": {"type": "string", "title": "商品名稱"},
+        "price": {"type": "number", "title": "商品價錢", "default": 100},
+        "public": {"type": "boolean", "title": "公開", "default": false},
+        "description": {"type": "string", "title": "產品說明"},
+        "labels": {
+          "type": "array",
+          "title": "分類標籤",
+          "items": {
+            "type": "string"
+          }
+        },
+        "intro": {"type": "string", "title": "產品介紹"},
+        "spec": {"type": "string", "title": "產品規格"},
+        "remark": {"type": "string", "title": "產品備註"},
+        "article": {"type": "string", "title": "產品文章"},
+        "searchText": {"type": "string", "title": "搜尋關鍵字"},
+        "images": {
+          "type": "array",
+          "title": "產品圖片",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "uiSchema": {
+      "description": {"ui:widget": "textarea"},
+      "intro": {"ui:widget": "textarea"},
+      "spec": {"ui:widget": "textarea"},
+      "remark": {"ui:widget": "textarea"},
+      "searchText": {"ui:widget": "textarea"}
+    }
+  },
+  "actionBar": ["article", "file"]
+}

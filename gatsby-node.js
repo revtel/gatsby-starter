@@ -1,5 +1,6 @@
 const path = require('path');
 const onCreateNode = require('./gatsby/onCreateNode');
+const config = require('./data.json');
 
 exports.createPages = async ({graphql, actions}) => {
   const {createPage} = actions;
@@ -104,16 +105,46 @@ exports.createPages = async ({graphql, actions}) => {
   });
 
   createPage({
-    path: `/admin/products`,
-    component: path.resolve(`src/Templates/AdminProductList/index.js`),
-    context: {...commonContext},
-  });
-
-  createPage({
     path: `/admin/images`,
     component: path.resolve(`src/Templates/AdminImageList/index.js`),
     context: {...commonContext},
   });
+
+  /**
+   * **************************************************
+   * Admin JSON generated routes
+   * **************************************************
+   */
+
+  const adminResourcePageNodes = (
+    await graphql(
+      `
+        {
+          allFile(filter: {relativeDirectory: {eq: "admin"}}) {
+            edges {
+              node {
+                internal {
+                  content
+                }
+              }
+            }
+          }
+        }
+      `,
+    )
+  ).data.allFile.edges.map(({node}) => node);
+
+  for (const node of adminResourcePageNodes) {
+    const {
+      internal: {content},
+    } = node;
+    const resource = JSON.parse(content);
+    createPage({
+      path: resource.path,
+      component: path.resolve(`src/Generators/AdminResource/index.js`),
+      context: {resource, config},
+    });
+  }
 
   /**
    * **************************************************
