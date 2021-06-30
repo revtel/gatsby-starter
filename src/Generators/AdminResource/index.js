@@ -1,6 +1,7 @@
 import React from 'react';
 import {useOutlet} from 'reconnect.js';
 import AdminForm from './AdminForm';
+import TableEditor from './TableEditor';
 import * as Generic from '../../Generic';
 
 function AdminResourcePage(props) {
@@ -10,6 +11,7 @@ function AdminResourcePage(props) {
   } = props;
 
   const {
+    inlineEditor,
     collection,
     primaryKey = 'id',
     searchField = 'searchText',
@@ -20,6 +22,10 @@ function AdminResourcePage(props) {
     formSpec,
     actionBar = ['article', 'file'],
   } = resource;
+
+  if (inlineEditor) {
+    return <TableEditor resource={resource} config={config} />;
+  }
 
   function fetchRecords({sort, keyword, paging} = {}) {
     return actions.fetchDocuments(

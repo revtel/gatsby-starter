@@ -381,6 +381,18 @@ Actions.updateDocument = async (collection, query, data) => {
   );
 };
 
+Actions.bulkWriteDocuments = async (collection, operations) => {
+  return await req(
+    `${Config.jstoreHost}/document/${collection}/bulk-write?token=${
+      getOutlet('user').getValue().token
+    }`,
+    {
+      method: 'POST',
+      data: {actions: operations},
+    },
+  );
+};
+
 /**
  * **************************************************
  * Project Specific APIs

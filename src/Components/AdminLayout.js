@@ -14,6 +14,7 @@ const SiteInfo = {
 const Routes = [
   {name: '首頁', path: '/admin'},
   {name: '商品', path: '/admin/products'},
+  {name: '商品(inline)', path: '/admin/products-table'},
   {name: '文章', path: '/admin/articles'},
   {name: '圖片', path: '/admin/images'},
   {name: '設定', path: '/admin/settings'},
