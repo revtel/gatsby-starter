@@ -79,8 +79,8 @@ function LoginModal(props) {
             </Form.Item>
           </Form>
 
-          <Register>
-            <p>還沒有帳號？</p>
+          <Register style={{border: 'none', padding: 0}}>
+            <div>還沒有帳號？</div>
             <Button
               type="link"
               size="small"
@@ -95,6 +95,25 @@ function LoginModal(props) {
                 }
               }}>
               立即註冊
+            </Button>
+          </Register>
+
+          <Register>
+            <div>忘記您的密碼？</div>
+            <Button
+              type="link"
+              size="small"
+              onClick={async () => {
+                try {
+                  actions.setLoading(true);
+                  navigate('/forgot-password/request');
+                  await actions.delay(600);
+                } finally {
+                  setVisible(false);
+                  actions.setLoading(false);
+                }
+              }}>
+              重新設定
             </Button>
           </Register>
 

@@ -58,6 +58,24 @@ exports.createPages = async ({graphql, actions}) => {
 
   /**
    * **************************************************
+   * Forgot Password routes
+   * **************************************************
+   */
+
+  createPage({
+    path: `/forgot-password/request`,
+    component: path.resolve(`src/Templates/ForgotPassword/RequestPage.js`),
+    context: {...commonContext},
+  });
+
+  createPage({
+    path: `/forgot-password/confirm`,
+    component: path.resolve(`src/Templates/ForgotPassword/ConfirmPage.js`),
+    context: {...commonContext},
+  });
+
+  /**
+   * **************************************************
    * Profile routes
    * **************************************************
    */
