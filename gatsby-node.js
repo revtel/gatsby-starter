@@ -40,6 +40,24 @@ exports.createPages = async ({graphql, actions}) => {
 
   /**
    * **************************************************
+   * Register routes
+   * **************************************************
+   */
+
+  createPage({
+    path: `/register/request`,
+    component: path.resolve(`src/Templates/Register/RequestPage.js`),
+    context: {...commonContext},
+  });
+
+  createPage({
+    path: `/register/confirm`,
+    component: path.resolve(`src/Templates/Register/ConfirmPage.js`),
+    context: {...commonContext},
+  });
+
+  /**
+   * **************************************************
    * Profile routes
    * **************************************************
    */
