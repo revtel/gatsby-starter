@@ -76,6 +76,10 @@ Actions.login = async ({username, password}) => {
 
   const decoded = jwtDecode(resp.token);
 
+  if (decoded.aud !== Config.clientId) {
+    throw new Error('incorrect clientId');
+  }
+
   UserOutlet.update({username: decoded.sub, ...resp, ...decoded});
   if (typeof window !== undefined) {
     window.localStorage.setItem('token', resp.refresh_token);
@@ -91,6 +95,11 @@ Actions.autoLogin = async () => {
       );
 
       const decoded = jwtDecode(resp.token);
+
+      if (decoded.aud !== Config.clientId) {
+        throw new Error('incorrect clientId');
+      }
+
       UserOutlet.update({username: decoded.sub, ...resp, ...decoded});
       return true;
     }

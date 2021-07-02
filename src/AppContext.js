@@ -53,6 +53,7 @@ function Provider(props) {
         await getOutlet('actions').getValue().autoLogin();
       } catch (ex) {
         console.log('autoLogin ex', ex);
+        getOutlet('actions').getValue().logout();
       }
     }
 
