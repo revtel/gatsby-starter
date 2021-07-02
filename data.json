@@ -1,6 +1,7 @@
 {
   "stage": "stg",
   "clientId": "revtel-puzzlego",
+  "apiHost": "https://puzzlego-api-stg.revtel2.com",
   "authHost": "https://auth-stg.revtel-api.com/v4",
   "jstoreHost": "https://jstorage-stg.revtel-api.com/v1",
   "uploadHost": "https://storage-stg.revtel-api.com/v3",
