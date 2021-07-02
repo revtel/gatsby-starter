@@ -192,4 +192,4 @@ const MobileMainMenu = styled.button`
   justify-content: center;
 `;
 
-export default withLoginRequired(AdminLayout);
+export default withLoginRequired(AdminLayout, true);

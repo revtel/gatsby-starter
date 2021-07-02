@@ -19,9 +19,6 @@ function ProfileMenu(props) {
       <Menu.Item key={'orders'} onClick={() => navigate('/profile/orders')}>
         我的訂單
       </Menu.Item>
-      <Menu.Item key={'admin'} onClick={() => navigate('/admin')}>
-        商店管理
-      </Menu.Item>
       <Menu.Item
         key={'logout'}
         onClick={() => {

@@ -27,7 +27,17 @@ const Wrapper = styled.div`
   transform: translateY(-80px);
 `;
 
-function withLoginRequired(NextComp) {
+function isAdmin(user) {
+  const allowed = ['admin', 'management'];
+  for (const grp of allowed) {
+    if (user.grp.indexOf(grp) > -1) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function withLoginRequired(NextComp, admin = false) {
   class Wrapper extends React.Component {
     constructor(props) {
       super(props);
@@ -45,7 +55,9 @@ function withLoginRequired(NextComp) {
       const user = getOutlet('user').getValue();
 
       if (user) {
-        return <NextComp user={user} {...this.props} />;
+        if (!admin || (admin && isAdmin(user))) {
+          return <NextComp user={user} {...this.props} />;
+        }
       }
 
       return <LoginRequired />;
