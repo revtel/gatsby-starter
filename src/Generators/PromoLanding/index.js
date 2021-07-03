@@ -41,7 +41,9 @@ function PromoLanding(props) {
 
         <FlexItemSection
           style={{padding: '100px 40px', backgroundColor: '#eee'}}>
-          <h3 style={{textAlign: 'center'}}>RevtelTech @ 2021</h3>
+          <h3 style={{textAlign: 'center'}}>
+            {nav.title || 'RevtelTech'} @ {new Date().getFullYear()}
+          </h3>
 
           <div className="content">
             <FlexItem>
