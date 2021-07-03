@@ -5,13 +5,14 @@ import {Button} from 'antd';
 import SiteNavBar from './SiteNavBar';
 
 function LoginRequired(props) {
+  const {admin} = props;
   const showLoginModal = useOutletSetter('login-modal');
   return (
     <>
       <SiteNavBar />
       <Wrapper>
         <h1>Login Required</h1>
-        <Button onClick={() => showLoginModal(true)}>LOGIN</Button>
+        <Button onClick={() => showLoginModal({admin})}>LOGIN</Button>
       </Wrapper>
     </>
   );
@@ -54,13 +55,15 @@ function withLoginRequired(NextComp, admin = false) {
     render() {
       const user = getOutlet('user').getValue();
 
+      console.log(user);
+
       if (user) {
         if (!admin || (admin && isAdmin(user))) {
           return <NextComp user={user} {...this.props} />;
         }
       }
 
-      return <LoginRequired />;
+      return <LoginRequired admin={admin} />;
     }
   }
 

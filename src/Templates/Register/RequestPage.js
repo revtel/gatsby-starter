@@ -8,16 +8,19 @@ function RequestPage(props) {
   const [requestResult, setRequestResult] = React.useState(null);
 
   const onFinish = async (values) => {
-    const {username, password} = values;
+    const {username} = values;
 
     try {
       await actions.setLoading(true);
-      console.log(username, password);
-      await actions.delay(1000);
-      setRequestResult(true);
+      if (requestResult === true) {
+        // TODO: resend the validation letter
+      } else {
+        await actions.registerRequest({email: username});
+        setRequestResult(true);
+      }
     } catch (ex) {
       console.log('EX', ex);
-      alert('API failed, login failed');
+      alert('API failed, register request failed');
       setRequestResult(false);
     } finally {
       await actions.setLoading(false);
@@ -76,18 +79,6 @@ function RequestPage(props) {
               },
             ]}>
             <Input disabled={disableInput} />
-          </Form.Item>
-
-          <Form.Item
-            label="密碼"
-            name="password"
-            rules={[
-              {
-                required: true,
-                message: '請輸入密碼!',
-              },
-            ]}>
-            <Input.Password disabled={disableInput} />
           </Form.Item>
 
           <Form.Item style={{textAlign: 'right'}}>

@@ -76,6 +76,18 @@ exports.createPages = async ({graphql, actions}) => {
 
   /**
    * **************************************************
+   * SocialLogin routes
+   * **************************************************
+   */
+
+  createPage({
+    path: `/social-login`,
+    component: path.resolve(`src/Templates/SocialLogin/index.js`),
+    context: {...commonContext},
+  });
+
+  /**
+   * **************************************************
    * Profile routes
    * **************************************************
    */

@@ -6,15 +6,17 @@ import {useOutlet} from 'reconnect.js';
 import {GooglePlusCircle, FacebookCircle} from '@styled-icons/boxicons-logos';
 
 function LoginModal(props) {
-  const [visible, setVisible] = useOutlet('login-modal');
+  const [info, setVisible] = useOutlet('login-modal');
   const [actions] = useOutlet('actions');
+  const visible = !!info;
+  let admin = info && info.admin;
 
   const onFinish = async (values) => {
     const {username, password} = values;
 
     await actions.setLoading(true);
     try {
-      await actions.login({username, password});
+      await actions.login({username, password}, admin);
     } catch (ex) {
       console.log('EX', ex);
       alert('API failed, login failed');
@@ -43,7 +45,7 @@ function LoginModal(props) {
       }}>
       <Wrapper>
         <Center>
-          <h2>登入</h2>
+          <h2>{admin ? 'ADMIN' : ''}登入</h2>
           <Form
             name="basic"
             onFinish={onFinish}
@@ -79,54 +81,59 @@ function LoginModal(props) {
             </Form.Item>
           </Form>
 
-          <Register style={{border: 'none', padding: 0}}>
-            <div>還沒有帳號？</div>
-            <Button
-              type="link"
-              size="small"
-              onClick={async () => {
-                try {
-                  actions.setLoading(true);
-                  navigate('/register/request');
-                  await actions.delay(600);
-                } finally {
-                  setVisible(false);
-                  actions.setLoading(false);
-                }
-              }}>
-              立即註冊
-            </Button>
-          </Register>
+          {!admin && (
+            <>
+              <Register style={{border: 'none', padding: 0}}>
+                <div>還沒有帳號？</div>
+                <Button
+                  type="link"
+                  size="small"
+                  onClick={async () => {
+                    try {
+                      actions.setLoading(true);
+                      navigate('/register/request');
+                      await actions.delay(600);
+                    } finally {
+                      setVisible(false);
+                      actions.setLoading(false);
+                    }
+                  }}>
+                  立即註冊
+                </Button>
+              </Register>
 
-          <Register>
-            <div>忘記您的密碼？</div>
-            <Button
-              type="link"
-              size="small"
-              onClick={async () => {
-                try {
-                  actions.setLoading(true);
-                  navigate('/forgot-password/request');
-                  await actions.delay(600);
-                } finally {
-                  setVisible(false);
-                  actions.setLoading(false);
-                }
-              }}>
-              重新設定
-            </Button>
-          </Register>
+              <Register>
+                <div>忘記您的密碼？</div>
+                <Button
+                  type="link"
+                  size="small"
+                  onClick={async () => {
+                    try {
+                      actions.setLoading(true);
+                      navigate('/forgot-password/request');
+                      await actions.delay(600);
+                    } finally {
+                      setVisible(false);
+                      actions.setLoading(false);
+                    }
+                  }}>
+                  重新設定
+                </Button>
+              </Register>
 
-          <SocialSignin>
-            <p style={{color: 'gray', textAlign: 'center', marginBottom: 8}}>
-              或使用以下方法登入
-            </p>
-            <div className="content">
-              <GoogleBtn />
-              <FacebookBtn />
-              <LineBtn />
-            </div>
-          </SocialSignin>
+              <SocialSignin>
+                <p
+                  style={{color: 'gray', textAlign: 'center', marginBottom: 8}}>
+                  或使用以下方法登入
+                </p>
+                <div className="content">
+                  <GoogleBtn onClick={() => actions.googleRedirect()} />
+                  <FacebookBtn onClick={() => actions.facebookRedirect()} />
+                  <LineBtn />
+                </div>
+              </SocialSignin>
+            </>
+          )}
         </Center>
       </Wrapper>
     </Modal>
