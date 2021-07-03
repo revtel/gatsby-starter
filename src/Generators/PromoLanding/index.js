@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import ReactDelighters from '../../Components/ReactDelighters';
+import SiteNavBar from '../../Components/SiteNavBar';
 import NavBar from './NavBar';
 import HeroBanner from './HeroBanner';
 import FeatureGrid from './FeatureGrid';
@@ -21,7 +22,8 @@ function PromoLanding(props) {
           content={nav.description || 'RevtelTech'}
         />
       </Helmet>
-      <NavBar nav={nav} />
+
+      {(nav.global && <SiteNavBar nav={nav} />) || <NavBar nav={nav} />}
 
       <Wrapper>
         {sections.map((section, idx) => {
