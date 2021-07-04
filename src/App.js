@@ -1,9 +1,11 @@
+import './AppOutlets';
 import {getOutlet} from 'reconnect.js';
 import jwtDecode from 'jwt-decode';
-import './AppOutlets';
 import Config from '../data.json';
 import {req} from './Utils/ApiUtils';
 import * as CustomRenderer from '../custom/renderer';
+import * as UserActions from './Actions/User';
+import * as JStorageActions from './Actions/JStorage';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const Actions = {};
@@ -23,103 +25,6 @@ Actions.setLoading = async (loading) => {
 
 Actions.renderCustomSection = (props) => {
   return CustomRenderer.renderCustomSection(props);
-};
-
-/**
- * **************************************************
- * Login APIs
- * **************************************************
- */
-
-Actions.login = async ({username, password}, admin) => {
-  const path = admin ? '/user/admin/login' : '/user/login';
-  const resp = await req(`${Config.apiHost}${path}`, {
-    method: 'POST',
-    data: {username, password},
-  });
-
-  const decoded = jwtDecode(resp.token);
-
-  if (decoded.aud !== Config.clientId) {
-    throw new Error('incorrect clientId');
-  }
-
-  UserOutlet.update({username: decoded.sub, ...resp, ...decoded});
-  if (typeof window !== undefined) {
-    window.localStorage.setItem('token', resp.refresh_token);
-  }
-};
-
-Actions.autoLogin = async ({refresh} = {}) => {
-  if (typeof window !== undefined) {
-    const token = refresh || window.localStorage.getItem('token');
-    if (token) {
-      const resp = await req(
-        `${Config.authHost}/management/access?refresh_token=${token}`,
-      );
-
-      const decoded = jwtDecode(resp.token);
-
-      if (decoded.aud !== Config.clientId) {
-        throw new Error('incorrect clientId');
-      }
-
-      UserOutlet.update({username: decoded.sub, ...resp, ...decoded});
-
-      // because we don't get refresh_token from localStorage,
-      // so we have to save it explicitly
-      if (refresh) {
-        window.localStorage.setItem('token', refresh);
-      }
-
-      return true;
-    }
-  }
-  return false;
-};
-
-Actions.logout = async () => {
-  await delay(600);
-  UserOutlet.update(null);
-  if (typeof window !== undefined) {
-    window.localStorage.removeItem('token');
-  }
-};
-
-Actions.registerRequest = async ({email}) => {
-  return req(`${Config.apiHost}/user/register/request`, {
-    method: 'POST',
-    data: {email},
-  });
-};
-
-Actions.registerConfirm = async ({password, access_token}) => {
-  return req(`${Config.apiHost}/user/register/confirm`, {
-    method: 'POST',
-    data: {password, access_token},
-  });
-};
-
-Actions.forgotPasswordRequest = async ({email}) => {
-  return req(`${Config.apiHost}/user/forgot-password/request`, {
-    method: 'POST',
-    data: {email},
-  });
-};
-
-Actions.forgotPasswordConfirm = async ({new_password, access_token}) => {
-  return req(`${Config.apiHost}/user/forgot-password/confirm`, {
-    method: 'POST',
-    data: {new_password, access_token},
-  });
-};
-
-Actions.googleRedirect = () => {
-  window.location.href = `${Config.apiHost}/google/redirect`;
-};
-
-Actions.facebookRedirect = () => {
-  window.location.href = `${Config.apiHost}/facebook/redirect`;
 };
 
 /**
@@ -340,77 +245,6 @@ Actions.fetchAllUploads = async () => {
 
 /**
  * **************************************************
- * JStorage APIs
- * **************************************************
- */
-
-Actions.fetchDocuments = async (
-  collection,
-  query = {},
-  sorting = [],
-  paging = {offset: 0, limit: 100},
-) => {
-  return await req(
-    `${Config.jstoreHost}/document/${collection}/find?token=${
-      getOutlet('user').getValue().token
-    }`,
-    {
-      method: 'POST',
-      data: {query, sorting, paging},
-    },
-  );
-};
-
-Actions.fetchOneDocument = async (collection, query = {}) => {
-  return await req(
-    `${Config.jstoreHost}/document/${collection}/find-one?token=${
-      getOutlet('user').getValue().token
-    }`,
-    {
-      method: 'POST',
-      data: {query},
-    },
-  );
-};
-
-Actions.createDocument = async (collection, data) => {
-  return await req(
-    `${Config.jstoreHost}/document/${collection}/create?token=${
-      getOutlet('user').getValue().token
-    }`,
-    {
-      method: 'POST',
-      data: {data},
-    },
-  );
-};
-
-Actions.updateDocument = async (collection, query, data) => {
-  return await req(
-    `${Config.jstoreHost}/document/${collection}/update?token=${
-      getOutlet('user').getValue().token
-    }`,
-    {
-      method: 'POST',
-      data: {query, data},
-    },
-  );
-};
-
-Actions.bulkWriteDocuments = async (collection, operations) => {
-  return await req(
-    `${Config.jstoreHost}/document/${collection}/bulk-write?token=${
-      getOutlet('user').getValue().token
-    }`,
-    {
-      method: 'POST',
-      data: {actions: operations},
-    },
-  );
-};
-
-/**
- * **************************************************
  * Project Specific APIs
  * **************************************************
  */
@@ -434,5 +268,10 @@ Actions.fetchRecordById = async (id) => {
   };
 };
 
-ActionOutlet.update(Actions);
+ActionOutlet.update({
+  ...UserActions,
+  ...JStorageActions,
+  ...Actions,
+});
+
 console.log('App initialized');
