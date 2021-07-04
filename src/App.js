@@ -1,54 +1,17 @@
-import {getNewOutlet, getOutlet} from 'reconnect.js';
+import {getOutlet} from 'reconnect.js';
 import jwtDecode from 'jwt-decode';
+import './AppOutlets';
 import Config from '../data.json';
 import {req} from './Utils/ApiUtils';
-import {buildCatDisplayMap} from './Utils/buildCatDisplayMap';
 import * as CustomRenderer from '../custom/renderer';
-import * as CustomCategories from '../custom/categories';
-import * as CustomSortOptions from '../custom/sortOptions';
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const Actions = {};
 
-const UserOutlet = getNewOutlet('user', null, {autoDelete: false});
-const LoadingOutlet = getNewOutlet('loading', null, {autoDelete: false});
-const ActionOutlet = getNewOutlet('actions', null, {autoDelete: false});
-const LoginModalOutlet = getNewOutlet('login-modal', null, {
-  autoDelete: false,
-});
-const ContactModalOutlet = getNewOutlet('contact-modal', null, {
-  autoDelete: false,
-});
-const CategoriesOutlet = getNewOutlet('categories', null, {
-  autoDelete: false,
-});
-const CategoryDisplayOutlet = getNewOutlet('categoryDisplayMap', null, {
-  autoDelete: false,
-});
-const SortOptionsOutlet = getNewOutlet('sortOptions', null, {
-  autoDelete: false,
-});
-const CartOutlet = getNewOutlet('cart', null, {autoDelete: false});
-
-const categories = CustomCategories.getCategories();
-const categoryDisplayMap = buildCatDisplayMap(categories);
-const sortOptions = CustomSortOptions.getSortOptions();
-
-LoadingOutlet.update(false);
-LoginModalOutlet.update(false);
-ContactModalOutlet.update(false);
-CategoriesOutlet.update(categories);
-CategoryDisplayOutlet.update(categoryDisplayMap);
-SortOptionsOutlet.update(sortOptions);
-CartOutlet.update({
-  items: [],
-  config: {
-    name: 'whitedog',
-    addr: 'office address',
-    mobile: '0911222333',
-    email: 'whitedogg13@gmail.com',
-  },
-});
+const UserOutlet = getOutlet('user');
+const LoadingOutlet = getOutlet('loading');
+const CartOutlet = getOutlet('cart');
+const ActionOutlet = getOutlet('actions');
 
 Actions.delay = delay;
 
