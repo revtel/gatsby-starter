@@ -94,7 +94,7 @@ async function forgotPasswordConfirm({new_password, access_token}) {
 
 async function resetPassword({old_password, new_password}, admin) {
   const path = admin ? '/user/admin/password/reset' : '/user/password/reset';
-  return req(`${Config.apiHost}${path}?token=${UserOutlet.getValue()}`, {
+  return req(`${Config.apiHost}${path}?token=${UserOutlet.getValue().token}`, {
     method: 'POST',
     data: {old_password, new_password},
   });
