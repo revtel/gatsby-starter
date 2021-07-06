@@ -1,7 +1,7 @@
 import {getOutlet} from 'reconnect.js';
 import jwtDecode from 'jwt-decode';
 import Config from '../../data.json';
-import {req} from '../Utils/ApiUtils';
+import {req} from '../Utils/ApiUtil';
 
 const UserOutlet = getOutlet('user');
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

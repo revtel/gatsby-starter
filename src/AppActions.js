@@ -1,6 +1,6 @@
 import {getOutlet} from 'reconnect.js';
 import Config from '../data.json';
-import {req} from './Utils/ApiUtils';
+import {req} from './Utils/ApiUtil';
 import * as CustomRenderer from '../custom/renderer';
 
 const UserOutlet = getOutlet('user');

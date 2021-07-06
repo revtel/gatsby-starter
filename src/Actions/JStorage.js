@@ -1,6 +1,6 @@
 import {getOutlet} from 'reconnect.js';
 import Config from '../../data.json';
-import {req} from '../Utils/ApiUtils';
+import {req} from '../Utils/ApiUtil';
 
 const UserOutlet = getOutlet('user');
 
