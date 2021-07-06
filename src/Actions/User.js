@@ -77,10 +77,11 @@ async function registerConfirm({password, access_token}) {
   });
 }
 
-async function forgotPasswordRequest({email}) {
+async function forgotPasswordRequest({username}) {
   return req(`${Config.apiHost}/user/forgot-password/request`, {
     method: 'POST',
-    data: {email},
+    // for normal user, change the "email" according to your project's user identifier
+    data: {email: username},
   });
 }
 

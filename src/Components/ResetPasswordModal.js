@@ -68,7 +68,7 @@ function ResetPasswordModal(props) {
                   message: '舊密碼不可為空',
                 },
               ]}>
-              <Input />
+              <Input.Password />
             </Form.Item>
 
             <Form.Item

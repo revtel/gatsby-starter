@@ -2,24 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import {Button, Input, Form} from 'antd';
 import {useOutlet} from 'reconnect.js';
+import * as AppActions from '../../AppActions';
+import * as UserActions from '../../Actions/User';
 
 function RequestPage(props) {
-  const [actions] = useOutlet('actions');
   const [requestResult, setRequestResult] = React.useState(null);
 
   const onFinish = async (values) => {
     const {username} = values;
 
     try {
-      await actions.setLoading(true);
-      console.log(username);
-      await actions.delay(1000);
+      await AppActions.setLoading(true);
+      await UserActions.forgotPasswordRequest({username});
       setRequestResult(true);
     } catch (ex) {
       console.log('EX', ex);
       setRequestResult(false);
     } finally {
-      await actions.setLoading(false);
+      await AppActions.setLoading(false);
     }
   };
 
@@ -60,29 +60,31 @@ function RequestPage(props) {
           </div>
         )}
 
-        <Form
-          layout="vertical"
-          name="register"
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}>
-          <Form.Item
-            label="EMAIL"
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: '請輸入EMAIL!',
-              },
-            ]}>
-            <Input disabled={disableInput} />
-          </Form.Item>
+        {requestResult !== true && (
+          <Form
+            layout="vertical"
+            name="register"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}>
+            <Form.Item
+              label="EMAIL"
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: '請輸入EMAIL!',
+                },
+              ]}>
+              <Input disabled={disableInput} />
+            </Form.Item>
 
-          <Form.Item style={{textAlign: 'right'}}>
-            <Button type="primary" htmlType="submit">
-              {requestResult === true ? '重傳認證信' : '送出請求'}
-            </Button>
-          </Form.Item>
-        </Form>
+            <Form.Item style={{textAlign: 'right'}}>
+              <Button type="primary" htmlType="submit">
+                {requestResult === true ? '重傳認證信' : '送出請求'}
+              </Button>
+            </Form.Item>
+          </Form>
+        )}
       </div>
     </Wrapper>
   );

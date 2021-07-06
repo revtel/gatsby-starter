@@ -1,28 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
+import {navigate} from 'gatsby';
 import {Button, Input, Form} from 'antd';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import queryString from 'query-string';
+import * as AppActions from '../../AppActions';
+import * as UserActions from '../../Actions/User';
 
 function RequestPage(props) {
+  const [user] = useOutlet('user');
   const showLoginModal = useOutletSetter('login-modal');
-  const [actions] = useOutlet('actions');
   const [requestResult, setRequestResult] = React.useState(null);
-  const {token} = queryString.parse(props.location.search);
+  const {access_token} = queryString.parse(props.location.search);
+
+  React.useEffect(() => {
+    if (user) {
+      navigate('/profile');
+    }
+  }, [user]);
 
   const onFinish = async (values) => {
     const {password1, password2} = values;
 
+    if (!password1) {
+      alert('密碼不可為空');
+      return;
+    }
+
+    if (password1 !== password2) {
+      alert('兩次所輸入的密碼不相符');
+      return;
+    }
+
     try {
-      await actions.setLoading(true);
-      console.log(password1, password2, token);
-      await actions.delay(1000);
+      await AppActions.setLoading(true);
+      await UserActions.forgotPasswordConfirm({
+        new_password: password1,
+        access_token,
+      });
       setRequestResult(true);
     } catch (ex) {
       console.log('EX', ex);
       setRequestResult(false);
     } finally {
-      await actions.setLoading(false);
+      await AppActions.setLoading(false);
     }
   };
 
@@ -73,19 +94,19 @@ function RequestPage(props) {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}>
             <Form.Item
-              label="密碼"
+              label="新密碼"
               name="password1"
               rules={[
                 {
                   required: true,
-                  message: '請輸入密碼!',
+                  message: '請輸入新密碼!',
                 },
               ]}>
               <Input.Password disabled={disableInput} />
             </Form.Item>
 
             <Form.Item
-              label="密碼"
+              label="新密碼再次輸入"
               name="password2"
               rules={[
                 {
