@@ -15,7 +15,9 @@ function SiteNavBar(props) {
       hasBorder={passBreakpoint}
       bgColor={passBreakpoint ? 'white' : 'transparent'}
       style={{height: 64}}>
-      <h2>RevtelTech</h2>
+      <h2 style={{cursor: 'pointer'}} onClick={() => navigate('/')}>
+        RevtelTech
+      </h2>
       <Button type="text">
         <Link to="/products">商品</Link>
       </Button>
