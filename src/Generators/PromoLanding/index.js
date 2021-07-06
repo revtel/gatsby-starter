@@ -9,6 +9,7 @@ import FeatureGrid from './FeatureGrid';
 import RowBanner from './RowBanner';
 import ArticleSection from './ArticleSection';
 import Fab from './Fab';
+import * as AppActions from '../../AppActions';
 
 function PromoLanding(props) {
   const {nav, contact, sections, fab} = props.pageContext;
@@ -35,6 +36,12 @@ function PromoLanding(props) {
             return <RowBanner key={idx} row={section} />;
           } else if (section.type === 'article') {
             return <ArticleSection key={idx} id={section.id} />;
+          } else if (section.type === 'custom') {
+            return AppActions.renderCustomSection({
+              route: props.location.pathname,
+              sectionId: section.id,
+              params: section,
+            });
           }
           return null;
         })}
