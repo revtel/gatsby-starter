@@ -75,4 +75,4 @@ export {
   createDocument,
   updateDocument,
   bulkWriteDocuments,
-}
+};

@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Layout, Button} from 'antd';
+import {Layout} from 'antd';
 import {navigate} from 'gatsby';
-import {useOutlet} from 'reconnect.js';
+import {useOutlet, useOutletSetter} from 'reconnect.js';
 import {withLoginRequired} from './LoginRequired';
+import * as UserActions from '../Actions/User';
 
 const SiteInfo = {
   icon: '/images/revicon_512.png',
@@ -18,16 +19,30 @@ const Routes = [
   {name: '文章', path: '/admin/articles'},
   {name: '圖片', path: '/admin/images'},
   {name: '設定', path: '/admin/settings'},
+  {name: '重設密碼', path: 'reset-password'},
+  {name: '登出', path: 'logout'},
 ];
 
 function AdminLayout(props) {
   const {children, location} = props;
-  const [actions] = useOutlet('actions');
   const [dimension] = useOutlet('dimension');
+  const showResetPasswordModal = useOutletSetter('reset-password-modal');
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
   const mobile = !dimension.rwd || dimension.rwd === 'mobile';
 
   const getMenuProps = (path) => {
+    if (path === 'reset-password') {
+      return {
+        onClick: () => showResetPasswordModal({admin: true}),
+      };
+    } else if (path === 'logout') {
+      return {
+        onClick: async () => {
+          await UserActions.logout();
+          navigate('/');
+        },
+      };
+    }
     return {
       selected: path === location.pathname,
       onClick: () => navigate(path),
@@ -68,32 +83,6 @@ function AdminLayout(props) {
             {name}
           </MenuItem>
         ))}
-
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            padding: 30,
-            width: 200,
-            display: 'flex',
-            flexDirection: 'column',
-          }}>
-          <Button
-            type="text"
-            onClick={async () => {
-              await actions.logout();
-              navigate('/');
-            }}
-            style={{
-              width: '100%',
-              boxShadow:
-                '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-              marginBottom: 10,
-            }}>
-            登出
-          </Button>
-        </div>
       </Layout.Sider>
 
       {mobile && (

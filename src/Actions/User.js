@@ -10,7 +10,9 @@ async function login({username, password}, admin) {
   const path = admin ? '/user/admin/login' : '/user/login';
   const resp = await req(`${Config.apiHost}${path}`, {
     method: 'POST',
-    data: {username, password},
+    // for admin, we always use "username" as the identifier,
+    // for normal user, change the "email" according to your project's user identifier
+    data: admin ? {username, password} : {email: username, password},
   });
 
   const decoded = jwtDecode(resp.token);
@@ -38,7 +40,7 @@ async function autoLogin({refresh} = {}) {
     const token = refresh || window.localStorage.getItem('token');
     if (token) {
       const resp = await req(
-        `${Config.authHost}/management/access?refresh_token=${token}`,
+        `${Config.authHost}/jwt/access?refresh_token=${token}`,
       );
 
       const decoded = jwtDecode(resp.token);
@@ -89,6 +91,14 @@ async function forgotPasswordConfirm({new_password, access_token}) {
   });
 }
 
+async function resetPassword({old_password, new_password}, admin) {
+  const path = admin ? '/user/admin/password/reset' : '/user/password/reset';
+  return req(`${Config.apiHost}${path}`, {
+    method: 'POST',
+    data: {old_password, new_password},
+  });
+}
+
 async function googleRedirect() {
   window.location.href = `${Config.apiHost}/google/redirect`;
 }
@@ -103,6 +113,7 @@ export {
   autoLogin,
   registerRequest,
   registerConfirm,
+  resetPassword,
   forgotPasswordRequest,
   forgotPasswordConfirm,
   googleRedirect,

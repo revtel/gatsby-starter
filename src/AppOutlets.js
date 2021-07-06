@@ -9,18 +9,23 @@ const sortOptions = CustomSortOptions.getSortOptions();
 
 getNewOutlet('user', null, {autoDelete: false});
 getNewOutlet('loading', false, {autoDelete: false});
-getNewOutlet('login-modal', false, { autoDelete: false});
-getNewOutlet('contact-modal', false, { autoDelete: false});
+getNewOutlet('login-modal', false, {autoDelete: false});
+getNewOutlet('contact-modal', false, {autoDelete: false});
+getNewOutlet('reset-password-modal', false, {autoDelete: false});
 getNewOutlet('categories', categories, {autoDelete: false});
 getNewOutlet('categoryDisplayMap', categoryDisplayMap, {autoDelete: false});
-getNewOutlet('sortOptions', sortOptions, { autoDelete: false});
-getNewOutlet('cart', {
-  items: [],
-  config: {
-    name: 'whitedog',
-    addr: 'office address',
-    mobile: '0911222333',
-    email: 'whitedogg13@gmail.com',
+getNewOutlet('sortOptions', sortOptions, {autoDelete: false});
+getNewOutlet(
+  'cart',
+  {
+    items: [],
+    config: {
+      name: 'whitedog',
+      addr: 'office address',
+      mobile: '0911222333',
+      email: 'whitedogg13@gmail.com',
+    },
   },
-}, {autoDelete: false});
+  {autoDelete: false},
+);
 getNewOutlet('actions', null, {autoDelete: false});

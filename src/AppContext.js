@@ -4,6 +4,7 @@ import './App';
 import ActivityIndicator from './Components/ActivityIndicator';
 import LoginModal from './Components/LoginModal';
 import ContactModal from './Components/ContactModal';
+import ResetPasswordModal from './Components/ResetPasswordModal';
 
 const Dimension = getNewOutlet(
   'dimension',
@@ -68,6 +69,7 @@ function Provider(props) {
 
       <LoginModal />
       <ContactModal />
+      <ResetPasswordModal />
       <ActivityIndicator />
     </>
   );

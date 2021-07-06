@@ -1,10 +1,11 @@
 import React from 'react';
 import {navigate} from 'gatsby';
-import {useOutlet} from 'reconnect.js';
+import {useOutlet, useOutletSetter} from 'reconnect.js';
 import {Menu} from 'antd';
 
 function ProfileMenu(props) {
   const [actions] = useOutlet('actions');
+  const showResetPasswordModal = useOutletSetter('reset-password-modal');
   const {activePath} = props;
   const selectedKeys = [activePath ? activePath : 'info'];
 
@@ -19,6 +20,13 @@ function ProfileMenu(props) {
       <Menu.Item key={'orders'} onClick={() => navigate('/profile/orders')}>
         我的訂單
       </Menu.Item>
+
+      <Menu.Item
+        key={'reset-password'}
+        onClick={() => showResetPasswordModal({admin: false})}>
+        重設密碼
+      </Menu.Item>
+
       <Menu.Item
         key={'logout'}
         onClick={() => {

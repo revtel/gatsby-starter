@@ -30,6 +30,7 @@ const Wrapper = styled.div`
 
 function isAdmin(user) {
   const allowed = ['admin', 'management'];
+  console.log('isAdmin', user);
   for (const grp of allowed) {
     if (user.grp.indexOf(grp) > -1) {
       return true;
