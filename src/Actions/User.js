@@ -101,10 +101,12 @@ async function resetPassword({old_password, new_password}, admin) {
 }
 
 async function googleRedirect() {
+  window.localStorage.setItem('nextRoute', window.location.pathname);
   window.location.href = `${Config.apiHost}/google/redirect`;
 }
 
 async function facebookRedirect() {
+  window.localStorage.setItem('nextRoute', window.location.pathname);
   window.location.href = `${Config.apiHost}/facebook/redirect`;
 }
 

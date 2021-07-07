@@ -4,26 +4,27 @@ import {navigate} from 'gatsby';
 import {Modal, Button, Input, Form} from 'antd';
 import {useOutlet} from 'reconnect.js';
 import {GooglePlusCircle, FacebookCircle} from '@styled-icons/boxicons-logos';
+import * as AppActions from '../AppActions';
+import * as UserActions from '../Actions/User';
 
 function LoginModal(props) {
   const [info, setVisible] = useOutlet('login-modal');
-  const [actions] = useOutlet('actions');
   const visible = !!info;
   let admin = info && info.admin;
 
   const onFinish = async (values) => {
     const {username, password} = values;
 
-    await actions.setLoading(true);
+    await AppActions.setLoading(true);
     try {
-      await actions.login({username, password}, admin);
+      await UserActions.login({username, password}, admin);
     } catch (ex) {
       console.log('EX', ex);
       alert('API failed, login failed');
     } finally {
       setVisible(false);
     }
-    await actions.setLoading(false);
+    await AppActions.setLoading(false);
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -90,12 +91,12 @@ function LoginModal(props) {
                   size="small"
                   onClick={async () => {
                     try {
-                      actions.setLoading(true);
+                      AppActions.setLoading(true);
                       navigate('/register/request');
-                      await actions.delay(600);
+                      await AppActions.delay(600);
                     } finally {
                       setVisible(false);
-                      actions.setLoading(false);
+                      AppActions.setLoading(false);
                     }
                   }}>
                   立即註冊
@@ -109,12 +110,12 @@ function LoginModal(props) {
                   size="small"
                   onClick={async () => {
                     try {
-                      actions.setLoading(true);
+                      AppActions.setLoading(true);
                       navigate('/forgot-password/request');
-                      await actions.delay(600);
+                      await AppActions.delay(600);
                     } finally {
                       setVisible(false);
-                      actions.setLoading(false);
+                      AppActions.setLoading(false);
                     }
                   }}>
                   重新設定
@@ -127,8 +128,8 @@ function LoginModal(props) {
                   或使用以下方法登入
                 </p>
                 <div className="content">
-                  <GoogleBtn onClick={() => actions.googleRedirect()} />
-                  <FacebookBtn onClick={() => actions.facebookRedirect()} />
+                  <GoogleBtn onClick={() => UserActions.googleRedirect()} />
+                  <FacebookBtn onClick={() => UserActions.facebookRedirect()} />
                   <LineBtn />
                 </div>
               </SocialSignin>
