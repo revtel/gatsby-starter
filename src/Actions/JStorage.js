@@ -9,23 +9,25 @@ async function fetchDocuments(
   query = {},
   sorting = [],
   paging = {offset: 0, limit: 100},
+  projection = null,
 ) {
   return await req(
-    `${Config.jstoreHost}/document/${collection}/find?token=${
-      UserOutlet.getValue().token
-    }`,
+    _appendToken(`${Config.jstoreHost}/document/${collection}/find`),
     {
       method: 'POST',
-      data: {query, sorting, paging},
+      data: {
+        query,
+        sorting,
+        ...(paging ? {paging} : {}),
+        ...(projection ? {projection} : {}),
+      },
     },
   );
 }
 
 async function fetchOneDocument(collection, query = {}) {
   return await req(
-    `${Config.jstoreHost}/document/${collection}/find-one?token=${
-      UserOutlet.getValue().token
-    }`,
+    _appendToken(`${Config.jstoreHost}/document/${collection}/find-one`),
     {
       method: 'POST',
       data: {query},
@@ -35,9 +37,7 @@ async function fetchOneDocument(collection, query = {}) {
 
 async function createDocument(collection, data) {
   return await req(
-    `${Config.jstoreHost}/document/${collection}/create?token=${
-      UserOutlet.getValue().token
-    }`,
+    _appendToken(`${Config.jstoreHost}/document/${collection}/create`),
     {
       method: 'POST',
       data: {data},
@@ -47,9 +47,7 @@ async function createDocument(collection, data) {
 
 async function updateDocument(collection, query, data) {
   return await req(
-    `${Config.jstoreHost}/document/${collection}/update?token=${
-      getOutlet('user').getValue().token
-    }`,
+    _appendToken(`${Config.jstoreHost}/document/${collection}/update`),
     {
       method: 'POST',
       data: {query, data},
@@ -59,14 +57,34 @@ async function updateDocument(collection, query, data) {
 
 async function bulkWriteDocuments(collection, operations) {
   return await req(
-    `${Config.jstoreHost}/document/${collection}/bulk-write?token=${
-      getOutlet('user').getValue().token
-    }`,
+    _appendToken(`${Config.jstoreHost}/document/${collection}/bulk-write`),
     {
       method: 'POST',
       data: {actions: operations},
     },
   );
+}
+
+/**
+ * **************************************************
+ * Helpers
+ * **************************************************
+ */
+
+function _appendToken(url) {
+  const token = UserOutlet.getValue()?.token;
+  let separator = '?';
+
+  // TODO: find better way for this
+  if (url.indexOf('?') > -1) {
+    separator = '&';
+  }
+
+  if (token) {
+    return url + `${separator}token=${token}`;
+  } else {
+    return url + `${separator}client_id=${Config.clientId}`;
+  }
 }
 
 export {
