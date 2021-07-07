@@ -11,9 +11,9 @@ function ResetPasswordModal(props) {
   let admin = info && info.admin;
 
   const onFinish = async (values) => {
-    const {old_password, new_password, new_password1} = values;
+    const {org_password, new_password, new_password1} = values;
 
-    if (!old_password) {
+    if (!org_password) {
       alert('不可為空');
       return;
     }
@@ -25,7 +25,7 @@ function ResetPasswordModal(props) {
 
     await AppActions.setLoading(true);
     try {
-      await UserActions.resetPassword({old_password, new_password}, admin);
+      await UserActions.resetPassword({org_password, new_password}, admin);
     } catch (ex) {
       console.warn('EX', ex);
       alert('API failed');
@@ -60,12 +60,12 @@ function ResetPasswordModal(props) {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}>
             <Form.Item
-              label="舊密碼"
-              name="old_password"
+              label="原密碼"
+              name="org_password"
               rules={[
                 {
                   required: true,
-                  message: '舊密碼不可為空',
+                  message: '原密碼不可為空',
                 },
               ]}>
               <Input.Password />
