@@ -7,8 +7,13 @@ const UserOutlet = getOutlet('user');
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function login({username, password}, admin) {
-  const path = admin ? '/user/admin/login' : '/user/login';
-  const resp = await req(`${Config.apiHost}${path}`, {
+  let endpoint = admin
+    ? `${Config.apiHost}/user/admin/login`
+    : `${Config.apiHost}/user/login`;
+  if (admin && Config.management) {
+    endpoint = `${Config.authHost}/management/sign-in`;
+  }
+  const resp = await req(endpoint, {
     method: 'POST',
     // for admin, we always use "username" as the identifier,
     // for normal user, change the "email" according to your project's user identifier
@@ -23,7 +28,10 @@ async function login({username, password}, admin) {
 
   UserOutlet.update({username: decoded.sub, ...resp, ...decoded});
   if (typeof window !== undefined) {
-    window.localStorage.setItem('token', resp.refresh);
+    window.localStorage.setItem(
+      'token',
+      admin && Config.management ? resp.refresh_token : resp.refresh,
+    );
   }
 }
 
