@@ -5,10 +5,11 @@ import {useOutlet} from 'reconnect.js';
 import qs from 'query-string';
 import {PageHeader} from 'antd';
 import RichTextPreview from '../../Components/RichTextPreview';
+import * as AppActions from '../../AppActions';
+import * as JStorageActions from '../../Actions/JStorage';
 
 function ArticleDetail(props) {
   const prefixPath = '/article';
-  const [actions] = useOutlet('actions');
   const [dimension] = useOutlet('dimension');
   const [article, setArticle] = React.useState(null);
   const params = qs.parse(props.location.search);
@@ -18,19 +19,21 @@ function ArticleDetail(props) {
   React.useEffect(() => {
     async function fetchData() {
       try {
-        actions.setLoading(true);
-        setArticle(await actions.clientFetchArticleById(id));
+        AppActions.setLoading(true);
+        setArticle(
+          await JStorageActions.fetchOneDocument('Article_Default', {id}),
+        );
       } catch (ex) {
       } finally {
-        actions.setLoading(false);
+        AppActions.setLoading(false);
       }
     }
 
     fetchData();
-  }, [actions, id]);
+  }, [id]);
 
   function renderCustomSection(sectionId) {
-    return actions.renderCustomSection({
+    return AppActions.renderCustomSection({
       route: prefixPath,
       sectionId,
       params,

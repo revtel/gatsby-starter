@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import {navigate} from 'gatsby';
 import {useOutlet} from 'reconnect.js';
 import ArticleItem from './ArticleItem';
+import * as AppActions from '../../AppActions';
+import * as JStorageActions from '../../Actions/JStorage';
 
 function ArticleList(props) {
   const prefixPath = '/articles';
-  const [actions] = useOutlet('actions');
   const [articles, setArticles] = React.useState([]);
   const [dimension] = useOutlet('dimension');
   const mobile = dimension.innerWidth < 900;
@@ -14,20 +15,32 @@ function ArticleList(props) {
   React.useEffect(() => {
     async function fetchData() {
       try {
-        actions.setLoading(true);
-        setArticles(await actions.clientFetchArticles());
+        AppActions.setLoading(true);
+        setArticles(
+          await JStorageActions.fetchDocuments(
+            'Article_Default',
+            {
+              label: 'blog',
+            },
+            ['-created'],
+            null,
+            {
+              content: 0,
+            },
+          ),
+        );
       } catch (ex) {
         console.warn(ex);
       } finally {
-        actions.setLoading(false);
+        AppActions.setLoading(false);
       }
     }
 
     fetchData();
-  }, [actions]);
+  }, []);
 
   function renderCustomSection(sectionId) {
-    return actions.renderCustomSection({
+    return AppActions.renderCustomSection({
       route: prefixPath,
       sectionId,
     });
