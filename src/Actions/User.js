@@ -4,7 +4,24 @@ import Config from '../../data.json';
 import {req} from '../Utils/ApiUtil';
 
 const UserOutlet = getOutlet('user');
+const ApiHookOutlet = getOutlet('ApiUtil');
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+ApiHookOutlet.update({
+  ...ApiHookOutlet.getValue(),
+  onError: async (url, payload, resp) => {
+    if (url.indexOf('token=') > -1 && resp.status === 401) {
+      console.log('onError try autoLogin');
+      const result = await autoLogin();
+      if (result) {
+        console.log('onError autoLogin success, fetch resource again', result);
+        return req(url, payload, {ignoreOnErrorHook: true});
+      }
+      console.log('onError autoLogin failure, throw original error', result);
+      throw resp;
+    }
+  },
+});
 
 async function login({username, password}, admin) {
   let endpoint = admin

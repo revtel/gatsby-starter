@@ -29,3 +29,4 @@ getNewOutlet(
   {autoDelete: false},
 );
 getNewOutlet('actions', null, {autoDelete: false});
+getNewOutlet('ApiUtil', {}, {autoDelete: false});

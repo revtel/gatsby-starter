@@ -1,8 +1,17 @@
+import {getOutlet, hasOutlet} from 'reconnect.js';
+
+const outletName = 'ApiUtil';
+
 async function req(
   url,
   {method = 'GET', headers = {}, data, ...restOptions} = {},
+  options = {},
 ) {
-  const resp = await fetch(url, {
+  const {onJson, onError} =
+    (hasOutlet(outletName) && getOutlet(outletName).getValue()) || {};
+  const {ignoreOnErrorHook} = options;
+
+  const fetchPayload = {
     method,
     headers: {
       'Content-Type': 'application/json',
@@ -10,15 +19,30 @@ async function req(
     },
     ...(method !== 'GET' && data ? {body: JSON.stringify(data)} : {}),
     ...restOptions,
-  });
+  };
+
+  const resp = await fetch(url, fetchPayload);
 
   if (200 <= resp.status && resp.status < 400) {
     try {
-      return await resp.json();
+      const jsonResp = await resp.json();
+
+      if (typeof onJson === 'function') {
+        return onJson(url, fetchPayload, jsonResp);
+      } else {
+        return jsonResp;
+      }
     } catch (ex) {
       // bypass
     }
+
+    // we cannot perform resp.json(), but we still consider it is a success fetch
+    // without any payload
     return null;
+  }
+
+  if (!ignoreOnErrorHook && typeof onError === 'function') {
+    return onError(url, fetchPayload, resp);
   }
 
   const err = {status: resp.status};
@@ -32,12 +56,4 @@ async function req(
   throw err;
 }
 
-// TODO: show warn or alert based on env configurations
-function onApiError(ex) {
-  console.warn(ex);
-  const errMsg = `API Fail: ${JSON.stringify(ex, null, 2)}`;
-  console.warn(errMsg);
-  alert(errMsg);
-}
-
-export {req, onApiError};
+export {req};

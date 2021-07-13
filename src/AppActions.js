@@ -6,6 +6,15 @@ import * as CustomRenderer from '../custom/renderer';
 const UserOutlet = getOutlet('user');
 const LoadingOutlet = getOutlet('loading');
 const CartOutlet = getOutlet('cart');
+const ApiHookOutlet = getOutlet('ApiUtil');
+
+ApiHookOutlet.update({
+  ...ApiHookOutlet.getValue(),
+  onJson: (url, payload, jsonResp) => {
+    // a sample hook, you can do whatever you want here
+    return jsonResp;
+  },
+});
 
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
