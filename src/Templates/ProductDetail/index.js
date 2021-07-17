@@ -5,6 +5,7 @@ import {Tabs, Button, Select, Checkbox} from 'antd';
 import {useOutlet} from 'reconnect.js';
 import qs from 'query-string';
 import RichTextPreview from '../../Components/RichTextPreview';
+import ProductVariants from '../../Components/ProductVariants';
 import BreadcrumbBar from '../../Templates/ProductList/BreadcrumbBar';
 import {mapLineBreak} from '../../Utils/TextUtil';
 
@@ -13,6 +14,7 @@ function ProductDetail(props) {
   const [activeSummaryTab, setActiveSummaryTab] = React.useState('intro');
   const [product, setProduct] = React.useState(null);
   const [quantity, setQuantity] = React.useState(1);
+  const [currPrice, setCurrPrice] = React.useState(null);
   const [article, setArticle] = React.useState(null);
   const [imgIdx, setImgIdx] = React.useState(0);
   const [actions] = useOutlet('actions');
@@ -43,6 +45,10 @@ function ProductDetail(props) {
 
     fetchData();
   }, [actions, id]);
+
+  const onNextConfig = React.useCallback((nextConfig) => {
+    setCurrPrice(nextConfig.amount);
+  }, []);
 
   function renderCustomSection(sectionId, data) {
     return actions.renderCustomSection({
@@ -151,55 +157,12 @@ function ProductDetail(props) {
 
             <LineSeperator />
 
-            <InputField>
-              <label>數量</label>
-              <Select
-                defaultValue={quantity}
-                value={quantity}
-                style={{width: 120}}
-                onChange={setQuantity}>
-                <Select.Option value={1}>1</Select.Option>
-                <Select.Option value={2}>2</Select.Option>
-                <Select.Option value={3}>3</Select.Option>
-                <Select.Option value={4}>4</Select.Option>
-                <Select.Option value={5}>5</Select.Option>
-              </Select>
-            </InputField>
-
-            <InputField>
-              <label>顏色</label>
-              <Select
-                defaultValue="white"
-                style={{width: 120}}
-                onChange={console.log}>
-                <Select.Option value="white">白色</Select.Option>
-                <Select.Option value="black">黑色</Select.Option>
-                <Select.Option value="red">紅色</Select.Option>
-              </Select>
-            </InputField>
-
-            <InputField>
-              <Checkbox checked={false} onChange={console.log}>
-                特殊選項
-              </Checkbox>
-            </InputField>
-
-            <InputField>
-              <Checkbox checked={false} onChange={console.log}>
-                特殊選項
-              </Checkbox>
-            </InputField>
-
-            <InputField>
-              <Checkbox checked={true} onChange={console.log}>
-                特殊選項
-              </Checkbox>
-            </InputField>
+            <ProductVariants product={product} onNextConfig={onNextConfig} />
 
             <LineSeperator />
 
             <InputField style={{justifyContent: 'flex-end'}}>
-              <h2>${product.price}</h2>
+              <h2>${currPrice || product.price}</h2>
             </InputField>
 
             <InputField style={{justifyContent: 'flex-end'}}>
