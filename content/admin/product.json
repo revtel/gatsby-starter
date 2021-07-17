@@ -58,6 +58,74 @@
           "items": {
             "type": "string"
           }
+        },
+        "variants": {
+          "type": "array",
+          "title": "商品加價選項",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "title": "選項類型",
+                "enum": ["bool", "single"],
+                "enumNames": ["是非題", "單選題"]
+              },
+              "name": {
+                "type": "string",
+                "title": "名稱"
+              },
+              "label": {
+                "type": "string",
+                "title": "顯示"
+              }
+            },
+            "dependencies": {
+              "type": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": ["bool"]
+                      },
+                      "price": {
+                        "type": "number",
+                        "title": "加價"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": ["single"]
+                      },
+                      "choices": {
+                        "type": "array",
+                        "title": "單選選項",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "title": "名稱"
+                            },
+                            "label": {
+                              "type": "string",
+                              "title": "顯示"
+                            },
+                            "price": {
+                              "type": "number",
+                              "title": "加價"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
         }
       }
     },
