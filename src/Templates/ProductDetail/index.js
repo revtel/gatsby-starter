@@ -1,23 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 import {navigate} from 'gatsby';
-import {Tabs, Button, Select, Checkbox} from 'antd';
-import {useOutlet} from 'reconnect.js';
+import {Tabs, Button, Select, Checkbox, message} from 'antd';
+import {useOutlet, useOutletSetter} from 'reconnect.js';
 import qs from 'query-string';
 import RichTextPreview from '../../Components/RichTextPreview';
 import ProductVariants from '../../Components/ProductVariants';
 import BreadcrumbBar from '../../Templates/ProductList/BreadcrumbBar';
 import {mapLineBreak} from '../../Utils/TextUtil';
+import * as CartActions from '../../Actions/Cart';
+import * as AppActions from '../../AppActions';
 
 function ProductDetail(props) {
   const prefixPath = '/product';
   const [activeSummaryTab, setActiveSummaryTab] = React.useState('intro');
   const [product, setProduct] = React.useState(null);
   const [quantity, setQuantity] = React.useState(1);
+  const [currItemConfig, setCurrItemConfig] = React.useState(null);
   const [currPrice, setCurrPrice] = React.useState(null);
   const [article, setArticle] = React.useState(null);
   const [imgIdx, setImgIdx] = React.useState(0);
-  const [actions] = useOutlet('actions');
+  const [user] = useOutlet('user');
+  const showLoginModal = useOutletSetter('login-modal');
   const [dimension] = useOutlet('dimension');
   const params = qs.parse(props.location.search);
   const {id} = params;
@@ -25,33 +29,34 @@ function ProductDetail(props) {
   React.useEffect(() => {
     async function fetchData() {
       try {
-        actions.setLoading(true);
-        const resp = await actions.clientFetchProductById(id);
+        AppActions.setLoading(true);
+        const resp = await AppActions.clientFetchProductById(id);
         setProduct(resp);
         setQuantity(1);
         setImgIdx(0);
-        actions.setLoading(false);
+        AppActions.setLoading(false);
 
         // don't show global spinner for article fetching
         if (resp.article) {
-          setArticle(await actions.clientFetchArticleById(resp.article));
+          setArticle(await AppActions.clientFetchArticleById(resp.article));
         }
       } catch (ex) {
         console.warn(ex);
       } finally {
-        actions.setLoading(false);
+        AppActions.setLoading(false);
       }
     }
 
     fetchData();
-  }, [actions, id]);
+  }, [id]);
 
-  const onNextConfig = React.useCallback((nextConfig) => {
-    setCurrPrice(nextConfig.amount);
+  const onNextConfig = React.useCallback((nextItemConfig, calcResp) => {
+    setCurrPrice(calcResp.amount);
+    setCurrItemConfig(nextItemConfig);
   }, []);
 
   function renderCustomSection(sectionId, data) {
-    return actions.renderCustomSection({
+    return AppActions.renderCustomSection({
       route: prefixPath,
       sectionId,
       params,
@@ -60,16 +65,20 @@ function ProductDetail(props) {
   }
 
   async function addToCart() {
+    if (!user) {
+      showLoginModal(true);
+      return;
+    }
+
     try {
-      actions.setLoading(true);
-      await actions.addItemToCart({
-        product,
-        config: {
-          quantity,
-        },
-      });
+      AppActions.setLoading(true);
+      await CartActions.addToCart(product.id, currItemConfig);
+      message.success('成功');
+    } catch (ex) {
+      console.warn(ex);
+      message.error('發生錯誤, 請稍後再重新嘗試');
     } finally {
-      actions.setLoading(false);
+      AppActions.setLoading(false);
     }
   }
 

@@ -5,16 +5,16 @@ import {useOutlet} from 'reconnect.js';
 import {Button} from 'antd';
 import qs from 'query-string';
 import CartItem from '../../Components/CartItem';
+import * as AppActions from '../../AppActions';
 
 function Cart(props) {
-  const [actions] = useOutlet('actions');
   const [cart] = useOutlet('cart');
   const [dimension] = useOutlet('dimension');
   const params = qs.parse(props.location.search);
   const mobile = dimension.rwd === 'mobile';
 
   function renderCustomSection(sectionId) {
-    return actions.renderCustomSection({
+    return AppActions.renderCustomSection({
       route: props.location.pathname,
       sectionId,
       params,
@@ -45,7 +45,7 @@ function Cart(props) {
       <RightSection>
         <Summary>
           <h2>總計</h2>
-          <h2 style={{textAlign: 'right'}}>${cart.items.length * 1000}</h2>
+          <h2 style={{textAlign: 'right'}}>${cart.total}</h2>
           <Button
             size="large"
             type="primary"

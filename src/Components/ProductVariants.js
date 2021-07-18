@@ -10,12 +10,13 @@ function ProductVariants(props) {
   const {
     product,
     onNextConfig,
-    values: savedValues = null,
+    config = null,
     disabled = false,
+    rowStyle = {},
   } = props;
-  const [quantity, setQuantity] = React.useState(1);
+  const [quantity, setQuantity] = React.useState(config?.qty || 1);
   const [values, setValues] = React.useState(
-    savedValues ||
+    config?.variants ||
       (product.variants || []).reduce((acc, variant) => {
         if (
           variant.type === 'single' &&
@@ -36,11 +37,12 @@ function ProductVariants(props) {
       if (onNextConfig) {
         try {
           AppActions.setLoading(true);
-          const resp = await CartActions.calcPrice(product.id, {
+          const itemConfig = {
             qty: quantity,
             variants: values,
-          });
-          onNextConfig(resp);
+          };
+          const resp = await CartActions.calcPrice(product.id, itemConfig);
+          onNextConfig(itemConfig, resp);
         } catch (ex) {
           console.warn(ex);
         } finally {
@@ -57,7 +59,7 @@ function ProductVariants(props) {
       {(product.variants || []).map((variant) => {
         if (variant.type === 'bool') {
           return (
-            <InputField key={variant.name}>
+            <InputField key={variant.name} style={rowStyle}>
               <Checkbox
                 disabled={disabled}
                 checked={Algorithm.getBool({values, name: variant.name})}
@@ -75,7 +77,7 @@ function ProductVariants(props) {
           );
         } else if (variant.type === 'single') {
           return (
-            <InputField key={variant.name}>
+            <InputField key={variant.name} style={rowStyle}>
               <label>{variant.label}</label>
               <Select
                 disabled={disabled}
@@ -103,7 +105,7 @@ function ProductVariants(props) {
         return null;
       })}
 
-      <InputField>
+      <InputField style={rowStyle}>
         <label>數量</label>
         <Select
           disabled={disabled}

@@ -4,20 +4,48 @@ import {navigate} from 'gatsby';
 import {useOutlet} from 'reconnect.js';
 import {Button, Input, PageHeader} from 'antd';
 import qs from 'query-string';
+import * as CartActions from '../../Actions/Cart';
+import * as AppActions from '../../AppActions';
+
+function getValuesFromCart(cart) {
+  return {
+    buyer_name: cart.buyer_name,
+    buyer_address: cart.buyer_address,
+    buyer_phone: cart.buyer_phone,
+    buyer_email: cart.buyer_email,
+  };
+}
+
+function checkModified(cart, values) {
+  for (const field in values) {
+    if (cart[field] !== values[field]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function checkAllowNextStep(cart, values) {
+  if (checkModified(cart, values)) {
+    return false;
+  }
+
+  return (
+    cart.items.length > 0 &&
+    cart.buyer_name &&
+    cart.buyer_address &&
+    cart.buyer_phone &&
+    cart.buyer_email
+  );
+}
 
 function CheckoutInfo(props) {
-  const [actions] = useOutlet('actions');
   const [cart] = useOutlet('cart');
   const [dimension] = useOutlet('dimension');
-  const [values, setValues] = React.useState({
-    name: cart.config.name,
-    addr: cart.config.addr,
-    mobile: cart.config.mobile,
-    email: cart.config.email,
-  });
+  const [values, setValues] = React.useState(getValuesFromCart(cart));
 
   React.useEffect(() => {
-    setValues({...cart.config});
+    setValues(getValuesFromCart(cart));
   }, [cart]);
 
   const getInputProps = (field) => {
@@ -36,34 +64,27 @@ function CheckoutInfo(props) {
 
   async function updateCartConfig() {
     try {
-      actions.setLoading(true);
-      await actions.updateCartConfig(values);
+      AppActions.setLoading(true);
+      await CartActions.editConfig(values);
     } finally {
-      actions.setLoading(false);
+      AppActions.setLoading(false);
     }
   }
 
   async function revertChanges() {
-    setValues({...cart.config});
+    setValues(getValuesFromCart(cart));
   }
 
   function renderCustomSection(sectionId) {
-    return actions.renderCustomSection({
+    return AppActions.renderCustomSection({
       route: props.location.pathname,
       sectionId,
       params,
     });
   }
 
-  function allowNextStep() {
-    return (
-      cart.items.length > 0 &&
-      cart.config.name &&
-      cart.config.addr &&
-      cart.config.mobile &&
-      cart.config.email
-    );
-  }
+  const isModified = checkModified(cart, values);
+  const isAllowNextStep = checkAllowNextStep(cart);
 
   return (
     <Wrapper mobile={mobile}>
@@ -78,27 +99,29 @@ function CheckoutInfo(props) {
 
         <InputField>
           <label>收件人</label>
-          <Input {...getInputProps('name')} />
+          <Input {...getInputProps('buyer_name')} />
         </InputField>
 
         <InputField>
           <label>地址</label>
-          <Input.TextArea {...getInputProps('addr')} />
+          <Input.TextArea {...getInputProps('buyer_address')} />
         </InputField>
 
         <InputField>
           <label>行動電話</label>
-          <Input {...getInputProps('mobile')} />
+          <Input {...getInputProps('buyer_phone')} />
         </InputField>
 
         <InputField>
           <label>電子郵件</label>
-          <Input {...getInputProps('email')} />
+          <Input {...getInputProps('buyer_email')} />
         </InputField>
 
         <div style={{display: 'flex', alignItems: 'center', marginTop: 20}}>
-          <Button onClick={updateCartConfig}>確認</Button>
-          <Button onClick={revertChanges} type="text">
+          <Button onClick={updateCartConfig} disabled={!isModified}>
+            更新寄送資訊
+          </Button>
+          <Button onClick={revertChanges} type="text" disabled={!isModified}>
             復原
           </Button>
         </div>
@@ -111,11 +134,11 @@ function CheckoutInfo(props) {
       <RightSection>
         <Summary>
           <h2>總計</h2>
-          <h2 style={{textAlign: 'right'}}>${cart.items.length * 1000}</h2>
+          <h2 style={{textAlign: 'right'}}>${cart.total}</h2>
           <Button
             size="large"
             type="primary"
-            disabled={!allowNextStep()}
+            disabled={!isAllowNextStep}
             onClick={() => navigate('/checkout/review')}
             style={{marginTop: 10, width: '100%'}}>
             下一步

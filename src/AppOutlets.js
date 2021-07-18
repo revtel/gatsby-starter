@@ -19,12 +19,8 @@ getNewOutlet(
   'cart',
   {
     items: [],
-    config: {
-      name: 'whitedog',
-      addr: 'office address',
-      mobile: '0911222333',
-      email: 'whitedogg13@gmail.com',
-    },
+    extra_items: [],
+    discount_items: [],
   },
   {autoDelete: false},
 );

@@ -2,6 +2,7 @@ import {getOutlet} from 'reconnect.js';
 import jwtDecode from 'jwt-decode';
 import Config from '../../data.json';
 import {req} from '../Utils/ApiUtil';
+import {fetchCart} from './Cart';
 
 const UserOutlet = getOutlet('user');
 const ApiHookOutlet = getOutlet('ApiUtil');
@@ -50,6 +51,8 @@ async function login({username, password}, admin) {
       admin && Config.management ? resp.refresh_token : resp.refresh,
     );
   }
+
+  fetchCart();
 }
 
 async function logout() {
@@ -82,6 +85,7 @@ async function autoLogin({refresh} = {}) {
         window.localStorage.setItem('token', refresh);
       }
 
+      fetchCart();
       return true;
     }
   }

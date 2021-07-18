@@ -42,7 +42,9 @@ async function req(
   }
 
   if (!ignoreOnErrorHook && typeof onError === 'function') {
-    return onError(url, fetchPayload, resp);
+    // don't return, so if the hook doesn't throw an exception,
+    // the flow will continue to execute
+    onError(url, fetchPayload, resp);
   }
 
   const err = {status: resp.status};
