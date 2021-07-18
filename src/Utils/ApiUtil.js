@@ -9,7 +9,7 @@ async function req(
 ) {
   const {onJson, onError} =
     (hasOutlet(outletName) && getOutlet(outletName).getValue()) || {};
-  const {ignoreOnErrorHook} = options;
+  const {ignoreOnErrorHook, ignoreStatusCheck} = options;
 
   const fetchPayload = {
     method,
@@ -23,7 +23,7 @@ async function req(
 
   const resp = await fetch(url, fetchPayload);
 
-  if (200 <= resp.status && resp.status < 400) {
+  if (ignoreStatusCheck || (200 <= resp.status && resp.status < 400)) {
     try {
       const jsonResp = await resp.json();
 

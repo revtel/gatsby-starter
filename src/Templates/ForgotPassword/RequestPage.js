@@ -4,22 +4,25 @@ import {Button, Input, Form} from 'antd';
 import {useOutlet} from 'reconnect.js';
 import * as AppActions from '../../AppActions';
 import * as UserActions from '../../Actions/User';
+import CountdownTimer from '../../Components/CountdownTimer';
 
 function RequestPage(props) {
   const [requestResult, setRequestResult] = React.useState(null);
+  const [endTime, setEndTime] = React.useState(0);
 
   const onFinish = async (values) => {
     const {username} = values;
 
     try {
-      await AppActions.setLoading(true);
+      AppActions.setLoading(true);
       await UserActions.forgotPasswordRequest({username});
+      setEndTime(new Date().getTime() + 2 * 60 * 1000);
       setRequestResult(true);
     } catch (ex) {
       console.log('EX', ex);
       setRequestResult(false);
     } finally {
-      await AppActions.setLoading(false);
+      AppActions.setLoading(false);
     }
   };
 
@@ -60,31 +63,36 @@ function RequestPage(props) {
           </div>
         )}
 
-        {requestResult !== true && (
-          <Form
-            layout="vertical"
-            name="register"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}>
-            <Form.Item
-              label="EMAIL"
-              name="username"
-              rules={[
-                {
-                  required: true,
-                  message: '請輸入EMAIL!',
-                },
-              ]}>
-              <Input disabled={disableInput} />
-            </Form.Item>
+        <Form
+          layout="vertical"
+          name="register"
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}>
+          <Form.Item
+            label="EMAIL"
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: '請輸入EMAIL!',
+              },
+            ]}>
+            <Input disabled={disableInput} />
+          </Form.Item>
 
+          <CountdownTimer
+            endTimeMs={endTime}
+            renderText={(secRemaining) => {
+              return `請於 ${secRemaining} 內完成認證`;
+            }}
+            style={{textAlign: 'right'}}>
             <Form.Item style={{textAlign: 'right'}}>
               <Button type="primary" htmlType="submit">
-                {requestResult === true ? '重傳認證信' : '送出請求'}
+                傳送認證信
               </Button>
             </Form.Item>
-          </Form>
-        )}
+          </CountdownTimer>
+        </Form>
       </div>
     </Wrapper>
   );

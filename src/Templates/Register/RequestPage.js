@@ -2,28 +2,27 @@ import React from 'react';
 import styled from 'styled-components';
 import {Button, Input, Form} from 'antd';
 import {useOutlet} from 'reconnect.js';
+import CountdownTimer from '../../Components/CountdownTimer';
 
 function RequestPage(props) {
   const [actions] = useOutlet('actions');
   const [requestResult, setRequestResult] = React.useState(null);
+  const [endTime, setEndTime] = React.useState(0);
 
   const onFinish = async (values) => {
     const {username} = values;
 
     try {
-      await actions.setLoading(true);
-      if (requestResult === true) {
-        // TODO: resend the validation letter
-      } else {
-        await actions.registerRequest({email: username});
-        setRequestResult(true);
-      }
+      actions.setLoading(true);
+      await actions.registerRequest({email: username});
+      setEndTime(new Date().getTime() + 2 * 60 * 1000);
+      setRequestResult(true);
     } catch (ex) {
       console.log('EX', ex);
       alert('API failed, register request failed');
       setRequestResult(false);
     } finally {
-      await actions.setLoading(false);
+      actions.setLoading(false);
     }
   };
 
@@ -81,11 +80,18 @@ function RequestPage(props) {
             <Input disabled={disableInput} />
           </Form.Item>
 
-          <Form.Item style={{textAlign: 'right'}}>
-            <Button type="primary" htmlType="submit">
-              {requestResult === true ? '重傳認證信' : '註冊'}
-            </Button>
-          </Form.Item>
+          <CountdownTimer
+            endTimeMs={endTime}
+            renderText={(secRemaining) => {
+              return `請於 ${secRemaining} 內完成認證`;
+            }}
+            style={{textAlign: 'right'}}>
+            <Form.Item style={{textAlign: 'right'}}>
+              <Button type="primary" htmlType="submit">
+                {requestResult === true ? '重傳認證信' : '註冊'}
+              </Button>
+            </Form.Item>
+          </CountdownTimer>
         </Form>
       </div>
     </Wrapper>

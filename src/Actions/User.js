@@ -93,10 +93,16 @@ async function autoLogin({refresh} = {}) {
 }
 
 async function registerRequest({email}) {
-  return req(`${Config.apiHost}/user/register/request`, {
-    method: 'POST',
-    data: {email},
-  });
+  return req(
+    `${Config.apiHost}/user/register/request`,
+    {
+      method: 'POST',
+      data: {email},
+    },
+    {
+      ignoreStatusCheck: true,
+    },
+  );
 }
 
 async function registerConfirm({password, access_token}) {
@@ -107,11 +113,17 @@ async function registerConfirm({password, access_token}) {
 }
 
 async function forgotPasswordRequest({username}) {
-  return req(`${Config.apiHost}/user/forgot-password/request`, {
-    method: 'POST',
-    // for normal user, change the "email" according to your project's user identifier
-    data: {email: username},
-  });
+  return req(
+    `${Config.apiHost}/user/forgot-password/request`,
+    {
+      method: 'POST',
+      // for normal user, change the "email" according to your project's user identifier
+      data: {email: username},
+    },
+    {
+      ignoreStatusCheck: true,
+    },
+  );
 }
 
 async function forgotPasswordConfirm({new_password, access_token}) {
