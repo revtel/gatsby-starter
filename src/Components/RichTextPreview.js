@@ -94,6 +94,18 @@ const Element = ({attributes, children, element}) => {
           {children}
         </div>
       );
+    case 'html':
+      return (
+        <div
+          {...attributes}
+          style={{
+            display: 'block',
+            boxShadow: `${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'}`,
+          }}>
+          <div dangerouslySetInnerHTML={{__html: element.value}} />
+          <div>{children}</div>
+        </div>
+      );
     default:
       return (
         <p {...attributes} style={style}>
