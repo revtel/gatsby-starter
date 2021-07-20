@@ -8,7 +8,7 @@ function EditableCell(props) {
   const [checked, setChecked] = React.useState(
     fieldType === 'boolean' ? initialValue : false,
   );
-  const [value, setValue] = React.useState(initialValue.toString());
+  const [value, setValue] = React.useState(initialValue?.toString());
   const setDirtyMap = props.setDirtyMap;
   const commonStyle = {width: props.width || 120};
 
@@ -17,7 +17,7 @@ function EditableCell(props) {
   const unchanged =
     fieldType === 'boolean'
       ? checked === initialValue
-      : value === initialValue.toString();
+      : value === initialValue?.toString();
 
   const style = unchanged
     ? {...commonStyle}
