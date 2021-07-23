@@ -19,19 +19,16 @@ async function fetchCart(item) {
 }
 
 async function calcPrice(productId, {qty, variants}) {
-  return req(
-    `${Config.apiHost}/cart/item/calc?token=${UserOutlet.getValue().token}`,
-    {
-      method: 'post',
-      data: {
-        product: productId,
-        config: {
-          qty,
-          variants,
-        },
+  return req(`${Config.apiHost}/cart/item/calc`, {
+    method: 'post',
+    data: {
+      product: productId,
+      config: {
+        qty,
+        variants,
       },
     },
-  );
+  });
 }
 
 async function addToCart(productId, {qty, variants}) {
