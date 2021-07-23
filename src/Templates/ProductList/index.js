@@ -10,11 +10,21 @@ import SortMenu from './SortMenu';
 import ProductGrid from './ProductGrid';
 import {updateQueries} from '../../Utils/updateQueries';
 import qs from 'query-string';
+import * as AppActions from '../../AppActions';
 
 function ProductList(props) {
-  const prefixPath = '/products';
-  const detailPrefixPath = '/product';
-  const [actions] = useOutlet('actions');
+  const {
+    pageContext: {
+      outlets = {
+        categories: 'categories',
+        categoryDisplayMap: 'categoryDisplayMap',
+        sortOptions: 'sortOptions',
+      },
+      prefixPath = '/products',
+      detailPrefixPath = '/product',
+      collection = 'product',
+    },
+  } = props;
   const [dimension] = useOutlet('dimension');
   const [products, setProducts] = React.useState([]);
   const [mobileFilterVisible, setMobileFilterVisible] = React.useState(false);
@@ -25,21 +35,29 @@ function ProductList(props) {
   React.useEffect(() => {
     async function fetchProducts() {
       try {
-        actions.setLoading(true);
-        setProducts(await actions.clientFetchProducts({cat, sort, search}));
+        AppActions.setLoading(true);
+        const resp = await AppActions.clientJStorageFetch(collection, {
+          cat,
+          sort,
+          search,
+        });
+        if (resp.error) {
+          throw new Error(resp.error);
+        }
+        setProducts(resp);
         setMobileFilterVisible(false);
       } catch (ex) {
         console.warn(ex);
       } finally {
-        actions.setLoading(false);
+        AppActions.setLoading(false);
       }
     }
 
     fetchProducts();
-  }, [actions, cat, sort, search]);
+  }, [cat, sort, search, collection]);
 
   function renderCustomSection(sectionId) {
-    return actions.renderCustomSection({
+    return AppActions.renderCustomSection({
       route: prefixPath,
       sectionId,
       params,
@@ -71,7 +89,11 @@ function ProductList(props) {
           {!mobile && (
             <div style={{display: 'flex', flexDirection: 'column'}}>
               {renderCustomSection('C')}
-              <FilterMenu cat={cat} updateCat={(cat) => updateRoute({cat})} />
+              <FilterMenu
+                cat={cat}
+                updateCat={(cat) => updateRoute({cat})}
+                categories={outlets.categories}
+              />
               {renderCustomSection('D')}
             </div>
           )}
@@ -83,6 +105,7 @@ function ProductList(props) {
               <BreadcrumbBar
                 cat={cat}
                 updateCat={(cat) => updateRoute({cat})}
+                categoryDisplayMap={outlets.categoryDisplayMap}
               />
             </div>
 
@@ -98,6 +121,7 @@ function ProductList(props) {
               <SortMenu
                 sort={sort}
                 updateSort={(sort) => updateRoute({sort})}
+                sortOptions={outlets.sortOptions}
               />
               <SearchInput
                 search={search}
@@ -125,7 +149,11 @@ function ProductList(props) {
         <MobileFilter visible={mobileFilterVisible}>
           <div style={{display: 'flex', flexDirection: 'column'}}>
             {renderCustomSection('C')}
-            <FilterMenu cat={cat} updateCat={(cat) => updateRoute({cat})} />
+            <FilterMenu
+              cat={cat}
+              updateCat={(cat) => updateRoute({cat})}
+              categories={outlets.categories}
+            />
             {renderCustomSection('D')}
           </div>
         </MobileFilter>

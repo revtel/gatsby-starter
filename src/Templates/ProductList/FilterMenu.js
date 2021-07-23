@@ -3,7 +3,7 @@ import {Menu} from 'antd';
 import {useOutlet} from 'reconnect.js';
 
 function FilterMenu(props) {
-  const [categories] = useOutlet('categories');
+  const [categories] = useOutlet(props.categories);
   const {cat, updateCat} = props;
 
   const onMenuClick = (catName) => () => {

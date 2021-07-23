@@ -3,7 +3,7 @@ import {Breadcrumb} from 'antd';
 import {useOutlet} from 'reconnect.js';
 
 function BreadcrumbBar(props) {
-  const [categoryDisplayMap] = useOutlet('categoryDisplayMap');
+  const [categoryDisplayMap] = useOutlet(props.categoryDisplayMap);
   const {cat = '', updateCat} = props;
   const catItems = cat.split('-');
 

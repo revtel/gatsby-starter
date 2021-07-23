@@ -3,7 +3,7 @@ import {useOutlet} from 'reconnect.js';
 import {Menu, Dropdown} from 'antd';
 
 function SortMenu(props) {
-  const [options] = useOutlet('sortOptions');
+  const [options] = useOutlet(props.sortOptions);
   const {sort, updateSort} = props;
 
   const selectedOption = options.find((opt) => opt.name === sort);
