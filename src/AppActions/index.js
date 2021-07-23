@@ -1,7 +1,7 @@
 import {getOutlet} from 'reconnect.js';
-import Config from '../data.json';
-import {req} from './Utils/ApiUtil';
-import * as CustomRenderer from '../custom/renderer';
+import Config from '../../data.json';
+import {req} from '../Utils/ApiUtil';
+import * as CustomRenderer from '../../custom/renderer';
 
 const UserOutlet = getOutlet('user');
 const LoadingOutlet = getOutlet('loading');
@@ -36,12 +36,12 @@ function renderCustomSection(props) {
  * **************************************************
  */
 
-async function clientFetchProducts({cat, sort, search}) {
+async function clientJStorageFetch(collection, {cat, sort, search}) {
   const catQuery = cat ? {labels: {$regex: cat}} : {};
   const searchQuery = search ? {searchText: {$regex: search}} : {};
   const sortValue = sort ? [sort] : ['-created'];
   return await req(
-    `${Config.jstoreHost}/document/product/find?client_id=${Config.clientId}`,
+    `${Config.jstoreHost}/document/${collection}/find?client_id=${Config.clientId}`,
     {
       method: 'POST',
       data: {
@@ -56,9 +56,9 @@ async function clientFetchProducts({cat, sort, search}) {
   );
 }
 
-async function clientFetchProductById(id) {
+async function clientJStorageFetchById(collection, id) {
   return await req(
-    `${Config.jstoreHost}/document/product/find-one?client_id=${Config.clientId}`,
+    `${Config.jstoreHost}/document/${collection}/find-one?client_id=${Config.clientId}`,
     {
       method: 'POST',
       data: {
@@ -275,8 +275,8 @@ export {
   delay,
   setLoading,
   renderCustomSection,
-  clientFetchProducts,
-  clientFetchProductById,
+  clientJStorageFetch,
+  clientJStorageFetchById,
   clientFetchArticles,
   clientFetchArticleById,
   fetchCart,

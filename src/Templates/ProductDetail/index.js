@@ -12,7 +12,14 @@ import * as CartActions from '../../Actions/Cart';
 import * as AppActions from '../../AppActions';
 
 function ProductDetail(props) {
-  const prefixPath = '/product';
+  const {
+    pageContext: {
+      collection = 'product',
+      prefixPath = '/product',
+      listViewPath = '/products',
+      outlets = {categoryDisplayMap: 'categoryDisplayMap'},
+    },
+  } = props;
   const [activeSummaryTab, setActiveSummaryTab] = React.useState('intro');
   const [product, setProduct] = React.useState(null);
   const [quantity, setQuantity] = React.useState(1);
@@ -30,7 +37,7 @@ function ProductDetail(props) {
     async function fetchData() {
       try {
         AppActions.setLoading(true);
-        const resp = await AppActions.clientFetchProductById(id);
+        const resp = await AppActions.clientJStorageFetchById(collection, id);
         setProduct(resp);
         setQuantity(1);
         setImgIdx(0);
@@ -48,7 +55,7 @@ function ProductDetail(props) {
     }
 
     fetchData();
-  }, [id]);
+  }, [id, collection]);
 
   const onNextConfig = React.useCallback((nextItemConfig, calcResp) => {
     setCurrPrice(calcResp.amount);
@@ -105,8 +112,9 @@ function ProductDetail(props) {
             <BreadcrumbBar
               cat={product.labels[0]}
               updateCat={(nextCat) => {
-                navigate(`/products?cat=${nextCat}`);
+                navigate(`${listViewPath}?cat=${nextCat}`);
               }}
+              categoryDisplayMap={outlets.categoryDisplayMap}
             />
           </div>
         )}
