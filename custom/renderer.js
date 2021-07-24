@@ -48,6 +48,8 @@ function renderCustomSection(props) {
         </Steps>
       );
     }
+
+    return null;
   }
 
   return (
