@@ -23,6 +23,13 @@ function ProductList(props) {
       prefixPath = '/products',
       detailPrefixPath = '/product',
       collection = 'product',
+      layout = {left: true, right: true},
+      features = {
+        cat: true,
+        search: true,
+        sort: true,
+        breadcrumb: true,
+      },
     },
   } = props;
   const [dimension] = useOutlet('dimension');
@@ -86,14 +93,18 @@ function ProductList(props) {
         {renderCustomSection('B')}
 
         <div style={{display: 'flex'}}>
-          {!mobile && (
+          {!mobile && layout.left && (
             <div style={{display: 'flex', flexDirection: 'column'}}>
               {renderCustomSection('C')}
-              <FilterMenu
-                cat={cat}
-                updateCat={(cat) => updateRoute({cat})}
-                categories={outlets.categories}
-              />
+
+              {features.cat && (
+                <FilterMenu
+                  cat={cat}
+                  updateCat={(cat) => updateRoute({cat})}
+                  categories={outlets.categories}
+                />
+              )}
+
               {renderCustomSection('D')}
             </div>
           )}
@@ -101,33 +112,41 @@ function ProductList(props) {
           <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
             {renderCustomSection('E')}
 
-            <div style={{padding: 'var(--basePadding)'}}>
-              <BreadcrumbBar
-                cat={cat}
-                updateCat={(cat) => updateRoute({cat})}
-                categoryDisplayMap={outlets.categoryDisplayMap}
-              />
-            </div>
+            {features.breadcrumb && (
+              <div style={{padding: 'var(--basePadding)'}}>
+                <BreadcrumbBar
+                  cat={cat}
+                  updateCat={(cat) => updateRoute({cat})}
+                  categoryDisplayMap={outlets.categoryDisplayMap}
+                />
+              </div>
+            )}
 
             {renderCustomSection('F')}
 
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                padding: 'var(--basePadding)',
-              }}>
-              <div style={{flex: 1}} />
-              <SortMenu
-                sort={sort}
-                updateSort={(sort) => updateRoute({sort})}
-                sortOptions={outlets.sortOptions}
-              />
-              <SearchInput
-                search={search}
-                updateSearch={(search) => updateRoute({search})}
-              />
-            </div>
+            {(features.sort || features.search) && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: 'var(--basePadding)',
+                }}>
+                <div style={{flex: 1}} />
+                {features.sort && (
+                  <SortMenu
+                    sort={sort}
+                    updateSort={(sort) => updateRoute({sort})}
+                    sortOptions={outlets.sortOptions}
+                  />
+                )}
+                {features.search && (
+                  <SearchInput
+                    search={search}
+                    updateSearch={(search) => updateRoute({search})}
+                  />
+                )}
+              </div>
+            )}
 
             {renderCustomSection('G')}
 
@@ -136,7 +155,7 @@ function ProductList(props) {
             {renderCustomSection('H')}
           </div>
 
-          {!mobile && renderCustomSection('I')}
+          {!mobile && layout.right && renderCustomSection('I')}
         </div>
 
         {mobile && renderCustomSection('I')}
@@ -145,7 +164,7 @@ function ProductList(props) {
 
       {renderCustomSection('K')}
 
-      {mobile && (
+      {mobile && features.cat && (
         <MobileFilter visible={mobileFilterVisible}>
           <div style={{display: 'flex', flexDirection: 'column'}}>
             {renderCustomSection('C')}
@@ -159,7 +178,7 @@ function ProductList(props) {
         </MobileFilter>
       )}
 
-      {mobile && (
+      {mobile && features.cat && (
         <MobileMenuBtn
           onClick={() => setMobileFilterVisible(!mobileFilterVisible)}>
           <Button type="primary">篩選</Button>
