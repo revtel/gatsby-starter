@@ -15,7 +15,7 @@ function LoginRequired(props) {
 
   return (
     <>
-      {hasNavBar && <SiteNavBar />}
+      {hasNavBar && <SiteNavBar location={location} />}
       <Wrapper>
         <h1>Login Required</h1>
         <Button onClick={() => showLoginModal({admin})}>LOGIN</Button>

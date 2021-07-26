@@ -13,7 +13,7 @@ function SiteNavBar(props) {
   const {passBreakpoint} = useBreakpoint(100);
   const [mobileNavVisible, setMobileNavVisible] = React.useState(false);
   const mobile = dimension.rwd !== 'desktop';
-  const pathname = location.pathname;
+  const pathname = location?.pathname;
 
   React.useEffect(() => {
     setMobileNavVisible(false);
