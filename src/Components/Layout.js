@@ -14,24 +14,21 @@ function Layout({children, location}) {
   } else if (location.pathname.indexOf('profile') > -1) {
     return (
       <Wrapper>
-        <SiteNavBar />
+        <SiteNavBar location={location} />
         <ProfileLayout location={location}>{children}</ProfileLayout>
       </Wrapper>
     );
   } else if (location.pathname.indexOf('checkout') > -1) {
     return (
       <Wrapper>
-        <SiteNavBar />
+        <SiteNavBar location={location} />
         <CheckoutLayout location={location}>{children}</CheckoutLayout>
       </Wrapper>
     );
   }
 
   let hasSiteNavBar = true;
-  if (
-    ['/'].indexOf(location.pathname) > -1 ||
-    location.pathname.indexOf('/promo') === 0
-  ) {
+  if (location.pathname.indexOf('/promo') === 0) {
     hasSiteNavBar = false;
   }
 
@@ -45,7 +42,7 @@ function Layout({children, location}) {
         />
       </Helmet>
       <Wrapper>
-        {hasSiteNavBar && <SiteNavBar />}
+        {hasSiteNavBar && <SiteNavBar location={location} />}
         {children}
       </Wrapper>
     </>

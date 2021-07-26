@@ -15,30 +15,6 @@ function Landing(props) {
 
   return (
     <ReactDelighters>
-      <NavBar
-        hasBorder={passBreakpoint}
-        bgColor={passBreakpoint ? 'white' : 'transparent'}
-        style={{height: 64}}>
-        <h2 style={{cursor: 'pointer'}} onClick={() => navigate('/')}>
-          RevtelTech
-        </h2>
-        <Button type="text">
-          <Link to="/products">商品</Link>
-        </Button>
-        <Button type="text">
-          <Link to="/articles">文章</Link>
-        </Button>
-
-        <div style={{flex: 1}}></div>
-        {user ? (
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <Button onClick={() => navigate('/profile')}>Profile</Button>
-          </div>
-        ) : (
-          <Button onClick={() => showLoginModal(true)}>LOGIN</Button>
-        )}
-      </NavBar>
-
       <Wrapper>
         <HeroBannerSection style={{backgroundColor: 'orange'}}>
           <HeroBannerLogo />
