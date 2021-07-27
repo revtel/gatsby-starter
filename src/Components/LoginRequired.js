@@ -36,7 +36,6 @@ const Wrapper = styled.div`
 
 function isAdmin(user) {
   const allowed = ['admin', 'management'];
-  console.log('isAdmin', user);
   for (const grp of allowed) {
     if (user.grp.indexOf(grp) > -1) {
       return true;
@@ -61,8 +60,6 @@ function withLoginRequired(NextComp, admin = false) {
 
     render() {
       const user = getOutlet('user').getValue();
-
-      console.log(user);
 
       if (user) {
         if (!admin || (admin && isAdmin(user))) {
