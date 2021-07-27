@@ -2,6 +2,7 @@ import {getOutlet} from 'reconnect.js';
 import Config from '../../data.json';
 import {req} from '../Utils/ApiUtil';
 import * as CustomRenderer from '../../custom/renderer';
+import * as CustomAdminRenderer from '../../custom/admin-renderer';
 
 const UserOutlet = getOutlet('user');
 const LoadingOutlet = getOutlet('loading');
@@ -28,6 +29,10 @@ function setLoading(loading) {
 
 function renderCustomSection(props) {
   return CustomRenderer.renderCustomSection(props);
+}
+
+function renderCustomAdminSection(props) {
+  return CustomAdminRenderer.renderCustomSection(props);
 }
 
 /**
@@ -275,6 +280,7 @@ export {
   delay,
   setLoading,
   renderCustomSection,
+  renderCustomAdminSection,
   clientJStorageFetch,
   clientJStorageFetchById,
   clientFetchArticles,

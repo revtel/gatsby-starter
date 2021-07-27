@@ -4,6 +4,7 @@ import * as Generic from '../../Generic';
 import {message, Button} from 'antd';
 import {removeAutoFields} from '../../Utils/JStorageUtil';
 import FileUpload from './FileUpload';
+import * as AppActions from '../../AppActions';
 
 function AdminForm(props) {
   const {instance, collection, actionBar, formSpec, config} = props;
@@ -23,30 +24,48 @@ function AdminForm(props) {
 
   return (
     <div>
-      <Generic.Form
-        schema={formSpec.schema}
-        uiSchema={formSpec.uiSchema}
-        instance={instance}
-        onSubmit={async (formData) => {
-          try {
-            actions.setLoading(true);
-            if (!instance) {
-              await actions.createDocument(collection, formData);
-            } else {
-              await actions.updateDocument(
-                collection,
-                {id: instance.id},
-                removeAutoFields(formData),
-              );
+      {AppActions.renderCustomAdminSection({
+        name: formSpec.customName || 'AdminForm',
+        section: 'A',
+        context: {
+          ...props,
+        },
+      })}
+
+      {!formSpec.preventDefault && (
+        <Generic.Form
+          schema={formSpec.schema}
+          uiSchema={formSpec.uiSchema}
+          instance={instance}
+          onSubmit={async (formData) => {
+            try {
+              actions.setLoading(true);
+              if (!instance) {
+                await actions.createDocument(collection, formData);
+              } else {
+                await actions.updateDocument(
+                  collection,
+                  {id: instance.id},
+                  removeAutoFields(formData),
+                );
+              }
+              message.success('成功!');
+            } catch (ex) {
+              message.error('API failure');
+            } finally {
+              actions.setLoading(false);
             }
-            message.success('成功!');
-          } catch (ex) {
-            message.error('API failure');
-          } finally {
-            actions.setLoading(false);
-          }
-        }}
-      />
+          }}
+        />
+      )}
+
+      {AppActions.renderCustomAdminSection({
+        name: formSpec.customName || 'AdminForm',
+        section: 'B',
+        context: {
+          ...props,
+        },
+      })}
 
       {actionBar && actionBar.length > 0 && (
         <div
