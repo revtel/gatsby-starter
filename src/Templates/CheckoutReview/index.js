@@ -66,7 +66,7 @@ function CheckoutReview(props) {
           />
         ))}
 
-        <CheckoutForm disabled={true} />
+        <CheckoutForm disabled={true} style={{marginTop: 30}} />
 
         {renderCustomSection('_A')}
       </LeftSection>
