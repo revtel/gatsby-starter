@@ -7,7 +7,7 @@ import ProductVariants from '../ProductVariants';
 
 function CartItem(props) {
   const [actions] = useOutlet('actions');
-  const {item, itemIdx, disabled} = props;
+  const {item, itemIdx, disabled, removeDisabled} = props;
 
   async function removeFromCart() {
     try {
@@ -70,9 +70,11 @@ function CartItem(props) {
                 alignItems: 'center',
                 justifyContent: 'flex-end',
               }}>
-              <Button style={{display: 'block'}} onClick={removeFromCart}>
-                移除
-              </Button>
+              {!removeDisabled && (
+                <Button style={{display: 'block'}} onClick={removeFromCart}>
+                  移除
+                </Button>
+              )}
             </div>
           )}
         </div>

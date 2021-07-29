@@ -1,5 +1,4 @@
 import {getOutlet} from 'reconnect.js';
-import jwtDecode from 'jwt-decode';
 import Config from '../../data.json';
 import {req} from '../Utils/ApiUtil';
 
@@ -107,4 +106,24 @@ async function clearCart(itemIdx) {
   CartOutlet.update(nextCartValue);
 }
 
-export {fetchCart, calcPrice, addToCart, removeFromCart, editConfig};
+async function checkoutRequest(itemIdx) {
+  const resp = await req(
+    `${Config.apiHost}/checkout/request?token=${UserOutlet.getValue().token}`,
+  );
+
+  const nextCart = await req(
+    `${Config.apiHost}/cart?token=${UserOutlet.getValue().token}`,
+  );
+
+  CartOutlet.update(nextCart);
+  return resp;
+}
+
+export {
+  fetchCart,
+  calcPrice,
+  addToCart,
+  removeFromCart,
+  editConfig,
+  checkoutRequest,
+};

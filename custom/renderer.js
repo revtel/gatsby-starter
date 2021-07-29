@@ -43,7 +43,7 @@ function renderCustomSection(props) {
       return (
         <Steps current={current} style={{marginBottom: 20}}>
           <Steps.Step title="購物車" />
-          <Steps.Step title="寄送資訊" />
+          <Steps.Step title="結帳資訊" />
           <Steps.Step title="付款" />
         </Steps>
       );
