@@ -7,27 +7,52 @@ import {Theme as AntDTheme} from '@rjsf/antd';
 const RjsForm = withTheme(AntDTheme);
 
 function Form(props) {
-  const {schema, uiSchema, instance, onSubmit = null} = props;
+  const {
+    schema,
+    uiSchema,
+    instance,
+    onSubmit = null,
+    renderCustomSection,
+  } = props;
   const [values, setValues] = React.useState(instance || {});
+  const [extValues, setExtValues] = React.useState(instance || {});
   const submitBtnRef = React.useRef();
 
   return (
     <Wrapper>
+      {renderCustomSection &&
+        renderCustomSection({
+          position: 'top',
+          instance,
+          values,
+          setValues,
+          extValues,
+          setExtValues,
+        })}
+
       <RjsForm
         schema={schema}
         uiSchema={uiSchema}
         formData={values}
         onChange={({formData}) => {
-          console.log('changed formData', formData);
           setValues(formData);
         }}
         onSubmit={({formData}) => {
-          console.log('submitted formData', formData);
-          onSubmit(formData);
+          onSubmit(formData, extValues);
         }}
         onError={(errors) => {
           console.log('errors', errors);
         }}>
+        {renderCustomSection &&
+          renderCustomSection({
+            position: 'bottom',
+            instance,
+            values,
+            setValues,
+            extValues,
+            setExtValues,
+          })}
+
         <div className="submit-buttons-bar">
           {onSubmit && (
             <Button

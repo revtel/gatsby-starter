@@ -1,9 +1,9 @@
 import React from 'react';
 
 function renderCustomSection(props) {
-  const {name, section, context} = props;
+  const {name, type, context} = props;
 
-  if (name === 'AdminForm') {
+  if (type === 'form' && name === 'AdminForm') {
     return (
       <div
         style={{
@@ -13,7 +13,7 @@ function renderCustomSection(props) {
           maxWidth: 800,
           backgroundColor: '#ccc',
         }}>
-        <h2>{`Custom Section ${section}`}</h2>
+        <h2>{`custom ${context.position} section`}</h2>
       </div>
     );
   }
