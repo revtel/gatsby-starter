@@ -10,9 +10,13 @@ async function fetchDocuments(
   sorting = [],
   paging = {offset: 0, limit: 100},
   projection = null,
+  options = {anonymous: false},
 ) {
   return await req(
-    _appendToken(`${Config.jstoreHost}/document/${collection}/find`),
+    _appendToken(
+      `${Config.jstoreHost}/document/${collection}/find`,
+      options.anonymous,
+    ),
     {
       method: 'POST',
       data: {
@@ -25,9 +29,17 @@ async function fetchDocuments(
   );
 }
 
-async function fetchOneDocument(collection, query = {}) {
+async function fetchOneDocument(
+  collection,
+  query = {},
+  projection = null,
+  options = {anonymous: false},
+) {
   return await req(
-    _appendToken(`${Config.jstoreHost}/document/${collection}/find-one`),
+    _appendToken(
+      `${Config.jstoreHost}/document/${collection}/find-one`,
+      options.anonymous,
+    ),
     {
       method: 'POST',
       data: {query},
@@ -71,7 +83,7 @@ async function bulkWriteDocuments(collection, operations) {
  * **************************************************
  */
 
-function _appendToken(url) {
+function _appendToken(url, anonymous) {
   const token = UserOutlet.getValue()?.token;
   let separator = '?';
 
@@ -80,7 +92,7 @@ function _appendToken(url) {
     separator = '&';
   }
 
-  if (token) {
+  if (token && !anonymous) {
     return url + `${separator}token=${token}`;
   } else {
     return url + `${separator}client_id=${Config.clientId}`;
