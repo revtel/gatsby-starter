@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import {navigate} from 'gatsby';
 import {Table, Button, Select, Input, Pagination} from 'antd';
 import queryString from 'query-string';
-import {useOutlet} from 'reconnect.js';
 
 function Resource(props) {
   const {
@@ -28,24 +27,17 @@ function Resource(props) {
     pageSizeOptions = null,
     sortOptions = null,
     canSearch = false,
-    outletKey,
   } = querySpec;
 
-  // use a special outlet to "remember" the query state,
-  // so when use go back from the detail page, the query states can be preserved.
-  const [queryState, setQueryState] = useOutlet(
-    outletKey,
-    {
-      keyword: '',
-      sort: sortOptions ? sortOptions[0].value : '',
-      pageSize: (pageSizeOptions && pageSizeOptions[0]) || 0,
-      paging: {
-        offset: 0,
-        limit: (pageSizeOptions && pageSizeOptions[0]) || 0,
-      },
+  const [queryState, setQueryState] = React.useState({
+    keyword: '',
+    sort: sortOptions ? sortOptions[0].value : '',
+    pageSize: (pageSizeOptions && pageSizeOptions[0]) || 0,
+    paging: {
+      offset: 0,
+      limit: (pageSizeOptions && pageSizeOptions[0]) || 0,
     },
-    {autoDelete: false},
-  );
+  });
 
   // generate all setters from the outlet
   const setKeyword = (keyword) => {
