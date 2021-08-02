@@ -1,14 +1,16 @@
 import React from 'react';
 import {useOutlet} from 'reconnect.js';
 import * as Generic from '../../Generic';
+import * as AppActions from '../../AppActions';
+import * as JStorageActions from '../../Actions/JStorage';
 
 const FormSpec = {
   schema: {
     title: '',
     type: 'object',
     properties: {
-      name: {type: 'string', title: '商品名稱', readOnly: true},
-      amount: {type: 'number', title: '商品價錢', default: 100, readOnly: true},
+      id: {type: 'id', title: 'id', readOnly: true},
+      total: {type: 'total', title: 'total', default: 100, readOnly: true},
     },
   },
   uiSchema: {},
@@ -27,7 +29,7 @@ function Form(props) {
 }
 
 function OrderPage(props) {
-  const [actions] = useOutlet('actions');
+  const [user] = useOutlet('user');
 
   return (
     <Generic.Resource
@@ -37,20 +39,30 @@ function OrderPage(props) {
         name: '訂單',
         primaryKey: 'id',
         actions: {
-          setLoading: actions.setLoading,
-          fetchRecords: actions.fetchOrders,
-          fetchRecordById: actions.fetchOrderById,
+          setLoading: AppActions.setLoading,
+          fetchRecords: () => {
+            return JStorageActions.fetchDocuments(
+              'order',
+              {owner: user.sub},
+              null,
+              null,
+              null,
+            );
+          },
+          fetchRecordById: (id) => {
+            return JStorageActions.fetchOneDocument('order', {id});
+          },
         },
         columns: [
           {
-            title: '名稱',
-            key: 'name',
-            dataIndex: 'name',
+            title: 'id',
+            key: 'id',
+            dataIndex: 'id',
           },
           {
             title: '價錢',
-            key: 'amount',
-            dataIndex: 'amount',
+            key: 'total',
+            dataIndex: 'total',
           },
         ],
       }}

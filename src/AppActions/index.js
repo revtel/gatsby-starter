@@ -6,7 +6,6 @@ import * as CustomAdminRenderer from '../../custom/admin-renderer';
 
 const UserOutlet = getOutlet('user');
 const LoadingOutlet = getOutlet('loading');
-const CartOutlet = getOutlet('cart');
 const ApiHookOutlet = getOutlet('ApiUtil');
 
 ApiHookOutlet.update({
@@ -115,82 +114,6 @@ async function clientFetchArticleById(id) {
 
 /**
  * **************************************************
- * Cart & Checkout APIs
- * **************************************************
- */
-
-async function fetchCart(item) {
-  console.log('fetchCart', item);
-  await delay(600);
-}
-
-async function updateCartConfig(cartConfig) {
-  await delay(600);
-  const cartValue = CartOutlet.getValue();
-  const nextCartValue = {
-    ...cartValue,
-    config: {
-      ...cartValue.config,
-      ...cartConfig,
-    },
-  };
-  CartOutlet.update(nextCartValue);
-}
-
-async function addItemToCart(item) {
-  await delay(600);
-  const cartValue = CartOutlet.getValue();
-  const nextCartValue = {
-    ...cartValue,
-    items: [...cartValue.items],
-  };
-  nextCartValue.items = [...nextCartValue.items, item];
-  CartOutlet.update(nextCartValue);
-}
-
-async function removeItemFromCart(itemIdx) {
-  await delay(600);
-  const cartValue = CartOutlet.getValue();
-  const nextCartValue = {
-    ...cartValue,
-    items: [...cartValue.items],
-  };
-  nextCartValue.items.splice(itemIdx, 1);
-  CartOutlet.update(nextCartValue);
-}
-
-async function clearCart(itemIdx) {
-  await delay(600);
-  const cartValue = CartOutlet.getValue();
-  const nextCartValue = {
-    ...cartValue,
-    items: [],
-  };
-  CartOutlet.update(nextCartValue);
-}
-
-/**
- * **************************************************
- * Order APIs
- * **************************************************
- */
-
-async function fetchOrders() {
-  await delay(600);
-  return [
-    {id: 1, name: 'order 1', amount: 300},
-    {id: 2, name: 'order 2', amount: 600},
-    {id: 3, name: 'order 3', amount: 900},
-  ];
-}
-
-async function fetchOrderById(id) {
-  await delay(600);
-  return {id, name: `order ${id}`, amount: 300};
-}
-
-/**
- * **************************************************
  * JStorage powered article fetching APIs
  * **************************************************
  */
@@ -285,13 +208,6 @@ export {
   clientJStorageFetchById,
   clientFetchArticles,
   clientFetchArticleById,
-  fetchCart,
-  updateCartConfig,
-  addItemToCart,
-  removeItemFromCart,
-  clearCart,
-  fetchOrders,
-  fetchOrderById,
   fetchArticles,
   getUploadUrlFromFile,
   fetchAllUploads,

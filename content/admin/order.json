@@ -1,0 +1,74 @@
+{
+  "path": "/admin/orders",
+  "name": "訂單",
+  "collection": "order",
+  "primaryKey": "id",
+  "searchField": "searchText",
+  "columns": [
+    {
+      "title": "id",
+      "key": "id",
+      "dataIndex": "id"
+    },
+    {
+      "title": "價錢",
+      "key": "total",
+      "dataIndex": "total"
+    },
+    {
+      "title": "buyer_name",
+      "key": "buyer_name",
+      "dataIndex": "buyer_name"
+    },
+    {
+      "title": "buyer_phone",
+      "key": "buyer_phone",
+      "dataIndex": "buyer_phone"
+    }
+  ],
+  "querySpec": {
+    "pageSizeOptions": [10, 30, 50],
+    "sortOptions": [
+      {"name": "+id", "value": "+id"},
+      {"name": "-id", "value": "-id"},
+      {"name": "價錢低到高", "value": "amount"},
+      {"name": "價錢高到低", "value": "-amount"}
+    ],
+    "canSearch": true
+  },
+  "formSpec": {
+    "schema": {
+      "title": "",
+      "type": "object",
+      "required": ["name", "price"],
+      "properties": {
+        "id": {"type": "string", "title": "id"},
+        "total": {"type": "number", "readOnly": true},
+        "buyer_name": {
+          "type": "string",
+          "readOnly": true
+        },
+        "buyer_phone": {
+          "type": "string",
+          "readOnly": true
+        },
+        "buyer_email": {
+          "type": "string",
+          "readOnly": true
+        },
+        "buyer_address": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "uiSchema": {
+      "description": {"ui:widget": "textarea"},
+      "intro": {"ui:widget": "textarea"},
+      "spec": {"ui:widget": "textarea"},
+      "remark": {"ui:widget": "textarea"},
+      "searchText": {"ui:widget": "textarea"}
+    }
+  },
+  "actionBar": []
+}
