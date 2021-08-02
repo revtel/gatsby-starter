@@ -20,6 +20,7 @@ function AdminResourcePage(props) {
     columns,
     querySpec,
     formSpec,
+    createFormSpec,
     actionBar = ['article', 'file'],
   } = resource;
 
@@ -69,15 +70,29 @@ function AdminResourcePage(props) {
         columns: columns_,
       }}
       querySpec={querySpec}
-      renderDetail={(props) => (
-        <AdminForm
-          {...props}
-          collection={collection}
-          actionBar={actionBar}
-          formSpec={formSpec}
-          config={config}
-        />
-      )}
+      renderDetail={(props) => {
+        if (props.instance) {
+          return (
+            <AdminForm
+              {...props}
+              collection={collection}
+              actionBar={actionBar}
+              formSpec={formSpec}
+              config={config}
+            />
+          );
+        } else {
+          return (
+            <AdminForm
+              {...props}
+              collection={collection}
+              actionBar={actionBar}
+              formSpec={createFormSpec || formSpec}
+              config={config}
+            />
+          );
+        }
+      }}
     />
   );
 }
