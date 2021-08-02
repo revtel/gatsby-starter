@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {navigate} from 'gatsby';
 import {useOutlet} from 'reconnect.js';
 import {Button} from 'antd';
 import FilterMenu from './FilterMenu';
@@ -78,11 +77,11 @@ function ProductList(props) {
       options,
     });
 
-    navigate(`${prefixPath}${nextQueryString}`);
+    AppActions.navigate(`${prefixPath}${nextQueryString}`, {loading: true});
   }
 
   function onItemClick(item, evt) {
-    navigate(`${detailPrefixPath}?id=${item.id}`);
+    AppActions.navigate(`${detailPrefixPath}?id=${item.id}`, {loading: true});
   }
 
   return (

@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import {navigate, Link} from 'gatsby';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import {Button} from 'antd';
 import useBreakpoint from '../../Hooks/useBreakPoint';
+import * as AppActions from '../../AppActions';
+import Link from '../NavLink';
 
 function SiteNavBar(props) {
   const {location} = props;
@@ -50,7 +51,9 @@ function SiteNavBar(props) {
             <div style={{flex: 1}}></div>
             {user ? (
               <div style={{display: 'flex', alignItems: 'center'}}>
-                <Button onClick={() => navigate('/profile')}>會員專區</Button>
+                <Button onClick={() => AppActions.navigate('/profile')}>
+                  會員專區
+                </Button>
               </div>
             ) : (
               <Button onClick={() => showLoginModal(true)}>登入</Button>
@@ -122,7 +125,7 @@ function MobileNav(props) {
           <div style={{display: 'flex', alignItems: 'center'}}>
             <Button
               style={{marginBottom: 10}}
-              onClick={() => navigate('/profile')}>
+              onClick={() => AppActions.navigate('/profile')}>
               會員專區
             </Button>
           </div>

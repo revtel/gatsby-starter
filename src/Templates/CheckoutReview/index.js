@@ -30,11 +30,12 @@ function CheckoutReview(props) {
   async function doCheckout() {
     try {
       AppActions.setLoading(true);
-      const resp = await CartActions.checkoutRequest();
-      window.location = resp;
+      // let users see the spinner
+      await AppActions.delay(600);
+      await CartActions.checkoutRequest();
     } catch (ex) {
       console.warn(ex);
-    } finally {
+      // only dismiss spinner when it fails, otherwise it moves to the payment domain
       AppActions.setLoading(false);
     }
   }

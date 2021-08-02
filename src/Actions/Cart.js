@@ -88,10 +88,10 @@ async function editConfig(nextConfig) {
         receiver_tel: currConfig.receiver_tel,
         receiver_tel_ext: currConfig.receiver_tel_ext,
         order_note: currConfig.order_note,
-        payment_subtype: currConfig.payment_subtype,
-        logistics_type: currConfig.logistics_type,
-        logistics_subtype: currConfig.logistics_subtype,
         ...nextConfig,
+        payment_subtype: 'cvs_cod', //currConfig.payment_subtype,
+        logistics_type: 'CVS', // currConfig.logistics_type,
+        logistics_subtype: 'FAMIC2C', //currConfig.logistics_subtype,
       },
     },
   );
@@ -109,17 +109,24 @@ async function clearCart(itemIdx) {
   CartOutlet.update(nextCartValue);
 }
 
-async function checkoutRequest(itemIdx) {
-  const resp = await req(
-    `${Config.apiHost}/checkout/request?token=${UserOutlet.getValue().token}`,
-  );
+async function checkoutRequest() {
+  window.location = `${Config.apiHost}/checkout/request?token=${
+    UserOutlet.getValue().token
+  }`;
+}
 
-  const nextCart = await req(
-    `${Config.apiHost}/cart?token=${UserOutlet.getValue().token}`,
-  );
+async function fetchOrders() {
+  await delay(600);
+  return [
+    {id: 1, name: 'order 1', amount: 300},
+    {id: 2, name: 'order 2', amount: 600},
+    {id: 3, name: 'order 3', amount: 900},
+  ];
+}
 
-  CartOutlet.update(nextCart);
-  return resp;
+async function fetchOrderById(id) {
+  await delay(600);
+  return {id, name: `order ${id}`, amount: 300};
 }
 
 export {
@@ -129,4 +136,6 @@ export {
   removeFromCart,
   editConfig,
   checkoutRequest,
+  fetchOrders,
+  fetchOrderById,
 };
