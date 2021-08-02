@@ -13,6 +13,7 @@
     {
       "title": "公開",
       "key": "public",
+      "dataIndex": "public",
       "dataType": "boolean"
     },
     {

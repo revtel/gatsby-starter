@@ -20,4 +20,9 @@ function renderCustomSection(props) {
   return null;
 }
 
-export {renderCustomSection};
+function renderCustomCol(props) {
+  const {col, record} = props;
+  return null;
+}
+
+export {renderCustomSection, renderCustomCol};

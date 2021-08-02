@@ -3,6 +3,7 @@ import {useOutlet} from 'reconnect.js';
 import AdminForm from './AdminForm';
 import TableEditor from './TableEditor';
 import * as Generic from '../../Generic';
+import * as AppActions from '../../AppActions';
 
 function AdminResourcePage(props) {
   const [actions] = useOutlet('actions');
@@ -50,7 +51,20 @@ function AdminResourcePage(props) {
 
   const columns_ = columns.map((col) => {
     if (col.dataType === 'boolean') {
-      col.render = (_, record) => <div>{record.public ? '是' : '否'}</div>;
+      col.render = (_, record) => (
+        <div>{record[col.dataIndex] ? '是' : '否'}</div>
+      );
+      col.render = (_, record) => (
+        <div>{record[col.dataIndex] ? '是' : '否'}</div>
+      );
+    } else if (col.dataType === 'timestamp') {
+      col.render = (_, record) => (
+        <div>{new Date(record[col.dataIndex]).toISOString().split('T')[0]}</div>
+      );
+    } else if (col.customType) {
+      col.render = (_, record) => {
+        return AppActions.renderCustomAdminCol({col, record});
+      };
     }
     return col;
   });

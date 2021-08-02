@@ -47,6 +47,10 @@ function renderCustomAdminSection(props) {
   return CustomAdminRenderer.renderCustomSection(props);
 }
 
+function renderCustomAdminCol(props) {
+  return CustomAdminRenderer.renderCustomCol(props);
+}
+
 /**
  * **************************************************
  * (client) JStorage powered product fetching APIs
@@ -218,6 +222,7 @@ export {
   navigate,
   renderCustomSection,
   renderCustomAdminSection,
+  renderCustomAdminCol,
   clientJStorageFetch,
   clientJStorageFetchById,
   clientFetchArticles,
