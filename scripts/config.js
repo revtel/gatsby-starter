@@ -8,7 +8,7 @@ function config() {
     data.apiHost = 'https://puzzlego-api-stg.revtel2.com';
     data.authHost = 'https://auth-stg.revtel-api.com/v4';
     data.jstoreHost = 'https://jstorage-stg.revtel-api.com/v1';
-    data.uploadHost = 'https://storage-stg.revtel-api.com/v3';
+    data.storageHost = 'https://storage-stg.revtel-api.com/v4';
     data.articleEditorHost = 'https://console.revtel2.com/article/editor';
   } else {
     data.stage = 'prod';
@@ -16,7 +16,7 @@ function config() {
     data.apiHost = 'https://puzzlego-api.revtel2.com';
     data.authHost = 'https://auth.revtel-api.com/v4';
     data.jstoreHost = 'https://jstorage.revtel-api.com/v1';
-    data.uploadHost = 'https://storage.revtel-api.com/v3';
+    data.storageHost = 'https://storage.revtel-api.com/v4';
     data.articleEditorHost = 'https://console-prod.netlify.com/article/editor';
   }
 

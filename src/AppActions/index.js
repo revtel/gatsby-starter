@@ -165,7 +165,7 @@ async function getUploadUrlFromFile(file, options = {}) {
   const fileType = file.type;
   const {acl = 'public-read'} = options;
   return await req(
-    `https://storage-stg.revtel-api.com/v4/storage/presigned/url?client_id=${
+    `${Config.storageHost}/storage/presigned/url?client_id=${
       Config.clientId
     }&token=${UserOutlet.getValue().token}`,
     {
@@ -181,7 +181,7 @@ async function getUploadUrlFromFile(file, options = {}) {
 
 async function fetchAllUploads() {
   return await req(
-    `https://storage-stg.revtel-api.com/v4/storage/file/list?client_id=${
+    `${Config.storageHost}/storage/file/list?client_id=${
       Config.clientId
     }&token=${UserOutlet.getValue().token}`,
     {
