@@ -1,10 +1,12 @@
 const fs = require('fs');
 
 function config() {
-  const data = {};
+  const data = {
+    clientId: 'revtel-puzzlego',
+  };
+
   if (process.env.REV_ENV === 'stg') {
     data.stage = 'stg';
-    data.clientId = 'revtel-puzzlego';
     data.apiHost = 'https://puzzlego-api-stg.revtel2.com';
     data.authHost = 'https://auth-stg.revtel-api.com/v4';
     data.jstoreHost = 'https://jstorage-stg.revtel-api.com/v1';
@@ -12,7 +14,6 @@ function config() {
     data.articleEditorHost = 'https://console.revtel2.com/article/editor';
   } else {
     data.stage = 'prod';
-    data.clientId = 'revtel-puzzlego';
     data.apiHost = 'https://puzzlego-api.revtel2.com';
     data.authHost = 'https://auth.revtel-api.com/v4';
     data.jstoreHost = 'https://jstorage.revtel-api.com/v1';
