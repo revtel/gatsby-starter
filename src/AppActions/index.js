@@ -5,7 +5,6 @@ import {req} from '../Utils/ApiUtil';
 import * as CustomRenderer from '../../custom/renderer';
 import * as CustomAdminRenderer from '../../custom/admin-renderer';
 
-const UserOutlet = getOutlet('user');
 const LoadingOutlet = getOutlet('loading');
 const ApiHookOutlet = getOutlet('ApiUtil');
 
@@ -157,42 +156,6 @@ async function fetchArticles() {
 
 /**
  * **************************************************
- * Storage APIs
- * **************************************************
- */
-async function getUploadUrlFromFile(file, options = {}) {
-  const fileKey = file.name.split('.')[0];
-  const fileType = file.type;
-  const {acl = 'public-read'} = options;
-  return await req(
-    `${Config.storageHost}/storage/presigned/url?client_id=${
-      Config.clientId
-    }&token=${UserOutlet.getValue().token}`,
-    {
-      method: 'POST',
-      data: {
-        acl,
-        'Content-Type': fileType,
-        key: `${fileKey}`,
-      },
-    },
-  );
-}
-
-async function fetchAllUploads() {
-  return await req(
-    `${Config.storageHost}/storage/file/list?client_id=${
-      Config.clientId
-    }&token=${UserOutlet.getValue().token}`,
-    {
-      method: 'POST',
-      data: {},
-    },
-  );
-}
-
-/**
- * **************************************************
  * Project Specific APIs
  * **************************************************
  */
@@ -228,8 +191,6 @@ export {
   clientFetchArticles,
   clientFetchArticleById,
   fetchArticles,
-  getUploadUrlFromFile,
-  fetchAllUploads,
   fetchRecords,
   fetchRecordById,
 };

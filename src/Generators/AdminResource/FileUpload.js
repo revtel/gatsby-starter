@@ -1,6 +1,7 @@
 import React from 'react';
-import {useOutlet} from 'reconnect.js';
 import {Upload, Button} from 'antd';
+import * as AppActions from '../../AppActions';
+import * as StorageActions from '../../Actions/Storage';
 
 const initialImageValue = {
   url: null,
@@ -9,14 +10,13 @@ const initialImageValue = {
 };
 
 function ImageUpload(props) {
-  const [actions] = useOutlet('actions');
   const {onFinished} = props;
   const [image, setImage] = React.useState(initialImageValue);
 
   const beforeUpload = async (file) => {
     try {
-      actions.setLoading(true);
-      let resp = await actions.getUploadUrlFromFile(file);
+      AppActions.setLoading(true);
+      let resp = await StorageActions.getUploadUrlFromFile(file);
       setImage({
         url: resp.url,
         data: resp.fields,
@@ -24,7 +24,7 @@ function ImageUpload(props) {
       });
     } catch (err) {
       alert('Api error');
-      actions.setLoading(false);
+      AppActions.setLoading(false);
     }
   };
 
@@ -33,11 +33,11 @@ function ImageUpload(props) {
       return;
     }
     if (info.file.status === 'done') {
-      actions.setLoading(false);
+      AppActions.setLoading(false);
       alert(`成功! ${image.filename}`);
       setImage(initialImageValue);
       if (onFinished) {
-        onFinished();
+        onFinished(image.filename);
       }
     }
   };

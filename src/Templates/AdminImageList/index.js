@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useOutlet} from 'reconnect.js';
 import {Button} from 'antd';
 import * as Generic from '../../Generic';
-import ImageUpload from '../../Components/ImageUpload';
+import FileUpload from '../../Generators/AdminResource/FileUpload';
+import * as AppActions from '../../AppActions';
+import * as StorageActions from '../../Actions/Storage';
 
 function AdminImageList(props) {
-  const [actions] = useOutlet('actions');
   const [updater, setUpdater] = React.useState(0);
 
   const buildFullPath = (filename) => filename;
 
-  function onFinished() {
-    console.log('updated');
+  function onFinished(fileUrl) {
+    console.log('updated', fileUrl);
     setUpdater(updater + 1);
   }
 
@@ -25,9 +25,9 @@ function AdminImageList(props) {
         name: '圖片',
         primaryKey: 'id',
         actions: {
-          setLoading: actions.setLoading,
+          setLoading: AppActions.setLoading,
           fetchRecords: async () => {
-            const {filenames} = await actions.fetchAllUploads();
+            const {filenames} = await StorageActions.fetchUploads();
             return filenames;
           },
           fetchRecordById: () => 0,
@@ -58,7 +58,7 @@ function AdminImageList(props) {
         ],
       }}
       renderDetailButton={null}
-      renderCreateButton={() => <ImageUpload onFinished={onFinished} />}
+      renderCreateButton={() => <FileUpload onFinished={onFinished} />}
       renderDetail={() => null}
       {...props}
     />
