@@ -28,11 +28,11 @@ function setLoading(loading) {
 }
 
 function navigate(nextRoute, options = {loading: false}) {
-  if (options?.loading) {
-    LoadingOutlet.update(true);
-  }
   const currRoute = '/' + window.location.href.split('/')[3];
   if (currRoute !== nextRoute) {
+    if (options?.loading) {
+      LoadingOutlet.update(true);
+    }
     nav(nextRoute);
   } else {
     console.log('path not changed, ignore...');
