@@ -67,6 +67,16 @@ async function updateDocument(collection, query, data) {
   );
 }
 
+async function deleteDocument(collection, query) {
+  return await req(
+    _appendToken(`${Config.jstoreHost}/document/${collection}/find-one/delete`),
+    {
+      method: 'POST',
+      data: {query},
+    },
+  );
+}
+
 async function bulkWriteDocuments(collection, operations) {
   return await req(
     _appendToken(`${Config.jstoreHost}/document/${collection}/bulk-write`),
@@ -104,5 +114,6 @@ export {
   fetchOneDocument,
   createDocument,
   updateDocument,
+  deleteDocument,
   bulkWriteDocuments,
 };
