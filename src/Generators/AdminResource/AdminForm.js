@@ -40,7 +40,7 @@ function AdminForm(props) {
               await actions.updateDocument(
                 collection,
                 {id: instance.id},
-                removeAutoFields(formData),
+                removeAutoFields({...formData, ...extValues}),
               );
             }
             message.success('成功!');
