@@ -15,7 +15,7 @@ function Form(props) {
     renderCustomSection,
   } = props;
   const [values, setValues] = React.useState(instance || {});
-  const [extValues, setExtValues] = React.useState(instance || {});
+  const [extValues, setExtValues] = React.useState({});
   const submitBtnRef = React.useRef();
 
   return (
