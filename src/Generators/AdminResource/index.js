@@ -23,6 +23,8 @@ function AdminResourcePage(props) {
     formSpec,
     createFormSpec,
     actionBar = ['article', 'file'],
+    renderCreateButton,
+    renderDetailButton,
   } = resource;
 
   if (inlineEditor) {
@@ -84,6 +86,8 @@ function AdminResourcePage(props) {
         columns: columns_,
       }}
       querySpec={querySpec}
+      renderCreateButton={renderCreateButton}
+      renderDetailButton={renderDetailButton}
       renderDetail={(props) => {
         if (props.instance) {
           return (
