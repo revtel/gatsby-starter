@@ -16,6 +16,7 @@ function config() {
     // site tracking
     data.gaId = '';
     data.gtmId = '';
+    data.fbPixelId = '';
   } else {
     data.stage = 'prod';
     data.apiHost = 'https://puzzlego-api.revtel2.com';
@@ -27,6 +28,7 @@ function config() {
     // site tracking
     data.gaId = '';
     data.gtmId = '';
+    data.fbPixelId = '';
   }
 
   fs.writeFileSync('./data.json', JSON.stringify(data, null, 2), 'utf8');

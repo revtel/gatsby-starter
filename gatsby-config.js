@@ -125,4 +125,14 @@ if (data.gtmId !== '') {
   });
 }
 
+if (data.fbPixelId !== '') {
+  console.log('****** fbPixelId', data.fbPixelId);
+  GatsbyConfig.plugins.push({
+    resolve: `gatsby-plugin-facebook-pixel`,
+    options: {
+      pixelId: data.fbPixelId,
+    },
+  });
+}
+
 module.exports = GatsbyConfig;

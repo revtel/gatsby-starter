@@ -7,5 +7,6 @@
   "storageHost": "https://storage-stg.revtel-api.com/v4",
   "articleEditorHost": "https://console.revtel2.com/article/editor",
   "gaId": "",
-  "gtmId": ""
+  "gtmId": "",
+  "fbPixelId": ""
 }
