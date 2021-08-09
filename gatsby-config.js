@@ -111,4 +111,18 @@ if (data.gaId !== '') {
   });
 }
 
+if (data.gtmId !== '') {
+  console.log('****** gtmId', data.gtmId);
+  GatsbyConfig.plugins.push({
+    resolve: 'gatsby-plugin-google-tagmanager',
+    options: {
+      id: data.gtmId,
+      includeInDevelopment: false,
+      defaultDataLayer: {platform: 'gatsby FE'},
+      enableWebVitalsTracking: true,
+      routeChangeEventName: 'route-change',
+    },
+  });
+}
+
 module.exports = GatsbyConfig;

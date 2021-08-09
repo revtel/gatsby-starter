@@ -6,5 +6,6 @@
   "jstoreHost": "https://jstorage-stg.revtel-api.com/v1",
   "storageHost": "https://storage-stg.revtel-api.com/v4",
   "articleEditorHost": "https://console.revtel2.com/article/editor",
-  "gaId": ""
+  "gaId": "",
+  "gtmId": ""
 }
