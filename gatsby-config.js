@@ -3,8 +3,9 @@
  *
  * See: https://www.gatsbyjs.com/docs/gatsby-config/
  */
+const data = require('./data.json');
 
-module.exports = {
+const GatsbyConfig = {
   /* Your site config here */
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -86,3 +87,28 @@ module.exports = {
     },
   ],
 };
+
+if (data.gaId !== '') {
+  console.log('****** gaId', data.gaId);
+  GatsbyConfig.plugins.push({
+    resolve: `gatsby-plugin-google-analytics`,
+    options: {
+      // The property ID; the tracking code won’t be generated without it
+      trackingId: data.gaId,
+      // Defines where to place the tracking script - `true` in the head and `false` in the body
+      head: false,
+      // Setting this parameter is optional
+      anonymize: true,
+      // Setting this parameter is also optional
+      respectDNT: true,
+      // Avoids sending pageview hits from custom paths
+      exclude: [],
+      // Delays sending pageview hits on route update (in milliseconds)
+      pageTransitionDelay: 0,
+      // Defers execution of google analytics script after page load
+      optimizeId: 'ec',
+    },
+  });
+}
+
+module.exports = GatsbyConfig;
