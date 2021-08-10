@@ -9,8 +9,8 @@ const FormSpec = {
     title: '',
     type: 'object',
     properties: {
-      id: {type: 'id', title: 'id', readOnly: true},
-      total: {type: 'total', title: 'total', default: 100, readOnly: true},
+      id: {type: 'string', title: 'id', readOnly: true},
+      total: {type: 'number', title: 'total', default: 100, readOnly: true},
     },
   },
   uiSchema: {},
