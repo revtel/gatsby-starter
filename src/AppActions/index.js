@@ -50,6 +50,10 @@ function renderCustomAdminCol(props) {
   return CustomAdminRenderer.renderCustomCol(props);
 }
 
+async function fetchCustomResources(resource, {sort, keyword, paging}) {
+  return null;
+}
+
 /**
  * **************************************************
  * (client) JStorage powered product fetching APIs
@@ -186,6 +190,7 @@ export {
   renderCustomSection,
   renderCustomAdminSection,
   renderCustomAdminCol,
+  fetchCustomResources,
   clientJStorageFetch,
   clientJStorageFetchById,
   clientFetchArticles,
