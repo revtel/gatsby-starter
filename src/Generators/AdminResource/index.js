@@ -4,9 +4,10 @@ import AdminForm from './AdminForm';
 import TableEditor from './TableEditor';
 import * as Generic from '../../Generic';
 import * as AppActions from '../../AppActions';
+import * as JStorageActions from '../../Actions/JStorage';
 
 function AdminResourcePage(props) {
-  const [actions] = useOutlet('actions');
+  const [user] = useOutlet('user');
   const {
     pageContext: {resource, config},
   } = props;
@@ -16,6 +17,9 @@ function AdminResourcePage(props) {
     collection,
     primaryKey = 'id',
     searchField = 'searchText',
+    searchFields,
+    predefinedQueries,
+    userField,
     path,
     name,
     columns,
@@ -31,24 +35,55 @@ function AdminResourcePage(props) {
     return <TableEditor resource={resource} config={config} />;
   }
 
-  function fetchRecords({sort, keyword, paging} = {}) {
-    return actions.fetchDocuments(
-      collection,
-      keyword
-        ? {
-            [searchField]: {
-              $regex: `${keyword}`,
-              $options: 'g',
-            },
-          }
-        : {},
-      sort ? [sort] : [],
+  async function fetchRecords({sort, keyword, paging} = {}) {
+    const resp = await AppActions.fetchCustomResources(resource, {
+      sort,
+      keyword,
       paging,
-    );
+    });
+
+    if (resp === null) {
+      const query = {};
+
+      if (Array.isArray(predefinedQueries)) {
+        for (const q of predefinedQueries) {
+          Object.assign(query, q);
+        }
+      }
+
+      if (userField) {
+        query[userField] = user.sub;
+      }
+
+      if (Array.isArray(searchFields)) {
+        const searchArr = [];
+        for (const field of searchFields) {
+          searchArr[field] = {
+            $regex: `${keyword}`,
+            $options: 'g',
+          };
+        }
+        query['$or'] = searchArr;
+      } else if (searchField) {
+        query[searchField] = {
+          $regex: `${keyword}`,
+          $options: 'g',
+        };
+      }
+
+      return await JStorageActions.fetchDocuments(
+        collection,
+        query,
+        sort ? [sort] : [],
+        paging,
+      );
+    }
+
+    return resp;
   }
 
   function fetchRecordById(id) {
-    return actions.fetchOneDocument(collection, {[primaryKey]: id});
+    return JStorageActions.fetchOneDocument(collection, {[primaryKey]: id});
   }
 
   const columns_ = columns.map((col) => {
@@ -79,7 +114,7 @@ function AdminResourcePage(props) {
         name,
         primaryKey,
         actions: {
-          setLoading: actions.setLoading,
+          setLoading: AppActions.setLoading,
           fetchRecords,
           fetchRecordById,
         },
