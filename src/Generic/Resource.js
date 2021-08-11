@@ -11,6 +11,7 @@ function Resource(props) {
     renderDetail,
     renderCreateButton,
     renderDetailButton,
+    renderCustomSection,
     onCreate,
     onGoToDetail,
     querySpec = {},
@@ -222,6 +223,16 @@ function Resource(props) {
               </Button>
             ))}
         </Row>
+
+        {renderCustomSection &&
+          renderCustomSection({
+            path: spec.path,
+            type: 'list',
+            context: {
+              position: 'top',
+              records,
+            },
+          })}
 
         {(canPaging || canSort || canSearch) && (
           <div

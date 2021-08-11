@@ -7,7 +7,7 @@ import FileUpload from './FileUpload';
 import * as AppActions from '../../AppActions';
 
 function AdminForm(props) {
-  const {instance, collection, actionBar, formSpec, config} = props;
+  const {path, instance, collection, actionBar, formSpec, config} = props;
   const [actions] = useOutlet('actions');
   const [user] = useOutlet('user');
 
@@ -52,8 +52,8 @@ function AdminForm(props) {
         }}
         renderCustomSection={(props) =>
           AppActions.renderCustomAdminSection({
+            path,
             type: 'form',
-            name: formSpec.customName || 'AdminForm',
             context: props,
           })
         }

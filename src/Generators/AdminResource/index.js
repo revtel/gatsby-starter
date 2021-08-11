@@ -123,6 +123,7 @@ function AdminResourcePage(props) {
       querySpec={querySpec}
       renderCreateButton={renderCreateButton}
       renderDetailButton={renderDetailButton}
+      renderCustomSection={AppActions.renderCustomAdminSection}
       renderDetail={(props) => {
         if (props.instance) {
           return (
@@ -132,6 +133,7 @@ function AdminResourcePage(props) {
               actionBar={actionBar}
               formSpec={formSpec}
               config={config}
+              path={path}
             />
           );
         } else {
@@ -142,6 +144,7 @@ function AdminResourcePage(props) {
               actionBar={actionBar}
               formSpec={createFormSpec || formSpec}
               config={config}
+              path={path}
             />
           );
         }
