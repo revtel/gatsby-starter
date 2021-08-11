@@ -7,7 +7,6 @@ import ContactModal from './Components/ContactModal';
 import ResetPasswordModal from './Components/ResetPasswordModal';
 
 function Provider(props) {
-  const Dimension = getOutlet('dimension');
   const detectDimension = React.useCallback(() => {
     const nextDimension = {};
     if (typeof window !== undefined) {
@@ -18,7 +17,7 @@ function Provider(props) {
       } else {
         nextDimension.rwd = 'desktop';
       }
-      Dimension.update(nextDimension);
+      getOutlet('dimension').update(nextDimension);
     }
   }, []);
 
