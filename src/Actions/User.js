@@ -11,7 +11,7 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 ApiHookOutlet.update({
   ...ApiHookOutlet.getValue(),
   onError: async (url, payload, resp) => {
-    if (url.indexOf('token=') > -1 && resp.status === 401) {
+    if (url.indexOf('token=') > -1 && resp.status === 410) {
       console.log('onError try autoLogin');
       const result = await autoLogin();
       if (result) {
