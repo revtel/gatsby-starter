@@ -60,5 +60,6 @@ getNewOutlet(
   },
   {autoDelete: false},
 );
+getNewOutlet('dimension', {rwd: 'mobile'}, {autoDelete: false});
 getNewOutlet('actions', null, {autoDelete: false});
 getNewOutlet('ApiUtil', {}, {autoDelete: false});
