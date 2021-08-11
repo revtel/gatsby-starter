@@ -58,16 +58,12 @@ function AdminResourcePage(props) {
       if (Array.isArray(searchFields)) {
         const searchArr = [];
         for (const field of searchFields) {
-          searchArr[field] = {
-            $regex: `${keyword}`,
-            $options: 'g',
-          };
+          searchArr.push({[field]: {$regex: `${keyword}`}});
         }
         query['$or'] = searchArr;
       } else if (searchField) {
         query[searchField] = {
           $regex: `${keyword}`,
-          $options: 'g',
         };
       }
 
