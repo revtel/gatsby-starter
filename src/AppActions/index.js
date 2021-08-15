@@ -27,7 +27,7 @@ function setLoading(loading) {
 }
 
 function navigate(nextRoute, options = {loading: false}) {
-  const currRoute = '/' + window.location.href.split('/')[3];
+  const currRoute = '/' + window.location.href.split('/').slice(3).join('/');
   if (currRoute !== nextRoute) {
     if (options?.loading) {
       LoadingOutlet.update(true);
