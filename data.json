@@ -1,7 +1,7 @@
 {
   "clientId": "revtel-puzzlego",
   "stage": "stg",
-  "apiHost": "https://puzzlego-api-stg.revtel2.com",
+  "apiHost": "https://ecstarter-api-stg.revtel2.com",
   "authHost": "https://auth-stg.revtel-api.com/v4",
   "jstoreHost": "https://jstorage-stg.revtel-api.com/v1",
   "storageHost": "https://storage-stg.revtel-api.com/v4",

@@ -2,12 +2,12 @@ const fs = require('fs');
 
 function config() {
   const data = {
-    clientId: 'revtel-puzzlego',
+    clientId: 'ecstarter',
   };
 
   if (process.env.REV_ENV === 'stg') {
     data.stage = 'stg';
-    data.apiHost = 'https://puzzlego-api-stg.revtel2.com';
+    data.apiHost = 'https://ecstarter-api-stg.revtel2.com';
     data.authHost = 'https://auth-stg.revtel-api.com/v4';
     data.jstoreHost = 'https://jstorage-stg.revtel-api.com/v1';
     data.storageHost = 'https://storage-stg.revtel-api.com/v4';
@@ -19,7 +19,7 @@ function config() {
     data.fbPixelId = '';
   } else {
     data.stage = 'prod';
-    data.apiHost = 'https://puzzlego-api.revtel2.com';
+    data.apiHost = 'https://ecstarter-api.revtel2.com';
     data.authHost = 'https://auth.revtel-api.com/v4';
     data.jstoreHost = 'https://jstorage.revtel-api.com/v1';
     data.storageHost = 'https://storage.revtel-api.com/v4';
