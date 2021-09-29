@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {Modal, Button, Input, Form} from 'antd';
 import {useOutlet} from 'reconnect.js';
+import * as User from 'rev.sdk.js/Actions/User';
 import * as AppActions from '../AppActions';
-import * as UserActions from '../Actions/User';
 
 function ResetPasswordModal(props) {
   const [info, setVisible] = useOutlet('reset-password-modal');
@@ -25,7 +25,7 @@ function ResetPasswordModal(props) {
 
     await AppActions.setLoading(true);
     try {
-      await UserActions.resetPassword({org_password, new_password}, admin);
+      await User.resetPassword({org_password, new_password}, admin);
     } catch (ex) {
       console.warn('EX', ex);
       alert('API failed');
@@ -41,6 +41,7 @@ function ResetPasswordModal(props) {
 
   return (
     <Modal
+      destroyOnClose={true}
       title={null}
       footer={null}
       bodyStyle={{padding: 0}}
@@ -60,12 +61,12 @@ function ResetPasswordModal(props) {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}>
             <Form.Item
-              label="原密碼"
+              label="舊密碼"
               name="org_password"
               rules={[
                 {
                   required: true,
-                  message: '原密碼不可為空',
+                  message: '舊密碼不可為空',
                 },
               ]}>
               <Input.Password />
@@ -112,7 +113,8 @@ const Wrapper = styled.div`
 `;
 
 const Center = styled.div`
-  width: 320px;
+  max-width: 320px;
+  width: 100%;
   margin: 0 auto;
 `;
 

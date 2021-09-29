@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Chat} from '@styled-icons/crypto';
+import {Chat} from '@styled-icons/crypto/Chat';
 
 function Fab(props) {
   const {fab} = props;

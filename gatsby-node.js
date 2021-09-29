@@ -1,5 +1,6 @@
 const path = require('path');
 const onCreateNode = require('./gatsby/onCreateNode');
+const onCreateWebpackConfig = require('./gatsby/onCreateWebpackConfig');
 const config = require('./data.json');
 const AppPages = require('./src/AppPages');
 
@@ -110,3 +111,4 @@ exports.createPages = async ({graphql, actions}) => {
 };
 
 exports.onCreateNode = onCreateNode;
+exports.onCreateWebpackConfig = onCreateWebpackConfig;

@@ -1,0 +1,99 @@
+{
+	"path": "/admin/users",
+	"name": "會員",
+	"collection": "user_profile",
+	"primaryKey": "id",
+	"searchField": "",
+	"columns": [
+		{
+			"title": "姓名",
+			"key": "name",
+			"dataIndex": "name"
+		},
+		{
+			"title": "手機",
+			"key": "phone",
+			"dataIndex": "phone"
+		},
+		{
+			"title": "電子信箱",
+			"key": "email",
+			"dataIndex": "email"
+		},
+		{
+			"title": "創建時間",
+			"key": "created",
+			"dataIndex": "created",
+			"dataType": "timestamp"
+		}
+	],
+	"querySpec": {
+		"pageSizeOptions": [
+			10,
+			30,
+			50
+		],
+		"sortOptions": [
+			{
+				"name": "時間舊到新",
+				"value": "created"
+			},
+			{
+				"name": "時間新到舊",
+				"value": "-created"
+			}
+		],
+		"canSearch": true,
+		"outletKey": "userProfileQueryState"
+	},
+	"formSpec": {
+		"schema": {
+			"title": "",
+			"type": "object",
+			"required": [],
+			"properties": {
+				"name": {
+					"type": "string",
+					"title": "姓名"
+				},
+				"gender": {
+					"type": "boolean",
+					"title": "性別",
+					"enum": [
+						true,
+						false
+					],
+					"enumNames": [
+						"先生",
+						"小姐"
+					]
+				},
+				"phone": {
+					"type": "string",
+					"title": "手機"
+				},
+				"email": {
+					"type": "string",
+					"title": "電子信箱"
+				},
+				"address": {
+					"type": "string",
+					"title": "聯絡地址"
+				},
+				"note": {
+					"type": "string",
+					"title": "備註"
+				}
+			}
+		},
+		"uiSchema": {
+			"gender": {
+				"ui:widget": "radio"
+			},
+			"note": {
+				"ui:widget": "textarea"
+			}
+		}
+	},
+	"actionBar": null
+}

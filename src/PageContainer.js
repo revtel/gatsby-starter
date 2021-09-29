@@ -1,5 +1,6 @@
-import React from 'react';
+import './polyfill';
 import './App';
+import React from 'react';
 import * as AppContext from './AppContext';
 import Layout from './Components/Layout';
 

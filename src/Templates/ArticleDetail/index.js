@@ -4,9 +4,9 @@ import {navigate} from 'gatsby';
 import {useOutlet} from 'reconnect.js';
 import qs from 'query-string';
 import {PageHeader} from 'antd';
-import RichTextPreview from '../../Components/RichTextPreview';
+import RichTextPreview from 'rev.sdk.js/Components/RichTextPreview';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as AppActions from '../../AppActions';
-import * as JStorageActions from '../../Actions/JStorage';
 
 function ArticleDetail(props) {
   const prefixPath = '/article';
@@ -20,9 +20,7 @@ function ArticleDetail(props) {
     async function fetchData() {
       try {
         AppActions.setLoading(true);
-        setArticle(
-          await JStorageActions.fetchOneDocument('Article_Default', {id}),
-        );
+        setArticle(await JStorage.fetchOneDocument('Article_Default', {id}));
       } catch (ex) {
       } finally {
         AppActions.setLoading(false);
@@ -51,7 +49,7 @@ function ArticleDetail(props) {
           style={{display: 'flex', flexDirection: mobile ? 'column' : 'row'}}>
           <div style={{flex: 1}}>
             <PageHeader
-              title={'返回最新文章'}
+              title={'返回所有文章'}
               onBack={() => navigate(`/articles`)}
               style={{padding: 0}}
             />
@@ -77,7 +75,7 @@ const Wrapper = styled.div`
   padding-top: var(--topNavBarHeight);
 
   & > .content {
-    max-width: var(--contentMaxWith);
+    max-width: var(--contentMaxWidth);
     margin: 0 auto;
     padding: var(--basePadding);
   }

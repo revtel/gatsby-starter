@@ -1,0 +1,98 @@
+{
+  "path": "/admin/discount-list",
+  "name": "滿額折扣",
+  "collection": "discount",
+  "primaryKey": "id",
+  "searchFields": [],
+  "searchApproach": "union",
+  "columns": [
+    {
+      "title": "滿額折扣名稱",
+      "key": "name",
+      "dataIndex": "name"
+    },
+    {
+      "title": "滿額折扣起日",
+      "key": "start_time",
+      "dataIndex": "start_time",
+      "dataType": "timestamp"
+    },
+    {
+      "title": "滿額折扣迄日",
+      "key": "end_time",
+      "dataIndex": "end_time",
+      "dataType": "timestamp"
+    },
+    {
+      "title": "滿額折扣門檻",
+      "key": "threshold",
+      "dataIndex": "threshold"
+    },
+    {
+      "title": "滿額折扣金額",
+      "key": "discount",
+      "dataIndex": "discount"
+    }
+  ],
+  "querySpec": {
+    "pageSizeOptions": [
+      20
+    ],
+    "sortOptions": [
+      {
+        "name": "門檻由小到大",
+        "value": "threshold"
+      },
+      {
+        "name": "門檻由大到小",
+        "value": "-threshold"
+      }
+    ],
+    "canSearch": true
+  },
+  "formSpec": {
+    "customName": "discount",
+    "schema": {
+      "title": "",
+      "type": "object",
+      "required": [
+        "name",
+        "start_time",
+        "end_time",
+        "threshold",
+        "discount"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "滿額折扣名稱"
+        },
+        "start_time": {
+          "type": "number",
+          "title": "滿額折扣起日"
+        },
+        "end_time": {
+          "type": "number",
+          "title": "滿額折扣迄日"
+        },
+        "threshold": {
+          "type": "number",
+          "title": "滿額折扣門檻"
+        },
+        "discount": {
+          "type": "number",
+          "title": "滿額折扣金額"
+        }
+      }
+    },
+    "uiSchema": {
+      "start_time": {
+        "ui:widget": "rev-datetime-to-timestamp-picker"
+      },
+      "end_time": {
+        "ui:widget": "rev-datetime-to-timestamp-picker"
+      }
+    }
+  },
+  "actionBar": []
+}

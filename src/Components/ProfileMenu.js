@@ -1,7 +1,42 @@
 import React from 'react';
 import {navigate} from 'gatsby';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
-import {Menu} from 'antd';
+import {Menu, Tabs} from 'antd';
+import * as User from 'rev.sdk.js/Actions/User';
+import * as AppActions from '../AppActions';
+
+function ProfileTabs(props) {
+  const {activePath} = props;
+  const showResetPasswordModal = useOutletSetter('reset-password-modal');
+
+  function onTabClick(nextKey) {
+    if (nextKey[0] === '/') {
+      // this is a path, simply navigate to it
+      console.log('DBG', nextKey);
+      AppActions.navigate(nextKey);
+      return;
+    }
+
+    if (nextKey === 'reset-password') {
+      showResetPasswordModal({admin: false});
+    } else if (nextKey === 'logout') {
+      User.logout();
+      setTimeout(() => {
+        AppActions.navigate('/');
+      }, 100);
+    }
+  }
+
+  return (
+    <Tabs activeKey={activePath} onChange={onTabClick} style={{margin: 10}}>
+      <Tabs.TabPane key="/profile" tab="個人資訊" />
+      <Tabs.TabPane key="/checkout" tab="購物車" />
+      <Tabs.TabPane key="/profile/orders" tab="我的訂單" />
+      <Tabs.TabPane key="reset-password" tab="重設密碼" />
+      <Tabs.TabPane key="logout" tab="登出" />
+    </Tabs>
+  );
+}
 
 function ProfileMenu(props) {
   const [actions] = useOutlet('actions');
@@ -42,3 +77,4 @@ function ProfileMenu(props) {
 }
 
 export default ProfileMenu;
+export {ProfileTabs};

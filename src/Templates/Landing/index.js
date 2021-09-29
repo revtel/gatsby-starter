@@ -1,18 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Button} from 'antd';
-import {navigate, Link} from 'gatsby';
 import {StaticImage} from 'gatsby-plugin-image';
-import {useOutlet, useOutletSetter} from 'reconnect.js';
-import useBreakpoint from '../../Hooks/useBreakPoint';
-import ReactDelighters from '../../Components/ReactDelighters';
+import ReactDelighters from 'rev.sdk.js/Components/ReactDelighters';
 
 function Landing(props) {
-  const [user] = useOutlet('user');
-  const [actions] = useOutlet('actions');
-  const showLoginModal = useOutletSetter('login-modal');
-  const {passBreakpoint} = useBreakpoint(100);
-
   return (
     <ReactDelighters>
       <Wrapper>
@@ -200,24 +192,20 @@ const Wrapper = styled.div`
     position: relative;
     overflow-x: hidden;
   }
-
   & .landing-slide-in-right {
     opacity: 0;
     transform: translateX(2000px);
     transition: 350ms;
   }
-
   & .landing-slide-in-right.delighter.started {
     opacity: 1;
     transform: translateX(0px);
   }
-
   & .landing-slide-in-left {
     opacity: 0;
     transform: translateX(-2000px);
     transition: 350ms;
   }
-
   & .landing-slide-in-left.delighter.started {
     opacity: 1;
     transform: translateX(0px);
@@ -248,7 +236,6 @@ const HeroBannerSection = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   & > h2 {
     font-size: 32px;
     color: white;
@@ -261,14 +248,12 @@ const HeroBannerSection = styled.section`
 
 const RowBannerSection = styled.section`
   padding: 40px 20px;
-
   & > .content {
     max-width: 800px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: flex-start;
-
     & > .description {
       display: flex;
       flex-direction: column;
@@ -286,7 +271,6 @@ const RowBannerSection = styled.section`
 
 const FlexItemSection = styled.section`
   padding: 40px;
-
   & > .content {
     max-width: 1024px;
     margin: 0 auto;
@@ -303,7 +287,6 @@ const FlexItem = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   & > .description {
     display: flex;
     flex-direction: column;

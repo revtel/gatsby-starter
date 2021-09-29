@@ -4,8 +4,8 @@ import {navigate} from 'gatsby';
 import {Button, Input, Form} from 'antd';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import queryString from 'query-string';
+import * as User from 'rev.sdk.js/Actions/User';
 import * as AppActions from '../../AppActions';
-import * as UserActions from '../../Actions/User';
 
 function RequestPage(props) {
   const [user] = useOutlet('user');
@@ -34,7 +34,7 @@ function RequestPage(props) {
 
     try {
       await AppActions.setLoading(true);
-      await UserActions.forgotPasswordConfirm({
+      await User.forgotPasswordConfirm({
         new_password: password1,
         access_token,
       });

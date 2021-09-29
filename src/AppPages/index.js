@@ -19,13 +19,31 @@ const pages = [
 
   {
     path: `/articles`,
-    component: `src/Templates/ArticleList/index.js`,
-    context: {},
+    component: `src/Templates/ProductList/index.js`,
+    context: {
+      outlets: {
+        categories: 'articleCategories',
+        categoryDisplayMap: 'articleCategoryDisplayMap',
+        sortOptions: 'articleSortOptions',
+      },
+      prefixPath: '/articles',
+      detailPrefixPath: '/article',
+      collection: 'Article_Default',
+      features: {
+        cat: false,
+      },
+    },
   },
 
   {
     path: `/article`,
     component: `src/Templates/ArticleDetail/index.js`,
+    context: {},
+  },
+
+  {
+    path: `/about`,
+    component: `src/Templates/About/index.js`,
     context: {},
   },
 
@@ -94,29 +112,11 @@ const pages = [
     component: `src/Templates/Admin/index.js`,
     context: {},
   },
-
-  {
-    path: `/admin/settings`,
-    component: `src/Templates/AdminSettings/index.js`,
-    context: {},
-  },
-
-  {
-    path: `/admin/articles`,
-    component: `src/Templates/AdminArticles/index.js`,
-    context: {},
-  },
-
-  {
-    path: `/admin/images`,
-    component: `src/Templates/AdminImageList/index.js`,
-    context: {},
-  },
 ];
 
 const config = {
   generateAdmin: true,
-  generatePromo: true,
+  generatePromo: false,
   generateMarkdown: true,
 };
 

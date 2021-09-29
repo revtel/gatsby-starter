@@ -1,12 +1,12 @@
 {
   "clientId": "revtel-puzzlego",
   "stage": "stg",
-  "apiHost": "https://ecstarter-api-stg.revtel2.com",
+  "apiHost": "https://puzzlego-api-stg.revtel2.com",
   "authHost": "https://auth-stg.revtel-api.com/v4",
-  "jstoreHost": "https://jstorage-stg.revtel-api.com/v1",
+  "jstoreHost": "https://jstorage-stg.revtel-api.com/v2",
+  "jstoreVersion": "v2",
   "storageHost": "https://storage-stg.revtel-api.com/v4",
   "articleEditorHost": "https://console.revtel2.com/article/editor",
-  "gaId": "",
-  "gtmId": "",
-  "fbPixelId": ""
+  "gaId": "UA-208890632-1",
+  "gtagId": "GTM-TJ5LZNR"
 }

@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import {navigate} from 'gatsby';
-import {Tabs, Button, Select, Checkbox, message} from 'antd';
+import {Button, message, Tabs} from 'antd';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import qs from 'query-string';
-import RichTextPreview from '../../Components/RichTextPreview';
-import ProductVariants from '../../Components/ProductVariants';
-import BreadcrumbBar from '../../Templates/ProductList/BreadcrumbBar';
+import BreadcrumbBar from 'rev.sdk.js/Templates/ProductList/BreadcrumbBar';
+import ProductVariants from 'rev.sdk.js/Components/ProductVariants';
+import RichTextPreview from 'rev.sdk.js/Components/RichTextPreview';
+import * as Cart from 'rev.sdk.js/Actions/Cart';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import {mapLineBreak} from '../../Utils/TextUtil';
-import * as CartActions from '../../Actions/Cart';
 import * as AppActions from '../../AppActions';
 
 function ProductDetail(props) {
@@ -37,7 +38,7 @@ function ProductDetail(props) {
     async function fetchData() {
       try {
         AppActions.setLoading(true);
-        const resp = await AppActions.clientJStorageFetchById(collection, id);
+        const resp = await JStorage.fetchOneDocument(collection, {id});
         setProduct(resp);
         setQuantity(1);
         setImgIdx(0);
@@ -45,7 +46,9 @@ function ProductDetail(props) {
 
         // don't show global spinner for article fetching
         if (resp.article) {
-          setArticle(await AppActions.clientFetchArticleById(resp.article));
+          setArticle(
+            await JStorage.fetchOneDocument('Article_Default', resp.article),
+          );
         }
       } catch (ex) {
         console.warn(ex);
@@ -79,7 +82,7 @@ function ProductDetail(props) {
 
     try {
       AppActions.setLoading(true);
-      await CartActions.addToCart(product.id, currItemConfig);
+      await Cart.addToCart(product.id, currItemConfig);
       message.success('成功');
     } catch (ex) {
       console.warn(ex);
@@ -144,7 +147,6 @@ function ProductDetail(props) {
 
           <Summary>
             {renderCustomSection('C', {product})}
-            <h3>{(product.labels && product.labels[0]) || ''}</h3>
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             {renderCustomSection('D', {product})}
@@ -208,7 +210,6 @@ function ProductDetail(props) {
 
 const Wrapper = styled.div`
   padding-top: var(--topNavBarHeight);
-
   & > .content {
     max-width: var(--contentMaxWith);
     margin: 0 auto;
@@ -236,7 +237,6 @@ const Gallery = styled.div`
   position: sticky;
   top: calc(20px + var(--topNavBarHeight));
   `}
-
   & > img:first-child {
     width: ${(props) => props.size}px;
     height: ${(props) => props.size}px;
@@ -248,15 +248,13 @@ const Summary = styled.div`
   & h2 {
     font-size: 32px;
   }
-
   & h3 {
     font-size: 21px;
   }
-
-  & p {
+  & > p {
+    margin: 20px 0;
     font-size: 17px;
   }
-
   flex: 1;
   flex-basis: 450px;
   min-height: 700px;

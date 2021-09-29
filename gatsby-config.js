@@ -3,9 +3,10 @@
  *
  * See: https://www.gatsbyjs.com/docs/gatsby-config/
  */
-const data = require('./data.json');
 
-const GatsbyConfig = {
+const config = require('./data.json');
+
+module.exports = {
   /* Your site config here */
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -24,7 +25,7 @@ const GatsbyConfig = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `static/favicon.ico`,
+        icon: `static/favicon.png`,
       },
     },
     {
@@ -75,6 +76,8 @@ const GatsbyConfig = {
           javascriptEnabled: true,
           modifyVars: {
             'primary-color': 'orange',
+            'border-radius-base': '10px',
+            'padding-xss': '8px',
           },
         },
       },
@@ -85,54 +88,34 @@ const GatsbyConfig = {
         style: true,
       },
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        // The property ID; the tracking code won’t be generated without it
+        trackingId: config.gaId,
+        // Defines where to place the tracking script - `true` in the head and `false` in the body
+        head: false,
+        // Setting this parameter is optional
+        anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
+        // Avoids sending pageview hits from custom paths
+        exclude: [],
+        // Delays sending pageview hits on route update (in milliseconds)
+        pageTransitionDelay: 0,
+        // Defers execution of google analytics script after page load
+        optimizeId: 'ec',
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-google-tagmanager',
+      options: {
+        id: config.gtagId,
+        includeInDevelopment: false,
+        defaultDataLayer: {platform: 'gatsby FE'},
+        enableWebVitalsTracking: true,
+        routeChangeEventName: 'route-change',
+      },
+    },
   ],
 };
-
-if (data.gaId !== '') {
-  console.log('****** gaId', data.gaId);
-  GatsbyConfig.plugins.push({
-    resolve: `gatsby-plugin-google-analytics`,
-    options: {
-      // The property ID; the tracking code won’t be generated without it
-      trackingId: data.gaId,
-      // Defines where to place the tracking script - `true` in the head and `false` in the body
-      head: false,
-      // Setting this parameter is optional
-      anonymize: true,
-      // Setting this parameter is also optional
-      respectDNT: true,
-      // Avoids sending pageview hits from custom paths
-      exclude: [],
-      // Delays sending pageview hits on route update (in milliseconds)
-      pageTransitionDelay: 0,
-      // Defers execution of google analytics script after page load
-      optimizeId: 'ec',
-    },
-  });
-}
-
-if (data.gtmId !== '') {
-  console.log('****** gtmId', data.gtmId);
-  GatsbyConfig.plugins.push({
-    resolve: 'gatsby-plugin-google-tagmanager',
-    options: {
-      id: data.gtmId,
-      includeInDevelopment: false,
-      defaultDataLayer: {platform: 'gatsby FE'},
-      enableWebVitalsTracking: true,
-      routeChangeEventName: 'route-change',
-    },
-  });
-}
-
-if (data.fbPixelId !== '') {
-  console.log('****** fbPixelId', data.fbPixelId);
-  GatsbyConfig.plugins.push({
-    resolve: `gatsby-plugin-facebook-pixel`,
-    options: {
-      pixelId: data.fbPixelId,
-    },
-  });
-}
-
-module.exports = GatsbyConfig;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
-import {LoaderAlt} from '@styled-icons/boxicons-regular';
+import {LoaderAlt} from '@styled-icons/boxicons-regular/LoaderAlt';
 
 function ActivityIndicator(props) {
   const [visible] = useOutlet('loading');

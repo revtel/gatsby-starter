@@ -1,0 +1,43 @@
+{
+  "path": "/admin/site",
+  "name": "網站設定",
+  "collection": "site",
+  "primaryKey": "id",
+  "searchField": "",
+  "renderDeleteButton": null,
+  "columns": [
+    {
+      "title": "id",
+      "key": "id",
+      "dataIndex": "id"
+    }
+  ],
+  "formSpec": {
+    "customName": "site-form",
+    "schema": {
+      "title": "",
+      "type": "object",
+      "properties": {
+        "banners": {
+          "type": "array",
+          "title": "首頁 banner",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["url"],
+            "properties": {
+              "url": {
+                "type": "string",
+                "title": "圖片"
+              },
+              "link": {
+                "type": "string",
+                "title": "連結"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

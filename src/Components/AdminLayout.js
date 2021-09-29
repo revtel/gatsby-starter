@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import {Layout} from 'antd';
 import {navigate} from 'gatsby';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
-import {withLoginRequired} from './LoginRequired';
-import * as UserActions from '../Actions/User';
+import * as User from 'rev.sdk.js/Actions/User';
+import {withLoginRequired} from 'rev.sdk.js/Components/LoginRequired';
+import SiteNavBar from '../Components/SiteNavBar';
 
 const SiteInfo = {
   icon: '/images/revicon_512.png',
@@ -14,14 +15,18 @@ const SiteInfo = {
 
 const Routes = [
   {name: '首頁', path: '/admin'},
-  {name: '訂單', path: '/admin/orders'},
+  {name: '網站設定', path: '/admin/site'},
   {name: '商品', path: '/admin/products'},
-  {name: '商品(inline)', path: '/admin/products-table'},
+  {name: '訂單', path: '/admin/orders'},
+  {name: '會員', path: '/admin/users'},
   {name: '文章', path: '/admin/articles'},
-  {name: '圖片', path: '/admin/images'},
-  {name: '設定', path: '/admin/settings'},
+  {name: '優惠券', path: '/admin/coupons'},
+  {name: '滿額折扣', path: '/admin/discount-list'},
   {name: '重設密碼', path: 'reset-password'},
   {name: '登出', path: 'logout'},
+  // {name: '商品(inline)', path: '/admin/products-table'},
+  // {name: '圖片', path: '/admin/images'},
+  // {name: '設定', path: '/admin/settings'},
 ];
 
 function AdminLayout(props) {
@@ -39,7 +44,7 @@ function AdminLayout(props) {
     } else if (path === 'logout') {
       return {
         onClick: async () => {
-          await UserActions.logout();
+          await User.logout();
           navigate('/');
         },
       };
@@ -182,4 +187,7 @@ const MobileMainMenu = styled.button`
   justify-content: center;
 `;
 
-export default withLoginRequired(AdminLayout, true);
+export default withLoginRequired(AdminLayout, {
+  admin: true,
+  SiteNavBar,
+});

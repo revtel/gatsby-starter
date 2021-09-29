@@ -1,18 +1,36 @@
 import {getOutlet} from 'reconnect.js';
 import {navigate as nav} from 'gatsby';
-import Config from '../../data.json';
-import {req} from '../Utils/ApiUtil';
+import * as User from 'rev.sdk.js/Actions/User';
+import * as Cart from 'rev.sdk.js/Actions/Cart';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
+import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
+
 import * as CustomRenderer from '../../custom/renderer';
 import * as CustomAdminRenderer from '../../custom/admin-renderer';
+import Config from '../../data.json';
 
+const req = ApiUtil.req;
 const LoadingOutlet = getOutlet('loading');
 const ApiHookOutlet = getOutlet('ApiUtil');
+const UserOutlet = getOutlet('user');
 
 ApiHookOutlet.update({
   ...ApiHookOutlet.getValue(),
   onJson: (url, payload, jsonResp) => {
     // a sample hook, you can do whatever you want here
     return jsonResp;
+  },
+  onError: async (url, payload, resp) => {
+    if (url.indexOf('token=') > -1 && resp.status === 410) {
+      console.log('onError try autoLogin');
+      const result = await User.autoLogin();
+      if (result) {
+        console.log('onError autoLogin success, fetch resource again', result);
+        return req(url, payload, {ignoreOnErrorHook: true});
+      }
+      console.log('onError autoLogin failure, throw original error', result);
+      throw resp;
+    }
   },
 });
 
@@ -31,6 +49,11 @@ function navigate(nextRoute, options = {loading: false}) {
   if (currRoute !== nextRoute) {
     if (options?.loading) {
       LoadingOutlet.update(true);
+      if (typeof options.loading === 'number') {
+        setTimeout(() => {
+          LoadingOutlet.update(false);
+        }, options.loading);
+      }
     }
     nav(nextRoute);
   } else {
@@ -50,8 +73,8 @@ function renderCustomAdminCol(props) {
   return CustomAdminRenderer.renderCustomCol(props);
 }
 
-async function fetchCustomResources(resource, {sort, keyword, paging}) {
-  return null;
+function renderCustomComponent(props) {
+  return CustomRenderer.renderCustomComponent(props);
 }
 
 /**
@@ -64,123 +87,91 @@ async function clientJStorageFetch(collection, {cat, sort, search}) {
   const catQuery = cat ? {labels: {$regex: cat}} : {};
   const searchQuery = search ? {searchText: {$regex: search}} : {};
   const sortValue = sort ? [sort] : ['-created'];
+  const extraQueries = {};
+  let projection = null;
+
+  if (collection === 'product') {
+    extraQueries.public = true;
+  } else if (collection === 'Article_Default') {
+    delete catQuery.labels;
+    if (!cat) {
+      catQuery.label = 'blog';
+    } else {
+      catQuery.label = {$regex: cat};
+    }
+    projection = {content: 0};
+  }
+
+  const resp = await JStorage.fetchDocuments(
+    collection,
+    {
+      ...catQuery,
+      ...searchQuery,
+      ...extraQueries,
+    },
+    sortValue,
+    null, // no paging for now, since our EC products shouldn't be too much
+    projection, // if we're fetching Article, ignore the content
+    {anonymous: true},
+  );
+
+  return resp;
+}
+
+const getDefaultCheckoutFormSpec = () => ({
+  paymentSubTypes: [
+    Cart.PAYMENT_SUBTYPE.default,
+    Cart.PAYMENT_SUBTYPE.credit,
+    Cart.PAYMENT_SUBTYPE.cod,
+  ],
+  logisticsTypes: [Cart.LOGISTICS_TYPE.cvs, Cart.LOGISTICS_TYPE.home],
+  logisticsSubTypes: {
+    [Cart.LOGISTICS_TYPE.cvs]: [
+      Cart.LOGISTICS_SUBTYPE.famic2c,
+      Cart.LOGISTICS_SUBTYPE.hilifec2c,
+      Cart.LOGISTICS_SUBTYPE.unimartc2c,
+    ],
+    [Cart.LOGISTICS_TYPE.home]: [
+      Cart.LOGISTICS_SUBTYPE.TCAT,
+      Cart.LOGISTICS_SUBTYPE.ECAN,
+    ],
+  },
+});
+
+function onCartLoaded(cart) {
+  //TODO: depend on product logic for set init for cart value
+  const checkoutFormSpec = getDefaultCheckoutFormSpec();
+  const updateConfig = null;
+  return {
+    updateConfig,
+    checkoutFormSpec,
+  };
+}
+
+// 建立物流訂單 ( 通常會自行建立，此 api 用於意外發生，手動重新建立物流訂單 ）
+async function createLogisticsOrder(id) {
   return await req(
-    `${Config.jstoreHost}/document/${collection}/find?client_id=${Config.clientId}`,
-    {
-      method: 'POST',
-      data: {
-        query: {
-          public: true,
-          ...catQuery,
-          ...searchQuery,
-        },
-        sorting: sortValue,
-      },
-    },
-  );
-}
-
-async function clientJStorageFetchById(collection, id) {
-  return await req(
-    `${Config.jstoreHost}/document/${collection}/find-one?client_id=${Config.clientId}`,
-    {
-      method: 'POST',
-      data: {
-        query: {
-          id,
-        },
-      },
-    },
-  );
-}
-
-/**
- * **************************************************
- * (client) JStorage powered article fetching APIs
- * **************************************************
- */
-
-async function clientFetchArticles() {
-  const resp = await req(
-    `${Config.jstoreHost}/document/Article_Default/find?client_id=${Config.clientId}`,
-    {
-      method: 'POST',
-      data: {
-        query: {
-          label: 'blog',
-        },
-        paging: {
-          offset: 0,
-          limit: 100,
-        },
-        sorting: ['-created'],
-      },
-    },
-  );
-  return resp.results;
-}
-
-async function clientFetchArticleById(id) {
-  return await req(
-    `${Config.jstoreHost}/document/Article_Default/find-one?client_id=${Config.clientId}`,
-    {
-      method: 'POST',
-      data: {
-        query: {id},
-      },
-    },
-  );
-}
-
-/**
- * **************************************************
- * JStorage powered article fetching APIs
- * **************************************************
- */
-
-async function fetchArticles() {
-  const resp = await req(
-    `${Config.jstoreHost}/document/Article_Default/find?token=${
-      getOutlet('user').getValue().token
+    `${Config.apiHost}/order/logistics/create?token=${
+      UserOutlet.getValue().token
     }`,
     {
-      method: 'POST',
+      method: 'post',
       data: {
-        query: {},
-        paging: {
-          offset: 0,
-          limit: 10,
-        },
+        id: id,
       },
     },
   );
-  // TODO: Resource Component should support JStorage find API feature, such as paging and search
-  return resp.results;
 }
 
-/**
- * **************************************************
- * Project Specific APIs
- * **************************************************
- */
-
-async function fetchRecords(queryConfigs = null) {
-  await delay(600);
-  return [
-    {id: '1', name: 'Item 1', price: 100, stock: 10},
-    {id: '2', name: 'Item 2', price: 200, stock: 20},
-    {id: '3', name: 'Item 3', price: 300, stock: 30},
-  ];
+async function rebuild() {
+  await req('https://api.netlify.com/build_hooks/615418bee44904a94bd7b4ab', {
+    method: 'POST',
+    data: {},
+  });
 }
 
-async function fetchRecordById(id) {
-  await delay(600);
-  return {
-    id: `${id}`,
-    name: `Item ${id}`,
-    price: 250,
-    stock: 25,
-  };
+async function fetchCustomResources(resource, {sort, keyword, filter, paging}) {
+  return null;
 }
 
 export {
@@ -190,12 +181,10 @@ export {
   renderCustomSection,
   renderCustomAdminSection,
   renderCustomAdminCol,
-  fetchCustomResources,
+  renderCustomComponent,
   clientJStorageFetch,
-  clientJStorageFetchById,
-  clientFetchArticles,
-  clientFetchArticleById,
-  fetchArticles,
-  fetchRecords,
-  fetchRecordById,
+  fetchCustomResources,
+  onCartLoaded,
+  createLogisticsOrder,
+  rebuild,
 };

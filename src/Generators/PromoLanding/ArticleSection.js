@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
-import RichTextPreview from '../../Components/RichTextPreview';
+import RichTextPreview from 'rev.sdk.js/Components/RichTextPreview';
 
 function ArticleSection(props) {
   const [actions] = useOutlet('actions');
@@ -35,7 +35,7 @@ function ArticleSection(props) {
 
 const Wrapper = styled.div`
   & > .content {
-    max-width: var(--contentMaxWith);
+    max-width: var(--contentMaxWidth);
     margin: 0 auto;
     padding: var(--basePadding);
   }

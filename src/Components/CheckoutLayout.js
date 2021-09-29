@@ -2,10 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import qs from 'query-string';
-import {withLoginRequired} from './LoginRequired';
+import {withLoginRequired} from 'rev.sdk.js/Components/LoginRequired';
+import SiteNavBar from '../Components/SiteNavBar';
 
 function CheckoutLayout(props) {
   const [actions] = useOutlet('actions');
+  const {style = {}} = props;
   const params = qs.parse(props.location.search);
 
   function renderCustomSection(sectionId) {
@@ -17,7 +19,7 @@ function CheckoutLayout(props) {
   }
 
   return (
-    <Wrapper>
+    <Wrapper style={{...style}}>
       {renderCustomSection('A')}
 
       <div className="content">
@@ -37,10 +39,14 @@ const Wrapper = styled.div`
   padding-top: var(--topNavBarHeight);
 
   & > .content {
-    max-width: var(--contentMaxWith);
+    max-width: var(--contentMaxWidth);
+    min-height: var(--contentMinHeight);
     margin: 0 auto;
     padding: var(--basePadding);
   }
 `;
 
-export default withLoginRequired(CheckoutLayout);
+export default withLoginRequired(CheckoutLayout, {
+  admin: false,
+  SiteNavBar,
+});

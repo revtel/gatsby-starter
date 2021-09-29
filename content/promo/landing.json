@@ -1,0 +1,127 @@
+{
+  "path": "/",
+  "contact": {
+    "email": "whitedogg13@gmail.com",
+    "mobile": "0911222333",
+    "tel": "0911222333",
+    "addr": "Some where in Taipei City"
+  },
+  "nav": {
+    "global": true,
+    "title": "Printbar",
+    "description" : "Printbar"
+  },
+  "sections": [
+    {
+      "type": "hero",
+      "bg": "https://t3.ftcdn.net/jpg/02/93/11/46/360_F_293114646_6uJj1Sp1eLkIOebm9QL0Y18dzOt5eZtb.jpg",
+      "color": "orange",
+      "subColor": "orange",
+      "title": "Puzzle GO",
+      "subtitle": "創建你獨一無二的拼圖吧!",
+      "action": "/products",
+      "actionText": "立即選購"
+    },
+    {
+      "type": "custom",
+      "id": "puzzlify"
+    },
+    {
+      "type": "feature",
+      "bgColor": "white",
+      "color": "black",
+      "subColor": "grey",
+      "title": "或是, 看看我們替您精選的拼圖吧!",
+      "subtitle": "",
+      "items": [
+        {
+          "image": "https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/42-alu-silver-sport-white-nc-s3-gallery1_GEO_TW?wid=1000&hei=1000&fmt=jpeg&qlt=95&.v=1594259775000",
+          "title": "世界名畫",
+          "subtitle": "Feature description... Feature description... Feature description... ",
+          "action": "/products?cat=世界名畫",
+          "actionText": "立即選購"
+        },
+        {
+          "image": "https://media.gamestop.com/i/gamestop/11104141/POP-Games-Pokemon-Pikachu-Metallic?$pdp$",
+          "title": "風景名勝",
+          "subtitle": "Feature description... Feature description... Feature description... ",
+          "action": "/products?cat=風景名勝",
+          "actionText": "立即選購"
+        },
+        {
+          "image": "https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/5794f0251b1180998d72d1f8568239620ff5279c.png",
+          "title": "設計師聯名",
+          "subtitle": "Feature description... Feature description... Feature description... ",
+          "action": "/products?cat=設計師聯名",
+          "actionText": "立即選購"
+        }
+      ]
+    },
+    {
+      "type": "row",
+      "direction": "left",
+      "effect": "slide-in-left",
+      "bgColor": "white",
+      "color": "black",
+      "subColor": "grey",
+      "image": "https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/42-alu-silver-sport-white-nc-s3-gallery1_GEO_TW?wid=1000&hei=1000&fmt=jpeg&qlt=95&.v=1594259775000",
+      "title": "世界名畫",
+      "subtitle": "Feature description... Feature description... Feature description... ",
+      "action": "/products?cat=世界名畫"
+    },
+    {
+      "type": "row",
+      "direction": "right",
+      "effect": "slide-in-left",
+      "bgColor": "white",
+      "color": "black",
+      "subColor": "grey",
+      "image": "https://media.gamestop.com/i/gamestop/11104141/POP-Games-Pokemon-Pikachu-Metallic?$pdp$",
+      "title": "風景名勝",
+      "subtitle": "Feature description... Feature description... Feature description... ",
+      "action": "/products?cat=風景名勝"
+    },
+    {
+      "type": "row",
+      "direction": "left",
+      "effect": "slide-in-left",
+      "bgColor": "white",
+      "color": "black",
+      "subColor": "grey",
+      "image": "https://tw.portal-pokemon.com/play/resources/pokedex/img/pm/5794f0251b1180998d72d1f8568239620ff5279c.png",
+      "title": "設計師聯名",
+      "subtitle": "Feature description... Feature description... Feature description... ",
+      "action": "/products?cat=設計師聯名"
+    },
+    {
+      "type": "feature",
+      "bg": "https://t3.ftcdn.net/jpg/02/93/11/46/360_F_293114646_6uJj1Sp1eLkIOebm9QL0Y18dzOt5eZtb.jpg",
+      "color": "black",
+      "subColor": "grey",
+      "title": "Our Customers",
+      "subtitle": "Our customers is listed below",
+      "items": [
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        },
+        {
+          "image": "https://cdn.iconscout.com/icon/free/png-512/react-1543566-1306069.png",
+          "title": "Customer"
+        }
+      ]
+    }
+  ]
+}

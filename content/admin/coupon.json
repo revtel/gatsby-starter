@@ -1,0 +1,118 @@
+{
+  "path": "/admin/coupons",
+  "name": "優惠券",
+  "collection": "coupon",
+  "primaryKey": "id",
+  "searchFields": [],
+  "searchApproach": "union",
+  "columns": [
+    {
+      "title": "優惠名稱",
+      "key": "name",
+      "dataIndex": "name"
+    },
+    {
+      "title": "優惠代碼",
+      "key": "code",
+      "dataIndex": "code"
+    },
+    {
+      "title": "優惠起日",
+      "key": "start_time",
+      "dataIndex": "start_time",
+      "dataType": "timestamp"
+    },
+    {
+      "title": "優惠迄日",
+      "key": "end_time",
+      "dataIndex": "end_time",
+      "dataType": "timestamp"
+    },
+    {
+      "title": "優惠門檻",
+      "key": "threshold",
+      "dataIndex": "threshold"
+    },
+    {
+      "title": "優惠折抵",
+      "key": "discount",
+      "dataIndex": "discount"
+    },
+    {
+      "title": "優惠使用數量",
+      "key": "usage",
+      "dataIndex": "usage"
+    }
+  ],
+  "querySpec": {
+    "pageSizeOptions": [
+      20
+    ],
+    "sortOptions": [
+      {
+        "name": "門檻由小到大",
+        "value": "threshold"
+      },
+      {
+        "name": "門檻由大到小",
+        "value": "-threshold"
+      }
+    ],
+    "canSearch": true
+  },
+  "formSpec": {
+    "customName": "coupon",
+    "schema": {
+      "title": "",
+      "type": "object",
+      "required": [
+        "name",
+        "code",
+        "start_time",
+        "end_time",
+        "threshold",
+        "discount",
+        "usage"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "優惠名稱"
+        },
+        "code": {
+          "type": "string",
+          "title": "優惠代碼"
+        },
+        "start_time": {
+          "type": "number",
+          "title": "優惠起日"
+        },
+        "end_time": {
+          "type": "number",
+          "title": "優惠迄日"
+        },
+        "threshold": {
+          "type": "number",
+          "title": "優惠門檻"
+        },
+        "discount": {
+          "type": "number",
+          "title": "優惠折抵"
+        },
+        "usage": {
+          "type": "number",
+          "title": "優惠使用數量"
+        }
+      }
+    },
+    "uiSchema": {
+      "start_time": {
+        "ui:widget": "rev-datetime-to-timestamp-picker"
+      },
+      "end_time": {
+        "ui:widget": "rev-datetime-to-timestamp-picker"
+      }
+    }
+  },
+  "actionBar": []
+}

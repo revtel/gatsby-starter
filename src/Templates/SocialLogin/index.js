@@ -62,7 +62,7 @@ const Wrapper = styled.div`
   padding-top: var(--topNavBarHeight);
 
   & > .content {
-    max-width: var(--contentMaxWith);
+    max-width: var(--contentMaxWidth);
     margin: 40px auto;
     padding: var(--basePadding);
   }

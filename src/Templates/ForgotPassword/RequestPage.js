@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Button, Input, Form} from 'antd';
-import {useOutlet} from 'reconnect.js';
+import * as User from 'rev.sdk.js/Actions/User';
 import * as AppActions from '../../AppActions';
-import * as UserActions from '../../Actions/User';
 import CountdownTimer from '../../Components/CountdownTimer';
 
 function RequestPage(props) {
@@ -15,7 +14,7 @@ function RequestPage(props) {
 
     try {
       AppActions.setLoading(true);
-      await UserActions.forgotPasswordRequest({username});
+      await User.forgotPasswordRequest({username});
       setEndTime(new Date().getTime() + 2 * 60 * 1000);
       setRequestResult(true);
     } catch (ex) {

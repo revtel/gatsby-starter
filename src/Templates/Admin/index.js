@@ -1,10 +1,155 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
+import moment from 'moment';
+import {Card, Col, Divider, Row, Statistic} from 'antd';
 
-function AdminPage(props) {
+function getTurnOver(orders) {
+  return orders.reduce((acc, cur) => {
+    acc += cur.total;
+    return acc;
+  }, 0);
+}
+
+const StatisticSection = (props) => {
+  const [statistic, setStatistic] = useState({
+    mom: 0,
+    yoy: 0,
+    monthlyTurnOver: 0,
+    monthlyOrderCount: 0,
+    turnOver: 0,
+    orderCount: 0,
+  });
+
+  useEffect(() => {
+    const fetchAllOrders = async () => {
+      //FIXME: will have issue when order quantity over than 100 , because paging limit is 100
+      const resp = await JStorage.fetchDocuments('order', {});
+      const {results} = resp;
+      const now = moment(new Date());
+      const settled = results.filter((o) => !!o.payment_transaction_detail);
+
+      const currentMonthOrders = settled.filter(
+        (o) =>
+          moment(o.payment_transaction_detail.TradeDate).format('YYYY-MM') ===
+          now.format('YYYY-MM'),
+      );
+
+      const lastMonthOrders = settled.filter(
+        (o) =>
+          moment(o.payment_transaction_detail.TradeDate).format('YYYY-MM') ===
+          now.add(-1, 'months').format('YYYY-MM'),
+      );
+
+      const lastYearOrdersInSameMonth = settled.filter(
+        (o) =>
+          moment(o.payment_transaction_detail.TradeDate).format('YYYY') ===
+          now.add(-1, 'year').format('YYYY-MM'),
+      );
+
+      const mom =
+        (getTurnOver(currentMonthOrders) / getTurnOver(lastMonthOrders) - 1) *
+        100;
+
+      const yoy =
+        (getTurnOver(currentMonthOrders) /
+          getTurnOver(lastYearOrdersInSameMonth) -
+          1) *
+        100;
+
+      setStatistic((prev) => ({
+        ...prev,
+        mom: mom,
+        yoy: yoy,
+        monthlyTurnOver: getTurnOver(currentMonthOrders),
+        monthlyOrderCount: currentMonthOrders.length,
+        turnOver: getTurnOver(results),
+        orderCount: results.length,
+      }));
+    };
+    fetchAllOrders();
+  }, []);
+
+  return (
+    <div style={{margin: '10px 0'}}>
+      {/*<Divider orientation="center">營收成長率</Divider>*/}
+      {/*<Row gutter={[16, 16]}>*/}
+      {/*  <Col lg={12} md={24} xs={24} sm={24}>*/}
+      {/*    <Card>*/}
+      {/*      <Statistic*/}
+      {/*        title="MoM (月營收成長率）"*/}
+      {/*        value={isFinite(statistic.mom) ? statistic.mom : '尚無資料'}*/}
+      {/*        precision={2}*/}
+      {/*        valueStyle={{color: statistic.mom >= 0 ? 'red' : 'green'}}*/}
+      {/*        suffix={isFinite(statistic.mom) ? '%' : ''}*/}
+      {/*      />*/}
+      {/*    </Card>*/}
+      {/*  </Col>*/}
+      {/*  <Col lg={12} md={24} xs={24} sm={24}>*/}
+      {/*    <Card>*/}
+      {/*      <Statistic*/}
+      {/*        title="YoY (年營收成長率）"*/}
+      {/*        value={isFinite(statistic.yoy) ? statistic.yoy : '尚無資料'}*/}
+      {/*        valueStyle={{color: statistic.yoy >= 0 ? 'red' : 'green'}}*/}
+      {/*        precision={2}*/}
+      {/*        suffix={isFinite(statistic.yoy) ? '%' : ''}*/}
+      {/*      />*/}
+      {/*    </Card>*/}
+      {/*  </Col>*/}
+      {/*</Row>*/}
+      <Divider orientation="center">月報</Divider>
+      <Row gutter={[16, 16]}>
+        <Col lg={12} md={24} xs={24} sm={24}>
+          <Card>
+            <Statistic
+              title="本月營收"
+              value={statistic.monthlyTurnOver}
+              precision={2}
+              suffix="TWD"
+            />
+          </Card>
+        </Col>
+        <Col lg={12} md={24} xs={24} sm={24}>
+          <Card>
+            <Statistic
+              title="本月訂單數"
+              value={statistic.monthlyOrderCount}
+              precision={0}
+            />
+          </Card>
+        </Col>
+      </Row>
+      {/*<Divider orientation="center">總報</Divider>*/}
+      {/*<Row gutter={[16, 16]}>*/}
+      {/*  <Col lg={12} md={24} xs={24} sm={24}>*/}
+      {/*    <Card>*/}
+      {/*      <Statistic*/}
+      {/*        title="總營收"*/}
+      {/*        value={statistic.turnOver}*/}
+      {/*        precision={2}*/}
+      {/*        suffix="TWD"*/}
+      {/*      />*/}
+      {/*    </Card>*/}
+      {/*  </Col>*/}
+      {/*  <Col lg={12} md={24} xs={24} sm={24}>*/}
+      {/*    <Card>*/}
+      {/*      <Statistic*/}
+      {/*        title="總訂單數"*/}
+      {/*        value={statistic.orderCount}*/}
+      {/*        precision={0}*/}
+      {/*      />*/}
+      {/*    </Card>*/}
+      {/*  </Col>*/}
+      {/*</Row>*/}
+    </div>
+  );
+};
+
+function Settings(props) {
   return (
     <Wrapper>
       <h1>首頁</h1>
+      <StatisticSection />
     </Wrapper>
   );
 }
@@ -17,90 +162,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default AdminPage;
-
-/**
- * if you need some template for generic resources list to detail,
- * use following template codes
- */
-
-/*
-import React from 'react';
-import {useOutlet} from 'reconnect.js';
-import * as Generic from '../../Generic';
-
-const FormSpec = {
-  schema: {
-    title: '',
-    type: 'object',
-    required: ['name', 'price', 'stock'],
-    properties: {
-      name: {type: 'string', title: '商品名稱'},
-      price: {type: 'number', title: '商品價錢', default: 100},
-      stock: {
-        title: '庫存',
-        type: 'number',
-        default: 0,
-      },
-    },
-  },
-  uiSchema: {},
-};
-
-function Form(props) {
-  const {instance} = props;
-
-  return (
-    <Generic.Form
-      schema={FormSpec.schema}
-      uiSchema={FormSpec.uiSchema}
-      instance={instance}
-      onSubmit={(formData) => {
-        console.log('onSubmit', formData);
-      }}
-    />
-  );
-}
-
-function Dashboard(props) {
-  const [actions] = useOutlet('actions');
-
-  return (
-    <Generic.Resource
-      spec={{
-        path: '/admin',
-        name: '產品',
-        primaryKey: 'id',
-        actions: {
-          setLoading: actions.setLoading,
-          fetchRecords: actions.fetchRecords,
-          fetchRecordById: actions.fetchRecordById,
-        },
-        searchFields: [],
-        columns: [
-          {
-            title: '名稱',
-            key: 'name',
-            dataIndex: 'name',
-          },
-          {
-            title: '價錢',
-            key: 'price',
-            dataIndex: 'price',
-            sorter: (a, b) => a.price - b.price,
-          },
-          {
-            title: '庫存',
-            key: 'stock',
-            dataIndex: 'stock',
-          },
-        ],
-      }}
-      renderDetail={(props) => <Form {...props}/>}
-      {...props}
-    />
-  );
-}
-
-export default Dashboard;
-*/
+export default Settings;

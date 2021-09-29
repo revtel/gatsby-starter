@@ -4,7 +4,7 @@
   "name": "產品",
   "collection": "product",
   "primaryKey": "id",
-  "searchField": "searchText",
+  "searchFields": ["searchText"],
   "columns": [
     {
       "title": "id",
@@ -32,7 +32,7 @@
     }
   ],
   "querySpec": {
-    "pageSizeOptions": [10, 30, 50],
+    "pageSizeOptions": [2, 5, 10, 30, 50],
     "sortOptions": [
       {"name": "價錢低到高", "value": "price"},
       {"name": "價錢高到低", "value": "-price"}
