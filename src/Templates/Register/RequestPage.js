@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {Button, Input, Form} from 'antd';
 import {useOutlet} from 'reconnect.js';
+import Config from '../../../data.json';
 import CountdownTimer from '../../Components/CountdownTimer';
 
 function RequestPage(props) {
@@ -11,10 +12,11 @@ function RequestPage(props) {
 
   const onFinish = async (values) => {
     const {username} = values;
+    const primaryUserType = Config.primaryUserType;
 
     try {
       actions.setLoading(true);
-      await actions.registerRequest({email: username});
+      await actions.registerRequest(primaryUserType, username);
       setEndTime(new Date().getTime() + 2 * 60 * 1000);
       setRequestResult(true);
     } catch (ex) {
