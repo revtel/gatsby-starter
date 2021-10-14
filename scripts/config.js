@@ -3,6 +3,7 @@ const fs = require('fs');
 function config() {
   const data = {
     clientId: 'revtel-puzzlego',
+    primaryUserType: 'email',
   };
 
   if (process.env.REV_ENV === 'stg') {

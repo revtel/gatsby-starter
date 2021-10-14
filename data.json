@@ -1,5 +1,6 @@
 {
   "clientId": "revtel-puzzlego",
+  "primaryUserType": "email",
   "stage": "stg",
   "apiHost": "https://puzzlego-api-stg.revtel2.com",
   "authHost": "https://auth-stg.revtel-api.com/v4",
