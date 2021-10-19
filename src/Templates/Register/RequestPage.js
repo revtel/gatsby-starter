@@ -12,11 +12,10 @@ function RequestPage(props) {
 
   const onFinish = async (values) => {
     const {username} = values;
-    const primaryUserType = Config.primaryUserType;
 
     try {
       actions.setLoading(true);
-      await actions.registerRequest(primaryUserType, username);
+      await actions.registerRequest(username);
       setEndTime(new Date().getTime() + 2 * 60 * 1000);
       setRequestResult(true);
     } catch (ex) {
