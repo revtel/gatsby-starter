@@ -1,74 +1,62 @@
 import React from 'react';
 import styled from 'styled-components';
-import {navigate} from 'gatsby';
 import {useOutlet} from 'reconnect.js';
+import * as AppActions from '../AppActions';
 
 let LINK_ITEMS = [
   {
     title: '關於我們',
     to: '/about',
+    loading: 300,
     items: [
       {
         title: '品牌介紹',
         to: '/about#intro',
+        loading: 300,
       },
       {
         title: '客製化諮詢',
         to: '/about#consult',
+        loading: 300,
       },
       {
         title: '聯絡我們',
         to: '/about#contact',
+        loading: 300,
       },
     ],
   },
   {
     title: '商品項目',
     to: '/products',
+    loading: true,
     items: [
       {
         title: '主題商品',
         to: '/products?cat=theme',
+        loading: true,
       },
       {
         title: '客製商品',
         to: '/products?cat=custom',
+        loading: true,
       },
     ],
   },
-  // {
-  //   title: '問答FAQ',
-  //   to: '',
-  //   items: [
-  //     {
-  //       title: '購物指南',
-  //       to: '',
-  //     },
-  //     {
-  //       title: '客製化須知',
-  //       to: '',
-  //     },
-  //     {
-  //       title: '常見問題',
-  //       to: '',
-  //     },
-  //     {
-  //       title: '條款聲明',
-  //       to: '',
-  //     },
-  //   ],
-  // },
   {
     title: '文章',
-    to: '',
+    to: '/articles',
+    loading: true,
     items: [
       {
         title: '部落格',
         to: '/articles',
+        loading: true,
       },
       {
         title: '最新消息',
         to: '/articles?cat=news',
+        loading: true,
       },
     ],
   },
@@ -87,7 +75,7 @@ function SiteFooter(props) {
         }}>
         <div className="constrain">
           <h2
-            onClick={() => navigate('/')}
+            onClick={() => AppActions.navigate('/', {loading: 500})}
             style={{flex: 1, textAlign: 'center'}}>
             <img
               src="/images/revicon_512.png"
@@ -113,11 +101,15 @@ function SiteFooter(props) {
                 <div
                   className="link-title"
                   style={{color: '#0eb407'}}
-                  onClick={() => navigate('/')}>
+                  onClick={() => AppActions.navigate('/', {loading: 500})}>
                   {item.title}
                 </div>
                 {item.items.map((i) => (
-                  <div className="link-item" onClick={() => navigate(i.to)}>
+                  <div
+                    className="link-item"
+                    onClick={() =>
+                      AppActions.navigate(i.to, {loading: i.loading})
+                    }>
                     {i.title}
                   </div>
                 ))}

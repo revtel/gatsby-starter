@@ -4,6 +4,7 @@ import * as User from 'rev.sdk.js/Actions/User';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
+import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
 
 import * as CustomRenderer from '../../custom/renderer';
 import * as CustomAdminRenderer from '../../custom/admin-renderer';
@@ -45,7 +46,8 @@ function setLoading(loading) {
 }
 
 function navigate(nextRoute, options = {loading: false}) {
-  const currRoute = '/' + window.location.href.split('/').slice(3).join('/');
+  const currRoute = PathUtil.normalizedRoute();
+  nextRoute = PathUtil.normalizedRoute(nextRoute);
   if (currRoute !== nextRoute) {
     if (options?.loading) {
       LoadingOutlet.update(true);

@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
 import * as AppActions from '../AppActions';
 
 function NavLink(props) {
@@ -6,7 +7,7 @@ function NavLink(props) {
 
   return (
     <a
-      href={to}
+      href={PathUtil.normalizedRoute(to)}
       style={extraStyle}
       onClick={(evt) => {
         evt.preventDefault();
