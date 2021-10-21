@@ -6,11 +6,12 @@ import {useOutlet, useOutletSetter} from 'reconnect.js';
 import qs from 'query-string';
 import BreadcrumbBar from 'rev.sdk.js/Templates/ProductList/BreadcrumbBar';
 import ProductVariants from 'rev.sdk.js/Components/ProductVariants';
-import RichTextPreview from 'rev.sdk.js/Components/RichTextPreview';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import {mapLineBreak} from '../../Utils/TextUtil';
 import * as AppActions from '../../AppActions';
+import Carousel from '../../Components/Carousel';
+import FixedRatioImage from '../../Components/FixedRatioImage';
 
 function ProductDetail(props) {
   const {
@@ -125,7 +126,27 @@ function ProductDetail(props) {
         <TopSection>
           <Gallery dimension={dimension} size={gallerySize}>
             {product.images && product.images[imgIdx] && (
-              <img src={product.images[imgIdx]} alt="product" />
+              <Carousel
+                currIdxFromParent={imgIdx}
+                width={gallerySize}
+                height={gallerySize * (400 / 650)}
+                data={product.images}
+                renderPrev={null}
+                renderNext={null}
+                renderDots={null}
+                renderItem={({item}) => {
+                  return (
+                    <FixedRatioImage
+                      image={item}
+                      width="100%"
+                      ratio={400 / 650}
+                      mode="cover"
+                      alt="product"
+                    />
+                  );
+                }}
+                disableSwipe
+              />
             )}
 
             {product.images && (
@@ -195,9 +216,7 @@ function ProductDetail(props) {
         {renderCustomSection('E', {product})}
 
         {article && (
-          <ProductArticle>
-            <RichTextPreview content={article.content} />
-          </ProductArticle>
+          <ArticlePreview dangerouslySetInnerHTML={{__html: article.html}} />
         )}
 
         {renderCustomSection('F', {product})}
@@ -207,6 +226,12 @@ function ProductDetail(props) {
     </Wrapper>
   );
 }
+
+const ArticlePreview = styled.div`
+  & img {
+    max-width: 100%;
+  }
+`;
 
 const Wrapper = styled.div`
   padding-top: var(--topNavBarHeight);
@@ -229,14 +254,7 @@ const TopSection = styled.div`
 
 const Gallery = styled.div`
   width: ${(props) => props.size}px;
-  min-height: ${(props) => props.size}px;
   margin-bottom: 20px;
-  ${(props) =>
-    props.dimension?.innerWidth > 1000 &&
-    `
-  position: sticky;
-  top: calc(20px + var(--topNavBarHeight));
-  `}
   & > img:first-child {
     width: ${(props) => props.size}px;
     height: ${(props) => props.size}px;
@@ -247,6 +265,7 @@ const Gallery = styled.div`
 const Summary = styled.div`
   & h2 {
     font-size: 32px;
+    line-height: 1.57;
   }
   & h3 {
     font-size: 21px;
@@ -257,7 +276,6 @@ const Summary = styled.div`
   }
   flex: 1;
   flex-basis: 450px;
-  min-height: 700px;
 `;
 
 const LineSeperator = styled.section`
@@ -291,6 +309,9 @@ const MiniImageItem = styled.img`
   border-radius: 4px;
   object-fit: contain;
   cursor: pointer;
+  :first-child {
+    margin-left: 0px;
+  }
 `;
 
 export default ProductDetail;

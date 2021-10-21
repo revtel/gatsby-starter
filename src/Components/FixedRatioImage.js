@@ -20,7 +20,7 @@ function FixedRatioImage(props) {
           className="fixed-ratio-image"
           ratio={ratio}
           width={width}
-          style={{backgroundImage: `url(${image})`}}
+          style={{backgroundImage: `url("${image}")`}}
           mode={mode}
           extraCss={extraCss}
           rwd={rwd}>
@@ -33,7 +33,7 @@ function FixedRatioImage(props) {
   return (
     <Wrapper
       className="fixed-ratio-image"
-      style={{backgroundImage: `url(${image})`}}
+      style={{backgroundImage: `url("${image}")`}}
       ratio={ratio}
       width={width}
       image={image}
