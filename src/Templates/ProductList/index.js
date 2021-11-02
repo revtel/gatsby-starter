@@ -5,9 +5,9 @@ import * as AppActions from '../../AppActions';
 
 function ProductList(props) {
   let onCustomClick = (item) => {
-    if (props.location.pathname === '/products') {
+    if (props.location.pathname.indexOf('/products') > -1) {
       AppActions.navigate(`/product?id=${item.id}`, {loading: true});
-    } else if (props.location.pathname === '/articles') {
+    } else if (props.location.pathname.indexOf('/articles') > -1) {
       AppActions.navigate(`/article?id=${item.id}`, {loading: true});
     }
   };
