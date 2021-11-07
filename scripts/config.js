@@ -16,8 +16,8 @@ function config() {
     data.storageHost = 'https://storage-stg.revtel-api.com/v4';
     data.articleEditorHost = 'https://console.revtel2.com/article/editor';
 
-    data.gaId = 'UA-208890632-1';
-    data.gtagId = 'GTM-TJ5LZNR';
+    data.gaId = 'UA-127064537-1';
+    data.gtagId = 'GTM-P9CS5JX';
   } else {
     // https://www.pinbar.tw
     data.stage = 'prod';
@@ -29,8 +29,8 @@ function config() {
     data.storageHost = 'https://storage.revtel-api.com/v4';
     data.articleEditorHost = 'https://console-prod.netlify.com/article/editor';
 
-    data.gaId = 'UA-208890632-2';
-    data.gtagId = 'GTM-M8MD9TP';
+    data.gaId = 'UA-127064537-1';
+    data.gtagId = 'GTM-P9CS5JX';
   }
 
   fs.writeFileSync('./data.json', JSON.stringify(data, null, 2), 'utf8');
