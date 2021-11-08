@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import * as AppActions from '../AppActions';
+import {COMMENT_KEYS} from '@babel/types';
 
 let LINK_ITEMS = [
   {
@@ -61,6 +62,16 @@ let LINK_ITEMS = [
     ],
   },
 ];
+
+const CONTACT_INFO = {
+  email: 'revteltech@gmail.com.tw',
+  phone: '+886227366566',
+  addressGoogleMap: 'https://g.page/RevtelTech?share',
+
+  phoneDisplay: '02-2736-6566',
+  addressDisplay: '103台北市大同區民權西路136號10樓之5',
+  workTimeDisplay: '週一至週五上午10點至下午7點（例假日休息）',
+};
 
 function SiteFooter(props) {
   const [dimension] = useOutlet('dimension');
@@ -123,14 +134,34 @@ function SiteFooter(props) {
               alignSelf: 'stretch',
               marginTop: dimension.rwd === 'desktop' ? 0 : 40,
             }}>
-            <p className="info-text"> 聯絡我們</p>
-            <p className="info-text"> revteltech@gmail.com.tw</p>
-            <p className="info-text"> 02-2736-6566</p>
-            <p className="info-text"> 臺北市大安區和平東路二段76巷29弄4號1樓</p>
+            <p className="info-text">聯絡我們</p>
             <p className="info-text">
-              {' '}
-              週一至週五上午10點至下午7點（例假日休息）
+              <a
+                style={{textDecoration: 'none', color: 'grey'}}
+                aria-label="email"
+                href={'mailto:' + CONTACT_INFO.email}>
+                {CONTACT_INFO.email}
+              </a>
             </p>
+            <p className="info-text">
+              <a
+                style={{textDecoration: 'none', color: 'grey'}}
+                aria-label="email"
+                href={'tel:' + CONTACT_INFO.phone}>
+                {CONTACT_INFO.phoneDisplay}
+              </a>
+            </p>
+            <p className="info-text">
+              <a
+                style={{textDecoration: 'none', color: 'grey'}}
+                aria-label="email"
+                href={CONTACT_INFO.addressGoogleMap}
+                target="_blank"
+                rel="noreferrer">
+                {CONTACT_INFO.addressDisplay}
+              </a>
+            </p>
+            <p className="info-text">{CONTACT_INFO.workTimeDisplay}</p>
 
             <div
               className="info"
