@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Helmet} from 'react-helmet';
-import {useOutlet} from 'reconnect.js';
+import {useOutlet, getOutlet} from 'reconnect.js';
 import 'antd/dist/antd.less';
 import './Layout.css';
 import AdminLayout from './AdminLayout';
@@ -12,10 +12,30 @@ import SiteFooter from './SiteFooter';
 
 function Layout({children, location}) {
   const [dimension] = useOutlet('dimension');
+  const [initialized, setInitialized] = React.useState(false);
 
-  if (location.pathname.indexOf('admin') > -1) {
+  React.useEffect(() => {
+    const isAdmin = location.pathname.indexOf('admin') !== -1;
+
+    const initialize = async (isAdmin) => {
+      try {
+        await getOutlet('actions').getValue().autoLogin({admin: isAdmin});
+      } catch (ex) {
+        console.log('autoLogin ex', ex);
+        getOutlet('actions').getValue().logout();
+      }
+
+      setInitialized(true);
+    };
+
+    if (!initialized) {
+      initialize(isAdmin);
+    }
+  }, [location.pathname, initialized]);
+
+  if (location.pathname.indexOf('admin') !== -1) {
     return <AdminLayout location={location}>{children}</AdminLayout>;
-  } else if (location.pathname.indexOf('profile') > -1) {
+  } else if (location.pathname.indexOf('profile') !== -1) {
     return (
       <Wrapper rwd={dimension.rwd}>
         <SiteNavBar location={location} />
@@ -25,7 +45,7 @@ function Layout({children, location}) {
         <SiteFooter />
       </Wrapper>
     );
-  } else if (location.pathname.indexOf('checkout') > -1) {
+  } else if (location.pathname.indexOf('checkout') !== -1) {
     return (
       <Wrapper rwd={dimension.rwd}>
         <SiteNavBar location={location} />

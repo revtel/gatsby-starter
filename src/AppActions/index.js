@@ -24,7 +24,9 @@ ApiHookOutlet.update({
   onError: async (url, payload, resp) => {
     if (url.indexOf('token=') > -1 && resp.status === 410) {
       console.log('onError try autoLogin');
-      const result = await User.autoLogin();
+      const user = UserOutlet.getValue();
+      const isAdmin = user.grp.split(':').indexOf('admin') !== -1;
+      const result = await User.autoLogin({admin: isAdmin});
       if (result) {
         console.log('onError autoLogin success, fetch resource again', result);
         return req(url, payload, {ignoreOnErrorHook: true});
@@ -176,6 +178,31 @@ async function fetchCustomResources(resource, {sort, keyword, filter, paging}) {
   return null;
 }
 
+async function onLoginResult(err, result) {
+  console.log('onLoginResult', err, result);
+  if (!err) {
+    try {
+      setLoading(true);
+      const isAdmin = result.grp.split(':').indexOf('admin') !== -1;
+      if (!isAdmin) {
+        const queryKey = Config.jstoreVersion !== 'v1' ? 'owner' : 'id';
+        const profile = await JStorage.fetchOneDocument('user_profile', {
+          [queryKey]: UserOutlet.getValue().username,
+        });
+        UserOutlet.update({
+          ...UserOutlet.getValue(),
+          data: {...profile},
+        });
+        await Cart.fetchCart();
+      }
+    } catch (ex) {
+      console.warn('onLoginResult ex', ex);
+    } finally {
+      setLoading(false);
+    }
+  }
+}
+
 export {
   delay,
   setLoading,
@@ -186,6 +213,7 @@ export {
   renderCustomComponent,
   clientJStorageFetch,
   fetchCustomResources,
+  onLoginResult,
   onCartLoaded,
   createLogisticsOrder,
   rebuild,

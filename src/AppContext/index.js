@@ -44,12 +44,7 @@ function Provider(props) {
   React.useEffect(() => {
     console.log('AppCtx effect hook');
     async function onCtxRendered() {
-      try {
-        await getOutlet('actions').getValue().autoLogin();
-      } catch (ex) {
-        console.log('autoLogin ex', ex);
-        getOutlet('actions').getValue().logout();
-      }
+      //
     }
 
     onCtxRendered();
