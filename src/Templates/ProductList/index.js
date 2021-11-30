@@ -12,11 +12,13 @@ function ProductList(props) {
     }
   };
   return (
-    <ProductListPage
-      {...props}
-      ProductGrid={ProductGrid}
-      onCustomClick={onCustomClick}
-    />
+    <div style={{maxWidth: 'var(--contentMaxWidth)', margin: '0 auto'}}>
+      <ProductListPage
+        {...props}
+        ProductGrid={ProductGrid}
+        onCustomClick={onCustomClick}
+      />
+    </div>
   );
 }
 

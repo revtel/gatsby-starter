@@ -9,6 +9,7 @@ import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
 import * as CustomRenderer from '../../custom/renderer';
 import * as CustomAdminRenderer from '../../custom/admin-renderer';
 import Config from '../../data.json';
+import * as _ from 'lodash';
 
 const req = ApiUtil.req;
 const LoadingOutlet = getOutlet('loading');
@@ -140,12 +141,53 @@ const getDefaultCheckoutFormSpec = () => ({
       Cart.LOGISTICS_SUBTYPE.ECAN,
     ],
   },
+  invoiceCategories: [Cart.INVOICE_CATEGORY.b2c, Cart.INVOICE_CATEGORY.b2b],
+  invoiceCarrierTypes: [
+    Cart.INVOICE_CARRIER_TYPE.none,
+    Cart.INVOICE_CARRIER_TYPE.ecpay,
+    Cart.INVOICE_CARRIER_TYPE.cdc,
+    Cart.INVOICE_CARRIER_TYPE.mobile,
+  ],
 });
 
 function onCartLoaded(cart) {
-  //TODO: depend on product logic for set init for cart value
+  const supportedLogisticsTypes = _.uniq(
+    cart.items.reduce((acc, cur) => {
+      acc = [
+        ...acc,
+        ...(cur.product.extra_data.supported_logistics_types || [
+          Cart.LOGISTICS_TYPE.home,
+        ]),
+      ];
+      return acc;
+    }, []),
+  );
+  const defaultEmail = UserOutlet.getValue().data.email;
+
   const checkoutFormSpec = getDefaultCheckoutFormSpec();
-  const updateConfig = null;
+
+  checkoutFormSpec.logisticsTypes = supportedLogisticsTypes;
+
+  let updateConfig = supportedLogisticsTypes.includes(cart.logistics_type)
+    ? {}
+    : {
+        ...cart,
+        logistics_type: Cart.LOGISTICS_TYPE.home,
+        logistics_subtype: Cart.LOGISTICS_SUBTYPE.TCAT,
+      };
+
+  updateConfig = cart.buyer_email
+    ? {
+        ...updateConfig,
+      }
+    : {
+        ...cart,
+        ...updateConfig,
+        buyer_email: defaultEmail,
+      };
+
+  updateConfig = Object.keys(updateConfig).length <= 0 ? null : updateConfig;
+
   return {
     updateConfig,
     checkoutFormSpec,

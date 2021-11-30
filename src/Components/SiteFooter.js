@@ -228,7 +228,6 @@ const FlexItemSection = styled.section`
     max-width: var(--contentMaxWidth);
     display: flex;
     flex: 1;
-    ${(props) => console.log('props', props)}
     flex-direction: ${(props) => (props.isMobile ? 'column' : 'row')};
     /* align-items: center; */
   }

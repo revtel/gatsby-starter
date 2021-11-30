@@ -1,8 +1,10 @@
 import React from 'react';
-import {Button, Image, Steps} from 'antd';
+import {Steps} from 'antd';
+import {getOutlet} from 'reconnect.js';
 
 function renderCustomSection(props) {
   const {route, sectionId, params, data} = props;
+  const dimension = getOutlet('dimension');
 
   if (route === '/products') {
     if (['B', 'C', 'E', 'F', 'G', 'H', 'J'].indexOf(sectionId) > -1) {
@@ -112,7 +114,13 @@ function renderCustomSection(props) {
 
     if (sectionId === 'B') {
       return (
-        <Steps type="navigation" current={current} style={{marginBottom: 20}}>
+        <Steps
+          direction={
+            dimension.getValue().rwd === 'mobile' ? 'vertical' : 'horizontal'
+          }
+          type="navigation"
+          current={current}
+          style={{marginBottom: 20}}>
           <Steps.Step title="購物車" />
           <Steps.Step title="寄送資訊" />
           <Steps.Step title="付款" />
@@ -129,29 +137,7 @@ function renderCustomComponent(props) {
 
   if (name === 'CART_CUSTOM_COLUMN') {
     if (data.item.product.labels?.includes('custom')) {
-      return (
-        <div>
-          <Image
-            src={data.item.config.image || ''}
-            fallback="https://www.taiwang-puzzle.com/image/cache/catalog/%E5%AE%A2%E8%A3%BD%E8%B4%88%E7%A6%AE%E5%93%81%E6%8B%BC%E5%9C%96/cp-0020-500x500.jpg"
-          />
-          <Button
-            style={{width: '100%'}}
-            onClick={async () => {
-              const image = await fetch(data.item.config.image);
-              const imageBlog = await image.blob();
-              const imageURL = URL.createObjectURL(imageBlog);
-              const link = document.createElement('a');
-              link.href = imageURL;
-              link.download = 'image';
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-            }}>
-            下載
-          </Button>
-        </div>
-      );
+      return <div />;
     } else {
       return null;
     }

@@ -2,7 +2,7 @@
   "clientId": "revtel-puzzlego",
   "primaryUserType": "email",
   "stage": "stg",
-  "apiHost": "https://puzzlego-api-stg.revtel2.com",
+  "apiHost": "https://revtel-puzzlego-api-stg.revtel2.com",
   "authHost": "https://auth-stg.revtel-api.com/v4",
   "jstoreHost": "https://jstorage-stg.revtel-api.com/v2",
   "jstoreVersion": "v2",

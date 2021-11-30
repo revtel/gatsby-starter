@@ -30,7 +30,6 @@ function ProfileTabs(props) {
   return (
     <Tabs activeKey={activePath} onChange={onTabClick} style={{margin: 10}}>
       <Tabs.TabPane key="/profile" tab="個人資訊" />
-      <Tabs.TabPane key="/checkout" tab="購物車" />
       <Tabs.TabPane key="/profile/orders" tab="我的訂單" />
       <Tabs.TabPane key="reset-password" tab="重設密碼" />
       <Tabs.TabPane key="logout" tab="登出" />
@@ -48,9 +47,6 @@ function ProfileMenu(props) {
     <Menu style={{width: 256}} selectedKeys={selectedKeys} mode="inline">
       <Menu.Item key={'info'} onClick={() => navigate('/profile')}>
         個人資訊
-      </Menu.Item>
-      <Menu.Item key={'checkout'} onClick={() => navigate('/checkout')}>
-        購物車
       </Menu.Item>
       <Menu.Item key={'orders'} onClick={() => navigate('/profile/orders')}>
         我的訂單

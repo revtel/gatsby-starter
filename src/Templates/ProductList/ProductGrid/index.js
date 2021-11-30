@@ -17,6 +17,9 @@ function ProductGrid(props) {
             onClick={(evt) => onItemClick(product, evt)}
           />
         ))}
+        {new Array(products.length).fill(0).map((item, key) => (
+          <div className="filler" key={key} />
+        ))}
       </ProductGridWrapper>
     );
   } else if (prefixPath.indexOf('articles') >= 0) {
@@ -53,6 +56,11 @@ const ProductGridWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: ${(props) => (props.mobile ? 'center' : 'space-between')};
   padding: ${(props) => (props.mobile ? 0 : 'var(--basePadding)')};
+  & > .filler {
+    width: ${(props) => (props.mobile ? '140px' : '180px')};
+    height: 1px;
+    margin: 10px;
+  }
 `;
 
 const ArticleGridWrapper = styled.div`
@@ -184,7 +192,7 @@ const ProductWrapper = styled.div`
   & > img {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 60%;
     object-fit: cover;
     transition: 200ms;
     &:hover {

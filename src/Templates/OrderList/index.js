@@ -1,19 +1,45 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {useOutlet} from 'reconnect.js';
 import * as AppActions from '../../AppActions';
 import * as JStorageActions from 'rev.sdk.js/Actions/JStorage';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import CartList from 'rev.sdk.js/Components/CartList';
-import GenericForm from 'rev.sdk.js/Generic/Form';
 import GenericResource from 'rev.sdk.js/Generic/Resource';
 import moment from 'moment';
 import numeral from 'numeral';
-import {Collapse, Form, Input} from 'antd';
+import {Avatar, Card, Collapse, Form, Input} from 'antd';
 import qs from 'query-string';
+import styled from 'styled-components';
 
 const {Panel} = Collapse;
 
-function Filed(props) {
+const PAYMENT_STATUS = {
+  pending: 'pending',
+  waiting: 'waiting',
+  success: 'success',
+  failure: 'failure',
+};
+
+const PAYMENT_STATUS_DISPLAY = {
+  [PAYMENT_STATUS.pending]: {
+    key: 'pending',
+    label: '尚未付款',
+  },
+  [PAYMENT_STATUS.waiting]: {
+    key: 'waiting',
+    label: '款項確認中',
+  },
+  [PAYMENT_STATUS.success]: {
+    key: 'success',
+    label: '付款成功',
+  },
+  [PAYMENT_STATUS.failure]: {
+    key: 'failure',
+    label: '付款失敗',
+  },
+};
+
+const Filed = (props) => {
   const {name, value, addonBefore = null, addonAfter = null} = props;
   return (
     <Form.Item
@@ -29,61 +55,35 @@ function Filed(props) {
       />
     </Form.Item>
   );
-}
-
-const FormSpec = {
-  schema: {
-    title: '',
-    type: 'object',
-    properties: {
-      order_id: {
-        type: 'string',
-        title: '訂單編號',
-        readOnly: true,
-      },
-      order_note: {
-        type: 'string',
-        title: '訂單備註',
-        readOnly: true,
-      },
-      total: {
-        type: 'string',
-        title: '訂單總金額',
-        readOnly: true,
-      },
-      created: {
-        type: 'string',
-        title: '訂單日期',
-        readOnly: true,
-      },
-      payment_status: {
-        type: 'string',
-        title: '金流狀態',
-        readOnly: true,
-      },
-    },
-  },
-  uiSchema: {
-    created: {
-      'ui:widget': 'date',
-    },
-  },
 };
 
-function OrderDetail(props) {
+const OrderDetail = (props) => {
   const {instance} = props;
 
+  if (!instance) {
+    return null;
+  }
+
   return (
-    <div style={{maxWidth: 744}}>
-      <GenericForm
-        schema={FormSpec.schema}
-        uiSchema={FormSpec.uiSchema}
-        instance={instance}
-        renderCustomSubmitButton={null}
-      />
+    <StyledWrapper>
       <Collapse defaultActiveKey={[1]}>
         <Panel header="訂單內容" key={1}>
           <CartList cartItems={instance.items} disabled={true} />
+        </Panel>
+        <Panel header="訂單資訊" key={5}>
+          <Filed name="訂單編號" value={instance.order_id} />
+          <Filed name="訂單總金額" value={instance.total} />
+          <Filed
+            name="訂單日期"
+            value={moment(instance.created).format('YYYY-MM-DD hh:mm')}
+          />
+          <Filed
+            name="金流狀態"
+            value={
+              PAYMENT_STATUS_DISPLAY[instance.payment_status]?.label ||
+              '尚未定義'
+            }
+          />
         </Panel>
         <Panel header="購買人資訊" key={2}>
           <Filed name="購買人姓名" value={instance.buyer_name} />
@@ -136,12 +136,43 @@ function OrderDetail(props) {
             name="物流方式"
             value={Cart.LOGISTICS_TYPE_DISPLAY[instance.logistics_type].label}
           />
+
           <Filed
             name="取件方式"
             value={
               Cart.LOGISTICS_SUBTYPE_DISPLAY[instance.logistics_subtype].label
             }
           />
+          {instance.logistics_type === Cart.LOGISTICS_TYPE.home && (
+            <Fragment>
+              <Filed
+                name="收件地址"
+                value={instance.receiver_address}
+                addonBefore={
+                  <span>
+                    {`${instance.receiver_zip} ${instance.receiver_city} ${instance.receiver_district}`}
+                  </span>
+                }
+              />
+            </Fragment>
+          )}
+
+          {instance.logistics_type === Cart.LOGISTICS_TYPE.cvs && (
+            <Fragment>
+              <Card style={{marginBottom: 10}}>
+                <Card.Meta
+                  avatar={
+                    <Avatar
+                      shape="square"
+                      src={Cart.CVS_ICON[instance.logistics_subtype]}
+                    />
+                  }
+                  title={instance.extra_data.CVSStoreName}
+                  description={instance.extra_data.CVSAddress}
+                />
+              </Card>
+            </Fragment>
+          )}
           <Filed
             name="付款方式"
             value={
@@ -150,14 +181,85 @@ function OrderDetail(props) {
             }
           />
         </Panel>
-      </Collapse>
-    </div>
-  );
-}
+        <Panel header="發票資訊" key={6}>
+          {!!instance?.invoice_category && (
+            <Filed
+              name="發票種類"
+              value={
+                Cart.INVOICE_CATEGORY_DISPLAY?.[instance?.invoice_category]
+                  ?.label
+              }
+            />
+          )}
+          {instance?.invoice_category === Cart.INVOICE_CATEGORY.b2c && (
+            <Fragment>
+              <Filed
+                name="是否捐贈"
+                value={
+                  Cart.INVOICE_DONATION_DISPLAY?.[instance?.invoice_donation]
+                    ?.label
+                }
+              />
+              {instance?.invoice_donation === Cart.INVOICE_DONATION.t && (
+                <Filed name="愛心捐贈碼" value={instance?.invoice_love_code} />
+              )}
 
-function OrderPage(props) {
-  const [user] = useOutlet('user');
+              {instance?.invoice_donation === Cart.INVOICE_DONATION.f && (
+                <Fragment>
+                  <Filed
+                    name="載具種類"
+                    value={
+                      Cart.INVOICE_CARRIER_TYPE_DISPLAY?.[
+                        instance?.invoice_carrier_type
+                      ]?.label
+                    }
+                  />
+                  {(instance?.invoice_carrier_type ===
+                    Cart.INVOICE_CARRIER_TYPE.cdc ||
+                    instance?.invoice_carrier_type ===
+                      Cart.INVOICE_CARRIER_TYPE.mobile) && (
+                    <Filed
+                      name="載具條碼"
+                      value={instance?.invoice_carrier_num}
+                    />
+                  )}
+                </Fragment>
+              )}
+            </Fragment>
+          )}
+          {instance?.invoice_category === Cart.INVOICE_CATEGORY.b2b && (
+            <Fragment>
+              <Filed name="統一編號號碼" value={[instance?.invoice_uni_no]} />
+            </Fragment>
+          )}
+          {instance?.invoice_detail && (
+            <Fragment>
+              <Filed
+                name="發票狀態"
+                value={[instance?.invoice_detail.RtnMsg]}
+              />
+              <Filed
+                name="發票號碼"
+                value={[instance?.invoice_detail?.InvoiceNo || '']}
+              />
+              <Filed
+                name="發票隨機碼"
+                value={[instance?.invoice_detail?.RandomNumber || '']}
+              />
+            </Fragment>
+          )}
+        </Panel>
+        <Panel header="其他資訊" key={7}>
+          <Filed name="備註" value={instance.order_note || '無'} />
+        </Panel>
+      </Collapse>
+    </StyledWrapper>
+  );
+};
+
+const OrderPage = (props) => {
   const {location} = props;
+  const [user] = useOutlet('user');
   const queryParams = qs.parse(location.search);
 
   const getQuery = (queryParams) => {
@@ -181,13 +283,13 @@ function OrderPage(props) {
 
   return (
     <GenericResource
-      renderDeleteButton={null}
+      resourceTableProps={{
+        scroll: {x: 500},
+      }}
       style={{padding: 0}}
       querySpec={{
         pageSizeOptions: [10],
         sortOptions: [
-          {name: '價錢低到高', value: 'total'},
-          {name: '價錢高到低', value: '-total'},
           {name: '日期近到遠', value: 'created'},
           {name: '日期遠到近', value: '-created'},
         ],
@@ -196,7 +298,7 @@ function OrderPage(props) {
       spec={{
         path: '/profile/orders',
         name: '訂單',
-        primaryKey: 'order_number',
+        primaryKey: 'id',
         canPaging: true,
         actions: {
           setLoading: AppActions.setLoading,
@@ -240,11 +342,16 @@ function OrderPage(props) {
           },
         ],
       }}
-      renderCreateButton={() => null}
+      renderCreateButton={null}
+      renderDeleteButton={null}
       renderDetail={OrderDetail}
       {...props}
     />
   );
-}
+};
+
+const StyledWrapper = styled.div`
+  margin: 10px 0;
+`;
 
 export default OrderPage;

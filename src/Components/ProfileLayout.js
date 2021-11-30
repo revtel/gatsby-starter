@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
-import {useOutlet} from 'reconnect.js';
+import {getOutlet, useOutlet} from 'reconnect.js';
 import qs from 'query-string';
 import {withLoginRequired} from 'rev.sdk.js/Components/LoginRequired';
 import SiteNavBar from '../Components/SiteNavBar';
 import ProfileMenu, {ProfileTabs} from './ProfileMenu';
+import {Result, Space, Button} from 'antd';
 
 function ProfileLayout(props) {
   const {style = {}} = props;
@@ -72,4 +73,29 @@ const Wrapper = styled.div`
 export default withLoginRequired(ProfileLayout, {
   admin: false,
   SiteNavBar,
+  renderLoginRequired: (options) => {
+    const loginModal = getOutlet('login-modal');
+    return (
+      <div
+        style={{
+          minHeight: 'var(--contentMinHeight)',
+          paddingTop: 'var(--topNavBarHeight)',
+        }}>
+        <Result
+          title={`尚無權限`}
+          subTitle="此頁面需要登入，方能瀏覽"
+          extra={
+            <Space direction="vertical">
+              <Button
+                onClick={() => {
+                  loginModal.update(true);
+                }}>
+                登入
+              </Button>
+            </Space>
+          }
+        />
+      </div>
+    );
+  },
 });

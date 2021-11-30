@@ -13,6 +13,8 @@ const navItems = [
   {children: '最新消息', url: '/articles?cat=news'},
   {children: '商品項目', url: '/products'},
   {children: '部落格', url: '/articles'},
+  {children: '購物車', url: '/checkout'},
+  {children: '會員專區', url: '/profile'},
 ];
 
 function _isInPath({location = {}, navItemUrl}) {
@@ -49,7 +51,7 @@ function SiteNavBar(props) {
     <>
       <NavBar hasBorder={passBreakpoint} bgColor={'white'} style={{height: 64}}>
         <Logo style={{cursor: 'pointer'}}>
-          <Link to="/" loading={true}>
+          <Link to="/" loading={800}>
             <img
               src="/images/revicon_512.png"
               alt="Logo"
@@ -80,6 +82,10 @@ function SiteNavBar(props) {
                 let loading = true;
                 if (url === '/about') {
                   loading = 800;
+                }
+
+                if (url === '/profile' || url === '/checkout') {
+                  return null;
                 }
 
                 return (
@@ -119,9 +125,7 @@ function SiteNavBar(props) {
                 onClick={() => {
                   AppActions.navigate('/profile');
                 }}>
-                <Badge count={cart.items.length}>
-                  <PersonCircle size={26} color={'#0eb407'} />
-                </Badge>
+                <PersonCircle size={26} color={'#0eb407'} />
               </Button>
             ) : (
               <Button onClick={() => showLoginModal(true)}>登入</Button>
@@ -172,7 +176,7 @@ function MobileNav(props) {
       <MobileContent visible={visible}>
         <Logo
           style={{cursor: 'pointer', alignSelf: 'center', marginBottom: 20}}>
-          <Link to="/">
+          <Link to="/" loading={800}>
             <img
               src="/images/revicon_512.png"
               alt="site logo"
@@ -187,8 +191,12 @@ function MobileNav(props) {
           });
 
           let loading = true;
-          if (url === '/about') {
+          if (url === '/about' || '/profile') {
             loading = 800;
+          }
+
+          if (!user && url === '/profile') {
+            return null;
           }
 
           return (
@@ -208,18 +216,12 @@ function MobileNav(props) {
           );
         })}
 
-        {user ? (
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <Button
-              style={{marginBottom: 10}}
-              onClick={() => AppActions.navigate('/profile')}>
-              會員專區
-            </Button>
-          </div>
-        ) : (
-          <Button style={{marginTop: 40}} onClick={() => showLoginModal(true)}>
+        {!user && (
+          <div
+            style={{padding: '19px 10px', textAlign: 'center'}}
+            onClick={() => showLoginModal(true)}>
             登入
-          </Button>
+          </div>
         )}
       </MobileContent>
     </>
