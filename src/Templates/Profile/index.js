@@ -3,6 +3,7 @@ import {Spin, Form, Input, Radio, Button, message} from 'antd';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import * as JStorageActions from 'rev.sdk.js/Actions/JStorage';
+import AntdAddressSetForm from 'rev.sdk.js/Components/AntdAddressSetForm';
 
 function ProfilePage(props) {
   const [user] = useOutlet('user');
@@ -84,12 +85,7 @@ function ProfilePage(props) {
               ]}>
               <Input disabled />
             </Form.Item>
-            <Form.Item
-              label="地址"
-              name="address"
-              rules={[{required: true, message: '請輸入您的地址'}]}>
-              <Input />
-            </Form.Item>
+            <AntdAddressSetForm form={form} />
             <Form.Item wrapperCol={{offset: 8, span: 16}}>
               <Button
                 htmlType="button"
