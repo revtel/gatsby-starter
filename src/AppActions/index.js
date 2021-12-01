@@ -88,7 +88,8 @@ function renderCustomComponent(props) {
  * **************************************************
  */
 
-async function clientJStorageFetch(collection, {cat, sort, search}) {
+async function clientJStorageFetch(collection, {cat, sort, search, q}) {
+  //"q" can defined custom query by project
   const catQuery = cat ? {labels: {$regex: cat}} : {};
   const searchQuery = search ? {searchText: {$regex: search}} : {};
   const sortValue = sort ? [sort] : ['-created'];
