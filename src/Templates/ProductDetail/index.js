@@ -236,7 +236,7 @@ const ArticlePreview = styled.div`
 const Wrapper = styled.div`
   padding-top: var(--topNavBarHeight);
   & > .content {
-    max-width: var(--contentMaxWith);
+    max-width: var(--contentMaxWidth);
     margin: 0 auto;
     padding: var(--basePadding);
     padding-top: 0;
