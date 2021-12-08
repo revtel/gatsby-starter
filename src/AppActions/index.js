@@ -217,7 +217,10 @@ async function rebuild() {
   });
 }
 
-async function fetchCustomResources(resource, {sort, keyword, filter, paging}) {
+async function fetchCustomResources(
+  resource,
+  {sort, keyword, filter, paging, extraQueries},
+) {
   return null;
 }
 
