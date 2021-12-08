@@ -262,9 +262,6 @@ async function onAdminFormSubmit({
   //sample code
 
   // if (path === '/admin/products') {
-  //   console.log('path', path);
-  //   console.log('collection', collection);
-  //   console.log('instance', instance);
 
   //   try {
   //     setLoading(true);
