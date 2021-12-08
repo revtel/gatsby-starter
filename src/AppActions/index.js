@@ -1,10 +1,12 @@
 import {getOutlet} from 'reconnect.js';
 import {navigate as nav} from 'gatsby';
+import {message} from 'antd';
 import * as User from 'rev.sdk.js/Actions/User';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
 import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
+import * as JstorageUtil from 'rev.sdk.js/Utils/JStorageUtil';
 
 import * as CustomRenderer from '../../custom/renderer';
 import * as CustomAdminRenderer from '../../custom/admin-renderer';
@@ -249,6 +251,49 @@ async function onLoginResult(err, result) {
   }
 }
 
+async function onAdminFormSubmit({
+  path,
+  collection,
+  instance,
+  extValues,
+  formData,
+  primaryKey,
+}) {
+  //sample code
+
+  // if (path === '/admin/products') {
+  //   console.log('path', path);
+  //   console.log('collection', collection);
+  //   console.log('instance', instance);
+
+  //   try {
+  //     setLoading(true);
+  //     if (!instance) {
+  //       await JStorage.createDocument(collection, {
+  //         ...formData,
+  //         ...extValues,
+  //       });
+  //       navigate(path);
+  //     } else {
+  //       await JStorage.updateDocument(
+  //         collection,
+  //         {[primaryKey]: instance[primaryKey]},
+  //         JstorageUtil.removeAutoFields({...formData, ...extValues}),
+  //       );
+  //     }
+  //     message.success('成功!');
+  //   } catch (ex) {
+  //     message.error('API failure');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+
+  //   return true;
+  // }
+
+  return false;
+}
+
 export {
   delay,
   setLoading,
@@ -260,6 +305,7 @@ export {
   clientJStorageFetch,
   fetchCustomResources,
   onLoginResult,
+  onAdminFormSubmit,
   onCartLoaded,
   createLogisticsOrder,
   rebuild,
