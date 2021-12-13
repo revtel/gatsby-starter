@@ -12,6 +12,7 @@ import * as CustomRenderer from '../../custom/renderer';
 import * as CustomAdminRenderer from '../../custom/admin-renderer';
 import Config from '../../data.json';
 import * as _ from 'lodash';
+import * as jwt from '../Utils/jwt';
 
 const req = ApiUtil.req;
 const LoadingOutlet = getOutlet('loading');
@@ -241,6 +242,8 @@ async function onLoginResult(err, result) {
           ...UserOutlet.getValue(),
           data: {...profile},
         });
+        const decoded = await jwt.decodeToken(UserOutlet.getValue().token);
+        console.log('VERIFY TOKEN SUCCESS', decoded);
         await Cart.fetchCart();
       }
     } catch (ex) {
