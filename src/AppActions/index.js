@@ -68,6 +68,10 @@ function navigate(nextRoute, options = {loading: false}) {
   }
 }
 
+function adminCanAccess(user, options = {}) {
+  return true;
+}
+
 function renderCustomSection(props) {
   return CustomRenderer.renderCustomSection(props);
 }
@@ -295,6 +299,7 @@ export {
   delay,
   setLoading,
   navigate,
+  adminCanAccess,
   renderCustomSection,
   renderCustomAdminSection,
   renderCustomAdminCol,
