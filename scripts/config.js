@@ -9,7 +9,7 @@ function config() {
   if (process.env.REV_ENV === 'stg') {
     // https://brickgo.netlify.app
     data.stage = 'stg';
-    data.apiHost = 'https://puzzlego-api-stg.revtel2.com';
+    data.apiHost = 'https://revtel-puzzlego-api-stg.revtel2.com';
     data.authHost = 'https://auth-stg.revtel-api.com/v4';
     data.jstoreHost = 'https://jstorage-stg.revtel-api.com/v2';
     data.jstoreVersion = 'v2';
