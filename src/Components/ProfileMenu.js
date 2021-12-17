@@ -6,13 +6,13 @@ import * as User from 'rev.sdk.js/Actions/User';
 import * as AppActions from '../AppActions';
 
 function ProfileTabs(props) {
-  const {activePath} = props;
   const showResetPasswordModal = useOutletSetter('reset-password-modal');
+  const [user] = useOutlet('user');
+  const {activePath} = props;
 
   function onTabClick(nextKey) {
     if (nextKey[0] === '/') {
       // this is a path, simply navigate to it
-      console.log('DBG', nextKey);
       AppActions.navigate(nextKey);
       return;
     }
@@ -31,7 +31,9 @@ function ProfileTabs(props) {
     <Tabs activeKey={activePath} onChange={onTabClick} style={{margin: 10}}>
       <Tabs.TabPane key="/profile" tab="個人資訊" />
       <Tabs.TabPane key="/profile/orders" tab="我的訂單" />
-      <Tabs.TabPane key="reset-password" tab="重設密碼" />
+      {user.data.provider === 'default' && (
+        <Tabs.TabPane key="reset-password" tab="重設密碼" />
+      )}
       <Tabs.TabPane key="logout" tab="登出" />
     </Tabs>
   );
@@ -39,6 +41,7 @@ function ProfileTabs(props) {
 
 function ProfileMenu(props) {
   const [actions] = useOutlet('actions');
+  const [user] = useOutlet('user');
   const showResetPasswordModal = useOutletSetter('reset-password-modal');
   const {activePath} = props;
   const selectedKeys = [activePath ? activePath : 'info'];
@@ -52,11 +55,13 @@ function ProfileMenu(props) {
         我的訂單
       </Menu.Item>
 
-      <Menu.Item
-        key={'reset-password'}
-        onClick={() => showResetPasswordModal({admin: false})}>
-        重設密碼
-      </Menu.Item>
+      {user.data.provider === 'default' && (
+        <Menu.Item
+          key={'reset-password'}
+          onClick={() => showResetPasswordModal({admin: false})}>
+          重設密碼
+        </Menu.Item>
+      )}
 
       <Menu.Item
         key={'logout'}
