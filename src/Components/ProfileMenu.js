@@ -31,7 +31,7 @@ function ProfileTabs(props) {
     <Tabs activeKey={activePath} onChange={onTabClick} style={{margin: 10}}>
       <Tabs.TabPane key="/profile" tab="個人資訊" />
       <Tabs.TabPane key="/profile/orders" tab="我的訂單" />
-      {user.data.provider === 'default' && (
+      {user.data?.provider === 'default' && (
         <Tabs.TabPane key="reset-password" tab="重設密碼" />
       )}
       <Tabs.TabPane key="logout" tab="登出" />
@@ -55,7 +55,7 @@ function ProfileMenu(props) {
         我的訂單
       </Menu.Item>
 
-      {user.data.provider === 'default' && (
+      {user.data?.provider === 'default' && (
         <Menu.Item
           key={'reset-password'}
           onClick={() => showResetPasswordModal({admin: false})}>
