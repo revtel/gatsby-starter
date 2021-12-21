@@ -12,6 +12,21 @@ import * as CustomRenderer from '../../custom/renderer';
 import * as CustomAdminRenderer from '../../custom/admin-renderer';
 import Config from '../../data.json';
 import * as _ from 'lodash';
+import setLoadingPlugin from './Plugin/setLoading';
+import navigatePlugin from './Plugin/navigate';
+import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
+
+/**
+ * **************************************************
+ * create all plugins before defining default actions
+ * **************************************************
+ */
+
+const Plugins = {
+  setLoading: new setLoadingPlugin('setLoading'),
+  navigate: new navigatePlugin('navigate'),
+  clientJStorageFetch: new clientJStorageFetchPlugin('clientJStorageFetch'),
+};
 
 const req = ApiUtil.req;
 const LoadingOutlet = getOutlet('loading');
@@ -45,12 +60,20 @@ function delay(ms) {
 }
 
 function setLoading(loading) {
+  if (Plugins.setLoading.shouldExecute()) {
+    return Plugins.setLoading.executeSync();
+  }
+
   setTimeout(() => {
     LoadingOutlet.update(loading);
   }, 0);
 }
 
 function navigate(nextRoute, options = {loading: false}) {
+  if (Plugins.navigate.shouldExecute()) {
+    return Plugins.navigate.executeSync(nextRoute, options);
+  }
+
   const currRoute = PathUtil.normalizedRoute();
   nextRoute = PathUtil.normalizedRoute(nextRoute);
   if (currRoute !== nextRoute) {
@@ -95,6 +118,15 @@ function renderCustomComponent(props) {
  */
 
 async function clientJStorageFetch(collection, {cat, sort, search, q}) {
+  if (Plugins.clientJStorageFetch.shouldExecute()) {
+    return Plugins.clientJStorageFetch.executeAsync(collection, {
+      cat,
+      sort,
+      search,
+      q,
+    });
+  }
+
   //"q" can defined custom query by project
   const catQuery = cat ? {labels: {$regex: cat}} : {};
   const searchQuery = search ? {searchText: {$regex: search}} : {};
@@ -293,6 +325,16 @@ async function onAdminFormSubmit({
   // }
 
   return false;
+}
+
+/**
+ * **************************************************
+ * init all plugins AFTER defining default actions
+ * **************************************************
+ */
+for (const name in Plugins) {
+  const plugin = Plugins[name];
+  plugin.init();
 }
 
 export {
