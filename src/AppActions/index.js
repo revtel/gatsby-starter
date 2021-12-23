@@ -9,7 +9,6 @@ import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
 import * as JstorageUtil from 'rev.sdk.js/Utils/JStorageUtil';
 
 import * as CustomRenderer from '../../custom/renderer';
-import * as CustomAdminRenderer from '../../custom/admin-renderer';
 import Config from '../../data.json';
 import * as _ from 'lodash';
 import * as jwt from '../Utils/jwt';
@@ -98,14 +97,6 @@ function adminCanAccess(user, options = {}) {
 
 function renderCustomSection(props) {
   return CustomRenderer.renderCustomSection(props);
-}
-
-function renderCustomAdminSection(props) {
-  return CustomAdminRenderer.renderCustomSection(props);
-}
-
-function renderCustomAdminCol(props) {
-  return CustomAdminRenderer.renderCustomCol(props);
 }
 
 function renderCustomComponent(props) {
@@ -346,8 +337,6 @@ export {
   navigate,
   adminCanAccess,
   renderCustomSection,
-  renderCustomAdminSection,
-  renderCustomAdminCol,
   renderCustomComponent,
   clientJStorageFetch,
   fetchCustomResources,
