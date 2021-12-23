@@ -12,6 +12,7 @@ import * as CustomRenderer from '../../custom/renderer';
 import * as CustomAdminRenderer from '../../custom/admin-renderer';
 import Config from '../../data.json';
 import * as _ from 'lodash';
+import * as jwt from '../Utils/jwt';
 import setLoadingPlugin from './Plugin/setLoading';
 import navigatePlugin from './Plugin/navigate';
 import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
@@ -277,6 +278,8 @@ async function onLoginResult(err, result) {
           ...UserOutlet.getValue(),
           data: {...profile},
         });
+        const decoded = await jwt.decodeToken(UserOutlet.getValue().token);
+        console.log('VERIFY TOKEN SUCCESS', decoded);
         await Cart.fetchCart();
       }
     } catch (ex) {
