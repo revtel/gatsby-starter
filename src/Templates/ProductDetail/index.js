@@ -66,55 +66,6 @@ function ProductDetail(props) {
     setCurrItemConfig(nextItemConfig);
   }, []);
 
-  function renderCustomSection({route, sectionId, params, data}) {
-    if (sectionId === 'A') {
-      return (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 40,
-            backgroundImage:
-              'url(https://t3.ftcdn.net/jpg/02/93/11/46/360_F_293114646_6uJj1Sp1eLkIOebm9QL0Y18dzOt5eZtb.jpg)',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: 'cover',
-          }}>
-          <h2>Product Detail Custom Area</h2>
-        </div>
-      );
-    }
-
-    if (['F', 'G'].indexOf(sectionId) === -1) {
-      return null;
-    }
-  }
-
-  const _renderCustomSection = React.useCallback(
-    (sectionId, data) => {
-      if (renderCustomSection && typeof renderCustomSection === 'function') {
-        return renderCustomSection({
-          route: prefixPath,
-          sectionId,
-          params,
-          data,
-        });
-      }
-      // customRenderFunc backward compatibility
-      if (AppActions.renderCustomSection) {
-        return AppActions.renderCustomSection({
-          route: prefixPath,
-          sectionId,
-          params,
-          data,
-        });
-      }
-
-      return null;
-    },
-    [params, prefixPath],
-  );
-
   async function addToCart() {
     if (!user) {
       showLoginModal(true);
@@ -146,11 +97,7 @@ function ProductDetail(props) {
 
   return (
     <Wrapper>
-      {_renderCustomSection('A', {product})}
-
       <div className="content">
-        {_renderCustomSection('B', {product})}
-
         {product.labels && product.labels[0] && (
           <div style={{marginTop: 15}}>
             <BreadcrumbBar
@@ -207,10 +154,8 @@ function ProductDetail(props) {
           <div style={{flexBasis: 20}} />
 
           <Summary>
-            {_renderCustomSection('C', {product})}
             <h2>{product.name}</h2>
             <p>{product.description}</p>
-            {_renderCustomSection('D', {product})}
             <Tabs activeKey={activeSummaryTab} onChange={setActiveSummaryTab}>
               <Tabs.TabPane tab="介紹" key="intro">
                 <div
@@ -253,16 +198,10 @@ function ProductDetail(props) {
           </Summary>
         </TopSection>
 
-        {_renderCustomSection('E', {product})}
-
         {article && (
           <ArticlePreview dangerouslySetInnerHTML={{__html: article.html}} />
         )}
-
-        {_renderCustomSection('F', {product})}
       </div>
-
-      {_renderCustomSection('G', {product})}
     </Wrapper>
   );
 }
