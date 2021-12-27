@@ -3,7 +3,7 @@
   "name": "產品",
   "collection": "product",
   "primaryKey": "id",
-  "searchFields": ["searchText"],
+  "searchFields": ["name","searchText"],
   "columns": [
     {
       "title": "名稱",
