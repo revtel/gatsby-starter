@@ -6,6 +6,7 @@ import {withLoginRequired} from 'rev.sdk.js/Components/LoginRequired';
 import SiteNavBar from '../Components/SiteNavBar';
 import ProfileMenu, {ProfileTabs} from './ProfileMenu';
 import {Result, Space, Button} from 'antd';
+import * as AppActions from '../AppActions';
 
 function ProfileLayout(props) {
   const {style = {}} = props;
@@ -15,20 +16,39 @@ function ProfileLayout(props) {
   const params = qs.parse(props.location.search);
   const mobile = dimension.rwd === 'mobile';
 
+  const _renderCustomSection = React.useCallback(
+    (sectionId) => {
+      if (renderCustomSection && typeof renderCustomSection === 'function') {
+        return renderCustomSection({
+          route: props.location.pathname,
+          sectionId,
+          params,
+        });
+      }
+      // customRenderFunc backward compatibility
+      if (AppActions.renderCustomSection) {
+        return AppActions.renderCustomSection({
+          route: props.location.pathname,
+          sectionId,
+          params,
+        });
+      }
+
+      return null;
+    },
+    [params, props.location.pathname, renderCustomSection],
+  );
+
   function renderCustomSection(sectionId) {
-    return actions.renderCustomSection({
-      route: props.location.pathname,
-      sectionId,
-      params,
-    });
+    return null;
   }
 
   return (
     <Wrapper style={{...style}}>
-      {renderCustomSection('A')}
+      {_renderCustomSection('A')}
 
       <div className="content">
-        {renderCustomSection('B')}
+        {_renderCustomSection('B')}
 
         <div
           style={{display: 'flex', flexDirection: mobile ? 'column' : 'row'}}>
@@ -36,25 +56,25 @@ function ProfileLayout(props) {
             <ProfileTabs activePath={activePath} />
           ) : (
             <div style={{display: 'flex', flexDirection: 'column'}}>
-              {renderCustomSection('C')}
+              {_renderCustomSection('C')}
 
               <ProfileMenu activePath={activePath} />
 
-              {renderCustomSection('D')}
+              {_renderCustomSection('D')}
             </div>
           )}
 
           <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
-            {renderCustomSection('E')}
+            {_renderCustomSection('E')}
 
             <div style={{padding: 'var(--basePadding)'}}>{props.children}</div>
           </div>
         </div>
 
-        {renderCustomSection('J')}
+        {_renderCustomSection('J')}
       </div>
 
-      {renderCustomSection('K')}
+      {_renderCustomSection('K')}
     </Wrapper>
   );
 }

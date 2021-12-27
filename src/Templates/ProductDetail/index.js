@@ -66,14 +66,54 @@ function ProductDetail(props) {
     setCurrItemConfig(nextItemConfig);
   }, []);
 
-  function renderCustomSection(sectionId, data) {
-    return AppActions.renderCustomSection({
-      route: prefixPath,
-      sectionId,
-      params,
-      data,
-    });
+  function renderCustomSection({route, sectionId, params, data}) {
+    if (sectionId === 'A') {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 40,
+            backgroundImage:
+              'url(https://t3.ftcdn.net/jpg/02/93/11/46/360_F_293114646_6uJj1Sp1eLkIOebm9QL0Y18dzOt5eZtb.jpg)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }}>
+          <h2>Product Detail Custom Area</h2>
+        </div>
+      );
+    }
+
+    if (['F', 'G'].indexOf(sectionId) === -1) {
+      return null;
+    }
   }
+
+  const _renderCustomSection = React.useCallback(
+    (sectionId, data) => {
+      if (renderCustomSection && typeof renderCustomSection === 'function') {
+        return renderCustomSection({
+          route: prefixPath,
+          sectionId,
+          params,
+          data,
+        });
+      }
+      // customRenderFunc backward compatibility
+      if (AppActions.renderCustomSection) {
+        return AppActions.renderCustomSection({
+          route: prefixPath,
+          sectionId,
+          params,
+          data,
+        });
+      }
+
+      return null;
+    },
+    [params, prefixPath],
+  );
 
   async function addToCart() {
     if (!user) {
@@ -106,10 +146,10 @@ function ProductDetail(props) {
 
   return (
     <Wrapper>
-      {renderCustomSection('A', {product})}
+      {_renderCustomSection('A', {product})}
 
       <div className="content">
-        {renderCustomSection('B', {product})}
+        {_renderCustomSection('B', {product})}
 
         {product.labels && product.labels[0] && (
           <div style={{marginTop: 15}}>
@@ -167,10 +207,10 @@ function ProductDetail(props) {
           <div style={{flexBasis: 20}} />
 
           <Summary>
-            {renderCustomSection('C', {product})}
+            {_renderCustomSection('C', {product})}
             <h2>{product.name}</h2>
             <p>{product.description}</p>
-            {renderCustomSection('D', {product})}
+            {_renderCustomSection('D', {product})}
             <Tabs activeKey={activeSummaryTab} onChange={setActiveSummaryTab}>
               <Tabs.TabPane tab="介紹" key="intro">
                 <div
@@ -213,16 +253,16 @@ function ProductDetail(props) {
           </Summary>
         </TopSection>
 
-        {renderCustomSection('E', {product})}
+        {_renderCustomSection('E', {product})}
 
         {article && (
           <ArticlePreview dangerouslySetInnerHTML={{__html: article.html}} />
         )}
 
-        {renderCustomSection('F', {product})}
+        {_renderCustomSection('F', {product})}
       </div>
 
-      {renderCustomSection('G', {product})}
+      {_renderCustomSection('G', {product})}
     </Wrapper>
   );
 }
@@ -235,6 +275,7 @@ const ArticlePreview = styled.div`
 
 const Wrapper = styled.div`
   padding-top: var(--topNavBarHeight);
+
   & > .content {
     max-width: var(--contentMaxWidth);
     margin: 0 auto;
@@ -255,6 +296,7 @@ const TopSection = styled.div`
 const Gallery = styled.div`
   width: ${(props) => props.size}px;
   margin-bottom: 20px;
+
   & > img:first-child {
     width: ${(props) => props.size}px;
     height: ${(props) => props.size}px;
@@ -267,13 +309,16 @@ const Summary = styled.div`
     font-size: 32px;
     line-height: 1.57;
   }
+
   & h3 {
     font-size: 21px;
   }
+
   & > p {
     margin: 20px 0;
     font-size: 17px;
   }
+
   flex: 1;
   flex-basis: 450px;
 `;
@@ -287,6 +332,7 @@ const InputField = styled.div`
   margin-bottom: 10px;
   display: flex;
   align-items: center;
+
   & > label {
     margin-right: 10px;
   }
@@ -309,6 +355,7 @@ const MiniImageItem = styled.img`
   border-radius: 4px;
   object-fit: contain;
   cursor: pointer;
+
   :first-child {
     margin-left: 0px;
   }

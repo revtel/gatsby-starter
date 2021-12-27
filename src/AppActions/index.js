@@ -1,14 +1,10 @@
 import {getOutlet} from 'reconnect.js';
 import {navigate as nav} from 'gatsby';
-import {message} from 'antd';
 import * as User from 'rev.sdk.js/Actions/User';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
 import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
-import * as JstorageUtil from 'rev.sdk.js/Utils/JStorageUtil';
-
-import * as CustomRenderer from '../../custom/renderer';
 import Config from '../../data.json';
 import * as _ from 'lodash';
 import * as jwt from '../Utils/jwt';
@@ -93,14 +89,6 @@ function navigate(nextRoute, options = {loading: false}) {
 
 function adminCanAccess(user, options = {}) {
   return true;
-}
-
-function renderCustomSection(props) {
-  return CustomRenderer.renderCustomSection(props);
-}
-
-function renderCustomComponent(props) {
-  return CustomRenderer.renderCustomComponent(props);
 }
 
 /**
@@ -336,8 +324,6 @@ export {
   setLoading,
   navigate,
   adminCanAccess,
-  renderCustomSection,
-  renderCustomComponent,
   clientJStorageFetch,
   fetchCustomResources,
   onLoginResult,

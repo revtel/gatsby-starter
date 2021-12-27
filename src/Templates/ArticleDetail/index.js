@@ -30,20 +30,59 @@ function ArticleDetail(props) {
     fetchData();
   }, [id]);
 
-  function renderCustomSection(sectionId) {
-    return AppActions.renderCustomSection({
-      route: prefixPath,
-      sectionId,
-      params,
-    });
+  function renderCustomSection({route, sectionId, params}) {
+    if (sectionId === 'A') {
+      return (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 40,
+            backgroundImage:
+              'url(https://t3.ftcdn.net/jpg/02/93/11/46/360_F_293114646_6uJj1Sp1eLkIOebm9QL0Y18dzOt5eZtb.jpg)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+          }}>
+          <h2>Article Detail Custom Area</h2>
+        </div>
+      );
+    }
+
+    if (['B', 'D'].indexOf(sectionId) > -1) {
+      return null;
+    }
   }
+
+  const _renderCustomSection = React.useCallback(
+    (sectionId) => {
+      if (renderCustomSection && typeof renderCustomSection === 'function') {
+        return renderCustomSection({
+          route: prefixPath,
+          sectionId,
+          params,
+        });
+      }
+      // customRenderFunc backward compatibility
+      if (AppActions.renderCustomSection) {
+        return AppActions.renderCustomSection({
+          route: prefixPath,
+          sectionId,
+          params,
+        });
+      }
+
+      return null;
+    },
+    [params, prefixPath],
+  );
 
   return (
     <Wrapper>
-      {renderCustomSection('A')}
+      {_renderCustomSection('A')}
 
       <div className="content">
-        {renderCustomSection('B')}
+        {_renderCustomSection('B')}
 
         <div
           style={{display: 'flex', flexDirection: mobile ? 'column' : 'row'}}>
@@ -60,13 +99,13 @@ function ArticleDetail(props) {
               </>
             )}
           </div>
-          {renderCustomSection('C')}
+          {_renderCustomSection('C')}
         </div>
 
-        {renderCustomSection('D')}
+        {_renderCustomSection('D')}
       </div>
 
-      {renderCustomSection('E')}
+      {_renderCustomSection('E')}
     </Wrapper>
   );
 }
