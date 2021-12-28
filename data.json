@@ -1,8 +1,8 @@
 {
-  "clientId": "revtel-puzzlego",
+  "clientId": "pokemon-store",
   "primaryUserType": "email",
   "stage": "stg",
-  "apiHost": "https://revtel-puzzlego-api-stg.revtel2.com",
+  "apiHost": "https://pokemon-store-api-stg.revtel2.com",
   "authHost": "https://auth-stg.revtel-api.com/v4",
   "jstoreHost": "https://jstorage-stg.revtel-api.com/v2",
   "jstoreVersion": "v2",
