@@ -39,7 +39,7 @@ let LINK_ITEMS = [
       },
       {
         title: '城都地區',
-        to: '/products?cat=janto',
+        to: '/products?cat=johto',
         loading: true,
       },
     ],

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import empty from '../../../../static/favicon.png';
 import moment from 'moment';
+import {ATTRIBUTE_DISPLAY} from '../../../constants';
+import {Tag} from 'antd';
 
 function ProductGrid(props) {
   const {products, onItemClick, prefixPath} = props;
@@ -91,6 +93,13 @@ function ProductItem(props) {
         {product.price !== undefined && (
           <p style={{textAlign: 'right'}}>${product.price}</p>
         )}
+        <div>
+          {product.attribute.map((attr, index) => (
+            <Tag key={index} color={ATTRIBUTE_DISPLAY[attr].color}>
+              {ATTRIBUTE_DISPLAY[attr].zh}
+            </Tag>
+          ))}
+        </div>
       </div>
     </ProductWrapper>
   );
