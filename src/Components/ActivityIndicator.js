@@ -15,8 +15,8 @@ function ActivityIndicator(props) {
             src="/loading.gif"
             alt="Logo"
             style={{
-              width: '100%',
-              height: '100%',
+              width: '180px',
+              height: '120px',
               objectFit: 'cover',
             }}
           />
