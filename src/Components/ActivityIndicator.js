@@ -10,7 +10,16 @@ function ActivityIndicator(props) {
     <>
       <Wrapper visible={visible}>
         <div className="spinner">
-          <LoaderAlt size={32} color="#6b6b6b" />
+          <img
+            className="logo"
+            src="/loading.gif"
+            alt="Logo"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+            }}
+          />
         </div>
       </Wrapper>
 
@@ -35,29 +44,15 @@ const Wrapper = styled(CoverAll)`
   justify-content: center;
   background-color: transparent;
 
-  @keyframes infinite-spinning {
-    0% {
-      transform: rotate(0deg) scale(1);
-    }
-    50% {
-      transform: rotate(360deg) scale(1.2);
-    }
-    100% {
-      transform: rotate(720deg) scale(1);
-    }
-  }
-
   & > .spinner {
-    width: 60px;
-    height: 60px;
+    height: 120px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: white;
+    background-color: transparent;
     transition: 200ms;
     opacity: ${(props) => (props.visible ? 1 : 0)};
-    animation: infinite-spinning 1.2s infinite;
   }
 `;
 

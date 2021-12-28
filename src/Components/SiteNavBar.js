@@ -51,6 +51,7 @@ function SiteNavBar(props) {
         <Logo style={{cursor: 'pointer'}}>
           <Link to="/" loading={800}>
             <img
+              className="logo"
               src="/favicon.png"
               alt="Logo"
               style={{
@@ -96,7 +97,7 @@ function SiteNavBar(props) {
                       color: '#000',
                       fontWeight: '400',
                       borderBottom: selected
-                        ? '4px solid #FEC20C'
+                        ? `4px solid ${THEME_COLOR}`
                         : '4px solid transparent',
                       padding: '19px 10px',
                       margin: '0px 20px',
@@ -157,6 +158,20 @@ const NavBar = styled.div`
       ? '0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23)'
       : 'none'}; */
   transition: 200ms;
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  & .logo {
+    &:hover {
+      animation: spin 700ms infinite linear;
+    }
+  }
 `;
 
 const Logo = styled.div`
@@ -204,7 +219,7 @@ function MobileNav(props) {
               className="nav-link"
               key={idx}
               extraStyle={{
-                color: selected ? '#FEC20C' : '#000',
+                color: selected ? THEME_COLOR : '#000',
                 fontWeight: '400',
                 padding: '19px 10px',
                 textAlign: 'center',

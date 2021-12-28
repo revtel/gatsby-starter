@@ -41,11 +41,15 @@ function ArticleDetail(props) {
             padding: 40,
             backgroundImage: 'url(/header_bg.jpg)',
             backgroundSize: 'contain',
+            animation: 'navMove 20s linear infinite',
           }}>
           <img
             src="/pokemon-logo.png"
             alt="logo"
-            style={{height: 100, transform: 'scale(2.5)'}}
+            style={{
+              height: 100,
+              transform: 'scale(2.5)',
+            }}
           />
         </div>
       );

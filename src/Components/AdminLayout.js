@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Layout} from 'antd';
+import {Button, Layout, Result, Space} from 'antd';
 import {navigate} from 'gatsby';
-import {useOutlet, useOutletSetter} from 'reconnect.js';
+import {getOutlet, useOutlet, useOutletSetter} from 'reconnect.js';
 import * as User from 'rev.sdk.js/Actions/User';
 import {withLoginRequired} from 'rev.sdk.js/Components/LoginRequired';
 import SiteNavBar from '../Components/SiteNavBar';
 
 const SiteInfo = {
   icon: '/favicon.png',
-  title: 'Pokémon Store',
+  title: 'Pokémon Center',
   subtitle: 'Dashboard',
 };
 
@@ -122,17 +122,21 @@ const AppHeaderWrapper = styled.header`
   background-color: white;
   display: flex;
   align-items: center;
+
   & > figure {
     padding: 10px;
     margin: 0px;
+
     & > img {
       width: 50px;
       height: 50px;
       object-fit: contain;
     }
   }
+
   & > .content {
     padding: 8px;
+
     & p {
       padding: 0;
       margin: 0;
@@ -188,4 +192,39 @@ const MobileMainMenu = styled.button`
 export default withLoginRequired(AdminLayout, {
   admin: true,
   SiteNavBar,
+  renderLoginRequired: (options) => {
+    const loginModal = getOutlet('login-modal');
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          paddingTop: 'var(--topNavBarHeight)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Result
+          icon={
+            <img
+              style={{width: 150}}
+              src="/permission-denied.gif"
+              alt="permission-denied"
+            />
+          }
+          title="尚無權限"
+          subTitle="此頁面需要登入，方能瀏覽"
+          extra={
+            <Space direction="vertical">
+              <Button
+                onClick={() => {
+                  loginModal.update({admin: true});
+                }}>
+                登入
+              </Button>
+            </Space>
+          }
+        />
+      </div>
+    );
+  },
 });

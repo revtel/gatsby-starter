@@ -24,6 +24,7 @@ function ProductList(props) {
               padding: 40,
               backgroundImage: 'url(/header_bg.jpg)',
               backgroundSize: 'contain',
+              animation: 'navMove 20s linear infinite',
             }}>
             <img
               src="/pokemon-logo.png"
@@ -52,6 +53,7 @@ function ProductList(props) {
               padding: 40,
               backgroundImage: 'url(/header_bg.jpg)',
               backgroundSize: 'contain',
+              animation: 'navMove 20s linear infinite',
             }}>
             <img
               src="/pokemon-logo.png"

@@ -43,4 +43,4 @@ export const ATTRIBUTE_DISPLAY = {
   },
 };
 
-export const THEME_COLOR = '#FEC20C';
+export const THEME_COLOR = '#C3AAD1';

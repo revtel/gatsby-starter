@@ -96,7 +96,7 @@ function Layout({children, location}) {
 
 const Wrapper = styled.div`
   --contentMaxWidth: 1200px;
-  --contentMinHeight: 600px;
+  --contentMinHeight: 840px;
   --topNavBarHeight: 64px;
   --basePadding: 15px 20px;
   --primaryColor: ${THEME_COLOR};

@@ -33,13 +33,13 @@ let LINK_ITEMS = [
     loading: true,
     items: [
       {
-        title: '主題商品',
-        to: '/products?cat=theme',
+        title: '關都地區',
+        to: '/products?cat=kanto',
         loading: true,
       },
       {
-        title: '客製商品',
-        to: '/products?cat=custom',
+        title: '城都地區',
+        to: '/products?cat=janto',
         loading: true,
       },
     ],

@@ -6,5 +6,14 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0;
+    margin: 0;
+}
+
+@keyframes navMove {
+    from {
+        background-position: left bottom;
+    }
+    to {
+        background-position: -200px bottom;
+    }
 }

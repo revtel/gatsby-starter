@@ -10,8 +10,11 @@ function Landing(props) {
       <Wrapper>
         <HeroBannerSection style={{backgroundColor: 'orange'}}>
           <HeroBannerLogo />
-          <h2>RevtelTech</h2>
-          <p>Subtitle</p>
+          <img
+            src="/pokemon-logo.png"
+            alt="logo"
+            style={{height: 100, transform: 'scale(2.5)'}}
+          />
         </HeroBannerSection>
 
         <FlexItemSection style={{backgroundColor: '#eee'}}>
@@ -177,7 +180,7 @@ function Landing(props) {
 function HeroBannerLogo(props) {
   return (
     <StaticImage
-      src="../../images/react-icon.png"
+      src="../../../static/favicon.png"
       alt="Logo"
       placeholder="blurred"
       layout="fixed"
@@ -192,20 +195,24 @@ const Wrapper = styled.div`
     position: relative;
     overflow-x: hidden;
   }
+
   & .landing-slide-in-right {
     opacity: 0;
     transform: translateX(2000px);
     transition: 350ms;
   }
+
   & .landing-slide-in-right.delighter.started {
     opacity: 1;
     transform: translateX(0px);
   }
+
   & .landing-slide-in-left {
     opacity: 0;
     transform: translateX(-2000px);
     transition: 350ms;
   }
+
   & .landing-slide-in-left.delighter.started {
     opacity: 1;
     transform: translateX(0px);
@@ -231,15 +238,17 @@ const NavBar = styled.div`
 
 const HeroBannerSection = styled.section`
   padding: 80px;
-  min-height: 640px;
+  min-height: 650px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   & > h2 {
     font-size: 32px;
     color: white;
   }
+
   & > p {
     font-size: 18px;
     color: #ccc;
@@ -248,19 +257,23 @@ const HeroBannerSection = styled.section`
 
 const RowBannerSection = styled.section`
   padding: 40px 20px;
+
   & > .content {
     max-width: 800px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
     & > .description {
       display: flex;
       flex-direction: column;
+
       & > h2 {
         font-size: 32px;
         color: #888;
       }
+
       & > p {
         font-size: 18px;
         color: #ccc;
@@ -271,6 +284,7 @@ const RowBannerSection = styled.section`
 
 const FlexItemSection = styled.section`
   padding: 40px;
+
   & > .content {
     max-width: 1024px;
     margin: 0 auto;
@@ -287,13 +301,16 @@ const FlexItem = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   & > .description {
     display: flex;
     flex-direction: column;
+
     & > h3 {
       font-size: 24px;
       color: #888;
     }
+
     & > p {
       font-size: 18px;
       color: #ccc;
