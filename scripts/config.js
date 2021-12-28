@@ -21,7 +21,6 @@ function config() {
   } else {
     // https://pokemon.netlify.app
     data.stage = 'prod';
-    data.clientId = 'revtel-puzzlego';
     data.apiHost = 'https://pokemon-store-api.revtel2.com';
     data.authHost = 'https://auth.revtel-api.com/v4';
     data.jstoreHost = 'https://jstorage.revtel-api.com/v2';

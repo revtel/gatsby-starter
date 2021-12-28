@@ -11,6 +11,7 @@ import * as jwt from '../Utils/jwt';
 import setLoadingPlugin from './Plugin/setLoading';
 import navigatePlugin from './Plugin/navigate';
 import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
+import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 
 /**
  * **************************************************
@@ -22,6 +23,7 @@ const Plugins = {
   setLoading: new setLoadingPlugin('setLoading'),
   navigate: new navigatePlugin('navigate'),
   clientJStorageFetch: new clientJStorageFetchPlugin('clientJStorageFetch'),
+  onAdminFormSubmit: new onAdminFormSubmitPlugin('onAdminFormSubmit'),
 };
 
 const req = ApiUtil.req;
@@ -170,42 +172,24 @@ const getDefaultCheckoutFormSpec = () => ({
 });
 
 function onCartLoaded(cart) {
-  const supportedLogisticsTypes = _.uniq(
-    cart.items.reduce((acc, cur) => {
-      acc = [
-        ...acc,
-        ...(cur.product.extra_data.supported_logistics_types || [
-          Cart.LOGISTICS_TYPE.home,
-        ]),
-      ];
-      return acc;
-    }, []),
-  );
-  const defaultEmail = UserOutlet.getValue().data.email;
-
   const checkoutFormSpec = getDefaultCheckoutFormSpec();
 
-  checkoutFormSpec.logisticsTypes = supportedLogisticsTypes;
+  const defaultUser = {
+    buyer_name: cart.buyer_name || UserOutlet.getValue().data.name || '',
+    buyer_email: cart.buyer_email || UserOutlet.getValue().data.email || '',
+    buyer_phone: cart.buyer_phone || UserOutlet.getValue().data.phone || '',
+    buyer_zip: cart.buyer_zip || UserOutlet.getValue().data.zip || '',
+    buyer_city: cart.buyer_city || UserOutlet.getValue().data.city || '',
+    buyer_district:
+      cart.buyer_district || UserOutlet.getValue().data.district || '',
+    buyer_address:
+      cart.buyer_address || UserOutlet.getValue().data.address || '',
+  };
 
-  let updateConfig = supportedLogisticsTypes.includes(cart.logistics_type)
-    ? {}
-    : {
-        ...cart,
-        logistics_type: Cart.LOGISTICS_TYPE.home,
-        logistics_subtype: Cart.LOGISTICS_SUBTYPE.TCAT,
-      };
-
-  updateConfig = cart.buyer_email
-    ? {
-        ...updateConfig,
-      }
-    : {
-        ...cart,
-        ...updateConfig,
-        buyer_email: defaultEmail,
-      };
-
-  updateConfig = Object.keys(updateConfig).length <= 0 ? null : updateConfig;
+  const updateConfig = {
+    ...cart,
+    ...defaultUser,
+  };
 
   return {
     updateConfig,

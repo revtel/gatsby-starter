@@ -1,5 +1,6 @@
 import {getNewOutlet} from 'reconnect.js';
 import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
+import {ATTRIBUTE_DISPLAY} from '../constants';
 
 // configurations for "product" collection
 const sortOptions = [
@@ -11,47 +12,21 @@ const sortOptions = [
 
 const categories = [
   {
-    name: 'theme',
-    display: '主題商品',
-    image:
-      'https://images.pexels.com/photos/6850740/pexels-photo-6850740.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    name: 'kanto',
+    display: '關都地區',
+    items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
+      name: `kanto-${attr[0]}`,
+      display: attr[1],
+    })),
   },
   {
-    name: 'custom',
-    display: '客製商品',
-    image:
-      'https://images.pexels.com/photos/6624333/pexels-photo-6624333.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    name: 'johto',
+    display: '城都地區',
+    items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
+      name: `johto-${attr[0]}`,
+      display: attr[1],
+    })),
   },
-  // {
-  //   name: 'A',
-  //   display: 'Cat A',
-  //   items: [
-  //     {
-  //       name: 'A-a',
-  //       display: 'Cat A-a',
-  //       items: [
-  //         {name: 'A-a-1', display: 'Cat A-a-1'},
-  //         {name: 'A-a-2', display: 'Cat A-a-2'},
-  //         {name: 'A-a-3', display: 'Cat A-a-3'},
-  //       ],
-  //     },
-  //     {name: 'A-b', display: 'Cat A-b'},
-  //     {name: 'A-c', display: 'Cat A-c'},
-  //   ],
-  // },
-  // {
-  //   name: 'B',
-  //   display: 'Cat B',
-  // },
-  // {
-  //   name: 'C',
-  //   display: 'Cat C',
-  //   items: [
-  //     {name: 'C-a', display: 'Cat C-a'},
-  //     {name: 'C-b', display: 'Cat C-b'},
-  //     {name: 'C-c', display: 'Cat C-c'},
-  //   ],
-  // },
 ];
 
 // configurations for "Article_Default" collection

@@ -53,7 +53,7 @@ function SiteNavBar(props) {
         <Logo style={{cursor: 'pointer'}}>
           <Link to="/" loading={800}>
             <img
-              src="/images/revicon_512.png"
+              src="/favicon.png"
               alt="Logo"
               style={{
                 height: dimension.rwd === 'desktop' ? 40 : 20,
@@ -98,7 +98,7 @@ function SiteNavBar(props) {
                       color: '#000',
                       fontWeight: '400',
                       borderBottom: selected
-                        ? '4px solid #0eb407'
+                        ? '4px solid #AFAFA4'
                         : '4px solid transparent',
                       padding: '19px 10px',
                       margin: '0px 20px',
@@ -115,7 +115,7 @@ function SiteNavBar(props) {
                 AppActions.navigate('/checkout');
               }}>
               <Badge count={cart.items.length}>
-                <ShoppingBag size={24} color={'#0eb407'} />
+                <ShoppingBag size={24} color={'#000000'} />
               </Badge>
             </Button>
 
@@ -125,7 +125,7 @@ function SiteNavBar(props) {
                 onClick={() => {
                   AppActions.navigate('/profile');
                 }}>
-                <PersonCircle size={26} color={'#0eb407'} />
+                <PersonCircle size={26} color={'#000000'} />
               </Button>
             ) : (
               <Button onClick={() => showLoginModal(true)}>登入</Button>
@@ -206,7 +206,7 @@ function MobileNav(props) {
               className="nav-link"
               key={idx}
               extraStyle={{
-                color: selected ? '#0eb407' : '#000',
+                color: selected ? '#AFAFA4' : '#000',
                 fontWeight: '400',
                 padding: '19px 10px',
                 textAlign: 'center',

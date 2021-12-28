@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
+import empty from '../../../../static/favicon.png';
 
 function ProductGrid(props) {
   const {products, onItemClick, prefixPath} = props;
@@ -56,6 +57,7 @@ const ProductGridWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: ${(props) => (props.mobile ? 'center' : 'space-between')};
   padding: ${(props) => (props.mobile ? 0 : 'var(--basePadding)')};
+
   & > .filler {
     width: ${(props) => (props.mobile ? '140px' : '180px')};
     height: 1px;
@@ -70,14 +72,18 @@ const ArticleGridWrapper = styled.div`
 
 function ProductItem(props) {
   const {product, onClick, mobile} = props;
+
+  let src = useMemo(() => {
+    try {
+      return product.images[0].expected_url;
+    } catch (e) {
+      return null;
+    }
+  }, [product.images]);
+
   return (
     <ProductWrapper mobile={mobile} onClick={onClick}>
-      <img
-        src={
-          (product.images && product.images[0]) || '../../images/empty-img.png'
-        }
-        alt="product"
-      />
+      <img src={src || empty} alt="product" />
 
       <div className="info">
         <h3>{product.name}</h3>
@@ -116,18 +122,21 @@ const ArticleWrapper = styled.div`
   & > .info {
     padding: 20px;
     flex: 1;
+
     & > .title {
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+
     & > .outline {
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
+
     & > .date {
       color: var(--primaryColor);
       font-size: 13px;
@@ -193,8 +202,10 @@ const ProductWrapper = styled.div`
     position: absolute;
     width: 100%;
     height: 60%;
+    padding: 20px;
     object-fit: cover;
     transition: 200ms;
+
     &:hover {
       transform: scale(1.2);
     }

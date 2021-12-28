@@ -116,8 +116,8 @@ function ProductDetail(props) {
               <Carousel
                 currIdxFromParent={imgIdx}
                 width={gallerySize}
-                height={gallerySize * (400 / 650)}
-                data={product.images}
+                height={gallerySize}
+                data={product.images.map((i) => i.expected_url)}
                 renderPrev={null}
                 renderNext={null}
                 renderDots={null}
@@ -126,7 +126,7 @@ function ProductDetail(props) {
                     <FixedRatioImage
                       image={item}
                       width="100%"
-                      ratio={400 / 650}
+                      ratio={1}
                       mode="cover"
                       alt="product"
                     />
@@ -140,7 +140,7 @@ function ProductDetail(props) {
               <MiniImageList>
                 {product.images.map((image, idx) => (
                   <MiniImageItem
-                    src={image}
+                    src={image.expected_url}
                     alt="mini"
                     key={idx}
                     selected={idx === imgIdx}
@@ -260,6 +260,7 @@ const Summary = styled.div`
 
   flex: 1;
   flex-basis: 450px;
+  margin: 20px;
 `;
 
 const LineSeperator = styled.section`

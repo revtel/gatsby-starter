@@ -3,8 +3,16 @@
   "name": "產品",
   "collection": "product",
   "primaryKey": "id",
-  "searchFields": ["name","searchText"],
+  "searchFields": [
+    "name",
+    "searchText"
+  ],
   "columns": [
+    {
+      "title": "神奇寶貝編號",
+      "key": "pokemon_id",
+      "dataIndex": "pokemon_id"
+    },
     {
       "title": "名稱",
       "key": "name",
@@ -23,7 +31,11 @@
     }
   ],
   "querySpec": {
-    "pageSizeOptions": [10, 30, 50],
+    "pageSizeOptions": [
+      10,
+      30,
+      50
+    ],
     "sortOptions": [
       {
         "name": "價錢低到高",
@@ -57,8 +69,35 @@
     "schema": {
       "title": "",
       "type": "object",
-      "required": ["name", "price"],
+      "required": [],
       "properties": {
+        "pokemon_id": {
+          "type": "number",
+          "title": "神奇寶貝編號"
+        },
+        "region": {
+          "type": "array",
+          "title": "所屬區域",
+          "uniqueItems": true,
+          "items": {
+            "anyOf": []
+          }
+        },
+        "attribute": {
+          "type": "array",
+          "title": "所屬屬性",
+          "uniqueItems": true,
+          "items": {
+            "anyOf": []
+          }
+        },
+        "images": {
+          "type": "array",
+          "title": "產品圖片",
+          "items": {
+            "type": "object"
+          }
+        },
         "name": {
           "type": "string",
           "title": "商品名稱"
@@ -73,111 +112,9 @@
           "title": "公開",
           "default": false
         },
-        "description": {
-          "type": "string",
-          "title": "產品說明"
-        },
-        "labels": {
-          "type": "array",
-          "title": "分類標籤",
-          "items": {
-            "type": "string"
-          }
-        },
-        "intro": {
-          "type": "string",
-          "title": "產品介紹"
-        },
-        "spec": {
-          "type": "string",
-          "title": "產品規格"
-        },
-        "remark": {
-          "type": "string",
-          "title": "產品備註"
-        },
-        "article": {
-          "type": "string",
-          "title": "產品文章"
-        },
         "searchText": {
           "type": "string",
           "title": "搜尋關鍵字"
-        },
-        "images": {
-          "type": "array",
-          "title": "產品圖片",
-          "items": {
-            "type": "string"
-          }
-        },
-        "variants": {
-          "type": "array",
-          "title": "商品加價選項",
-          "items": {
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "title": "選項類型",
-                "enum": ["bool", "single"],
-                "enumNames": ["是非題", "單選題"]
-              },
-              "name": {
-                "type": "string",
-                "title": "名稱"
-              },
-              "label": {
-                "type": "string",
-                "title": "顯示"
-              }
-            },
-            "dependencies": {
-              "type": {
-                "oneOf": [
-                  {
-                    "properties": {
-                      "type": {
-                        "enum": ["bool"]
-                      },
-                      "price": {
-                        "type": "number",
-                        "title": "加價"
-                      }
-                    }
-                  },
-                  {
-                    "properties": {
-                      "type": {
-                        "enum": ["single"]
-                      },
-                      "choices": {
-                        "type": "array",
-                        "title": "單選選項",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "name": {
-                              "type": "string",
-                              "title": "名稱"
-                            },
-                            "label": {
-                              "type": "string",
-                              "title": "顯示"
-                            },
-                            "price": {
-                              "type": "number",
-                              "title": "加價"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
         }
       }
     },
@@ -198,7 +135,7 @@
         "ui:widget": "textarea"
       },
       "images": {
-        "ui:field": "rev-images"
+        "ui:field": "rev-files"
       }
     }
   },
@@ -217,5 +154,5 @@
       }
     }
   },
-  "actionBar": ["article", "file"]
+  "actionBar": []
 }

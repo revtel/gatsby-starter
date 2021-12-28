@@ -13,7 +13,7 @@ function NavBar(props) {
       bgColor={passBreakpoint ? 'white' : 'transparent'}
       style={{height: 64}}>
       <img
-        src="/images/revicon_512.png"
+        src="/favicon.png"
         style={{width: 32, height: 32, objectFit: 'contain'}}
         alt="revtel logo"
       />

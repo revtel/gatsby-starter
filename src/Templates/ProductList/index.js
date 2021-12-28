@@ -22,12 +22,14 @@ function ProductList(props) {
               alignItems: 'center',
               justifyContent: 'center',
               padding: 40,
-              backgroundImage:
-                'url(https://t3.ftcdn.net/jpg/02/93/11/46/360_F_293114646_6uJj1Sp1eLkIOebm9QL0Y18dzOt5eZtb.jpg)',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
+              backgroundImage: 'url(/header_bg.jpg)',
+              backgroundSize: 'contain',
             }}>
-            <h2>Article List Custom Area</h2>
+            <img
+              src="/pokemon-logo.png"
+              alt="logo"
+              style={{height: 100, transform: 'scale(2.5)'}}
+            />
           </div>
         );
       }
@@ -48,12 +50,14 @@ function ProductList(props) {
               alignItems: 'center',
               justifyContent: 'center',
               padding: 40,
-              backgroundImage:
-                'url(https://t3.ftcdn.net/jpg/02/93/11/46/360_F_293114646_6uJj1Sp1eLkIOebm9QL0Y18dzOt5eZtb.jpg)',
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: 'cover',
+              backgroundImage: 'url(/header_bg.jpg)',
+              backgroundSize: 'contain',
             }}>
-            <h2>Product List Custom Area</h2>
+            <img
+              src="/pokemon-logo.png"
+              alt="logo"
+              style={{height: 100, transform: 'scale(2.5)'}}
+            />
           </div>
         );
       }

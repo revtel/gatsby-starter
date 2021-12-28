@@ -1,8 +1,13 @@
 import React from 'react';
 import AdminResource from 'rev.sdk.js/Generators/AdminResource';
 import {Button, message, Tag} from 'antd';
+import {useOutlet} from 'reconnect.js';
+import {ATTRIBUTE_DISPLAY} from '../../constants';
 
 function AdminResourcePage(props) {
+  const {path, pageContext} = props;
+  const [categories] = useOutlet('categories');
+
   function renderCustomAdminSection(props) {
     const {name, type, context} = props;
 
@@ -51,6 +56,23 @@ function AdminResourcePage(props) {
       );
     }
     return null;
+  }
+
+  if (path === '/admin/products') {
+    pageContext.resource.formSpec.schema.properties.region.items.anyOf = categories.map(
+      (c) => ({
+        type: 'string',
+        enum: [c.name],
+        title: c.display,
+      }),
+    );
+    pageContext.resource.formSpec.schema.properties.attribute.items.anyOf = Object.entries(
+      ATTRIBUTE_DISPLAY,
+    ).map((attr) => ({
+      type: 'string',
+      enum: [attr[0]],
+      title: attr[1],
+    }));
   }
 
   return (

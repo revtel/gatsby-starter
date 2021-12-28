@@ -78,7 +78,7 @@ function SiteFooter(props) {
             onClick={() => AppActions.navigate('/', {loading: 500})}
             style={{flex: 1, textAlign: 'center'}}>
             <img
-              src="/images/revicon_512.png"
+              src="/favicon.png"
               alt="Logo"
               style={{
                 height: 150,
@@ -97,15 +97,18 @@ function SiteFooter(props) {
               justifyContent: 'space-between',
             }}>
             {LINK_ITEMS.map((item, idx) => (
-              <div style={{minWidth: dimension.rwd === 'desktop' ? 120 : 85}}>
+              <div
+                key={idx}
+                style={{minWidth: dimension.rwd === 'desktop' ? 120 : 85}}>
                 <div
                   className="link-title"
                   style={{color: '#0eb407'}}
                   onClick={() => AppActions.navigate('/', {loading: 500})}>
                   {item.title}
                 </div>
-                {item.items.map((i) => (
+                {item.items.map((i, index) => (
                   <div
+                    key={index}
                     className="link-item"
                     onClick={() =>
                       AppActions.navigate(i.to, {loading: i.loading})
@@ -200,10 +203,10 @@ function SiteFooter(props) {
                 fontSize: 12,
                 color: '#14A58C',
               }}
-              href="https://revteltech.pse.is/3psgrd"
+              href="https://www.revtel.tech/"
               target="_blank"
               rel="noreferrer">
-              奕果雲端數位 EcultureTech
+              忻旅科技 RevtelTech
             </a>
           </div>
         </div>
@@ -214,6 +217,7 @@ function SiteFooter(props) {
 
 const FlexItemSection = styled.section`
   text-align: ${(props) => (props.isMobile ? 'center' : 'left')};
+
   & > .content {
     max-width: 1024px;
     margin: 0 auto;
@@ -243,13 +247,16 @@ const FlexItemSection = styled.section`
 
     & .info {
       flex-basis: 100px;
+
       & .info-text {
         color: #707070;
         margin-top: 8px;
+
         :first-child {
           margin-top: 0px;
         }
       }
+
       & img {
         cursor: pointer;
       }
@@ -297,10 +304,12 @@ const FlexItem = styled.div`
   & > .description {
     display: flex;
     flex-direction: column;
+
     & > h3 {
       font-size: 24px;
       color: #888;
     }
+
     & > p {
       font-size: 18px;
       color: #ccc;
