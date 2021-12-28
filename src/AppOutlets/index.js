@@ -4,9 +4,11 @@ import {ATTRIBUTE_DISPLAY} from '../constants';
 
 // configurations for "product" collection
 const sortOptions = [
+  {name: 'pokemon_id', display: '編號(由低到高)'},
+  {name: '-pokemon_id', display: '編號(由高到低)'},
   {name: '-created', display: '上架時間(由新到舊)'},
-  {name: 'price', display: '價格(由低到高)'},
   {name: 'created', display: '上架時間(由舊到新)'},
+  {name: 'price', display: '價格(由低到高)'},
   {name: '-price', display: '價格(由高到低)'},
 ];
 
@@ -16,7 +18,7 @@ const categories = [
     display: '關都地區',
     items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
       name: `kanto-${attr[0]}`,
-      display: attr[1],
+      display: attr[1].zh,
     })),
   },
   {
@@ -24,7 +26,7 @@ const categories = [
     display: '城都地區',
     items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
       name: `johto-${attr[0]}`,
-      display: attr[1],
+      display: attr[1].zh,
     })),
   },
 ];

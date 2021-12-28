@@ -7,6 +7,7 @@ import Link from './NavLink';
 import * as AppActions from '../AppActions';
 import {ShoppingBag} from '@styled-icons/boxicons-regular/ShoppingBag';
 import {PersonCircle} from '@styled-icons/ionicons-outline/PersonCircle';
+import {THEME_COLOR} from '../constants';
 
 const navItems = [
   {children: '品牌介紹', url: '/about'},
@@ -98,7 +99,7 @@ function SiteNavBar(props) {
                       color: '#000',
                       fontWeight: '400',
                       borderBottom: selected
-                        ? '4px solid #AFAFA4'
+                        ? '4px solid #FEC20C'
                         : '4px solid transparent',
                       padding: '19px 10px',
                       margin: '0px 20px',
@@ -115,7 +116,7 @@ function SiteNavBar(props) {
                 AppActions.navigate('/checkout');
               }}>
               <Badge count={cart.items.length}>
-                <ShoppingBag size={24} color={'#000000'} />
+                <ShoppingBag size={24} color={THEME_COLOR} />
               </Badge>
             </Button>
 
@@ -125,7 +126,7 @@ function SiteNavBar(props) {
                 onClick={() => {
                   AppActions.navigate('/profile');
                 }}>
-                <PersonCircle size={26} color={'#000000'} />
+                <PersonCircle size={26} color={THEME_COLOR} />
               </Button>
             ) : (
               <Button onClick={() => showLoginModal(true)}>登入</Button>
@@ -206,7 +207,7 @@ function MobileNav(props) {
               className="nav-link"
               key={idx}
               extraStyle={{
-                color: selected ? '#AFAFA4' : '#000',
+                color: selected ? '#FEC20C' : '#000',
                 fontWeight: '400',
                 padding: '19px 10px',
                 textAlign: 'center',

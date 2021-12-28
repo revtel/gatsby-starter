@@ -14,6 +14,18 @@
       "dataIndex": "pokemon_id"
     },
     {
+      "title": "地區",
+      "key": "region",
+      "dataIndex": "region",
+      "customType": "region"
+    },
+    {
+      "title": "屬性",
+      "key": "attribute",
+      "dataIndex": "attribute",
+      "customType": "attribute"
+    },
+    {
       "title": "名稱",
       "key": "name",
       "dataIndex": "name"
@@ -38,12 +50,12 @@
     ],
     "sortOptions": [
       {
-        "name": "價錢低到高",
-        "value": "price"
+        "name": "編號低到高",
+        "value": "pokemon_id"
       },
       {
-        "name": "價錢高到低",
-        "value": "-price"
+        "name": "編號高到低",
+        "value": "-pokemon_id"
       }
     ],
     "canSearch": true,
@@ -115,6 +127,84 @@
         "searchText": {
           "type": "string",
           "title": "搜尋關鍵字"
+        },
+        "variants": {
+          "type": "array",
+          "title": "商品加價選項",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "title": "選項類型",
+                "enum": [
+                  "bool",
+                  "single"
+                ],
+                "enumNames": [
+                  "是非題",
+                  "單選題"
+                ]
+              },
+              "name": {
+                "type": "string",
+                "title": "名稱"
+              },
+              "label": {
+                "type": "string",
+                "title": "顯示"
+              }
+            },
+            "dependencies": {
+              "type": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "bool"
+                        ]
+                      },
+                      "price": {
+                        "type": "number",
+                        "title": "加價"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "single"
+                        ]
+                      },
+                      "choices": {
+                        "type": "array",
+                        "title": "單選選項",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string",
+                              "title": "名稱"
+                            },
+                            "label": {
+                              "type": "string",
+                              "title": "顯示"
+                            },
+                            "price": {
+                              "type": "number",
+                              "title": "加價"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
         }
       }
     },

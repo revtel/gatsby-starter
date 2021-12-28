@@ -2,7 +2,7 @@ import React from 'react';
 import AdminResource from 'rev.sdk.js/Generators/AdminResource';
 import {Button, message, Tag} from 'antd';
 import {useOutlet} from 'reconnect.js';
-import {ATTRIBUTE_DISPLAY} from '../../constants';
+import {ATTRIBUTE_DISPLAY, REGION_DISPLAY} from '../../constants';
 
 function AdminResourcePage(props) {
   const {path, pageContext} = props;
@@ -44,16 +44,16 @@ function AdminResourcePage(props) {
 
   function renderCustomAdminCol(props) {
     const {col, record} = props;
-    if (col.customType === 'label') {
-      return record.label?.map((l, idx) => <Tag>{l}</Tag>);
-    } else if (col.customType === 'ORDER_STATUS') {
-      return (
-        <div>
-          {record.status === 'waiting' && '未處理'}
-          {record.status === 'done' && '已完成'}
-          {record.status === 'canceled' && '已取消'}
-        </div>
-      );
+    if (col.customType === 'region') {
+      return record.region?.map((l, idx) => (
+        <Tag key={idx}>{REGION_DISPLAY[l].zh}</Tag>
+      ));
+    } else if (col.customType === 'attribute') {
+      return record.attribute?.map((l, idx) => (
+        <Tag color={ATTRIBUTE_DISPLAY[l].color} key={idx}>
+          {ATTRIBUTE_DISPLAY[l].zh}
+        </Tag>
+      ));
     }
     return null;
   }
@@ -71,7 +71,7 @@ function AdminResourcePage(props) {
     ).map((attr) => ({
       type: 'string',
       enum: [attr[0]],
-      title: attr[1],
+      title: attr[1].zh,
     }));
   }
 

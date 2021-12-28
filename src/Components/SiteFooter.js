@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import * as AppActions from '../AppActions';
+import {THEME_COLOR} from '../constants';
 
 let LINK_ITEMS = [
   {
@@ -102,7 +103,7 @@ function SiteFooter(props) {
                 style={{minWidth: dimension.rwd === 'desktop' ? 120 : 85}}>
                 <div
                   className="link-title"
-                  style={{color: '#0eb407'}}
+                  style={{color: THEME_COLOR}}
                   onClick={() => AppActions.navigate('/', {loading: 500})}>
                   {item.title}
                 </div>
@@ -201,7 +202,7 @@ function SiteFooter(props) {
               style={{
                 display: 'inline',
                 fontSize: 12,
-                color: '#14A58C',
+                color: THEME_COLOR,
               }}
               href="https://www.revtel.tech/"
               target="_blank"
