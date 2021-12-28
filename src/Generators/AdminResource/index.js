@@ -3,6 +3,8 @@ import AdminResource from 'rev.sdk.js/Generators/AdminResource';
 import {Button, message, Tag} from 'antd';
 import {useOutlet} from 'reconnect.js';
 import {ATTRIBUTE_DISPLAY, REGION_DISPLAY} from '../../constants';
+import AdminOrderDetailForm from '../../../custom/Components/AdminOrderDetailForm';
+import {ArticleEditor} from 'rev.sdk.js';
 
 function AdminResourcePage(props) {
   const {path, pageContext} = props;
@@ -16,13 +18,20 @@ function AdminResourcePage(props) {
       name === 'AdminOrderDetailForm' &&
       context.position === 'bottom'
     ) {
-      return <div>Hello!!</div>;
+      return <AdminOrderDetailForm context={context} />;
     } else if (
       type === 'form' &&
       name === 'ArticleFormHi' &&
       context.position === 'top'
     ) {
-      return <div>article!</div>;
+      return (
+        <ArticleEditor
+          collection={{name: 'Article_Default'}} // will be removed in sdk
+          onUpdate={() => 0} // will be removed in sdk
+          onClose={() => 0} // will be removed in sdk
+          document={context?.instance}
+        />
+      );
     } else if (
       type === 'form' &&
       name === 'site-form' &&
@@ -54,6 +63,8 @@ function AdminResourcePage(props) {
           {ATTRIBUTE_DISPLAY[l].zh}
         </Tag>
       ));
+    } else if (col.customType === 'label') {
+      return record.label?.map((l, idx) => <Tag key={idx}>{l}</Tag>);
     }
     return null;
   }

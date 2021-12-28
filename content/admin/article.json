@@ -3,7 +3,9 @@
   "name": "文章",
   "collection": "Article_Default",
   "primaryKey": "id",
-  "searchFields": ["searchText"],
+  "searchFields": [
+    "searchText"
+  ],
   "columns": [
     {
       "title": "名稱",
@@ -21,24 +23,29 @@
       "key": "label",
       "dataIndex": "label",
       "customType": "label"
-    },
-    {
-      "title": "大綱",
-      "key": "outline",
-      "dataIndex": "outline"
     }
   ],
   "querySpec": {
-    "pageSizeOptions": [10, 30, 50],
+    "pageSizeOptions": [
+      10,
+      30,
+      50
+    ],
     "sortOptions": [
-      {"name": "時間舊到新", "value": "created"},
-      {"name": "時間新到舊", "value": "-created"}
+      {
+        "name": "時間舊到新",
+        "value": "created"
+      },
+      {
+        "name": "時間新到舊",
+        "value": "-created"
+      }
     ],
     "canSearch": true
   },
   "formSpec": {
-    "submitButton": null,
     "customName": "ArticleFormHi",
+    "submitButton": null,
     "schema": {
       "title": "",
       "type": "object",
@@ -46,11 +53,21 @@
       }
     },
     "uiSchema": {
-      "description": {"ui:widget": "textarea"},
-      "intro": {"ui:widget": "textarea"},
-      "spec": {"ui:widget": "textarea"},
-      "remark": {"ui:widget": "textarea"},
-      "searchText": {"ui:widget": "textarea"}
+      "description": {
+        "ui:widget": "textarea"
+      },
+      "intro": {
+        "ui:widget": "textarea"
+      },
+      "spec": {
+        "ui:widget": "textarea"
+      },
+      "remark": {
+        "ui:widget": "textarea"
+      },
+      "searchText": {
+        "ui:widget": "textarea"
+      }
     }
   },
   "actionBar": []

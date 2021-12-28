@@ -16,16 +16,14 @@ const SiteInfo = {
 const Routes = [
   {name: '首頁', path: '/admin'},
   {name: '商品', path: '/admin/products'},
+  {name: '優惠券', path: '/admin/coupons'},
+  {name: '滿額折扣', path: '/admin/discount-list'},
+  {name: '訂單', path: '/admin/orders'},
+  {name: '會員', path: '/admin/users'},
+  {name: '文章', path: '/admin/articles'},
   {name: '重設密碼', path: 'reset-password'},
   {name: '登出', path: 'logout'},
   // {name: '網站設定', path: '/admin/site'},
-  // {name: '訂單', path: '/admin/orders'},
-  // {name: '會員', path: '/admin/users'},
-  // {name: '文章', path: '/admin/articles'},
-  // {name: '優惠券', path: '/admin/coupons'},
-  // {name: '滿額折扣', path: '/admin/discount-list'},
-  // {name: '商品(inline)', path: '/admin/products-table'},
-  // {name: '圖片', path: '/admin/images'},
   // {name: '設定', path: '/admin/settings'},
 ];
 

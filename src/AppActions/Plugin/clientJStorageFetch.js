@@ -10,8 +10,8 @@ export default class Plugin extends PluginAction {
     const [collection, {cat, q, search, sort}] = args;
 
     //"q" can defined custom query by project
-    let catQuery;
-    if (cat) {
+    let catQuery = {};
+    if (cat && collection === 'product') {
       const region = cat.split('-')[0];
       const attribute = cat.split('-')[1];
       catQuery = {

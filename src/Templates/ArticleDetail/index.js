@@ -42,7 +42,11 @@ function ArticleDetail(props) {
             backgroundImage: 'url(/header_bg.jpg)',
             backgroundSize: 'contain',
           }}>
-          <h2>Article Detail Custom Area</h2>
+          <img
+            src="/pokemon-logo.png"
+            alt="logo"
+            style={{height: 100, transform: 'scale(2.5)'}}
+          />
         </div>
       );
     }

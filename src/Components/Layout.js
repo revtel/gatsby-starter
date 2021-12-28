@@ -9,6 +9,7 @@ import ProfileLayout from './ProfileLayout';
 import CheckoutLayout from './CheckoutLayout';
 import SiteNavBar from './SiteNavBar';
 import SiteFooter from './SiteFooter';
+import {THEME_COLOR} from '../constants';
 
 function Layout({children, location}) {
   const [dimension] = useOutlet('dimension');
@@ -34,7 +35,18 @@ function Layout({children, location}) {
   }, [location.pathname, initialized]);
 
   if (location.pathname.indexOf('admin') !== -1) {
-    return <AdminLayout location={location}>{children}</AdminLayout>;
+    return (
+      <AdminLayout location={location}>
+        <Helmet>
+          <title>Pokémon Center</title>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+          />
+        </Helmet>
+        {children}
+      </AdminLayout>
+    );
   } else if (location.pathname.indexOf('profile') !== -1) {
     return (
       <Wrapper rwd={dimension.rwd}>
@@ -87,7 +99,7 @@ const Wrapper = styled.div`
   --contentMinHeight: 600px;
   --topNavBarHeight: 64px;
   --basePadding: 15px 20px;
-  --primaryColor: #0eb407;
+  --primaryColor: ${THEME_COLOR};
   --sectionPadding: 50px 100px;
   --sectionMobilePadding: 20px;
 
@@ -119,6 +131,7 @@ const Wrapper = styled.div`
     max-width: 900px;
     margin: 0 auto;
   }
+
   .section-dark {
     padding: ${(props) =>
       props.rwd === 'desktop'

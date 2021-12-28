@@ -20,12 +20,9 @@ const navItems = [
 
 function _isInPath({location = {}, navItemUrl}) {
   if (navItemUrl === '/articles?cat=news') {
-    if (location.pathname === '/articles' && location.search === '?cat=news') {
-      // workaround for special case '/articles?cat=news'
-      return true;
-    } else {
-      return false;
-    }
+    return (
+      location.pathname === '/articles/' && location.search === '?cat=news'
+    );
   } else {
     if (location.search === '?cat=news') {
       return false;
