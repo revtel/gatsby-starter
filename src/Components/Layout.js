@@ -84,6 +84,17 @@ function Layout({children, location}) {
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
         />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          charSet="UTF-8"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
       </Helmet>
       <Wrapper rwd={dimension.rwd}>
         {hasSiteNavBar && <SiteNavBar bgColor="white" location={location} />}
@@ -102,6 +113,7 @@ const Wrapper = styled.div`
   --primaryColor: ${THEME_COLOR};
   --sectionPadding: 50px 100px;
   --sectionMobilePadding: 20px;
+  overflow-x: hidden;
 
   min-height: 100vh;
   display: flex;

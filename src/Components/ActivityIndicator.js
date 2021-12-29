@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
-import {LoaderAlt} from '@styled-icons/boxicons-regular/LoaderAlt';
 
 function ActivityIndicator(props) {
   const [visible] = useOutlet('loading');
@@ -10,16 +9,7 @@ function ActivityIndicator(props) {
     <>
       <Wrapper visible={visible}>
         <div className="spinner">
-          <img
-            className="logo"
-            src="/loading.gif"
-            alt="Logo"
-            style={{
-              width: '180px',
-              height: '120px',
-              objectFit: 'cover',
-            }}
-          />
+          <img className="logo" src="/loading.gif" alt="loading spinner" />
         </div>
       </Wrapper>
 
@@ -53,6 +43,11 @@ const Wrapper = styled(CoverAll)`
     background-color: transparent;
     transition: 200ms;
     opacity: ${(props) => (props.visible ? 1 : 0)};
+    & > img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 `;
 

@@ -18,24 +18,26 @@
       "title": "",
       "type": "object",
       "properties": {
-        "banners": {
-          "type": "array",
-          "title": "首頁 banner",
-          "minItems": 1,
-          "items": {
-            "type": "object",
-            "required": ["url"],
-            "properties": {
-              "url": {
-                "type": "string",
-                "title": "圖片"
-              },
-              "link": {
-                "type": "string",
-                "title": "連結"
+        "hero_banner": {
+          "type": "object",
+          "title": "首頁橫幅",
+          "properties": {
+            "images": {
+              "type": "array",
+              "title": "圖片",
+              "schema_path": "hero_banner.images",
+              "items": {
+                "type": "object"
               }
             }
           }
+        }
+      }
+    },
+    "uiSchema": {
+      "hero_banner": {
+        "images": {
+          "ui:field": "rev-files"
         }
       }
     }

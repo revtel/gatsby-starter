@@ -127,12 +127,11 @@ function SiteFooter(props) {
               alignSelf: 'stretch',
               marginTop: dimension.rwd === 'desktop' ? 0 : 40,
             }}>
-            <p className="info-text"> 聯絡我們</p>
-            <p className="info-text"> revteltech@gmail.com.tw</p>
-            <p className="info-text"> 02-2736-6566</p>
-            <p className="info-text"> 臺北市大安區和平東路二段76巷29弄4號1樓</p>
+            <p className="info-text">聯絡我們</p>
+            <p className="info-text">revteltech@gmail.com</p>
+            <p className="info-text">02-2736-6566</p>
+            <p className="info-text">103 台北市大同區民權西路136號10樓之5</p>
             <p className="info-text">
-              {' '}
               週一至週五上午10點至下午7點（例假日休息）
             </p>
 
@@ -142,7 +141,6 @@ function SiteFooter(props) {
                 maxWidth: 280,
                 justifyContent:
                   dimension.rwd === 'desktop' ? 'flex-end' : 'center',
-                // textAlign: 'right',
                 marginTop: 40,
               }}>
               <a

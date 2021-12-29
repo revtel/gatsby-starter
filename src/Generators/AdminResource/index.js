@@ -32,21 +32,6 @@ function AdminResourcePage(props) {
           document={context?.instance}
         />
       );
-    } else if (
-      type === 'form' &&
-      name === 'site-form' &&
-      context.position === 'top'
-    ) {
-      return (
-        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <Button
-            onClick={async () => {
-              message.success('早安');
-            }}>
-            按鈕
-          </Button>
-        </div>
-      );
     }
     return null;
   }

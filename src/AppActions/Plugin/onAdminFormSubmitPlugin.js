@@ -6,7 +6,6 @@ export default class onAdminFormSubmitPlugin extends PluginAction {
   }
 
   async executeAsync(...args) {
-    console.log(123);
     return false;
   }
 }
