@@ -13,7 +13,7 @@ const pages = [
 
   {
     path: `/product`,
-    component: `src/CustomTemplates/ProductDetail/index.js`,
+    component: `src/Templates/ProductDetail/index.js`,
     context: {},
   },
 

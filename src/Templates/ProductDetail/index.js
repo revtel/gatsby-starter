@@ -21,7 +21,7 @@ function ProductDetail(props) {
       listViewPath = '/products',
       outlets = {categoryDisplayMap: 'categoryDisplayMap'},
     },
-    renderCustomSection,
+    renderCustomSection = (sectionId, product) => null,
   } = props;
   const [activeSummaryTab, setActiveSummaryTab] = React.useState('intro');
   const [product, setProduct] = React.useState(null);
