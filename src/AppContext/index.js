@@ -4,6 +4,8 @@ import ActivityIndicator from '../Components/ActivityIndicator';
 import LoginModal from 'rev.sdk.js/Components/LoginModal';
 import ContactModal from '../Components/ContactModal';
 import ResetPasswordModal from '../Components/ResetPasswordModal';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
+import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
 
 function Provider(props) {
   const Dimension = getOutlet('dimension');
@@ -41,12 +43,27 @@ function Provider(props) {
     }
   }, [onResize, detectDimension]);
 
+  async function getSiteConfig(name) {
+    const [first] = await JStorage.fetchDocuments(
+      'site',
+      {
+        name,
+      },
+      null,
+      null,
+    );
+    return first;
+  }
+
   React.useEffect(() => {
     console.log('AppCtx effect hook');
     async function onCtxRendered() {
-      //
+      const categories = JSON.parse(
+        (await getSiteConfig('product_category')).value,
+      );
+      getOutlet('categories').update(categories);
+      getOutlet('categoryDisplayMap').update(buildCatDisplayMap(categories));
     }
-
     onCtxRendered();
   }, []);
 

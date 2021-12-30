@@ -16,18 +16,20 @@ const categories = [
   {
     name: 'kanto',
     display: '關都地區',
-    items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
-      name: `kanto-${attr[0]}`,
-      display: attr[1].zh,
-    })),
+    items: [],
+    // items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
+    //   name: `kanto-${attr[0]}`,
+    //   display: attr[1].zh,
+    // })),
   },
   {
     name: 'johto',
     display: '城都地區',
-    items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
-      name: `johto-${attr[0]}`,
-      display: attr[1].zh,
-    })),
+    items: [],
+    // items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
+    //   name: `johto-${attr[0]}`,
+    //   display: attr[1].zh,
+    // })),
   },
 ];
 
