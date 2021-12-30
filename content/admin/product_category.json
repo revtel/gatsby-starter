@@ -1,0 +1,33 @@
+{
+  "path": "/admin/product_category",
+  "name": "產品分類",
+  "collection": "site",
+  "primaryKey": "id",
+  "searchField": "",
+  "renderDeleteButton": null,
+  "columns": [
+    {
+      "title": "id",
+      "key": "id",
+      "dataIndex": "id"
+    }
+  ],
+  "formSpec": {
+    "customName": "product-category",
+    "schema": {
+      "title": "",
+      "type": "object",
+      "properties": {
+        "value": {
+          "title": "JSON String",
+          "type": "string"
+        }
+      }
+    },
+    "uiSchema": {
+      "value": {
+        "ui:widget": "textarea"
+      }
+    }
+  }
+}

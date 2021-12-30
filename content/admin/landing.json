@@ -1,25 +1,15 @@
 {
-  "path": "/admin/site",
-  "name": "網站設定",
+  "path": "/admin/landing",
+  "name": "首頁設定",
   "collection": "site",
   "primaryKey": "id",
   "searchField": "",
   "renderDeleteButton": null,
   "columns": [
     {
-      "title": "name",
-      "key": "name",
-      "dataIndex": "name"
-    },
-    {
-      "title": "created",
-      "key": "created",
-      "dataIndex": "created"
-    },
-    {
-      "title": "updated",
-      "key": "updated",
-      "dataIndex": "updated"
+      "title": "id",
+      "key": "id",
+      "dataIndex": "id"
     }
   ],
   "formSpec": {
