@@ -20,7 +20,8 @@ function Landing(props) {
     const _fetchSite = async () => {
       try {
         actions.setLoading(true);
-        const _site = (await JStorage.fetchDocuments('site', {})).results[0];
+        const _site = (await JStorage.fetchDocuments('site', {name: 'landing'}))
+          .results[0];
         const _product = (await JStorage.fetchDocuments('product', {})).results;
         const _articles = (await JStorage.fetchDocuments('Article_Default', {}))
           .results;
