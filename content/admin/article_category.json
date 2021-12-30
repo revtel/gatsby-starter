@@ -1,6 +1,6 @@
 {
-  "path": "/admin/product_category",
-  "name": "產品分類",
+  "path": "/admin/article_category",
+  "name": "文章分類",
   "collection": "site",
   "primaryKey": "id",
   "searchField": "",

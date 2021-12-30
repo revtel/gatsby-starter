@@ -43,26 +43,25 @@ function Provider(props) {
     }
   }, [onResize, detectDimension]);
 
-  async function getSiteConfig(name) {
-    const [first] = await JStorage.fetchDocuments(
-      'site',
-      {
-        name,
-      },
-      null,
-      null,
-    );
-    return first;
-  }
-
   React.useEffect(() => {
     console.log('AppCtx effect hook');
-    async function onCtxRendered() {
-      const categories = JSON.parse(
-        (await getSiteConfig('product_category')).value,
-      );
-      getOutlet('categories').update(categories);
-      getOutlet('categoryDisplayMap').update(buildCatDisplayMap(categories));
+    function onCtxRendered() {
+      // TODO: create cache for category to boost performance
+      JStorage.fetchDocuments('site', {}, null, null).then((configs) => {
+        for (const cfg of configs) {
+          if (cfg.name === 'product_category') {
+            getOutlet('categories').update(cfg.categories || []);
+            getOutlet('categoryDisplayMap').update(
+              buildCatDisplayMap(cfg.categories || []),
+            );
+          } else if (cfg.name === 'article_category') {
+            getOutlet('articleCategories').update(cfg.categories || []);
+            getOutlet('articleCategoryDisplayMap').update(
+              buildCatDisplayMap(cfg.categories || []),
+            );
+          }
+        }
+      });
     }
     onCtxRendered();
   }, []);

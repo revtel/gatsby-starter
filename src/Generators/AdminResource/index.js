@@ -39,6 +39,9 @@ function CreateSiteConfigButton() {
         <Select.Option style={{width: 100}} value="product_category">
           產品分類
         </Select.Option>
+        <Select.Option style={{width: 100}} value="article_category">
+          文章分類
+        </Select.Option>
       </Select>
       <Button type="text" disabled={name === ''} onClick={createSiteConfig}>
         建立

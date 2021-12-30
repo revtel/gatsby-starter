@@ -1,6 +1,5 @@
 import {getNewOutlet} from 'reconnect.js';
 import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
-import {ATTRIBUTE_DISPLAY} from '../constants';
 
 // configurations for "product" collection
 const sortOptions = [
@@ -14,22 +13,9 @@ const sortOptions = [
 
 const categories = [
   {
-    name: 'kanto',
-    display: '關都地區',
+    name: 'all',
+    display: '所有分類',
     items: [],
-    // items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
-    //   name: `kanto-${attr[0]}`,
-    //   display: attr[1].zh,
-    // })),
-  },
-  {
-    name: 'johto',
-    display: '城都地區',
-    items: [],
-    // items: Object.entries(ATTRIBUTE_DISPLAY).map((attr) => ({
-    //   name: `johto-${attr[0]}`,
-    //   display: attr[1].zh,
-    // })),
   },
 ];
 
@@ -41,21 +27,9 @@ const articleSortOptions = [
 
 const articleCategories = [
   {
-    name: 'A',
-    display: 'Doc A',
-  },
-  {
-    name: 'B',
-    display: 'Doc B',
-  },
-  {
-    name: 'C',
-    display: 'Doc C',
-    items: [
-      {name: 'C-a', display: 'Doc C-a'},
-      {name: 'C-b', display: 'Doc C-b'},
-      {name: 'C-c', display: 'Doc C-c'},
-    ],
+    name: 'all',
+    display: '所有分類',
+    items: [],
   },
 ];
 
