@@ -19,7 +19,6 @@ function Landing(props) {
   useEffect(() => {
     const _fetchSite = async () => {
       try {
-        actions.setLoading(true);
         const _site = (await JStorage.fetchDocuments('site', {name: 'landing'}))
           .results[0];
         const _product = (await JStorage.fetchDocuments('product', {})).results;
@@ -30,7 +29,6 @@ function Landing(props) {
         setArticles(_articles);
       } catch (e) {
       } finally {
-        actions.setLoading(false);
       }
     };
     _fetchSite().then(() => {});
@@ -106,7 +104,14 @@ function Landing(props) {
               }
             })
           ) : (
-            <HeroBannerSection />
+            <HeroBannerSection>
+              <img
+                src="/pokemon-bg-loading.gif"
+                alt="banner"
+                width="100%"
+                height="100%"
+              />
+            </HeroBannerSection>
           )}
         </Slick>
 
@@ -118,15 +123,17 @@ function Landing(props) {
               <div className="title">最新消息</div>
               <div className="subtitle">News</div>
             </div>
-            {articles.slice(0, 2).map((a, idx) => (
-              <ArticleItem
-                data={a}
-                key={idx}
-                onClick={() => {
-                  actions.navigate(`/article?id=${a.id}`, {loading: true});
-                }}
-              />
-            ))}
+            <Skeleton loading={articles.length <= 0} paragraph={{rows: 15}}>
+              {articles.slice(0, 2).map((a, idx) => (
+                <ArticleItem
+                  data={a}
+                  key={idx}
+                  onClick={() => {
+                    actions.navigate(`/article?id=${a.id}`, {loading: true});
+                  }}
+                />
+              ))}
+            </Skeleton>
           </div>
           <img
             src="/article_section_corner.png"
@@ -148,24 +155,26 @@ function Landing(props) {
               <div className="title">推薦產品</div>
               <div className="subtitle">Recommended Products</div>
             </div>
-            {products.slice(0, 6).map((p, idx) => (
-              <RecommendProductItem
-                key={idx}
-                onClick={() => {
-                  actions.navigate(`/product/?id=${p.id}`, {loading: true});
-                }}>
-                <img
-                  src={p.images[0].expected_url}
-                  alt="Logo"
-                  style={{width: 180, height: 180, objectFit: 'contain'}}
-                />
+            <Skeleton loading={products.length <= 0} paragraph={{rows: 20}}>
+              {products.slice(0, 6).map((p, idx) => (
+                <RecommendProductItem
+                  key={idx}
+                  onClick={() => {
+                    actions.navigate(`/product/?id=${p.id}`, {loading: true});
+                  }}>
+                  <img
+                    src={p.images[0].expected_url}
+                    alt="Logo"
+                    style={{width: 180, height: 180, objectFit: 'contain'}}
+                  />
 
-                <div className="description">
-                  <h3>{p.name}</h3>
-                  <p>{p.price}</p>
-                </div>
-              </RecommendProductItem>
-            ))}
+                  <div className="description">
+                    <h3>{p.name}</h3>
+                    <p>{p.price}</p>
+                  </div>
+                </RecommendProductItem>
+              ))}
+            </Skeleton>
           </div>
         </RecommendProductSection>
 
@@ -244,7 +253,7 @@ const HeroBannerSection = styled.section`
   position: relative;
   cursor: pointer;
   aspect-ratio: calc(16 / 9);
-  background-color: #000;
+  background-color: black;
 
   & > img {
     object-fit: cover;

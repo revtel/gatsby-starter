@@ -86,6 +86,13 @@ function ProductItem(props) {
 
   return (
     <ProductWrapper mobile={mobile} onClick={onClick}>
+      <div>
+        {product.attribute.map((attr, index) => (
+          <Tag key={index} color={ATTRIBUTE_DISPLAY[attr].color}>
+            {ATTRIBUTE_DISPLAY[attr].zh}
+          </Tag>
+        ))}
+      </div>
       <img src={src || empty} alt="product" />
 
       <div className="info">
@@ -93,13 +100,6 @@ function ProductItem(props) {
         {product.price !== undefined && (
           <p style={{textAlign: 'right'}}>${product.price}</p>
         )}
-        <div>
-          {product.attribute.map((attr, index) => (
-            <Tag key={index} color={ATTRIBUTE_DISPLAY[attr].color}>
-              {ATTRIBUTE_DISPLAY[attr].zh}
-            </Tag>
-          ))}
-        </div>
       </div>
     </ProductWrapper>
   );
@@ -219,7 +219,7 @@ const ProductWrapper = styled.div`
     width: 100%;
     height: 65%;
     padding: 20px;
-    object-fit: cover;
+    object-fit: contain;
     transition: 200ms;
 
     &:hover {
