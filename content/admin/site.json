@@ -13,7 +13,6 @@
     }
   ],
   "formSpec": {
-    "customName": "site-form",
     "schema": {
       "title": "",
       "type": "object",
@@ -27,7 +26,13 @@
               "title": "圖片",
               "schema_path": "hero_banner.images",
               "items": {
-                "type": "object"
+                "type": "object",
+                "properties": {
+                  "link": {
+                    "type": "string",
+                    "title": "連結"
+                  }
+                }
               }
             }
           }

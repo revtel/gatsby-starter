@@ -132,7 +132,7 @@ function SiteFooter(props) {
             <p className="info-text">02-2736-6566</p>
             <p className="info-text">103 台北市大同區民權西路136號10樓之5</p>
             <p className="info-text">
-              週一至週五上午10點至下午7點（例假日休息）
+              {`週一至週五上午9點至下午6點\n（例假日休息）`}
             </p>
 
             <div
@@ -144,7 +144,7 @@ function SiteFooter(props) {
                 marginTop: 40,
               }}>
               <a
-                href="https://www.youtube.com/channel/UCXfn2Ob1iDzajn-ZzT0sEmw"
+                href="https://www.facebook.com/RevtelTech"
                 target="_blank"
                 rel="noreferrer">
                 <img
@@ -154,7 +154,7 @@ function SiteFooter(props) {
                 />
               </a>
               <a
-                href="https://www.instagram.com/vbeauty.group/"
+                href="https://www.instagram.com/revtel_tech/"
                 target="_blank"
                 rel="noreferrer">
                 <img
@@ -163,10 +163,7 @@ function SiteFooter(props) {
                   style={{height: 40, objectFit: 'contain', marginLeft: 15}}
                 />
               </a>
-              <a
-                href="https://www.instagram.com/vbeauty.group/"
-                target="_blank"
-                rel="noreferrer">
+              <a href="" target="_blank" rel="noreferrer">
                 <img
                   src="/images/line.png"
                   alt="Logo"
@@ -250,6 +247,7 @@ const FlexItemSection = styled.section`
       & .info-text {
         color: #707070;
         margin-top: 8px;
+        white-space: pre-line;
 
         :first-child {
           margin-top: 0px;
