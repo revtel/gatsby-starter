@@ -9,52 +9,20 @@
     {
       "title": "name",
       "key": "name",
-      "dataIndex": "name"
+      "dataIndex": "name",
+      "customType": "site-config-name"
     },
     {
       "title": "created",
       "key": "created",
-      "dataIndex": "created"
+      "dataIndex": "created",
+      "dataType": "timestamp"
     },
     {
       "title": "updated",
       "key": "updated",
-      "dataIndex": "updated"
+      "dataIndex": "updated",
+      "dataType": "timestamp"
     }
-  ],
-  "formSpec": {
-    "schema": {
-      "title": "",
-      "type": "object",
-      "properties": {
-        "hero_banner": {
-          "type": "object",
-          "title": "首頁橫幅",
-          "properties": {
-            "images": {
-              "type": "array",
-              "title": "圖片",
-              "schema_path": "hero_banner.images",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "link": {
-                    "type": "string",
-                    "title": "連結"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "uiSchema": {
-      "hero_banner": {
-        "images": {
-          "ui:field": "rev-files"
-        }
-      }
-    }
-  }
+  ]
 }

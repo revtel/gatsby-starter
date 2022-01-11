@@ -1,6 +1,8 @@
 {
   "path": "/admin/article_category",
   "name": "文章分類",
+  "backTitle": "返回網站設定",
+  "backPath": "/admin/site",
   "collection": "site",
   "primaryKey": "id",
   "searchField": "",

@@ -8,6 +8,12 @@ import {ArticleEditor} from 'rev.sdk.js';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as AppActions from '../../AppActions';
 
+const SITE_CONFIG = {
+  landing: {display: '首頁設定', value: 'landing'},
+  product_category: {display: '產品分類', value: 'product_category'},
+  article_category: {display: '文章分類', value: 'article_category'},
+};
+
 function CreateSiteConfigButton() {
   const [name, setName] = React.useState('');
 
@@ -33,15 +39,15 @@ function CreateSiteConfigButton() {
         <Select.Option style={{width: 100}} value="">
           請選擇
         </Select.Option>
-        <Select.Option style={{width: 100}} value="landing">
-          首頁設定
-        </Select.Option>
-        <Select.Option style={{width: 100}} value="product_category">
-          產品分類
-        </Select.Option>
-        <Select.Option style={{width: 100}} value="article_category">
-          文章分類
-        </Select.Option>
+        {[
+          SITE_CONFIG.landing,
+          SITE_CONFIG.product_category,
+          SITE_CONFIG.article_category,
+        ].map((opt) => (
+          <Select.Option key={opt.value} style={{width: 100}} value={opt.value}>
+            {opt.display}
+          </Select.Option>
+        ))}
       </Select>
       <Button type="text" disabled={name === ''} onClick={createSiteConfig}>
         建立
@@ -94,6 +100,8 @@ function AdminResourcePage(props) {
       ));
     } else if (col.customType === 'label') {
       return record.label?.map((l, idx) => <Tag key={idx}>{l}</Tag>);
+    } else if (col.customType === 'site-config-name') {
+      return SITE_CONFIG[record.name]?.display || record.name;
     }
     return null;
   }
