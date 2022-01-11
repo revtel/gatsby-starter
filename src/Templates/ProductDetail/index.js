@@ -21,6 +21,7 @@ function ProductDetail(props) {
       listViewPath = '/products',
       outlets = {categoryDisplayMap: 'categoryDisplayMap'},
     },
+    renderCustomSection = (sectionId, product) => null,
   } = props;
   const [activeSummaryTab, setActiveSummaryTab] = React.useState('intro');
   const [product, setProduct] = React.useState(null);
@@ -97,7 +98,10 @@ function ProductDetail(props) {
 
   return (
     <Wrapper>
+      {renderCustomSection('A', {product})}
+
       <div className="content">
+        {renderCustomSection('B', {product})}
         {product.labels && product.labels[0] && (
           <div style={{marginTop: 15}}>
             <BreadcrumbBar
@@ -154,8 +158,10 @@ function ProductDetail(props) {
           <div style={{flexBasis: 20}} />
 
           <Summary>
+            {renderCustomSection('C', {product})}
             <h2>{product.name}</h2>
             <p>{product.description}</p>
+            {renderCustomSection('D', {product})}
             <Tabs activeKey={activeSummaryTab} onChange={setActiveSummaryTab}>
               <Tabs.TabPane tab="介紹" key="intro">
                 <div
@@ -198,10 +204,16 @@ function ProductDetail(props) {
           </Summary>
         </TopSection>
 
+        {renderCustomSection('E', {product})}
+
         {article && (
           <ArticlePreview dangerouslySetInnerHTML={{__html: article.html}} />
         )}
+
+        {renderCustomSection('F', {product})}
       </div>
+
+      {renderCustomSection('G', {product})}
     </Wrapper>
   );
 }
