@@ -4,6 +4,24 @@ const onCreateWebpackConfig = require('./gatsby/onCreateWebpackConfig');
 const config = require('./data.json');
 const AppPages = require('./src/AppPages');
 
+function queryJsonByDir(dirname) {
+  return `
+    {
+      allFile(filter: {relativeDirectory: {eq: "${dirname}"}}) {
+        edges {
+          node {
+            name
+            relativeDirectory
+            internal {
+              content
+            }
+          }
+        }
+      }
+    }
+  `;
+}
+
 exports.createPages = async ({graphql, actions}) => {
   const {createPage} = actions;
 
@@ -20,28 +38,33 @@ exports.createPages = async ({graphql, actions}) => {
 
   if (AppPages.config.generateAdmin) {
     const adminResourcePageNodes = (
-      await graphql(
-        `
-          {
-            allFile(filter: {relativeDirectory: {eq: "admin"}}) {
-              edges {
-                node {
-                  internal {
-                    content
-                  }
-                }
-              }
-            }
-          }
-        `,
-      )
+      await graphql(queryJsonByDir('admin'))
     ).data.allFile.edges.map(({node}) => node);
 
+    const customAdminResourcePageNodes = (
+      await graphql(queryJsonByDir('custom-admin'))
+    ).data.allFile.edges.map(({node}) => node);
+
+    const finalAdminNodes = new Map();
+
     for (const node of adminResourcePageNodes) {
+      finalAdminNodes.set(node.name, node);
+    }
+
+    for (const node of customAdminResourcePageNodes) {
+      finalAdminNodes.set(node.name, node);
+    }
+
+    for (const [_, node] of finalAdminNodes) {
       const {
+        name,
+        relativeDirectory,
         internal: {content},
       } = node;
       const resource = JSON.parse(content);
+      console.log(
+        `[Admin] create ${resource.path} from ${relativeDirectory}/${name}.json...`,
+      );
       createPage({
         path: resource.path,
         component: path.resolve(`src/Generators/AdminResource/index.js`),
