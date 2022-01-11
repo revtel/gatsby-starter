@@ -19,7 +19,6 @@ function Landing(props) {
   useEffect(() => {
     const _fetchSite = async () => {
       try {
-        actions.setLoading(true);
         const _site = (await JStorage.fetchDocuments('site', {name: 'landing'}))
           .results[0];
         const _product = (await JStorage.fetchDocuments('product', {})).results;
@@ -30,31 +29,34 @@ function Landing(props) {
         setArticles(_articles);
       } catch (e) {
       } finally {
-        actions.setLoading(false);
       }
     };
     _fetchSite().then(() => {});
   }, [actions]);
 
-  const common = (
-    <div
-      style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translateX(-50%) translateY(-50%)',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-      }}>
-      <HeroBannerLogo />
-      <img
-        src="/pokemon-logo.png"
-        alt="logo"
-        style={{height: 100, transform: 'scale(2.5)'}}
-      />
-    </div>
-  );
+  const getCommonElem = (i) => {
+    return (
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translateX(-50%) translateY(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          cursor: 'pointer',
+        }}
+        onClick={() => {}}>
+        <HeroBannerLogo />
+        <img
+          src="/pokemon-logo.png"
+          alt="logo"
+          style={{height: 100, transform: 'scale(2.5)'}}
+        />
+      </div>
+    );
+  };
 
   return (
     <ReactDelighters>
@@ -86,7 +88,7 @@ function Landing(props) {
                       muted
                       url={i.expected_url}
                     />
-                    {common}
+                    {getCommonElem(i)}
                   </HeroBannerSection>
                 );
               } else {
@@ -100,13 +102,20 @@ function Landing(props) {
                       src={i.expected_url}
                       alt="hero banner"
                     />
-                    {common}
+                    {getCommonElem(i)}
                   </HeroBannerSection>
                 );
               }
             })
           ) : (
-            <HeroBannerSection />
+            <HeroBannerSection>
+              <img
+                src="/pokemon-bg-loading.gif"
+                alt="banner"
+                width="100%"
+                height="100%"
+              />
+            </HeroBannerSection>
           )}
         </Slick>
 
@@ -118,15 +127,20 @@ function Landing(props) {
               <div className="title">最新消息</div>
               <div className="subtitle">News</div>
             </div>
-            {articles.slice(0, 2).map((a, idx) => (
-              <ArticleItem
-                data={a}
-                key={idx}
-                onClick={() => {
-                  actions.navigate(`/article?id=${a.id}`, {loading: true});
-                }}
-              />
-            ))}
+            <Skeleton
+              active
+              loading={articles.length <= 0}
+              paragraph={{rows: 15}}>
+              {articles.slice(0, 2).map((a, idx) => (
+                <ArticleItem
+                  data={a}
+                  key={idx}
+                  onClick={() => {
+                    actions.navigate(`/article?id=${a.id}`, {loading: true});
+                  }}
+                />
+              ))}
+            </Skeleton>
           </div>
           <img
             src="/article_section_corner.png"
@@ -148,24 +162,29 @@ function Landing(props) {
               <div className="title">推薦產品</div>
               <div className="subtitle">Recommended Products</div>
             </div>
-            {products.slice(0, 6).map((p, idx) => (
-              <RecommendProductItem
-                key={idx}
-                onClick={() => {
-                  actions.navigate(`/product/?id=${p.id}`, {loading: true});
-                }}>
-                <img
-                  src={p.images[0].expected_url}
-                  alt="Logo"
-                  style={{width: 180, height: 180, objectFit: 'contain'}}
-                />
+            <Skeleton
+              active
+              loading={products.length <= 0}
+              paragraph={{rows: 20}}>
+              {products.slice(0, 6).map((p, idx) => (
+                <RecommendProductItem
+                  key={idx}
+                  onClick={() => {
+                    actions.navigate(`/product/?id=${p.id}`, {loading: true});
+                  }}>
+                  <img
+                    src={p.images[0].expected_url}
+                    alt="Logo"
+                    style={{width: 180, height: 180, objectFit: 'contain'}}
+                  />
 
-                <div className="description">
-                  <h3>{p.name}</h3>
-                  <p>{p.price}</p>
-                </div>
-              </RecommendProductItem>
-            ))}
+                  <div className="description">
+                    <h3>{p.name}</h3>
+                    <p>$ {p.price}</p>
+                  </div>
+                </RecommendProductItem>
+              ))}
+            </Skeleton>
           </div>
         </RecommendProductSection>
 
@@ -244,7 +263,7 @@ const HeroBannerSection = styled.section`
   position: relative;
   cursor: pointer;
   aspect-ratio: calc(16 / 9);
-  background-color: #000;
+  background-color: black;
 
   & > img {
     object-fit: cover;
@@ -401,8 +420,8 @@ const RecommendProductItem = styled(FlexItem)`
 
   :hover {
     transform: translateY(-5px) translateX(-5px);
-    border: 5px solid black;
-    box-shadow: 5px 5px 0 #ccc;
+    border: 5px solid #ccc;
+    box-shadow: 5px 5px 15px gray;
   }
 
   & > .description {
@@ -418,9 +437,10 @@ function ArticleItem(props) {
       <div className="content">
         <div className="title">
           <div>{data.title}</div>
-          <div>{moment(data.created).format('YYYY-MM-DD hh:mm')}</div>
+          <div className="date">
+            {moment(data.created).format('YYYY-MM-DD hh:mm')}
+          </div>
         </div>
-        <div className="content">{data.outline}</div>
       </div>
     </BlogWrapper>
   );
@@ -463,7 +483,8 @@ const BlogWrapper = styled.div`
 
     & > .title {
       display: flex;
-      flex-display: column;
+      flex-direction: column;
+      flex: 1;
       border-bottom: 1px solid var(--primaryColor);
       padding-bottom: 16px;
       width: 100%;
@@ -473,6 +494,10 @@ const BlogWrapper = styled.div`
       & > h3 {
         font-size: ${(props) => (props.mobile ? '20px' : '25px')};
         color: var(--primaryColor);
+      }
+      & > .date {
+        margin-top: auto;
+        align-self: flex-end;
       }
     }
 
