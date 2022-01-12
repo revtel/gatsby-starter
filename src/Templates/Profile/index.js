@@ -73,6 +73,7 @@ function ProfilePage(props) {
               ]}>
               <Input />
             </Form.Item>
+
             <Form.Item
               label="電子信箱"
               name="email"
@@ -95,6 +96,13 @@ function ProfilePage(props) {
               </Button>
               <Button htmlType="submit" type="primary">
                 儲存
+              </Button>
+              <Button
+                style={{marginLeft: 20}}
+                htmlType="button"
+                type="primary"
+                onClick={() => {}}>
+                更改電子信箱
               </Button>
             </Form.Item>
           </Form>

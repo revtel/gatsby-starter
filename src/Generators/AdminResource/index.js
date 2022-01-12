@@ -1,8 +1,7 @@
 import React from 'react';
 import AdminResource from 'rev.sdk.js/Generators/AdminResource';
-import {Button, message, Tag, Select} from 'antd';
-import {useOutlet} from 'reconnect.js';
-import {ATTRIBUTE_DISPLAY, REGION_DISPLAY} from '../../constants';
+import {Button, Select, Tag} from 'antd';
+import {getOutlet, useOutlet} from 'reconnect.js';
 import AdminOrderDetailForm from './AdminOrderDetailForm';
 import {ArticleEditor} from 'rev.sdk.js';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
@@ -88,16 +87,29 @@ function AdminResourcePage(props) {
 
   function renderCustomAdminCol(props) {
     const {col, record} = props;
+    const categories = getOutlet('categories').getValue();
+    const attributes =
+      getOutlet('categories')
+        .getValue()[0]
+        .items.map((attr) => ({
+          ...attr,
+          name: attr.name.slice(6, attr.name.length),
+        })) || [];
+
     if (col.customType === 'region') {
-      return record.region?.map((l, idx) => (
-        <Tag key={idx}>{REGION_DISPLAY[l].zh}</Tag>
+      return record.region.map((l, idx) => (
+        <Tag key={idx}>{categories.find((r) => r.name === l)?.display}</Tag>
       ));
     } else if (col.customType === 'attribute') {
-      return record.attribute?.map((l, idx) => (
-        <Tag color={ATTRIBUTE_DISPLAY[l].color} key={idx}>
-          {ATTRIBUTE_DISPLAY[l].zh}
-        </Tag>
-      ));
+      return record.attribute.sort().map((l, idx) => {
+        return (
+          <Tag
+            color={attributes.find((attr) => attr.name === l)?.color}
+            key={idx}>
+            {attributes.find((attr) => attr.name === l)?.display}
+          </Tag>
+        );
+      });
     } else if (col.customType === 'label') {
       return record.label?.map((l, idx) => <Tag key={idx}>{l}</Tag>);
     } else if (col.customType === 'site-config-name') {
@@ -107,6 +119,14 @@ function AdminResourcePage(props) {
   }
 
   if (path === '/admin/products') {
+    const categories = getOutlet('categories').getValue();
+    const attributes =
+      getOutlet('categories')
+        .getValue()[0]
+        .items.map((attr) => ({
+          ...attr,
+          name: attr.name.slice(6, attr.name.length),
+        })) || [];
     pageContext.resource.formSpec.schema.properties.region.items.anyOf = categories.map(
       (c) => ({
         type: 'string',
@@ -114,12 +134,12 @@ function AdminResourcePage(props) {
         title: c.display,
       }),
     );
-    pageContext.resource.formSpec.schema.properties.attribute.items.anyOf = Object.entries(
-      ATTRIBUTE_DISPLAY,
+    pageContext.resource.formSpec.schema.properties.attribute.items.anyOf = Object.values(
+      attributes,
     ).map((attr) => ({
       type: 'string',
-      enum: [attr[0]],
-      title: attr[1].zh,
+      enum: [attr.name],
+      title: attr.display,
     }));
   } else if (path === '/admin/site') {
     pageContext.resource.renderCreateButton = () => {
