@@ -12,6 +12,7 @@ import setLoadingPlugin from './Plugin/setLoading';
 import navigatePlugin from './Plugin/navigate';
 import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
+import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
 
 /**
  * **************************************************
@@ -24,6 +25,9 @@ const Plugins = {
   navigate: new navigatePlugin('navigate'),
   clientJStorageFetch: new clientJStorageFetchPlugin('clientJStorageFetch'),
   onAdminFormSubmit: new onAdminFormSubmitPlugin('onAdminFormSubmit'),
+  onAfterAdminFormSubmit: new onAfterAdminFormSubmitPlugin(
+    'onAfterAdminFormSubmit',
+  ),
 };
 
 const req = ApiUtil.req;
@@ -261,10 +265,19 @@ async function onAdminFormSubmit({
   formData,
   primaryKey,
 }) {
+  if (Plugins.onAdminFormSubmit.shouldExecute()) {
+    return await Plugins.onAdminFormSubmit.executeAsync({
+      path,
+      collection,
+      instance,
+      extValues,
+      formData,
+      primaryKey,
+    });
+  }
+
   //sample code
-
   // if (path === '/admin/products') {
-
   //   try {
   //     setLoading(true);
   //     if (!instance) {
@@ -293,6 +306,23 @@ async function onAdminFormSubmit({
   return false;
 }
 
+async function onAfterAdminFormSubmit(
+  {path, collection, instance, extValues, formData, primaryKey},
+  updatedInstance,
+) {
+  if (Plugins.onAfterAdminFormSubmit.shouldExecute()) {
+    return await Plugins.onAfterAdminFormSubmit.executeAsync({
+      path,
+      collection,
+      instance,
+      extValues,
+      formData,
+      primaryKey,
+    });
+  }
+
+  return null;
+}
 /**
  * **************************************************
  * init all plugins AFTER defining default actions
@@ -312,6 +342,7 @@ export {
   fetchCustomResources,
   onLoginResult,
   onAdminFormSubmit,
+  onAfterAdminFormSubmit,
   onCartLoaded,
   createLogisticsOrder,
   rebuild,
