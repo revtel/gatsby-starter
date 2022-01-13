@@ -7,7 +7,6 @@ function config() {
   };
 
   if (process.env.REV_ENV === 'stg') {
-    // https://brickgo.netlify.app
     data.stage = 'stg';
     data.apiHost = 'https://revtel-puzzlego-api-stg.revtel2.com';
     data.authHost = 'https://auth-stg.revtel-api.com/v4';
@@ -19,7 +18,6 @@ function config() {
     data.gaId = 'UA-127064537-1';
     data.gtagId = 'GTM-P9CS5JX';
   } else {
-    // https://www.pinbar.tw
     data.stage = 'prod';
     data.clientId = 'revtel-puzzlego';
     data.apiHost = 'https://puzzlego-api.revtel2.com';
