@@ -78,6 +78,7 @@
     ]
   },
   "formSpec": {
+    "customName": "ProductForm",
     "schema": {
       "title": "",
       "type": "object",
@@ -205,6 +206,10 @@
               }
             }
           }
+        },
+        "og_image": {
+          "type": "string",
+          "title": "og-image"
         }
       }
     },
@@ -226,6 +231,12 @@
       },
       "images": {
         "ui:field": "rev-files"
+      },
+      "og_image": {
+        "ui:field": "rev-rename-image",
+        "ui:readonly": true,
+        "referenceImageFieldKey": "images[0].expected_url",
+        "hidden": true
       }
     }
   },

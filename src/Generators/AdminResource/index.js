@@ -59,6 +59,7 @@ function CreateSiteConfigButton() {
 function AdminResourcePage(props) {
   const {path, pageContext} = props;
   const [categories] = useOutlet('categories');
+  const [actions] = useOutlet('actions');
 
   function renderCustomAdminSection(props) {
     const {name, type, context} = props;
@@ -82,6 +83,27 @@ function AdminResourcePage(props) {
           document={context?.instance}
         />
       );
+    } else if (
+      type === 'form' &&
+      name === 'ProductForm' &&
+      context.position === 'top'
+    ) {
+      let _copyShareUrl = async () => {
+        let _data = context.instance;
+        let _url = actions.getReurl({
+          title: encodeURIComponent(_data.name),
+          image: _data.og_image || '',
+          redirectUrl: `${window.location.origin}/product?id=${_data.id}`,
+        });
+        try {
+          await navigator.clipboard.writeText(_url);
+          message.success(`已複製分享連結 ${_url}`);
+        } catch (err) {
+          console.log(err);
+          message.warn(`無法複製連結 ${_url}`);
+        }
+      };
+      return <Button onClick={_copyShareUrl}>取得分享連結</Button>;
     }
     return null;
   }

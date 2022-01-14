@@ -323,6 +323,12 @@ async function onAfterAdminFormSubmit(
 
   return null;
 }
+
+function getReurl({title, description, image, redirectUrl}) {
+  return `${Config.apiHost}/misc/reurl?title=${title}&image=${image}${
+    description ? `&description=${description}` : ''
+  }&redirect_url=${redirectUrl}`;
+}
 /**
  * **************************************************
  * init all plugins AFTER defining default actions
@@ -346,4 +352,5 @@ export {
   onCartLoaded,
   createLogisticsOrder,
   rebuild,
+  getReurl,
 };
