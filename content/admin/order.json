@@ -14,8 +14,8 @@
   "columns": [
     {
       "title": "訂單編號",
-      "key": "order_number",
-      "dataIndex": "order_number"
+      "key": "order_id",
+      "dataIndex": "order_id"
     },
     {
       "title": "購買人姓名",
