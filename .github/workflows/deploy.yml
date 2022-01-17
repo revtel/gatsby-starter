@@ -6,6 +6,11 @@ name: Deploy To S3 PROD
 # or API.
 on:
   workflow_dispatch:
+    inputs:
+      stage:
+        description: 'STAGE'
+        default: 'prod'
+        required: true
 
   # https://kontent.ai/blog/how-to-trigger-github-action-using-webhook-with-no-code
   repository_dispatch:
@@ -17,7 +22,7 @@ jobs:
   # This workflow contains a single job called "greet"
   deploy-sls:
     env:
-      STAGE: prod
+      STAGE: ${{ github.event.inputs.stage }} 
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       S3_BUCKET_REGION: ap-northeast-1
@@ -29,8 +34,6 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: pokemon
 
       - uses: actions/setup-node@v2
         with:
