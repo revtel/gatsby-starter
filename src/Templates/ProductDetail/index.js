@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import {navigate} from 'gatsby';
-import {Button, message, Tabs} from 'antd';
+import {Button, Tooltip, message, Tabs} from 'antd';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import qs from 'query-string';
 import BreadcrumbBar from 'rev.sdk.js/Templates/ProductList/BreadcrumbBar';
 import ProductVariants from 'rev.sdk.js/Components/ProductVariants';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
+import {Link as LinkIcon} from '@styled-icons/boxicons-regular/Link';
 import {mapLineBreak} from '../../Utils/TextUtil';
 import * as AppActions from '../../AppActions';
 import Carousel from '../../Components/Carousel';
 import FixedRatioImage from '../../Components/FixedRatioImage';
+import {THEME_COLOR} from '../../constants';
 
 function ProductDetail(props) {
   const {
@@ -66,6 +68,21 @@ function ProductDetail(props) {
     setCurrPrice(calcResp.amount);
     setCurrItemConfig(nextItemConfig);
   }, []);
+
+  async function copyProductShareUrl() {
+    let _url = AppActions.getReurl({
+      title: encodeURIComponent(product.name),
+      image: product.og_image || '',
+      redirectUrl: `${window.location.origin}/product?id=${product.id}`,
+    });
+    try {
+      await navigator.clipboard.writeText(_url);
+      message.success(`已複製分享連結`);
+    } catch (err) {
+      console.log(err);
+      message.warn(`無法複製連結`);
+    }
+  }
 
   async function addToCart() {
     if (!user) {
@@ -197,6 +214,14 @@ function ProductDetail(props) {
             </InputField>
 
             <InputField style={{justifyContent: 'flex-end'}}>
+              <Tooltip title="複製分享連結">
+                <Button
+                  ghost
+                  icon={<LinkIcon size={24} color={THEME_COLOR} />}
+                  style={{marginRight: 10}}
+                  onClick={copyProductShareUrl}
+                />
+              </Tooltip>
               <Button size="large" type="primary" onClick={addToCart}>
                 加入購物車
               </Button>
