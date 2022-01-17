@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import {Skeleton} from 'antd';
 import {StaticImage} from 'gatsby-plugin-image';
 import ReactDelighters from 'rev.sdk.js/Components/ReactDelighters';
-import {JStorage} from 'rev.sdk.js';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import ReactPlayer from 'react-player';
 import Slick from 'react-slick';
 import {useOutlet} from 'reconnect.js';
