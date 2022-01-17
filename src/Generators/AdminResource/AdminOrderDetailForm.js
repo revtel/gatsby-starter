@@ -7,6 +7,7 @@ import {
   Form,
   Input,
   message,
+  Popconfirm,
   Space,
 } from 'antd';
 import AntdAddressSetForm from 'rev.sdk.js/Components/AntdAddressSetForm';
@@ -143,16 +144,29 @@ function CustomAdminOrderDetailForm(props) {
 
   return (
     <div style={{margin: '5px 0'}}>
-      <Button
-        style={{marginBottom: 12}}
-        disabled={
-          !['created', 'pending', 'error', 'exception'].includes(
-            instance?.logistics_status,
-          )
-        }
-        onClick={handleGenLogisticsOrder}>
-        建立物流訂單
-      </Button>
+      <Space direction="horizontal" style={{marginBottom: 12}}>
+        <Button
+          disabled={
+            !['created', 'pending', 'error', 'exception'].includes(
+              instance?.logistics_status,
+            )
+          }
+          onClick={handleGenLogisticsOrder}>
+          建立物流訂單
+        </Button>
+
+        <Popconfirm
+          title="已經確認轉帳後五碼？"
+          onConfirm={async () => {
+            await actions.confirmOfflineOrder(instance.id);
+            const order = await JStorage.fetchOneDocument('order', {
+              id: instance.id,
+            });
+            setValues(order);
+          }}>
+          <Button>切換付款狀態為成功</Button>
+        </Popconfirm>
+      </Space>
       <Collapse defaultActiveKey={[]}>
         <Panel header="購買人資訊" key={1}>
           <Filed name="購買人姓名" value={instance.buyer_name} />

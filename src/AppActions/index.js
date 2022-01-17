@@ -6,7 +6,6 @@ import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
 import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
 import Config from '../../data.json';
-import * as _ from 'lodash';
 import * as jwt from '../Utils/jwt';
 import setLoadingPlugin from './Plugin/setLoading';
 import navigatePlugin from './Plugin/navigate';
@@ -153,6 +152,7 @@ const getDefaultCheckoutFormSpec = () => ({
     Cart.PAYMENT_SUBTYPE.default,
     Cart.PAYMENT_SUBTYPE.credit,
     Cart.PAYMENT_SUBTYPE.cod,
+    Cart.PAYMENT_SUBTYPE.offline,
   ],
   logisticsTypes: [Cart.LOGISTICS_TYPE.cvs, Cart.LOGISTICS_TYPE.home],
   logisticsSubTypes: {
@@ -257,6 +257,18 @@ async function onLoginResult(err, result) {
   }
 }
 
+async function confirmOfflineOrder(id) {
+  await req(
+    `${Config.apiHost}/order/offline?token=${UserOutlet.getValue().token}`,
+    {
+      method: 'POST',
+      data: {
+        id: id,
+      },
+    },
+  );
+}
+
 async function onAdminFormSubmit({
   path,
   collection,
@@ -353,4 +365,5 @@ export {
   createLogisticsOrder,
   rebuild,
   getReurl,
+  confirmOfflineOrder,
 };

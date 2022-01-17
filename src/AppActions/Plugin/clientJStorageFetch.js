@@ -1,5 +1,5 @@
 import PluginAction from '../PluginAction';
-import {JStorage} from 'rev.sdk.js';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 
 export default class Plugin extends PluginAction {
   shouldExecute(...args) {
