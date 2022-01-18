@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
-import {Skeleton} from 'antd';
+import {Button, Skeleton} from 'antd';
 import {StaticImage} from 'gatsby-plugin-image';
 import ReactDelighters from 'rev.sdk.js/Components/ReactDelighters';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';

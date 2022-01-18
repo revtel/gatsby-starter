@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import empty from '../../../../static/favicon.png';
 import moment from 'moment';
-import {Tag} from 'antd';
 
 function ProductGrid(props) {
   const {products, onItemClick, prefixPath} = props;
@@ -74,12 +73,6 @@ const ArticleGridWrapper = styled.div`
 
 function ProductItem(props) {
   const {product, onClick, mobile} = props;
-  const [categories] = useOutlet('categories');
-  const attributes =
-    categories?.[0].items.map((attr) => ({
-      ...attr,
-      name: attr.name.slice(6, attr.name.length),
-    })) || [];
 
   const src = useMemo(() => {
     try {
@@ -91,15 +84,6 @@ function ProductItem(props) {
 
   return (
     <ProductWrapper mobile={mobile} onClick={onClick}>
-      <div>
-        {product.attribute.sort().map((attr, index) => (
-          <Tag
-            key={index}
-            color={attributes.find((a) => a.name === attr).color}>
-            {attributes.find((a) => a.name === attr).display}
-          </Tag>
-        ))}
-      </div>
       <img src={src || empty} alt="product" />
 
       <div className="info">

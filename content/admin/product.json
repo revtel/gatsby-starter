@@ -14,16 +14,10 @@
       "dataIndex": "pokemon_id"
     },
     {
-      "title": "地區",
-      "key": "region",
-      "dataIndex": "region",
-      "customType": "region"
-    },
-    {
-      "title": "屬性",
-      "key": "attribute",
-      "dataIndex": "attribute",
-      "customType": "attribute"
+      "title": "分類",
+      "key": "labels",
+      "dataIndex": "labels",
+      "customType": "labels"
     },
     {
       "title": "名稱",
@@ -91,17 +85,15 @@
         "region": {
           "type": "array",
           "title": "所屬區域",
-          "uniqueItems": true,
           "items": {
-            "anyOf": []
+            "type": "string"
           }
         },
         "attribute": {
           "type": "array",
           "title": "所屬屬性",
-          "uniqueItems": true,
           "items": {
-            "anyOf": []
+            "type": "string"
           }
         },
         "images": {
@@ -109,6 +101,13 @@
           "title": "產品圖片",
           "items": {
             "type": "object"
+          }
+        },
+        "labels": {
+          "type": "array",
+          "title": "分類",
+          "items": {
+            "type": "string"
           }
         },
         "name": {

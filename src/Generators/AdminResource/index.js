@@ -109,29 +109,8 @@ function AdminResourcePage(props) {
 
   function renderCustomAdminCol(props) {
     const {col, record} = props;
-    const categories = getOutlet('categories').getValue();
-    const attributes =
-      getOutlet('categories')
-        .getValue()[0]
-        .items.map((attr) => ({
-          ...attr,
-          name: attr.name.slice(6, attr.name.length),
-        })) || [];
-
-    if (col.customType === 'region') {
-      return record.region.map((l, idx) => (
-        <Tag key={idx}>{categories.find((r) => r.name === l)?.display}</Tag>
-      ));
-    } else if (col.customType === 'attribute') {
-      return record.attribute.sort().map((l, idx) => {
-        return (
-          <Tag
-            color={attributes.find((attr) => attr.name === l)?.color}
-            key={idx}>
-            {attributes.find((attr) => attr.name === l)?.display}
-          </Tag>
-        );
-      });
+    if (col.customType === 'labels') {
+      return record.labels.map((l, idx) => <Tag key={idx}>{l}</Tag>);
     } else if (col.customType === 'label') {
       return record.label?.map((l, idx) => <Tag key={idx}>{l}</Tag>);
     } else if (col.customType === 'site-config-name') {
@@ -140,30 +119,7 @@ function AdminResourcePage(props) {
     return null;
   }
 
-  if (path === '/admin/products') {
-    const categories = getOutlet('categories').getValue();
-    const attributes =
-      getOutlet('categories')
-        .getValue()[0]
-        .items.map((attr) => ({
-          ...attr,
-          name: attr.name.slice(6, attr.name.length),
-        })) || [];
-    pageContext.resource.formSpec.schema.properties.region.items.anyOf = categories.map(
-      (c) => ({
-        type: 'string',
-        enum: [c.name],
-        title: c.display,
-      }),
-    );
-    pageContext.resource.formSpec.schema.properties.attribute.items.anyOf = Object.values(
-      attributes,
-    ).map((attr) => ({
-      type: 'string',
-      enum: [attr.name],
-      title: attr.display,
-    }));
-  } else if (path === '/admin/site') {
+  if (path === '/admin/site') {
     pageContext.resource.renderCreateButton = () => {
       return <CreateSiteConfigButton />;
     };
