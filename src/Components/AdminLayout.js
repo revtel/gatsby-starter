@@ -45,7 +45,7 @@ function AdminLayout(props) {
       return {
         onClick: async () => {
           await User.logout(true);
-          navigate('/');
+          navigate('/admin');
         },
       };
     }
