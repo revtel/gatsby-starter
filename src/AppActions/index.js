@@ -241,9 +241,15 @@ async function onLoginResult(err, result) {
         const profile = await JStorage.fetchOneDocument('user_profile', {
           [queryKey]: UserOutlet.getValue().username,
         });
+        const privateProfile = await User.getPrivateProfile();
+
         UserOutlet.update({
           ...UserOutlet.getValue(),
-          data: {...profile},
+          data: {
+            ...profile,
+            email: privateProfile.email,
+            points: privateProfile.points,
+          },
         });
         const decoded = await jwt.decodeToken(UserOutlet.getValue().token);
         console.log('VERIFY TOKEN SUCCESS', decoded);
