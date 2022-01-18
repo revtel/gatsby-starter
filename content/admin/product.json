@@ -82,20 +82,6 @@
           "type": "number",
           "title": "神奇寶貝編號"
         },
-        "region": {
-          "type": "array",
-          "title": "所屬區域",
-          "items": {
-            "type": "string"
-          }
-        },
-        "attribute": {
-          "type": "array",
-          "title": "所屬屬性",
-          "items": {
-            "type": "string"
-          }
-        },
         "images": {
           "type": "array",
           "title": "產品圖片",

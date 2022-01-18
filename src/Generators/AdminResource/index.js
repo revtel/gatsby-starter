@@ -1,7 +1,7 @@
 import React from 'react';
 import AdminResource from 'rev.sdk.js/Generators/AdminResource';
-import {Button, Select, Tag, message} from 'antd';
-import {getOutlet, useOutlet} from 'reconnect.js';
+import {Button, message, Select, Tag} from 'antd';
+import {useOutlet} from 'reconnect.js';
 import AdminOrderDetailForm from './AdminOrderDetailForm';
 import {ArticleEditor} from 'rev.sdk.js';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
@@ -71,7 +71,7 @@ function AdminResourcePage(props) {
       return <AdminOrderDetailForm context={context} />;
     } else if (
       type === 'form' &&
-      name === 'ArticleFormHi' &&
+      name === 'ArticleForm' &&
       context.position === 'top'
     ) {
       return (

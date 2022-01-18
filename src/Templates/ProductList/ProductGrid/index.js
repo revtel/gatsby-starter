@@ -19,7 +19,7 @@ function ProductGrid(props) {
             onClick={(evt) => onItemClick(product, evt)}
           />
         ))}
-        {new Array(products.length).fill(0).map((item, key) => (
+        {new Array(products.length % 4).fill(0).map((item, key) => (
           <div className="filler" key={key} />
         ))}
       </ProductGridWrapper>
