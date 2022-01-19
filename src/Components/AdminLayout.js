@@ -1,32 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Layout} from 'antd';
+import {Button, Layout, Result, Space} from 'antd';
 import {navigate} from 'gatsby';
-import {useOutlet, useOutletSetter} from 'reconnect.js';
+import {getOutlet, useOutlet, useOutletSetter} from 'reconnect.js';
 import * as User from 'rev.sdk.js/Actions/User';
 import {withLoginRequired} from 'rev.sdk.js/Components/LoginRequired';
 import SiteNavBar from '../Components/SiteNavBar';
 
 const SiteInfo = {
-  icon: '/images/revicon_512.png',
-  title: 'RevtelTech',
-  subtitle: 'Subtitle',
+  icon: '/favicon.png',
+  title: 'Pokémon Center',
+  subtitle: 'Dashboard',
 };
 
 const Routes = [
   {name: '首頁', path: '/admin'},
-  {name: '網站設定', path: '/admin/site'},
-  {name: '商品', path: '/admin/products'},
-  {name: '訂單', path: '/admin/orders'},
   {name: '會員', path: '/admin/users'},
   {name: '文章', path: '/admin/articles'},
+  {name: '訂單', path: '/admin/orders'},
+  {name: '商品', path: '/admin/products'},
   {name: '優惠券', path: '/admin/coupons'},
   {name: '滿額折扣', path: '/admin/discount-list'},
   {name: '重設密碼', path: 'reset-password'},
+  {name: '網站設定', path: '/admin/site'},
   {name: '登出', path: 'logout'},
-  // {name: '商品(inline)', path: '/admin/products-table'},
-  // {name: '圖片', path: '/admin/images'},
-  // {name: '設定', path: '/admin/settings'},
 ];
 
 function AdminLayout(props) {
@@ -124,17 +121,21 @@ const AppHeaderWrapper = styled.header`
   background-color: white;
   display: flex;
   align-items: center;
+
   & > figure {
     padding: 10px;
     margin: 0px;
+
     & > img {
       width: 50px;
       height: 50px;
       object-fit: contain;
     }
   }
+
   & > .content {
     padding: 8px;
+
     & p {
       padding: 0;
       margin: 0;
@@ -190,4 +191,39 @@ const MobileMainMenu = styled.button`
 export default withLoginRequired(AdminLayout, {
   admin: true,
   SiteNavBar,
+  renderLoginRequired: (options) => {
+    const loginModal = getOutlet('login-modal');
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          paddingTop: 'var(--topNavBarHeight)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Result
+          icon={
+            <img
+              style={{width: 150}}
+              src="/permission-denied.gif"
+              alt="permission-denied"
+            />
+          }
+          title="尚無權限"
+          subTitle="此頁面需要登入，方能瀏覽"
+          extra={
+            <Space direction="vertical">
+              <Button
+                onClick={() => {
+                  loginModal.update({admin: true});
+                }}>
+                登入
+              </Button>
+            </Space>
+          }
+        />
+      </div>
+    );
+  },
 });

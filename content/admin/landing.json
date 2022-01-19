@@ -1,0 +1,47 @@
+{
+  "path": "/admin/landing",
+  "name": "首頁設定",
+  "backTitle": "返回網站設定",
+  "backPath": "/admin/site",
+  "collection": "site",
+  "primaryKey": "id",
+  "searchField": "",
+  "renderDeleteButton": null,
+  "columns": [
+    {
+      "title": "id",
+      "key": "id",
+      "dataIndex": "id"
+    }
+  ],
+  "formSpec": {
+    "customName": "site-form",
+    "schema": {
+      "title": "",
+      "type": "object",
+      "properties": {
+        "hero_banner": {
+          "type": "object",
+          "title": "首頁橫幅",
+          "properties": {
+            "images": {
+              "type": "array",
+              "title": "圖片",
+              "schema_path": "hero_banner.images",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "uiSchema": {
+      "hero_banner": {
+        "images": {
+          "ui:field": "rev-files"
+        }
+      }
+    }
+  }
+}

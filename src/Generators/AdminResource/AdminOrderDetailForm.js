@@ -1,5 +1,15 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Button, Card, Collapse, Form, Input, message} from 'antd';
+import {
+  Avatar,
+  Button,
+  Card,
+  Collapse,
+  Form,
+  Input,
+  message,
+  Popconfirm,
+  Space,
+} from 'antd';
 import AntdAddressSetForm from 'rev.sdk.js/Components/AntdAddressSetForm';
 import CartList from 'rev.sdk.js/Components/CartList';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
@@ -76,22 +86,6 @@ function UpdateOrderSection(props) {
     [actions, setValues, values.id],
   );
 
-  const handleRegenLogisticsOrder = useCallback(async () => {
-    try {
-      actions.setLoading(true);
-      const {error = null} = await actions.createLogisticsOrder(values.id);
-      if (error) {
-        throw new Error(error);
-      }
-      setDisabled(true);
-      message.success('建立成功');
-    } catch (e) {
-      message.error(e.message);
-    } finally {
-      actions.setLoading(false);
-    }
-  }, [actions, values.id]);
-
   return (
     <Card>
       <Form
@@ -122,12 +116,6 @@ function UpdateOrderSection(props) {
             style={{marginRight: 10}}>
             更新資訊
           </Button>
-          <Button
-            disabled={isDirty || disabled}
-            htmlType="button"
-            onClick={handleRegenLogisticsOrder}>
-            重建物流訂單
-          </Button>
         </Form.Item>
       </Form>
     </Card>
@@ -137,8 +125,48 @@ function UpdateOrderSection(props) {
 function CustomAdminOrderDetailForm(props) {
   const {context} = props;
   const {instance, values, setValues} = context;
+  const [actions] = useOutlet('actions');
+
+  const handleGenLogisticsOrder = useCallback(async () => {
+    try {
+      actions.setLoading(true);
+      const {error = null} = await actions.createLogisticsOrder(values.id);
+      if (error) {
+        throw new Error(error);
+      }
+      message.success('建立成功');
+    } catch (e) {
+      message.error(e.message);
+    } finally {
+      actions.setLoading(false);
+    }
+  }, [actions, values.id]);
+
   return (
     <div style={{margin: '5px 0'}}>
+      <Space direction="horizontal" style={{marginBottom: 12}}>
+        <Button
+          disabled={
+            !['created', 'pending', 'error', 'exception'].includes(
+              instance?.logistics_status,
+            )
+          }
+          onClick={handleGenLogisticsOrder}>
+          建立物流訂單
+        </Button>
+
+        <Popconfirm
+          title="已經確認轉帳後五碼？"
+          onConfirm={async () => {
+            await actions.confirmOfflineOrder(instance.id);
+            const order = await JStorage.fetchOneDocument('order', {
+              id: instance.id,
+            });
+            setValues(order);
+          }}>
+          <Button>切換付款狀態為成功</Button>
+        </Popconfirm>
+      </Space>
       <Collapse defaultActiveKey={[]}>
         <Panel header="購買人資訊" key={1}>
           <Filed name="購買人姓名" value={instance.buyer_name} />
@@ -194,15 +222,27 @@ function CustomAdminOrderDetailForm(props) {
             value={Cart.PAYMENT_SUBTYPE_DISPLAY[instance.payment_subtype].label}
           />
           <Filed name="物流狀態" value={instance.logistics_status} />
+          {instance.logistics_type === Cart.LOGISTICS_TYPE.cvs && (
+            <Card style={{marginBottom: 10}}>
+              <Card.Meta
+                avatar={
+                  <Avatar
+                    shape="square"
+                    src={Cart.CVS_ICON[instance.logistics_subtype]}
+                  />
+                }
+                title={instance.extra_data.CVSStoreName}
+                description={instance.extra_data.CVSAddress}
+              />
+            </Card>
+          )}
         </Panel>
         <Panel header="訂單內容" key={4}>
           <CartList cartItems={instance.items} disabled={true} />
         </Panel>
-        {instance?.logistics_status === 'error' && (
-          <Panel header="重建物流單" key={5}>
-            <UpdateOrderSection values={values} setValues={setValues} />
-          </Panel>
-        )}
+        <Panel header="更新訂單資訊" key={5}>
+          <UpdateOrderSection values={values} setValues={setValues} />
+        </Panel>
       </Collapse>
     </div>
   );

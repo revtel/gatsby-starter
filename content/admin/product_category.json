@@ -1,0 +1,77 @@
+{
+  "path": "/admin/product_category",
+  "name": "產品分類",
+  "backTitle": "返回網站設定",
+  "backPath": "/admin/site",
+  "collection": "site",
+  "primaryKey": "id",
+  "searchField": "",
+  "renderDeleteButton": null,
+  "columns": [
+    {
+      "title": "id",
+      "key": "id",
+      "dataIndex": "id"
+    }
+  ],
+  "formSpec": {
+    "customName": "product-category",
+    "schema": {
+      "title": "",
+      "type": "object",
+      "properties": {
+        "categories": {
+          "title": "主類別",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "title": "主類別名"
+              },
+              "display": {
+                "type": "string",
+                "title": "顯示字串"
+              },
+              "items": {
+                "title": "次類別",
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "title": "次類別名"
+                    },
+                    "display": {
+                      "type": "string",
+                      "title": "顯示字串"
+                    },
+                    "items": {
+                      "title": "細部類別",
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "title": "細部類別名"
+                          },
+                          "display": {
+                            "type": "string",
+                            "title": "顯示字串"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

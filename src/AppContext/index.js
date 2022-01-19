@@ -4,6 +4,8 @@ import ActivityIndicator from '../Components/ActivityIndicator';
 import LoginModal from 'rev.sdk.js/Components/LoginModal';
 import ContactModal from '../Components/ContactModal';
 import ResetPasswordModal from '../Components/ResetPasswordModal';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
+import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
 
 function Provider(props) {
   const Dimension = getOutlet('dimension');
@@ -43,10 +45,55 @@ function Provider(props) {
 
   React.useEffect(() => {
     console.log('AppCtx effect hook');
-    async function onCtxRendered() {
-      //
-    }
+    function onCtxRendered() {
+      const PRODUCT_CATEGORY_IN_SESSION_STORAGE = JSON.parse(
+        window.sessionStorage.getItem('categories'),
+      );
+      const ARTICLE_CATEGORY_IN_SESSION_STORAGE = JSON.parse(
+        window.sessionStorage.getItem('articleCategories'),
+      );
 
+      if (
+        // PRODUCT_CATEGORY_IN_SESSION_STORAGE &&
+        // ARTICLE_CATEGORY_IN_SESSION_STORAGE
+        false
+      ) {
+        getOutlet('categories').update(PRODUCT_CATEGORY_IN_SESSION_STORAGE);
+        getOutlet('categoryDisplayMap').update(
+          buildCatDisplayMap(PRODUCT_CATEGORY_IN_SESSION_STORAGE),
+        );
+        getOutlet('articleCategories').update(
+          ARTICLE_CATEGORY_IN_SESSION_STORAGE,
+        );
+        getOutlet('articleCategoryDisplayMap').update(
+          buildCatDisplayMap(ARTICLE_CATEGORY_IN_SESSION_STORAGE),
+        );
+      } else {
+        JStorage.fetchDocuments('site', {}, null, null).then((configs) => {
+          for (const cfg of configs) {
+            if (cfg.name === 'product_category') {
+              getOutlet('categories').update(cfg.categories || []);
+              getOutlet('categoryDisplayMap').update(
+                buildCatDisplayMap(cfg.categories || []),
+              );
+              window.sessionStorage.setItem(
+                'categories',
+                JSON.stringify(cfg.categories || []),
+              );
+            } else if (cfg.name === 'article_category') {
+              getOutlet('articleCategories').update(cfg.categories || []);
+              getOutlet('articleCategoryDisplayMap').update(
+                buildCatDisplayMap(cfg.categories || []),
+              );
+              window.sessionStorage.setItem(
+                'articleCategories',
+                JSON.stringify(cfg.categories || []),
+              );
+            }
+          }
+        });
+      }
+    }
     onCtxRendered();
   }, []);
 

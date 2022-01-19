@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import * as AppActions from '../AppActions';
+import {THEME_COLOR} from '../constants';
 
 let LINK_ITEMS = [
   {
@@ -32,13 +33,13 @@ let LINK_ITEMS = [
     loading: true,
     items: [
       {
-        title: '主題商品',
-        to: '/products?cat=theme',
+        title: '關都地區',
+        to: '/products?cat=kanto',
         loading: true,
       },
       {
-        title: '客製商品',
-        to: '/products?cat=custom',
+        title: '城都地區',
+        to: '/products?cat=johto',
         loading: true,
       },
     ],
@@ -78,7 +79,7 @@ function SiteFooter(props) {
             onClick={() => AppActions.navigate('/', {loading: 500})}
             style={{flex: 1, textAlign: 'center'}}>
             <img
-              src="/images/revicon_512.png"
+              src="/favicon.png"
               alt="Logo"
               style={{
                 height: 150,
@@ -97,15 +98,18 @@ function SiteFooter(props) {
               justifyContent: 'space-between',
             }}>
             {LINK_ITEMS.map((item, idx) => (
-              <div style={{minWidth: dimension.rwd === 'desktop' ? 120 : 85}}>
+              <div
+                key={idx}
+                style={{minWidth: dimension.rwd === 'desktop' ? 120 : 85}}>
                 <div
                   className="link-title"
-                  style={{color: '#0eb407'}}
+                  style={{color: THEME_COLOR}}
                   onClick={() => AppActions.navigate('/', {loading: 500})}>
                   {item.title}
                 </div>
-                {item.items.map((i) => (
+                {item.items.map((i, index) => (
                   <div
+                    key={index}
                     className="link-item"
                     onClick={() =>
                       AppActions.navigate(i.to, {loading: i.loading})
@@ -123,13 +127,12 @@ function SiteFooter(props) {
               alignSelf: 'stretch',
               marginTop: dimension.rwd === 'desktop' ? 0 : 40,
             }}>
-            <p className="info-text"> 聯絡我們</p>
-            <p className="info-text"> revteltech@gmail.com.tw</p>
-            <p className="info-text"> 02-2736-6566</p>
-            <p className="info-text"> 臺北市大安區和平東路二段76巷29弄4號1樓</p>
+            <p className="info-text">聯絡我們</p>
+            <p className="info-text">revteltech@gmail.com</p>
+            <p className="info-text">02-2736-6566</p>
+            <p className="info-text">103 台北市大同區民權西路136號10樓之5</p>
             <p className="info-text">
-              {' '}
-              週一至週五上午10點至下午7點（例假日休息）
+              {`週一至週五上午9點至下午6點\n（例假日休息）`}
             </p>
 
             <div
@@ -138,11 +141,10 @@ function SiteFooter(props) {
                 maxWidth: 280,
                 justifyContent:
                   dimension.rwd === 'desktop' ? 'flex-end' : 'center',
-                // textAlign: 'right',
                 marginTop: 40,
               }}>
               <a
-                href="https://www.youtube.com/channel/UCXfn2Ob1iDzajn-ZzT0sEmw"
+                href="https://www.facebook.com/RevtelTech"
                 target="_blank"
                 rel="noreferrer">
                 <img
@@ -152,7 +154,7 @@ function SiteFooter(props) {
                 />
               </a>
               <a
-                href="https://www.instagram.com/vbeauty.group/"
+                href="https://www.instagram.com/revtel_tech/"
                 target="_blank"
                 rel="noreferrer">
                 <img
@@ -161,10 +163,7 @@ function SiteFooter(props) {
                   style={{height: 40, objectFit: 'contain', marginLeft: 15}}
                 />
               </a>
-              <a
-                href="https://www.instagram.com/vbeauty.group/"
-                target="_blank"
-                rel="noreferrer">
+              <a href="" target="_blank" rel="noreferrer">
                 <img
                   src="/images/line.png"
                   alt="Logo"
@@ -198,12 +197,12 @@ function SiteFooter(props) {
               style={{
                 display: 'inline',
                 fontSize: 12,
-                color: '#14A58C',
+                color: THEME_COLOR,
               }}
-              href="https://revteltech.pse.is/3psgrd"
+              href="https://www.revtel.tech/"
               target="_blank"
               rel="noreferrer">
-              奕果雲端數位 EcultureTech
+              忻旅科技 RevtelTech
             </a>
           </div>
         </div>
@@ -214,6 +213,7 @@ function SiteFooter(props) {
 
 const FlexItemSection = styled.section`
   text-align: ${(props) => (props.isMobile ? 'center' : 'left')};
+
   & > .content {
     max-width: 1024px;
     margin: 0 auto;
@@ -243,13 +243,17 @@ const FlexItemSection = styled.section`
 
     & .info {
       flex-basis: 100px;
+
       & .info-text {
         color: #707070;
         margin-top: 8px;
+        white-space: pre-line;
+
         :first-child {
           margin-top: 0px;
         }
       }
+
       & img {
         cursor: pointer;
       }
@@ -297,10 +301,12 @@ const FlexItem = styled.div`
   & > .description {
     display: flex;
     flex-direction: column;
+
     & > h3 {
       font-size: 24px;
       color: #888;
     }
+
     & > p {
       font-size: 18px;
       color: #ccc;

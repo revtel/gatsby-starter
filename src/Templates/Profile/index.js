@@ -1,9 +1,10 @@
-import React from 'react';
-import {Spin, Form, Input, Radio, Button, message} from 'antd';
+import React, {Fragment, useEffect, useState} from 'react';
+import {Button, Form, Input, message, Modal, Radio, Space, Spin} from 'antd';
 import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import * as JStorageActions from 'rev.sdk.js/Actions/JStorage';
 import AntdAddressSetForm from 'rev.sdk.js/Components/AntdAddressSetForm';
+import ResetEmailButton from 'rev.sdk.js/Components/ResetEmailButton';
 
 function ProfilePage(props) {
   const [user] = useOutlet('user');
@@ -73,6 +74,7 @@ function ProfilePage(props) {
               ]}>
               <Input />
             </Form.Item>
+
             <Form.Item
               label="電子信箱"
               name="email"
@@ -85,7 +87,9 @@ function ProfilePage(props) {
               ]}>
               <Input disabled />
             </Form.Item>
+
             <AntdAddressSetForm form={form} />
+
             <Form.Item wrapperCol={{offset: 8, span: 16}}>
               <Button
                 htmlType="button"
@@ -96,6 +100,7 @@ function ProfilePage(props) {
               <Button htmlType="submit" type="primary">
                 儲存
               </Button>
+              <ResetEmailButton />
             </Form.Item>
           </Form>
         ) : (

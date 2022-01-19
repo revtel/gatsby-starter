@@ -72,6 +72,12 @@ const pages = [
   },
 
   {
+    path: `/reset-email/confirm`,
+    component: `src/Templates/ResetEmail/index.js`,
+    context: {},
+  },
+
+  {
     path: `/social-login`,
     component: `src/Templates/SocialLogin/index.js`,
     context: {},

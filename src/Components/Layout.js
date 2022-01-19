@@ -9,6 +9,7 @@ import ProfileLayout from './ProfileLayout';
 import CheckoutLayout from './CheckoutLayout';
 import SiteNavBar from './SiteNavBar';
 import SiteFooter from './SiteFooter';
+import {THEME_COLOR} from '../constants';
 
 function Layout({children, location}) {
   const [dimension] = useOutlet('dimension');
@@ -34,7 +35,18 @@ function Layout({children, location}) {
   }, [location.pathname, initialized]);
 
   if (location.pathname.indexOf('admin') !== -1) {
-    return <AdminLayout location={location}>{children}</AdminLayout>;
+    return (
+      <AdminLayout location={location}>
+        <Helmet>
+          <title>Pokémon Center</title>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+          />
+        </Helmet>
+        {children}
+      </AdminLayout>
+    );
   } else if (location.pathname.indexOf('profile') !== -1) {
     return (
       <Wrapper rwd={dimension.rwd}>
@@ -67,10 +79,21 @@ function Layout({children, location}) {
   return (
     <>
       <Helmet>
-        <title>Revteltech</title>
+        <title>Pokémon Store</title>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          charSet="UTF-8"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css"
+        />
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
         />
       </Helmet>
       <Wrapper rwd={dimension.rwd}>
@@ -84,12 +107,13 @@ function Layout({children, location}) {
 
 const Wrapper = styled.div`
   --contentMaxWidth: 1200px;
-  --contentMinHeight: 600px;
+  --contentMinHeight: 840px;
   --topNavBarHeight: 64px;
   --basePadding: 15px 20px;
-  --primaryColor: #0eb407;
+  --primaryColor: ${THEME_COLOR};
   --sectionPadding: 50px 100px;
   --sectionMobilePadding: 20px;
+  overflow-x: hidden;
 
   min-height: 100vh;
   display: flex;
@@ -119,6 +143,7 @@ const Wrapper = styled.div`
     max-width: 900px;
     margin: 0 auto;
   }
+
   .section-dark {
     padding: ${(props) =>
       props.rwd === 'desktop'

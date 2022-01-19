@@ -6,11 +6,12 @@ import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
 import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
 import Config from '../../data.json';
-import * as _ from 'lodash';
 import * as jwt from '../Utils/jwt';
 import setLoadingPlugin from './Plugin/setLoading';
 import navigatePlugin from './Plugin/navigate';
 import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
+import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
+import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
 
 /**
  * **************************************************
@@ -22,6 +23,10 @@ const Plugins = {
   setLoading: new setLoadingPlugin('setLoading'),
   navigate: new navigatePlugin('navigate'),
   clientJStorageFetch: new clientJStorageFetchPlugin('clientJStorageFetch'),
+  onAdminFormSubmit: new onAdminFormSubmitPlugin('onAdminFormSubmit'),
+  onAfterAdminFormSubmit: new onAfterAdminFormSubmitPlugin(
+    'onAfterAdminFormSubmit',
+  ),
 };
 
 const req = ApiUtil.req;
@@ -147,6 +152,7 @@ const getDefaultCheckoutFormSpec = () => ({
     Cart.PAYMENT_SUBTYPE.default,
     Cart.PAYMENT_SUBTYPE.credit,
     Cart.PAYMENT_SUBTYPE.cod,
+    Cart.PAYMENT_SUBTYPE.offline,
   ],
   logisticsTypes: [Cart.LOGISTICS_TYPE.cvs, Cart.LOGISTICS_TYPE.home],
   logisticsSubTypes: {
@@ -170,42 +176,24 @@ const getDefaultCheckoutFormSpec = () => ({
 });
 
 function onCartLoaded(cart) {
-  const supportedLogisticsTypes = _.uniq(
-    cart.items.reduce((acc, cur) => {
-      acc = [
-        ...acc,
-        ...(cur.product.extra_data.supported_logistics_types || [
-          Cart.LOGISTICS_TYPE.home,
-        ]),
-      ];
-      return acc;
-    }, []),
-  );
-  const defaultEmail = UserOutlet.getValue().data.email;
-
   const checkoutFormSpec = getDefaultCheckoutFormSpec();
 
-  checkoutFormSpec.logisticsTypes = supportedLogisticsTypes;
+  const defaultUser = {
+    buyer_name: cart.buyer_name || UserOutlet.getValue().data.name || '',
+    buyer_email: cart.buyer_email || UserOutlet.getValue().data.email || '',
+    buyer_phone: cart.buyer_phone || UserOutlet.getValue().data.phone || '',
+    buyer_zip: cart.buyer_zip || UserOutlet.getValue().data.zip || '',
+    buyer_city: cart.buyer_city || UserOutlet.getValue().data.city || '',
+    buyer_district:
+      cart.buyer_district || UserOutlet.getValue().data.district || '',
+    buyer_address:
+      cart.buyer_address || UserOutlet.getValue().data.address || '',
+  };
 
-  let updateConfig = supportedLogisticsTypes.includes(cart.logistics_type)
-    ? {}
-    : {
-        ...cart,
-        logistics_type: Cart.LOGISTICS_TYPE.home,
-        logistics_subtype: Cart.LOGISTICS_SUBTYPE.TCAT,
-      };
-
-  updateConfig = cart.buyer_email
-    ? {
-        ...updateConfig,
-      }
-    : {
-        ...cart,
-        ...updateConfig,
-        buyer_email: defaultEmail,
-      };
-
-  updateConfig = Object.keys(updateConfig).length <= 0 ? null : updateConfig;
+  const updateConfig = {
+    ...cart,
+    ...defaultUser,
+  };
 
   return {
     updateConfig,
@@ -253,9 +241,15 @@ async function onLoginResult(err, result) {
         const profile = await JStorage.fetchOneDocument('user_profile', {
           [queryKey]: UserOutlet.getValue().username,
         });
+        const privateProfile = await User.getPrivateProfile();
+
         UserOutlet.update({
           ...UserOutlet.getValue(),
-          data: {...profile},
+          data: {
+            ...profile,
+            email: privateProfile.email,
+            points: privateProfile.points,
+          },
         });
         const decoded = await jwt.decodeToken(UserOutlet.getValue().token);
         console.log('VERIFY TOKEN SUCCESS', decoded);
@@ -269,6 +263,18 @@ async function onLoginResult(err, result) {
   }
 }
 
+async function confirmOfflineOrder(id) {
+  await req(
+    `${Config.apiHost}/order/offline?token=${UserOutlet.getValue().token}`,
+    {
+      method: 'POST',
+      data: {
+        id: id,
+      },
+    },
+  );
+}
+
 async function onAdminFormSubmit({
   path,
   collection,
@@ -277,10 +283,19 @@ async function onAdminFormSubmit({
   formData,
   primaryKey,
 }) {
+  if (Plugins.onAdminFormSubmit.shouldExecute()) {
+    return await Plugins.onAdminFormSubmit.executeAsync({
+      path,
+      collection,
+      instance,
+      extValues,
+      formData,
+      primaryKey,
+    });
+  }
+
   //sample code
-
   // if (path === '/admin/products') {
-
   //   try {
   //     setLoading(true);
   //     if (!instance) {
@@ -309,6 +324,29 @@ async function onAdminFormSubmit({
   return false;
 }
 
+async function onAfterAdminFormSubmit(
+  {path, collection, instance, extValues, formData, primaryKey},
+  updatedInstance,
+) {
+  if (Plugins.onAfterAdminFormSubmit.shouldExecute()) {
+    return await Plugins.onAfterAdminFormSubmit.executeAsync({
+      path,
+      collection,
+      instance,
+      extValues,
+      formData,
+      primaryKey,
+    });
+  }
+
+  return null;
+}
+
+function getReurl({title, description, image, redirectUrl}) {
+  return `${Config.apiHost}/misc/reurl?title=${title}&image=${image}${
+    description ? `&description=${description}` : ''
+  }&redirect_url=${redirectUrl}`;
+}
 /**
  * **************************************************
  * init all plugins AFTER defining default actions
@@ -328,7 +366,10 @@ export {
   fetchCustomResources,
   onLoginResult,
   onAdminFormSubmit,
+  onAfterAdminFormSubmit,
   onCartLoaded,
   createLogisticsOrder,
   rebuild,
+  getReurl,
+  confirmOfflineOrder,
 };

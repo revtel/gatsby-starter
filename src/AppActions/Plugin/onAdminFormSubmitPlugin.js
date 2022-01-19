@@ -1,8 +1,8 @@
 import PluginAction from '../PluginAction';
 
-export default class Plugin extends PluginAction {
+export default class onAdminFormSubmitPlugin extends PluginAction {
   shouldExecute(...args) {
-    return false;
+    return true;
   }
 
   async executeAsync(...args) {

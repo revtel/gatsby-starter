@@ -3,8 +3,22 @@
   "name": "產品",
   "collection": "product",
   "primaryKey": "id",
-  "searchFields": ["name","searchText"],
+  "searchFields": [
+    "name",
+    "searchText"
+  ],
   "columns": [
+    {
+      "title": "神奇寶貝編號",
+      "key": "pokemon_id",
+      "dataIndex": "pokemon_id"
+    },
+    {
+      "title": "分類",
+      "key": "labels",
+      "dataIndex": "labels",
+      "customType": "labels"
+    },
     {
       "title": "名稱",
       "key": "name",
@@ -23,15 +37,19 @@
     }
   ],
   "querySpec": {
-    "pageSizeOptions": [10, 30, 50],
+    "pageSizeOptions": [
+      10,
+      30,
+      50
+    ],
     "sortOptions": [
       {
-        "name": "價錢低到高",
-        "value": "price"
+        "name": "編號低到高",
+        "value": "pokemon_id"
       },
       {
-        "name": "價錢高到低",
-        "value": "-price"
+        "name": "編號高到低",
+        "value": "-pokemon_id"
       }
     ],
     "canSearch": true,
@@ -54,11 +72,30 @@
     ]
   },
   "formSpec": {
+    "customName": "ProductForm",
     "schema": {
       "title": "",
       "type": "object",
-      "required": ["name", "price"],
+      "required": [],
       "properties": {
+        "pokemon_id": {
+          "type": "number",
+          "title": "神奇寶貝編號"
+        },
+        "images": {
+          "type": "array",
+          "title": "產品圖片",
+          "items": {
+            "type": "object"
+          }
+        },
+        "labels": {
+          "type": "array",
+          "title": "分類",
+          "items": {
+            "type": "string"
+          }
+        },
         "name": {
           "type": "string",
           "title": "商品名稱"
@@ -73,43 +110,9 @@
           "title": "公開",
           "default": false
         },
-        "description": {
-          "type": "string",
-          "title": "產品說明"
-        },
-        "labels": {
-          "type": "array",
-          "title": "分類標籤",
-          "items": {
-            "type": "string"
-          }
-        },
-        "intro": {
-          "type": "string",
-          "title": "產品介紹"
-        },
-        "spec": {
-          "type": "string",
-          "title": "產品規格"
-        },
-        "remark": {
-          "type": "string",
-          "title": "產品備註"
-        },
-        "article": {
-          "type": "string",
-          "title": "產品文章"
-        },
         "searchText": {
           "type": "string",
           "title": "搜尋關鍵字"
-        },
-        "images": {
-          "type": "array",
-          "title": "產品圖片",
-          "items": {
-            "type": "string"
-          }
         },
         "variants": {
           "type": "array",
@@ -120,8 +123,14 @@
               "type": {
                 "type": "string",
                 "title": "選項類型",
-                "enum": ["bool", "single"],
-                "enumNames": ["是非題", "單選題"]
+                "enum": [
+                  "bool",
+                  "single"
+                ],
+                "enumNames": [
+                  "是非題",
+                  "單選題"
+                ]
               },
               "name": {
                 "type": "string",
@@ -138,7 +147,9 @@
                   {
                     "properties": {
                       "type": {
-                        "enum": ["bool"]
+                        "enum": [
+                          "bool"
+                        ]
                       },
                       "price": {
                         "type": "number",
@@ -149,7 +160,9 @@
                   {
                     "properties": {
                       "type": {
-                        "enum": ["single"]
+                        "enum": [
+                          "single"
+                        ]
                       },
                       "choices": {
                         "type": "array",
@@ -178,6 +191,10 @@
               }
             }
           }
+        },
+        "og_image": {
+          "type": "string",
+          "title": "og-image"
         }
       }
     },
@@ -198,7 +215,13 @@
         "ui:widget": "textarea"
       },
       "images": {
-        "ui:field": "rev-images"
+        "ui:field": "rev-files"
+      },
+      "og_image": {
+        "ui:field": "rev-rename-image",
+        "ui:readonly": true,
+        "referenceImageFieldKey": "images[0].expected_url",
+        "hidden": true
       }
     }
   },
@@ -217,5 +240,5 @@
       }
     }
   },
-  "actionBar": ["article", "file"]
+  "actionBar": []
 }

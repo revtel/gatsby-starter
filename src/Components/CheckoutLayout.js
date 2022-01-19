@@ -99,9 +99,19 @@ export default withLoginRequired(CheckoutLayout, {
         style={{
           minHeight: 'var(--contentMinHeight)',
           paddingTop: 'var(--topNavBarHeight)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}>
         <Result
-          title={`尚無權限`}
+          icon={
+            <img
+              style={{width: 150}}
+              src="/permission-denied.gif"
+              alt="permission-denied"
+            />
+          }
+          title="尚無權限"
           subTitle="此頁面需要登入，方能瀏覽"
           extra={
             <Space direction="vertical">
