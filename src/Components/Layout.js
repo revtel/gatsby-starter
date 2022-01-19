@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import {Helmet} from 'react-helmet';
 import {useOutlet, getOutlet} from 'reconnect.js';
@@ -10,6 +10,7 @@ import CheckoutLayout from './CheckoutLayout';
 import SiteNavBar from './SiteNavBar';
 import SiteFooter from './SiteFooter';
 import {THEME_COLOR} from '../constants';
+import Config from '../../data.json';
 
 function Layout({children, location}) {
   const [dimension] = useOutlet('dimension');
@@ -33,6 +34,21 @@ function Layout({children, location}) {
       initialize(isAdmin);
     }
   }, [location.pathname, initialized]);
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') {
+      window.gtag = function () {
+        console.error('ga not ready');
+      };
+      return;
+    }
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag('js', new Date());
+    window.gtag('config', Config.gaId);
+  }, []);
 
   if (location.pathname.indexOf('admin') !== -1) {
     return (
@@ -94,6 +110,10 @@ function Layout({children, location}) {
           rel="stylesheet"
           type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
+        />
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-Z6FVJRGTFN"
         />
       </Helmet>
       <Wrapper rwd={dimension.rwd}>

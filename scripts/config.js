@@ -15,9 +15,7 @@ function config() {
     data.jstoreVersion = 'v2';
     data.storageHost = 'https://storage-stg.revtel-api.com/v4';
     data.articleEditorHost = 'https://console.revtel2.com/article/editor';
-
-    data.gaId = 'UA-208890632-1'; //TODO: should change
-    data.gtagId = 'GTM-TJ5LZNR'; //TODO: should change
+    data.gaId = 'G-1LH69CW4Y1';
   } else {
     // https://pokemon.netlify.app
     data.stage = 'prod';
@@ -27,9 +25,7 @@ function config() {
     data.jstoreVersion = 'v2';
     data.storageHost = 'https://storage.revtel-api.com/v4';
     data.articleEditorHost = 'https://console-prod.netlify.com/article/editor';
-
-    data.gaId = 'UA-208890632-2'; //TODO: should change
-    data.gtagId = 'GTM-M8MD9TP'; //TODO: should change
+    data.gaId = 'G-2324HZCWPM';
   }
 
   fs.writeFileSync('./data.json', JSON.stringify(data, null, 2), 'utf8');
