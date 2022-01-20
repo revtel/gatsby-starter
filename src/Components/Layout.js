@@ -113,7 +113,7 @@ function Layout({children, location}) {
         />
         <script
           async
-          src="https://www.googletagmanager.com/gtag/js?id=G-Z6FVJRGTFN"
+          src={`https://www.googletagmanager.com/gtag/js?id=${Config.gaId}`}
         />
       </Helmet>
       <Wrapper rwd={dimension.rwd}>
