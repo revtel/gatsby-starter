@@ -16,6 +16,7 @@ function config() {
     data.storageHost = 'https://storage-stg.revtel-api.com/v4';
     data.articleEditorHost = 'https://console.revtel2.com/article/editor';
     data.gaId = 'G-1LH69CW4Y1';
+    data.gtmId = 'GTM-KCRVXBN';
   } else {
     // https://pokemon.netlify.app
     data.stage = 'prod';
@@ -26,6 +27,7 @@ function config() {
     data.storageHost = 'https://storage.revtel-api.com/v4';
     data.articleEditorHost = 'https://console-prod.netlify.com/article/editor';
     data.gaId = 'G-2324HZCWPM';
+    data.gtmId = 'GTM-NJXKB4D';
   }
 
   fs.writeFileSync('./data.json', JSON.stringify(data, null, 2), 'utf8');
