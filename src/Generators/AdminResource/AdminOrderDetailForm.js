@@ -144,7 +144,9 @@ function CustomAdminOrderDetailForm(props) {
 
   return (
     <div style={{margin: '5px 0'}}>
-      <Filed name="轉帳後五碼" value={instance.offline_tx} />
+      {values.payment_subtype === Cart.PAYMENT_SUBTYPE.offline && (
+        <Filed name="轉帳後五碼" value={instance.offline_tx} />
+      )}
       <Space direction="horizontal" style={{marginBottom: 12}}>
         <Button
           disabled={
