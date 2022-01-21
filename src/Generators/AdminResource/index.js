@@ -3,7 +3,7 @@ import AdminResource from 'rev.sdk.js/Generators/AdminResource';
 import {Button, message, Select, Tag} from 'antd';
 import {useOutlet} from 'reconnect.js';
 import AdminOrderDetailForm from './AdminOrderDetailForm';
-import {ArticleEditor} from 'rev.sdk.js';
+import ArticleEditor from 'rev.sdk.js/Components/ArticleEditor';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as AppActions from '../../AppActions';
 

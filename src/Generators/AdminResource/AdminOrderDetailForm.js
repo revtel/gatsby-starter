@@ -144,28 +144,41 @@ function CustomAdminOrderDetailForm(props) {
 
   return (
     <div style={{margin: '5px 0'}}>
+      {values.payment_subtype === Cart.PAYMENT_SUBTYPE.offline && (
+        <Filed name="轉帳後五碼" value={instance.offline_tx} />
+      )}
       <Space direction="horizontal" style={{marginBottom: 12}}>
         <Button
           disabled={
             !['created', 'pending', 'error', 'exception'].includes(
-              instance?.logistics_status,
+              values?.logistics_status,
             )
           }
           onClick={handleGenLogisticsOrder}>
           建立物流訂單
         </Button>
-
-        <Popconfirm
-          title="已經確認轉帳後五碼？"
-          onConfirm={async () => {
-            await actions.confirmOfflineOrder(instance.id);
-            const order = await JStorage.fetchOneDocument('order', {
-              id: instance.id,
-            });
-            setValues(order);
-          }}>
-          <Button>切換付款狀態為成功</Button>
-        </Popconfirm>
+        {values.payment_subtype === Cart.PAYMENT_SUBTYPE.offline && (
+          <>
+            <Popconfirm
+              title="已經確認轉帳後五碼？"
+              onConfirm={async () => {
+                const _hide = message.loading('更新付款狀態...');
+                await actions.confirmOfflineOrder(instance.id);
+                const order = await JStorage.fetchOneDocument('order', {
+                  id: instance.id,
+                });
+                setValues(order);
+                _hide();
+              }}>
+              <Button
+                disabled={
+                  values.payment_status === Cart.PAYMENT_STATUS.success
+                }>
+                切換付款狀態為成功
+              </Button>
+            </Popconfirm>
+          </>
+        )}
       </Space>
       <Collapse defaultActiveKey={[]}>
         <Panel header="購買人資訊" key={1}>
