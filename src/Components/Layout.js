@@ -35,25 +35,13 @@ function Layout({children, location}) {
     }
   }, [location.pathname, initialized]);
 
-  React.useEffect(() => {
-    if (typeof window === 'undefined') {
-      window.gtag = function () {
-        console.error('ga not ready');
-      };
-      return;
-    }
+  React.useLayoutEffect(() => {
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () {
       window.dataLayer.push(arguments);
     };
     window.gtag('js', new Date());
     window.gtag('config', Config.gaId);
-  }, []);
-
-  React.useEffect(() => {
-    if (!document) {
-      return;
-    }
     const script = document.createElement('script');
     const noScript = document.createElement('noscript');
     script.innerHTML = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
