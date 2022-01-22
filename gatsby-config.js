@@ -88,34 +88,5 @@ module.exports = {
         style: true,
       },
     },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        // The property ID; the tracking code won’t be generated without it
-        trackingId: config.gaId,
-        // Defines where to place the tracking script - `true` in the head and `false` in the body
-        head: false,
-        // Setting this parameter is optional
-        anonymize: true,
-        // Setting this parameter is also optional
-        respectDNT: true,
-        // Avoids sending pageview hits from custom paths
-        exclude: [],
-        // Delays sending pageview hits on route update (in milliseconds)
-        pageTransitionDelay: 0,
-        // Defers execution of google analytics script after page load
-        optimizeId: 'ec',
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-google-tagmanager',
-      options: {
-        id: config.gtagId,
-        includeInDevelopment: false,
-        defaultDataLayer: {platform: 'gatsby FE'},
-        enableWebVitalsTracking: true,
-        routeChangeEventName: 'route-change',
-      },
-    },
   ],
 };
