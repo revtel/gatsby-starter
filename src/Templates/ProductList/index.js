@@ -2,37 +2,21 @@ import React from 'react';
 import ProductGrid from './ProductGrid';
 import ProductListPage from 'rev.sdk.js/Templates/ProductList';
 import * as AppActions from '../../AppActions';
+import BrowserHeader from '../../Components/BrowseHeader';
 
 function ProductList(props) {
-  let onCustomClick = (item) => {
+  let onCustomClick = async (item) => {
     if (props.location.pathname.indexOf('/products') > -1) {
-      AppActions.navigate(`/product?id=${item.id}`, {loading: true});
+      await AppActions.navigate(`/product?id=${item.id}`, {loading: true});
     } else if (props.location.pathname.indexOf('/articles') > -1) {
-      AppActions.navigate(`/article?id=${item.id}`, {loading: true});
+      await AppActions.navigate(`/article?id=${item.id}`, {loading: true});
     }
   };
 
   function renderCustomSection({route, sectionId, params}) {
     if (route === '/articles') {
       if (sectionId === 'A') {
-        return (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: 40,
-              backgroundImage: 'url(/header_bg.jpg)',
-              backgroundSize: 'contain',
-              animation: 'navMove 20s linear infinite',
-            }}>
-            <img
-              src="/pokemon-logo.png"
-              alt="logo"
-              style={{height: 100, transform: 'scale(2.5)'}}
-            />
-          </div>
-        );
+        return <BrowserHeader />;
       }
 
       if (['B', 'C', 'E'].indexOf(sectionId) > -1) {
@@ -44,24 +28,7 @@ function ProductList(props) {
       }
 
       if (sectionId === 'A') {
-        return (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: 40,
-              backgroundImage: 'url(/header_bg.jpg)',
-              backgroundSize: 'contain',
-              animation: 'navMove 20s linear infinite',
-            }}>
-            <img
-              src="/pokemon-logo.png"
-              alt="logo"
-              style={{height: 100, transform: 'scale(2.5)'}}
-            />
-          </div>
-        );
+        return <BrowserHeader />;
       }
     }
   }

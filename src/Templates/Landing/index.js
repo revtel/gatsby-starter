@@ -19,9 +19,15 @@ function Landing(props) {
   useEffect(() => {
     const _fetchSite = async () => {
       try {
+        actions.setLoading(true);
         const _site = (await JStorage.fetchDocuments('site', {name: 'landing'}))
           .results[0];
-        const _product = (await JStorage.fetchDocuments('product', {})).results;
+        const _product = (
+          await JStorage.fetchDocuments('product', {}, ['pokemon_id'], {
+            limit: 6,
+            offset: 0,
+          })
+        ).results;
         const _articles = (await JStorage.fetchDocuments('Article_Default', {}))
           .results;
         setSite(_site);
@@ -29,34 +35,11 @@ function Landing(props) {
         setArticles(_articles);
       } catch (e) {
       } finally {
+        actions.setLoading(false);
       }
     };
     _fetchSite().then(() => {});
   }, [actions]);
-
-  const getCommonElem = (i) => {
-    return (
-      <div
-        style={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translateX(-50%) translateY(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          cursor: 'pointer',
-        }}
-        onClick={() => {}}>
-        <HeroBannerLogo />
-        <img
-          src="/pokemon-logo.png"
-          alt="logo"
-          style={{height: 100, transform: 'scale(2.5)'}}
-        />
-      </div>
-    );
-  };
 
   return (
     <ReactDelighters>
@@ -79,7 +62,7 @@ function Landing(props) {
             site.hero_banner.images.map((i) => {
               if (i.file_type.indexOf('video') > -1) {
                 return (
-                  <HeroBannerSection>
+                  <HeroBannerSection key={i}>
                     <ReactPlayer
                       width="100%"
                       height="100%"
@@ -88,12 +71,11 @@ function Landing(props) {
                       muted
                       url={i.expected_url}
                     />
-                    {getCommonElem(i)}
                   </HeroBannerSection>
                 );
               } else {
                 return (
-                  <HeroBannerSection>
+                  <HeroBannerSection key={i}>
                     <img
                       style={{
                         width: '100%',
@@ -102,7 +84,6 @@ function Landing(props) {
                       src={i.expected_url}
                       alt="hero banner"
                     />
-                    {getCommonElem(i)}
                   </HeroBannerSection>
                 );
               }

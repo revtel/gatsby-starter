@@ -60,17 +60,17 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function setLoading(loading) {
+function setLoading(loading, params) {
   if (Plugins.setLoading.shouldExecute()) {
     return Plugins.setLoading.executeSync();
   }
-
+  const {message = ''} = params || {};
   setTimeout(() => {
-    LoadingOutlet.update(loading);
+    LoadingOutlet.update({loading: loading, message: message});
   }, 0);
 }
 
-function navigate(nextRoute, options = {loading: false}) {
+async function navigate(nextRoute, options = {message: '', loading: false}) {
   if (Plugins.navigate.shouldExecute()) {
     return Plugins.navigate.executeSync(nextRoute, options);
   }
@@ -79,14 +79,17 @@ function navigate(nextRoute, options = {loading: false}) {
   nextRoute = PathUtil.normalizedRoute(nextRoute);
   if (currRoute !== nextRoute) {
     if (options?.loading) {
-      LoadingOutlet.update(true);
+      LoadingOutlet.update({
+        message: options.message,
+        loading: options.loading,
+      });
       if (typeof options.loading === 'number') {
         setTimeout(() => {
           LoadingOutlet.update(false);
         }, options.loading);
       }
     }
-    nav(nextRoute);
+    await nav(nextRoute);
   } else {
     console.log('path not changed, ignore...');
   }
