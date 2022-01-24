@@ -49,7 +49,7 @@ function CreateSiteConfigButton() {
         ))}
       </Select>
       <Button type="text" disabled={name === ''} onClick={createSiteConfig}>
-        建立
+        前往
       </Button>
     </div>
   );
