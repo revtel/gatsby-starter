@@ -28,7 +28,7 @@ function ProfileTabs(props) {
   }
 
   return (
-    <Tabs activeKey={activePath} onChange={onTabClick} style={{margin: 10}}>
+    <Tabs activeKey={activePath} onChange={onTabClick}>
       <Tabs.TabPane key="/profile" tab="個人資訊" />
       <Tabs.TabPane key="/profile/orders" tab="我的訂單" />
       {user.data?.provider === 'default' && (

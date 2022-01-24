@@ -1,5 +1,7 @@
 import React from 'react';
+
 import OrderPage from 'rev.sdk.js/Templates/OrderPage';
+import styled from 'styled-components';
 
 function OrderList(props) {
   function renderCustomComponent(props) {
@@ -14,7 +16,19 @@ function OrderList(props) {
     return null;
   }
 
-  return <OrderPage {...props} renderCustomComponent={renderCustomComponent} />;
+  return (
+    <Wrapper>
+      <OrderPage {...props} renderCustomComponent={renderCustomComponent} />
+    </Wrapper>
+  );
 }
+
+const Wrapper = styled.div`
+  padding: 20px;
+
+  @media screen and (max-width: 768px) {
+    padding: 0;
+  }
+`;
 
 export default OrderList;

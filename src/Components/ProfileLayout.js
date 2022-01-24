@@ -67,7 +67,7 @@ function ProfileLayout(props) {
           <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
             {_renderCustomSection('E')}
 
-            <div style={{padding: 'var(--basePadding)'}}>{props.children}</div>
+            <div>{props.children}</div>
           </div>
         </div>
 
