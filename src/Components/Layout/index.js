@@ -46,7 +46,7 @@ function Layout({children, location}) {
       window.dataLayer.push(arguments);
     };
     window.gtag('js', new Date());
-    window.gtag('config', Config.gaId);
+    window.gtag('config', Config.gaId, {debug_mode: true});
 
     const gtmScriptTag = document.createElement('script');
     gtmScriptTag.innerHTML = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

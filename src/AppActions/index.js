@@ -13,6 +13,7 @@ import navigatePlugin from './Plugin/navigate';
 import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
+import Gtag from 'rev.sdk.js/Utils/GTag';
 
 /**
  * **************************************************
@@ -239,7 +240,6 @@ async function fetchCustomResources(
 }
 
 async function onLoginResult(err, result) {
-  console.log('onLoginResult', err, result);
   if (!err) {
     try {
       setLoading(true);
@@ -260,7 +260,15 @@ async function onLoginResult(err, result) {
           },
         });
         const decoded = await jwt.decodeToken(UserOutlet.getValue().token);
-        console.log('VERIFY TOKEN SUCCESS', decoded);
+        console.log(decoded);
+        Gtag('event', 'login', {
+          method: UserOutlet.getValue().data.provider,
+        });
+        Gtag('set', 'user_id', decoded.sub);
+        Gtag('set', 'user_properties', {
+          provider: UserOutlet.getValue().data.provider,
+          email: UserOutlet.getValue().data.email,
+        });
         await Cart.fetchCart();
       }
     } catch (ex) {
