@@ -5,6 +5,7 @@ import * as Cart from 'rev.sdk.js/Actions/Cart';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
 import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
+import NavUrl from 'rev.sdk.js/Utils/NavUrl';
 import Config from '../../data.json';
 import * as jwt from '../Utils/jwt';
 import setLoadingPlugin from './Plugin/setLoading';
@@ -71,8 +72,12 @@ function setLoading(loading, params) {
 }
 
 async function navigate(nextRoute, options = {message: '', loading: false}) {
+  if (nextRoute instanceof NavUrl) {
+    nextRoute = nextRoute.toString();
+  }
+
   if (Plugins.navigate.shouldExecute()) {
-    return Plugins.navigate.executeSync(nextRoute, options);
+    return Plugins.navigate.executeAsync(nextRoute, options);
   }
 
   const currRoute = PathUtil.normalizedRoute();
