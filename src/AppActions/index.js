@@ -14,6 +14,7 @@ import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
 import Gtag from 'rev.sdk.js/Utils/GTag';
+import {replace} from 'gatsby-link';
 
 /**
  * **************************************************
@@ -72,7 +73,8 @@ function setLoading(loading, params) {
   }, 0);
 }
 
-async function navigate(nextRoute, options = {message: '', loading: false}) {
+async function navigate(nextRoute, options = {}) {
+  const {message = '', loading = false, ...rest} = options;
   if (nextRoute instanceof NavUrl) {
     nextRoute = nextRoute.toString();
   }
@@ -95,7 +97,7 @@ async function navigate(nextRoute, options = {message: '', loading: false}) {
         }, options.loading);
       }
     }
-    await nav(nextRoute);
+    await nav(nextRoute, rest);
   } else {
     console.log('path not changed, ignore...');
   }

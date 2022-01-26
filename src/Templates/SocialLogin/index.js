@@ -1,11 +1,17 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import {useOutlet} from 'reconnect.js';
 import {navigate} from 'gatsby';
+import Gtag from 'rev.sdk.js/Utils/GTag';
+import NavUrl from 'rev.sdk.js/Utils/NavUrl';
 
 function SocialLoginPage(props) {
-  const {refresh_token} = queryString.parse(props.location.search);
+  const {
+    refresh_token,
+    is_registered = 'false',
+    provider = '',
+  } = queryString.parse(props.location.search);
   const [actions] = useOutlet('actions');
   const [loginResult, setLoginResult] = React.useState(null);
 
@@ -13,13 +19,26 @@ function SocialLoginPage(props) {
     async function tryLogin() {
       try {
         actions.setLoading(true);
+        if (is_registered === 'true') {
+          Gtag('event', 'sign_up', {
+            method: provider,
+          });
+          const params = queryString.parse(window.location.search);
+          delete params.is_registered;
+          delete params.provider;
+          actions.navigate(new NavUrl(`${window.location.pathname}`, params), {
+            loading: false,
+            replace: true,
+          });
+          return;
+        }
         await actions.autoLogin({refresh: refresh_token});
         const nextRoute = window.localStorage.getItem('nextRoute');
         window.localStorage.removeItem('nextRoute');
         if (nextRoute) {
-          navigate(nextRoute);
+          await navigate(nextRoute);
         } else {
-          navigate('/profile');
+          await navigate('/profile');
         }
         setLoginResult(true);
       } catch (ex) {
@@ -31,7 +50,7 @@ function SocialLoginPage(props) {
     }
 
     tryLogin();
-  }, [refresh_token, actions]);
+  }, [refresh_token, actions, is_registered, provider]);
 
   return (
     <Wrapper>

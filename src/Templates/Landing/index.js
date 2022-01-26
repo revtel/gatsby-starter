@@ -8,6 +8,7 @@ import ReactPlayer from 'react-player';
 import Slick from 'react-slick';
 import {useOutlet} from 'reconnect.js';
 import moment from 'moment';
+import Gtag from 'rev.sdk.js/Utils/GTag';
 
 function Landing(props) {
   const [site, setSite] = useState(null);
@@ -151,6 +152,15 @@ function Landing(props) {
                 <RecommendProductItem
                   key={idx}
                   onClick={() => {
+                    Gtag('event', 'select_item', {
+                      item_list_name: 'product',
+                      items: [
+                        {
+                          item_id: p.id,
+                          item_name: p.name,
+                        },
+                      ],
+                    });
                     actions.navigate(`/product/?id=${p.id}`, {loading: true});
                   }}>
                   <img
