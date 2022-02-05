@@ -73,37 +73,6 @@ exports.createPages = async ({graphql, actions}) => {
     }
   }
 
-  if (AppPages.config.generatePromo) {
-    const promoPageNodes = (
-      await graphql(
-        `
-          {
-            allFile(filter: {relativeDirectory: {eq: "promo"}}) {
-              edges {
-                node {
-                  internal {
-                    content
-                  }
-                }
-              }
-            }
-          }
-        `,
-      )
-    ).data.allFile.edges.map(({node}) => node);
-    for (const node of promoPageNodes) {
-      const {
-        internal: {content},
-      } = node;
-      const {path: promoPath, ...extraCtx} = JSON.parse(content);
-      createPage({
-        path: promoPath,
-        component: path.resolve(`src/Generators/PromoLanding/index.js`),
-        context: extraCtx,
-      });
-    }
-  }
-
   if (AppPages.config.generateMarkdown) {
     const allMdNodes = (
       await graphql(

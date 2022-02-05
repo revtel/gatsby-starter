@@ -122,7 +122,6 @@ const pages = [
 
 const config = {
   generateAdmin: true,
-  generatePromo: false,
   generateMarkdown: true,
 };
 

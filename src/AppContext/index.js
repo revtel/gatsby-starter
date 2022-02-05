@@ -1,7 +1,6 @@
 import React from 'react';
 import {getOutlet} from 'reconnect.js';
 import LoginModal from 'rev.sdk.js/Components/LoginModal';
-import ContactModal from '../Components/ContactModal';
 import ResetPasswordModal from '../Components/ResetPasswordModal';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
@@ -112,7 +111,6 @@ function Provider(props) {
         onForgotPasswordClick={null}
         onRegisterClick={null}
       />
-      <ContactModal />
       <ResetPasswordModal />
       <Spinner
         imageUrl={LoadingGif}
