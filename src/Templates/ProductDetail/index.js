@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import {navigate} from 'gatsby';
 import {Button, message, Tabs, Tooltip} from 'antd';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import qs from 'query-string';
@@ -146,7 +145,7 @@ function ProductDetail(props) {
             <BreadcrumbBar
               cat={product.labels[0]}
               updateCat={(nextCat) => {
-                navigate(`${listViewPath}?cat=${nextCat}`);
+                AppActions.navigate(`${listViewPath}?cat=${nextCat}`);
               }}
               categoryDisplayMap={outlets.categoryDisplayMap}
             />
