@@ -27,7 +27,6 @@ function ProductDetail(props) {
   } = props;
   const [activeSummaryTab, setActiveSummaryTab] = React.useState('intro');
   const [product, setProduct] = React.useState(null);
-  const [quantity, setQuantity] = React.useState(1);
   const [currItemConfig, setCurrItemConfig] = React.useState(null);
   const [currPrice, setCurrPrice] = React.useState(null);
   const [article, setArticle] = React.useState(null);
@@ -44,7 +43,6 @@ function ProductDetail(props) {
         AppActions.setLoading(true);
         const resp = await JStorage.fetchOneDocument(collection, {id});
         setProduct(resp);
-        setQuantity(1);
         setImgIdx(0);
         Gtag('event', 'view_item', {
           currency: 'TWD',
