@@ -16,39 +16,16 @@ function ProfileLayout(props) {
   const params = qs.parse(props.location.search);
   const mobile = dimension.rwd === 'mobile';
 
-  const _renderCustomSection = React.useCallback(
-    (sectionId) => {
-      if (renderCustomSection && typeof renderCustomSection === 'function') {
-        return renderCustomSection({
-          route: props.location.pathname,
-          sectionId,
-          params,
-        });
-      }
-      // customRenderFunc backward compatibility
-      if (AppActions.renderCustomSection) {
-        return AppActions.renderCustomSection({
-          route: props.location.pathname,
-          sectionId,
-          params,
-        });
-      }
-
-      return null;
-    },
-    [params, props.location.pathname, renderCustomSection],
-  );
-
   function renderCustomSection(sectionId) {
     return null;
   }
 
   return (
     <Wrapper style={{...style}}>
-      {_renderCustomSection('A')}
+      {renderCustomSection('A')}
 
       <div className="content">
-        {_renderCustomSection('B')}
+        {renderCustomSection('B')}
 
         <div
           style={{display: 'flex', flexDirection: mobile ? 'column' : 'row'}}>
@@ -56,25 +33,25 @@ function ProfileLayout(props) {
             <ProfileTabs activePath={activePath} />
           ) : (
             <div style={{display: 'flex', flexDirection: 'column'}}>
-              {_renderCustomSection('C')}
+              {renderCustomSection('C')}
 
               <ProfileMenu activePath={activePath} />
 
-              {_renderCustomSection('D')}
+              {renderCustomSection('D')}
             </div>
           )}
 
           <div style={{display: 'flex', flexDirection: 'column', flex: 1}}>
-            {_renderCustomSection('E')}
+            {renderCustomSection('E')}
 
             <div>{props.children}</div>
           </div>
         </div>
 
-        {_renderCustomSection('J')}
+        {renderCustomSection('J')}
       </div>
 
-      {_renderCustomSection('K')}
+      {renderCustomSection('K')}
     </Wrapper>
   );
 }
