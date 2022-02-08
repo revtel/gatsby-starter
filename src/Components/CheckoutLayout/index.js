@@ -12,9 +12,10 @@ function CheckoutLayout(props) {
   const [actions] = useOutlet('actions');
   const [dimension] = useOutlet('dimension');
   const {style = {}} = props;
+  const route = props.location.pathname;
   const params = qs.parse(props.location.search);
 
-  function renderCustomSection({route, sectionId, params}) {
+  function renderCustomSection(sectionId) {
     const subRoute = route.split('/')[2];
     let current = 0;
 
@@ -37,44 +38,23 @@ function CheckoutLayout(props) {
         </Steps>
       );
     }
+
+    return null;
   }
-
-  const _renderCustomSection = React.useCallback(
-    (sectionId) => {
-      if (renderCustomSection && typeof renderCustomSection === 'function') {
-        return renderCustomSection({
-          route: props.location.pathname,
-          sectionId,
-          params,
-        });
-      }
-      // customRenderFunc backward compatibility
-      if (AppActions.renderCustomSection) {
-        return AppActions.renderCustomSection({
-          route: props.location.pathname,
-          sectionId,
-          params,
-        });
-      }
-
-      return null;
-    },
-    [params, props.location.pathname, renderCustomSection],
-  );
 
   return (
     <Wrapper style={{...style}}>
-      {_renderCustomSection('A')}
+      {renderCustomSection('A')}
 
       <div className="content">
-        {_renderCustomSection('B')}
+        {renderCustomSection('B')}
 
         {props.children}
 
-        {_renderCustomSection('J')}
+        {renderCustomSection('J')}
       </div>
 
-      {_renderCustomSection('K')}
+      {renderCustomSection('K')}
     </Wrapper>
   );
 }
