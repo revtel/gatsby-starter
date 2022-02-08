@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 import Slick from 'react-slick';
 import {useOutlet} from 'reconnect.js';
 import moment from 'moment';
-import Gtag from 'rev.sdk.js/Utils/GTag';
+import Gtag from 'rev.sdk.js/Utils/Gtag';
 
 function Landing(props) {
   const [site, setSite] = useState(null);

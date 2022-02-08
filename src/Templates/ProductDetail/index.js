@@ -13,7 +13,7 @@ import * as AppActions from '../../AppActions';
 import Carousel from '../../Components/Carousel';
 import FixedRatioImage from '../../Components/FixedRatioImage';
 import {THEME_COLOR} from '../../constants';
-import Gtag from 'rev.sdk.js/Utils/GTag';
+import Gtag from 'rev.sdk.js/Utils/Gtag';
 
 function ProductDetail(props) {
   const {

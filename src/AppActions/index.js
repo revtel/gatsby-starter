@@ -13,8 +13,8 @@ import navigatePlugin from './Plugin/navigate';
 import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
-import Gtag from 'rev.sdk.js/Utils/GTag';
-import {replace} from 'gatsby-link';
+import gtagPlugin from './Plugin/gtagPlugin';
+import Gtag from 'rev.sdk.js/Utils/Gtag';
 
 /**
  * **************************************************
@@ -30,6 +30,7 @@ const Plugins = {
   onAfterAdminFormSubmit: new onAfterAdminFormSubmitPlugin(
     'onAfterAdminFormSubmit',
   ),
+  gtag: new gtagPlugin('gtag'),
 };
 
 const req = ApiUtil.req;
@@ -71,6 +72,18 @@ function setLoading(loading, params) {
   setTimeout(() => {
     LoadingOutlet.update({loading: loading, message: message});
   }, 0);
+}
+
+function gtag(eventType, event, payload) {
+  if (Plugins.gtag.shouldExecute()) {
+    /* TODO: add custom gtag event and to decide
+        whether call rev.sdk.js gtag event
+        plz always do custom code in plugin */
+    return Plugins.gtag.executeSync(eventType, event, payload);
+  }
+
+  // when return value is true , would trigger the default ga behavior in rev.sdk.js
+  return true;
 }
 
 async function navigate(nextRoute, options = {}) {
@@ -262,7 +275,6 @@ async function onLoginResult(err, result) {
           },
         });
         const decoded = await jwt.decodeToken(UserOutlet.getValue().token);
-        console.log(decoded);
         Gtag('event', 'login', {
           method: UserOutlet.getValue().data.provider,
         });
@@ -390,4 +402,5 @@ export {
   rebuild,
   getReurl,
   confirmOfflineOrder,
+  gtag,
 };

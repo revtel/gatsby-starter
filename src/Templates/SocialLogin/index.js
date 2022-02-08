@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import queryString from 'query-string';
 import {useOutlet} from 'reconnect.js';
 import {navigate} from 'gatsby';
-import Gtag from 'rev.sdk.js/Utils/GTag';
+import Gtag from 'rev.sdk.js/Utils/Gtag';
 import NavUrl from 'rev.sdk.js/Utils/NavUrl';
 
 function SocialLoginPage(props) {
