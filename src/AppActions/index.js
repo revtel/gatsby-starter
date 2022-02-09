@@ -75,15 +75,15 @@ function setLoading(loading, params) {
 }
 
 function gtag(eventType, event, payload) {
+  let shouldContinue = true;
   if (Plugins.gtag.shouldExecute()) {
     /* TODO: add custom gtag event and to decide
         whether call rev.sdk.js gtag event
         plz always do custom code in plugin */
-    return Plugins.gtag.executeSync(eventType, event, payload);
+    shouldContinue = Plugins.gtag.executeSync(eventType, event, payload);
   }
-
   // when return value is true , would trigger the default ga behavior in rev.sdk.js
-  return true;
+  return shouldContinue;
 }
 
 async function navigate(nextRoute, options = {}) {
