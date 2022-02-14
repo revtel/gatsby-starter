@@ -313,6 +313,8 @@ async function onAdminFormSubmit({
   formData,
   primaryKey,
 }) {
+  console.log(formData);
+  return false;
   if (Plugins.onAdminFormSubmit.shouldExecute()) {
     return await Plugins.onAdminFormSubmit.executeAsync({
       path,
