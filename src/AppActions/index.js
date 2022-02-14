@@ -305,6 +305,31 @@ async function confirmOfflineOrder(id) {
   );
 }
 
+async function getUserPrivateProfile(id) {
+  return await req(
+    `${Config.apiHost}/user/admin/user_profile?user_id=${id}&token=${
+      UserOutlet.getValue().token
+    }`,
+    {
+      method: 'GET',
+      data: {},
+    },
+  );
+}
+
+async function editUserPrivateProfile(id, points) {
+  return await req(
+    `${Config.apiHost}/user/points?token=${UserOutlet.getValue().token}`,
+    {
+      method: 'POST',
+      data: {
+        user_id: id,
+        points,
+      },
+    },
+  );
+}
+
 async function onAdminFormSubmit({
   path,
   collection,
@@ -403,4 +428,6 @@ export {
   getReurl,
   confirmOfflineOrder,
   gtag,
+  getUserPrivateProfile,
+  editUserPrivateProfile,
 };
