@@ -31,6 +31,7 @@ function ProfileTabs(props) {
     <Tabs activeKey={activePath} onChange={onTabClick}>
       <Tabs.TabPane key="/profile" tab="個人資訊" />
       <Tabs.TabPane key="/profile/orders" tab="我的訂單" />
+      <Tabs.TabPane key="/profile/coupons" tab="我的優惠券" />
       {user.data?.provider === 'default' && (
         <Tabs.TabPane key="reset-password" tab="重設密碼" />
       )}
@@ -48,16 +49,20 @@ function ProfileMenu(props) {
 
   return (
     <Menu style={{width: 256}} selectedKeys={selectedKeys} mode="inline">
-      <Menu.Item key={'info'} onClick={() => navigate('/profile')}>
+      <Menu.Item key="info" onClick={() => navigate('/profile')}>
         個人資訊
       </Menu.Item>
-      <Menu.Item key={'orders'} onClick={() => navigate('/profile/orders')}>
+      <Menu.Item key="orders" onClick={() => navigate('/profile/orders')}>
         我的訂單
+      </Menu.Item>
+
+      <Menu.Item key="coupons" onClick={() => navigate('/profile/coupons')}>
+        我的優惠券
       </Menu.Item>
 
       {user.data?.provider === 'default' && (
         <Menu.Item
-          key={'reset-password'}
+          key="reset-password"
           onClick={() => showResetPasswordModal({admin: false})}>
           重設密碼
         </Menu.Item>
