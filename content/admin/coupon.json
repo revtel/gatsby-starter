@@ -103,6 +103,11 @@
           "type": "number",
           "title": "優惠使用數量"
         },
+        "is_void": {
+          "type": "boolean",
+          "title": "是否註銷",
+          "default": false
+        },
         "user_id": {
           "type": "string",
           "default": "",

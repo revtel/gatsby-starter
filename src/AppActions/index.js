@@ -338,8 +338,6 @@ async function onAdminFormSubmit({
   formData,
   primaryKey,
 }) {
-  console.log(formData);
-  return false;
   if (Plugins.onAdminFormSubmit.shouldExecute()) {
     return await Plugins.onAdminFormSubmit.executeAsync({
       path,
@@ -350,34 +348,6 @@ async function onAdminFormSubmit({
       primaryKey,
     });
   }
-
-  //sample code
-  // if (path === '/admin/products') {
-  //   try {
-  //     setLoading(true);
-  //     if (!instance) {
-  //       await JStorage.createDocument(collection, {
-  //         ...formData,
-  //         ...extValues,
-  //       });
-  //       navigate(path);
-  //     } else {
-  //       await JStorage.updateDocument(
-  //         collection,
-  //         {[primaryKey]: instance[primaryKey]},
-  //         JstorageUtil.removeAutoFields({...formData, ...extValues}),
-  //       );
-  //     }
-  //     message.success('成功!');
-  //   } catch (ex) {
-  //     message.error('API failure');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-
-  //   return true;
-  // }
-
   return false;
 }
 
@@ -403,6 +373,16 @@ function getReurl({title, description, image, redirectUrl}) {
   return `${Config.apiHost}/misc/reurl?title=${title}&image=${image}${
     description ? `&description=${description}` : ''
   }&redirect_url=${redirectUrl}`;
+}
+
+function createCustomOrder(payload) {
+  return req(
+    `${Config.apiHost}/checkout/custom?token=${UserOutlet.getValue().token}`,
+    {
+      method: 'POST',
+      data: payload,
+    },
+  );
 }
 /**
  * **************************************************
@@ -432,4 +412,5 @@ export {
   gtag,
   getUserPrivateProfile,
   editUserPrivateProfile,
+  createCustomOrder,
 };

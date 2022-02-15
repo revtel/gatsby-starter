@@ -20,6 +20,7 @@ const CouponListPage = () => {
             {start_time: {$lte: now}},
             {end_time: {$gte: now}},
             {usage: {$gte: 1}},
+            {is_void: false},
           ],
         });
         setCoupons(resp.results);

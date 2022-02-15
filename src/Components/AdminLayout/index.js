@@ -22,6 +22,7 @@ const Routes = [
   {name: '商品', path: '/admin/products'},
   {name: '優惠券', path: '/admin/coupons'},
   {name: '滿額折扣', path: '/admin/discount-list'},
+  {name: '客製化訂單', path: '/admin/custom-order'},
   {name: '重設密碼', path: 'reset-password'},
   {name: '網站設定', path: '/admin/site'},
   {name: '登出', path: 'logout'},
