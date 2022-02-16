@@ -102,6 +102,34 @@
         "usage": {
           "type": "number",
           "title": "優惠使用數量"
+        },
+        "is_void": {
+          "type": "boolean",
+          "title": "是否註銷",
+          "default": false
+        },
+        "user_id": {
+          "type": "string",
+          "default": "",
+          "title": "指定使用者",
+          "collection": "user_profile",
+          "primaryKey": "owner",
+          "searchFields": [
+            "owner",
+            "email"
+          ],
+          "searchCaseSensitive": false,
+          "searchApproach": "union",
+          "extraColumns": [
+            {
+              "title": "email",
+              "dataIndex": "email"
+            },
+            {
+              "title": "provider",
+              "dataIndex": "provider"
+            }
+          ]
         }
       }
     },
@@ -111,6 +139,9 @@
       },
       "end_time": {
         "ui:widget": "rev-datetime-to-timestamp-picker"
+      },
+      "user_id": {
+        "ui:field": "rev-foreign"
       }
     }
   },

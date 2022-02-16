@@ -29,7 +29,7 @@ function ProfilePage(props) {
       message.error(`API error ${ex}`);
     }
   };
-
+  console.log('user000000', user);
   return (
     <Wrapper>
       <h2>個人資訊</h2>
@@ -46,6 +46,15 @@ function ProfilePage(props) {
             setValues({...allValues, ...changedValues});
           }}
           onFinish={onFinish}>
+          {user.data.points !== undefined && (
+            <Form.Item label="我的紅利" name="name">
+              <span style={{color: '#d11d26', fontWeight: 'bold'}}>
+                {user.data.points}
+              </span>
+              <span>點</span>
+            </Form.Item>
+          )}
+
           <Form.Item
             label="姓名"
             name="name"

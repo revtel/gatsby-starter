@@ -1,11 +1,12 @@
 import React from 'react';
 import {getOutlet} from 'reconnect.js';
-import ActivityIndicator from '../Components/ActivityIndicator';
 import LoginModal from 'rev.sdk.js/Components/LoginModal';
 import ContactModal from '../Components/ContactModal';
 import ResetPasswordModal from '../Components/ResetPasswordModal';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
+import Spinner from 'rev.sdk.js/Components/Spinner';
+import LoadingGif from '../../static/loading.gif';
 
 function Provider(props) {
   const Dimension = getOutlet('dimension');
@@ -102,11 +103,22 @@ function Provider(props) {
   return (
     <>
       {props.children}
-
-      <LoginModal />
+      <LoginModal
+        canFacebookLogin={true}
+        canLineLogin={true}
+        canGoogleLogin={true}
+        canForgetPassword={true}
+        canRegister={true}
+        onForgotPasswordClick={null}
+        onRegisterClick={null}
+      />
       <ContactModal />
       <ResetPasswordModal />
-      <ActivityIndicator />
+      <Spinner
+        imageUrl={LoadingGif}
+        spinnerStyle={{animation: 'unset', width: 150, height: 150}}
+        style={{backgroundColor: 'transparent'}}
+      />
     </>
   );
 }

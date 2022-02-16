@@ -3,11 +3,17 @@ import styled from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import empty from '../../../../static/favicon.png';
 import moment from 'moment';
+import Empty from '../../../Components/Empty';
 
 function ProductGrid(props) {
   const {products, onItemClick, prefixPath} = props;
   const [dimension] = useOutlet('dimension');
   const mobile = dimension.rwd === 'mobile';
+
+  if (products.length <= 0) {
+    return <Empty />;
+  }
+
   if (prefixPath.indexOf('products') >= 0) {
     return (
       <ProductGridWrapper mobile={mobile}>
