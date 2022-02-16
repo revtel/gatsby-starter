@@ -272,6 +272,7 @@ async function onLoginResult(err, result) {
             ...profile,
             email: privateProfile.email,
             points: privateProfile.points,
+            provider: privateProfile.provider,
           },
         });
         const decoded = await jwt.decodeToken(UserOutlet.getValue().token);

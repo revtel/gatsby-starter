@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import moment from 'moment';
 import {Card, Col, Divider, Row, Statistic} from 'antd';
+import * as Cart from 'rev.sdk.js/Actions/Cart';
 
 function getTurnOver(orders) {
   return orders.reduce((acc, cur) => {
@@ -27,23 +28,23 @@ const StatisticSection = (props) => {
       const resp = await JStorage.fetchDocuments('order', {});
       const {results} = resp;
       const now = moment(new Date());
-      const settled = results.filter((o) => !!o.payment_transaction_detail);
+      const settled = results.filter(
+        (o) => o.payment_status === Cart.PAYMENT_STATUS.success,
+      );
 
       const currentMonthOrders = settled.filter(
-        (o) =>
-          moment(o.payment_transaction_detail.TradeDate).format('YYYY-MM') ===
-          now.format('YYYY-MM'),
+        (o) => moment(o.created).format('YYYY-MM') === now.format('YYYY-MM'),
       );
 
       const lastMonthOrders = settled.filter(
         (o) =>
-          moment(o.payment_transaction_detail.TradeDate).format('YYYY-MM') ===
+          moment(o.created).format('YYYY-MM') ===
           now.add(-1, 'months').format('YYYY-MM'),
       );
 
       const lastYearOrdersInSameMonth = settled.filter(
         (o) =>
-          moment(o.payment_transaction_detail.TradeDate).format('YYYY') ===
+          moment(o.created).format('YYYY') ===
           now.add(-1, 'year').format('YYYY-MM'),
       );
 
