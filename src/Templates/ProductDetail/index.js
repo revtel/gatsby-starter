@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {navigate} from 'gatsby';
-import {Button, Tooltip, message, Tabs} from 'antd';
+import {Button, message, Tabs, Tooltip} from 'antd';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import qs from 'query-string';
 import BreadcrumbBar from 'rev.sdk.js/Templates/ProductList/BreadcrumbBar';
@@ -14,6 +13,7 @@ import * as AppActions from '../../AppActions';
 import Carousel from '../../Components/Carousel';
 import FixedRatioImage from '../../Components/FixedRatioImage';
 import {THEME_COLOR} from '../../constants';
+import Gtag from 'rev.sdk.js/Utils/Gtag';
 
 function ProductDetail(props) {
   const {
@@ -27,7 +27,6 @@ function ProductDetail(props) {
   } = props;
   const [activeSummaryTab, setActiveSummaryTab] = React.useState('intro');
   const [product, setProduct] = React.useState(null);
-  const [quantity, setQuantity] = React.useState(1);
   const [currItemConfig, setCurrItemConfig] = React.useState(null);
   const [currPrice, setCurrPrice] = React.useState(null);
   const [article, setArticle] = React.useState(null);
@@ -44,8 +43,15 @@ function ProductDetail(props) {
         AppActions.setLoading(true);
         const resp = await JStorage.fetchOneDocument(collection, {id});
         setProduct(resp);
-        setQuantity(1);
         setImgIdx(0);
+        Gtag('event', 'view_item', {
+          currency: 'TWD',
+          value: resp.price,
+          items: [resp].map((p) => ({
+            item_id: p.id,
+            item_name: p.name,
+          })),
+        });
         AppActions.setLoading(false);
 
         // don't show global spinner for article fetching
@@ -77,6 +83,11 @@ function ProductDetail(props) {
     });
     try {
       await navigator.clipboard.writeText(_url);
+      Gtag('event', 'share', {
+        method: 'url',
+        content_type: 'product',
+        item_id: product.id,
+      });
       message.success(`已複製分享連結`);
     } catch (err) {
       console.log(err);
@@ -93,6 +104,14 @@ function ProductDetail(props) {
     try {
       AppActions.setLoading(true);
       await Cart.addToCart(product.id, currItemConfig);
+      Gtag('event', 'add_to_cart', {
+        currency: 'TWD',
+        value: product.price * currItemConfig.qty,
+        items: [product].map((p) => ({
+          item_id: p.id,
+          item_name: p.name,
+        })),
+      });
       message.success('成功');
     } catch (ex) {
       console.warn(ex);
@@ -124,7 +143,7 @@ function ProductDetail(props) {
             <BreadcrumbBar
               cat={product.labels[0]}
               updateCat={(nextCat) => {
-                navigate(`${listViewPath}?cat=${nextCat}`);
+                AppActions.navigate(`${listViewPath}?cat=${nextCat}`);
               }}
               categoryDisplayMap={outlets.categoryDisplayMap}
             />

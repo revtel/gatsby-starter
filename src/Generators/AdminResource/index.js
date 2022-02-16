@@ -6,6 +6,7 @@ import AdminOrderDetailForm from './AdminOrderDetailForm';
 import ArticleEditor from 'rev.sdk.js/Components/ArticleEditor';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as AppActions from '../../AppActions';
+import PrivateProfile from './PrivateProfile';
 
 const SITE_CONFIG = {
   landing: {display: '首頁設定', value: 'landing'},
@@ -103,6 +104,10 @@ function AdminResourcePage(props) {
         }
       };
       return <Button onClick={_copyShareUrl}>取得分享連結</Button>;
+    }
+    if (name === 'UserCustom' && context.position === 'top') {
+      // get private profile, display points
+      return <PrivateProfile context={context} />;
     }
     return null;
   }

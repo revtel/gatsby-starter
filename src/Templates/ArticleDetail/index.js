@@ -7,6 +7,7 @@ import {PageHeader} from 'antd';
 import RichTextPreview from 'rev.sdk.js/Components/RichTextPreview';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as AppActions from '../../AppActions';
+import BrowseHeader from '../../Components/BrowseHeader';
 
 function ArticleDetail(props) {
   const prefixPath = '/article';
@@ -32,27 +33,7 @@ function ArticleDetail(props) {
 
   function renderCustomSection({route, sectionId, params}) {
     if (sectionId === 'A') {
-      return (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: 40,
-            backgroundImage: 'url(/header_bg.jpg)',
-            backgroundSize: 'contain',
-            animation: 'navMove 20s linear infinite',
-          }}>
-          <img
-            src="/pokemon-logo.png"
-            alt="logo"
-            style={{
-              height: 100,
-              transform: 'scale(2.5)',
-            }}
-          />
-        </div>
-      );
+      return <BrowseHeader />;
     }
 
     if (['B', 'D'].indexOf(sectionId) > -1) {
@@ -118,10 +99,9 @@ function ArticleDetail(props) {
 
 const Wrapper = styled.div`
   padding-top: var(--topNavBarHeight);
-
+  max-width: var(--contentMaxWidth);
+  margin: 0 auto;
   & > .content {
-    max-width: var(--contentMaxWidth);
-    margin: 0 auto;
     padding: var(--basePadding);
   }
 `;

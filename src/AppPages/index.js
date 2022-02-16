@@ -96,6 +96,18 @@ const pages = [
   },
 
   {
+    path: `/profile/coupons`,
+    component: `src/Templates/CouponList/index.js`,
+    context: {},
+  },
+
+  {
+    path: `/admin/custom-order`,
+    component: `src/Templates/AdminCustomOrder/index.js`,
+    context: {},
+  },
+
+  {
     path: `/checkout`,
     component: `src/Templates/Cart/index.js`,
     context: {},

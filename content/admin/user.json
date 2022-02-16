@@ -3,7 +3,10 @@
 	"name": "會員",
 	"collection": "user_profile",
 	"primaryKey": "id",
-	"searchField": "",
+	"searchFields": [
+    "email",
+    "name"
+  ],
 	"columns": [
 		{
 			"title": "姓名",
@@ -19,6 +22,11 @@
 			"title": "電子信箱",
 			"key": "email",
 			"dataIndex": "email"
+		},
+		{
+			"title": "登入方式",
+			"key": "provider",
+			"dataIndex": "provider"
 		},
 		{
 			"title": "創建時間",
@@ -47,6 +55,7 @@
 		"outletKey": "userProfileQueryState"
 	},
 	"formSpec": {
+		"customName": "UserCustom",
 		"schema": {
 			"title": "",
 			"type": "object",
