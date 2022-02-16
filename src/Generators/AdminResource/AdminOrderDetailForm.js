@@ -160,6 +160,7 @@ function CustomAdminOrderDetailForm(props) {
         {values.payment_subtype === Cart.PAYMENT_SUBTYPE.offline && (
           <>
             <Popconfirm
+              disabled={values.payment_status === Cart.PAYMENT_STATUS.success}
               title="已經確認轉帳後五碼？"
               onConfirm={async () => {
                 const _hide = message.loading('更新付款狀態...');
