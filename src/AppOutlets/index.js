@@ -69,3 +69,12 @@ getNewOutlet(
 getNewOutlet('dimension', {rwd: 'mobile'}, {autoDelete: false});
 getNewOutlet('actions', null, {autoDelete: false});
 getNewOutlet('ApiUtil', {}, {autoDelete: false});
+getNewOutlet(
+  'routes',
+  {
+    getRoute: (route, params) => {
+      return null;
+    },
+  },
+  {autoDelete: false},
+);

@@ -29,7 +29,7 @@ function ProfilePage(props) {
       message.error(`API error ${ex}`);
     }
   };
-
+  console.log('user000000', user);
   return (
     <Wrapper>
       <h2>個人資訊</h2>

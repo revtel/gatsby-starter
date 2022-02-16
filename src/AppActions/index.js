@@ -5,6 +5,7 @@ import * as Cart from 'rev.sdk.js/Actions/Cart';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
 import * as PathUtil from 'rev.sdk.js/Utils/PathUtil';
+import NavUrl from 'rev.sdk.js/Utils/NavUrl';
 import Config from '../../data.json';
 import * as jwt from '../Utils/jwt';
 import setLoadingPlugin from './Plugin/setLoading';
@@ -12,6 +13,8 @@ import navigatePlugin from './Plugin/navigate';
 import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
+import gtagPlugin from './Plugin/gtagPlugin';
+import Gtag from 'rev.sdk.js/Utils/Gtag';
 
 /**
  * **************************************************
@@ -27,6 +30,7 @@ const Plugins = {
   onAfterAdminFormSubmit: new onAfterAdminFormSubmitPlugin(
     'onAfterAdminFormSubmit',
   ),
+  gtag: new gtagPlugin('gtag'),
 };
 
 const req = ApiUtil.req;
@@ -60,33 +64,53 @@ function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function setLoading(loading) {
+function setLoading(loading, params) {
   if (Plugins.setLoading.shouldExecute()) {
     return Plugins.setLoading.executeSync();
   }
-
+  const {message = ''} = params || {};
   setTimeout(() => {
-    LoadingOutlet.update(loading);
+    LoadingOutlet.update({loading: loading, message: message});
   }, 0);
 }
 
-function navigate(nextRoute, options = {loading: false}) {
+function gtag(eventType, event, payload) {
+  let shouldContinue = true;
+  if (Plugins.gtag.shouldExecute()) {
+    /* TODO: add custom gtag event and to decide
+        whether call rev.sdk.js gtag event
+        plz always do custom code in plugin */
+    shouldContinue = Plugins.gtag.executeSync(eventType, event, payload);
+  }
+  // when return value is true , would trigger the default ga behavior in rev.sdk.js
+  return shouldContinue;
+}
+
+async function navigate(nextRoute, options = {}) {
+  const {message = '', loading = false, ...rest} = options;
+  if (nextRoute instanceof NavUrl) {
+    nextRoute = nextRoute.toString();
+  }
+
   if (Plugins.navigate.shouldExecute()) {
-    return Plugins.navigate.executeSync(nextRoute, options);
+    return Plugins.navigate.executeAsync(nextRoute, options);
   }
 
   const currRoute = PathUtil.normalizedRoute();
   nextRoute = PathUtil.normalizedRoute(nextRoute);
   if (currRoute !== nextRoute) {
     if (options?.loading) {
-      LoadingOutlet.update(true);
+      LoadingOutlet.update({
+        message: options.message,
+        loading: options.loading,
+      });
       if (typeof options.loading === 'number') {
         setTimeout(() => {
           LoadingOutlet.update(false);
         }, options.loading);
       }
     }
-    nav(nextRoute);
+    await nav(nextRoute, rest);
   } else {
     console.log('path not changed, ignore...');
   }
@@ -231,7 +255,6 @@ async function fetchCustomResources(
 }
 
 async function onLoginResult(err, result) {
-  console.log('onLoginResult', err, result);
   if (!err) {
     try {
       setLoading(true);
@@ -252,7 +275,14 @@ async function onLoginResult(err, result) {
           },
         });
         const decoded = await jwt.decodeToken(UserOutlet.getValue().token);
-        console.log('VERIFY TOKEN SUCCESS', decoded);
+        Gtag('event', 'login', {
+          method: UserOutlet.getValue().data.provider,
+        });
+        Gtag('set', 'user_id', decoded.sub);
+        Gtag('set', 'user_properties', {
+          provider: UserOutlet.getValue().data.provider,
+          email: UserOutlet.getValue().data.email,
+        });
         await Cart.fetchCart();
       }
     } catch (ex) {
@@ -270,6 +300,31 @@ async function confirmOfflineOrder(id) {
       method: 'POST',
       data: {
         id: id,
+      },
+    },
+  );
+}
+
+async function getUserPrivateProfile(id) {
+  return await req(
+    `${Config.apiHost}/user/admin/user_profile?user_id=${id}&token=${
+      UserOutlet.getValue().token
+    }`,
+    {
+      method: 'GET',
+      data: {},
+    },
+  );
+}
+
+async function editUserPrivateProfile(id, points) {
+  return await req(
+    `${Config.apiHost}/user/points?token=${UserOutlet.getValue().token}`,
+    {
+      method: 'POST',
+      data: {
+        user_id: id,
+        points,
       },
     },
   );
@@ -293,34 +348,6 @@ async function onAdminFormSubmit({
       primaryKey,
     });
   }
-
-  //sample code
-  // if (path === '/admin/products') {
-  //   try {
-  //     setLoading(true);
-  //     if (!instance) {
-  //       await JStorage.createDocument(collection, {
-  //         ...formData,
-  //         ...extValues,
-  //       });
-  //       navigate(path);
-  //     } else {
-  //       await JStorage.updateDocument(
-  //         collection,
-  //         {[primaryKey]: instance[primaryKey]},
-  //         JstorageUtil.removeAutoFields({...formData, ...extValues}),
-  //       );
-  //     }
-  //     message.success('成功!');
-  //   } catch (ex) {
-  //     message.error('API failure');
-  //   } finally {
-  //     setLoading(false);
-  //   }
-
-  //   return true;
-  // }
-
   return false;
 }
 
@@ -347,6 +374,16 @@ function getReurl({title, description, image, redirectUrl}) {
     description ? `&description=${description}` : ''
   }&redirect_url=${redirectUrl}`;
 }
+
+function createCustomOrder(payload) {
+  return req(
+    `${Config.apiHost}/checkout/custom?token=${UserOutlet.getValue().token}`,
+    {
+      method: 'POST',
+      data: payload,
+    },
+  );
+}
 /**
  * **************************************************
  * init all plugins AFTER defining default actions
@@ -372,4 +409,8 @@ export {
   rebuild,
   getReurl,
   confirmOfflineOrder,
+  gtag,
+  getUserPrivateProfile,
+  editUserPrivateProfile,
+  createCustomOrder,
 };

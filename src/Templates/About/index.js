@@ -41,8 +41,8 @@ function About(props) {
             <img
               src="../../images/about1.png"
               style={{
+                border: '1px solid red',
                 objectFit: 'cover',
-                flex: 1,
                 maxWidth:
                   dimension.rwd === 'desktop'
                     ? (dimension.innerWidth - 200) / 3

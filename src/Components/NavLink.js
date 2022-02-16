@@ -9,9 +9,9 @@ function NavLink(props) {
     <a
       href={PathUtil.normalizedRoute(to)}
       style={extraStyle}
-      onClick={(evt) => {
+      onClick={async (evt) => {
         evt.preventDefault();
-        AppActions.navigate(to, {loading});
+        await AppActions.navigate(to, {loading});
       }}>
       {props.children}
     </a>
