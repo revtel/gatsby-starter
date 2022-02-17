@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   Avatar,
   Button,
@@ -8,6 +8,7 @@ import {
   Input,
   message,
   Popconfirm,
+  Select,
   Space,
 } from 'antd';
 import AntdAddressSetForm from 'rev.sdk.js/Components/AntdAddressSetForm';
@@ -15,6 +16,9 @@ import CartList from 'rev.sdk.js/Components/CartList';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import {useOutlet} from 'reconnect.js';
+import {BlobProvider} from '@react-pdf/renderer';
+import OrderPDF from './OrderPDF';
+
 const {Panel} = Collapse;
 
 function Filed(props) {
@@ -40,40 +44,37 @@ function UpdateOrderSection(props) {
   const [form] = Form.useForm();
   const [isDirty, setIsDirty] = useState(false);
   const [actions] = useOutlet('actions');
-  const [disabled, setDisabled] = useState(false);
-
-  useEffect(() => {
-    if (!values) {
-      return;
-    }
-    form.setFieldsValue({
-      receiver_address: values.receiver_address,
-      receiver_zip: values.receiver_zip,
-      receiver_city: values.receiver_city,
-      receiver_district: values.receiver_district,
-    });
-  }, [form, values]);
 
   const handleUpdateOrder = useCallback(
     async (data) => {
       try {
         actions.setLoading(true);
-        await JStorage.updateDocument(
+        const payload =
+          data.logistics_type === Cart.LOGISTICS_TYPE.home
+            ? {
+                logistics_type: data.logistics_type,
+                logistics_subtype: data.logistics_subtype,
+                receiver_address: data.receiver_address,
+                receiver_zip: data.receiver_zip,
+                receiver_city: data.receiver_city,
+                receiver_district: data.receiver_district,
+                logistics_cvs_store_id: '',
+                extra_data: {},
+              }
+            : {
+                logistics_type: data.logistics_type,
+                logistics_subtype: data.logistics_subtype,
+                logistics_cvs_store_id: data.logistics_cvs_store_id,
+              };
+        const resp = await JStorage.updateDocument(
           'order',
           {id: values.id},
-          {
-            receiver_address: data.receiver_address,
-            receiver_zip: data.receiver_zip,
-            receiver_city: data.receiver_city,
-            receiver_district: data.receiver_district,
-          },
+          payload,
         );
+        console.log(resp);
         setValues((prev) => ({
           ...prev,
-          receiver_address: data.receiver_address,
-          receiver_zip: data.receiver_zip,
-          receiver_city: data.receiver_city,
-          receiver_district: data.receiver_district,
+          ...payload,
         }));
         setIsDirty(false);
         message.success('更新資訊成功');
@@ -86,27 +87,126 @@ function UpdateOrderSection(props) {
     [actions, setValues, values.id],
   );
 
+  if (!values) {
+    return null;
+  }
+
   return (
     <Card>
       <Form
+        layout="vertical"
         form={form}
         initialValues={{
-          receiver_address: '',
-          receiver_zip: '',
-          receiver_city: '',
-          receiver_district: '',
+          receiver_address: values.receiver_address,
+          receiver_zip: values.receiver_zip,
+          receiver_city: values.receiver_city,
+          receiver_district: values.receiver_district,
+          logistics_type: values.logistics_type,
+          logistics_subtype: values.logistics_subtype,
+          logistics_cvs_store_id: values.logistics_cvs_store_id,
         }}
         onFinish={async (data) => {
           await handleUpdateOrder(data);
         }}
         onFinishFailed={() => {}}
-        onFieldsChange={() => {
+        onFieldsChange={(field) => {
+          if (field[0].name[0] === 'logistics_type') {
+            form.setFieldsValue({
+              logistics_subtype: '',
+            });
+          }
           const _isDirty = Object.keys(form.getFieldsValue()).some(
             (key) => form.getFieldsValue()[key] !== values[key],
           );
           setIsDirty(_isDirty);
         }}>
-        <AntdAddressSetForm form={form} name="receiver" />
+        <Form.Item
+          rules={[{required: true, message: '必填'}]}
+          name="logistics_type"
+          label="物流方式">
+          <Select>
+            <Select.Option key="-1" value="" disabled={true}>
+              請選擇物流方式
+            </Select.Option>
+            {Object.values(Cart.LOGISTICS_TYPE_DISPLAY).map((opt, idx) => (
+              <Select.Option key={idx} value={opt.value}>
+                {opt.label}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+        <Form.Item dependencies={['logistics_type']}>
+          {(instance) => {
+            const selectLogisticsSubTypeElem = (
+              <Form.Item
+                rules={[{required: true, message: '必填'}]}
+                label="物流商"
+                name="logistics_subtype">
+                <Select>
+                  <Select.Option key="-1" value="" disabled={true}>
+                    請選擇物流商
+                  </Select.Option>
+                  {instance.getFieldValue('logistics_type') ===
+                  Cart.LOGISTICS_TYPE.cvs
+                    ? Object.values(Cart.LOGISTICS_SUBTYPE_DISPLAY)
+                        .filter(
+                          (type) =>
+                            type.value !== Cart.LOGISTICS_SUBTYPE.TCAT &&
+                            type.value !== Cart.LOGISTICS_SUBTYPE.ECAN,
+                        )
+                        .map((opt, idx) => (
+                          <Select.Option key={idx} value={opt.value}>
+                            {opt.label}{' '}
+                            {opt.value.toUpperCase().indexOf('C2C') < 0 &&
+                              '大宗'}
+                          </Select.Option>
+                        ))
+                    : Object.values(Cart.LOGISTICS_SUBTYPE_DISPLAY)
+                        .filter(
+                          (type) =>
+                            type.value === Cart.LOGISTICS_SUBTYPE.TCAT ||
+                            type.value === Cart.LOGISTICS_SUBTYPE.ECAN,
+                        )
+                        .map((opt, idx) => (
+                          <Select.Option key={idx} value={opt.value}>
+                            {opt.label}
+                          </Select.Option>
+                        ))}
+                </Select>
+              </Form.Item>
+            );
+            return instance.getFieldValue('logistics_type') ===
+              Cart.LOGISTICS_TYPE.home ? (
+              <>
+                {selectLogisticsSubTypeElem}
+                <AntdAddressSetForm form={form} name="receiver" />
+              </>
+            ) : (
+              <>
+                {selectLogisticsSubTypeElem}
+                <Form.Item
+                  rules={[{required: true, message: '必填'}]}
+                  label="超商ID"
+                  name="logistics_cvs_store_id">
+                  <Input />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    htmlType="button"
+                    type="primary"
+                    onClick={() => {
+                      window.open(
+                        `${window.location.origin}/admin/select-cvs`,
+                        '_blank',
+                      );
+                    }}>
+                    超商地圖
+                  </Button>
+                </Form.Item>
+              </>
+            );
+          }}
+        </Form.Item>
         <Form.Item>
           <Button
             disabled={!isDirty}
@@ -148,6 +248,19 @@ function CustomAdminOrderDetailForm(props) {
         <Filed name="轉帳後五碼" value={instance.offline_tx} />
       )}
       <Space direction="horizontal" style={{marginBottom: 12}}>
+        <BlobProvider document={<OrderPDF order={instance} />}>
+          {({...rest}) => {
+            return (
+              <Button
+                style={{margin: '10px 0'}}
+                onClick={() => {
+                  window.open(rest.url, '_blank');
+                }}>
+                下載 PDF
+              </Button>
+            );
+          }}
+        </BlobProvider>
         <Button
           disabled={
             !['created', 'pending', 'error', 'exception'].includes(
