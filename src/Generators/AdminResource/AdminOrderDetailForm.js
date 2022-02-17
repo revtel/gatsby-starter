@@ -15,6 +15,7 @@ import CartList from 'rev.sdk.js/Components/CartList';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import {useOutlet} from 'reconnect.js';
+import {Open} from '@styled-icons/ionicons-outline/Open';
 const {Panel} = Collapse;
 
 function Filed(props) {
@@ -142,6 +143,22 @@ function CustomAdminOrderDetailForm(props) {
     }
   }, [actions, values.id]);
 
+  const openCustomOrderOwnerInfo = async (ownerId) => {
+    try {
+      actions.setLoading(true);
+      console.log('ownerId >', ownerId);
+      let user = await JStorage.fetchOneDocument('user_profile', {
+        owner: ownerId,
+      });
+      window.open(`/admin/users/?action=detail&id=${user.id}`);
+    } catch (err) {
+      console.log(err);
+      message.warn('無法取得此客戶資訊');
+    } finally {
+      actions.setLoading(false);
+    }
+  };
+
   return (
     <div style={{margin: '5px 0'}}>
       {values.payment_subtype === Cart.PAYMENT_SUBTYPE.offline && (
@@ -187,7 +204,20 @@ function CustomAdminOrderDetailForm(props) {
 
       {instance.is_custom ? (
         <div style={{marginTop: 10}}>
-          <Filed name="客戶 id" value={instance.owner} />
+          <div style={{display: 'flex', flexDirection: 'column'}}>
+            <div
+              style={{display: 'flex', alignItems: 'center', marginBottom: 5}}>
+              {' '}
+              <label>客戶 id</label>
+              <Button
+                type="link"
+                icon={<Open size={24} />}
+                onClick={() => openCustomOrderOwnerInfo(instance.owner)}
+                style={{marginLeft: 5}}
+              />
+            </div>
+            <Input disabled value={instance.owner} />
+          </div>
         </div>
       ) : (
         <Collapse defaultActiveKey={[]}>
