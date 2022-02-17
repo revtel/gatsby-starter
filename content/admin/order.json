@@ -37,7 +37,7 @@
     }
   ],
   "querySpec": {
-    "pageSizeOptions": [5, 10, 15, 20],
+    "pageSizeOptions": [50],
     "sortOptions": [
       {
         "name": "日期近到遠",
