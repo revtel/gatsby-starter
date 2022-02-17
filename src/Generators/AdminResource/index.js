@@ -120,6 +120,17 @@ function AdminResourcePage(props) {
       return record.label?.map((l, idx) => <Tag key={idx}>{l}</Tag>);
     } else if (col.customType === 'site-config-name') {
       return SITE_CONFIG[record.name]?.display || record.name;
+    } else if (col.customType === 'custom-order-info') {
+      if (record.is_custom) {
+        return (
+          <div>
+            <div>{record.custom_name}</div>
+            <div>${record.total}</div>
+          </div>
+        );
+      } else {
+        return '';
+      }
     }
     return null;
   }

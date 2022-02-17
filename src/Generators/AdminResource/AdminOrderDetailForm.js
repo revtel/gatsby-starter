@@ -148,15 +148,18 @@ function CustomAdminOrderDetailForm(props) {
         <Filed name="轉帳後五碼" value={instance.offline_tx} />
       )}
       <Space direction="horizontal" style={{marginBottom: 12}}>
-        <Button
-          disabled={
-            !['created', 'pending', 'error', 'exception'].includes(
-              values?.logistics_status,
-            )
-          }
-          onClick={handleGenLogisticsOrder}>
-          建立物流訂單
-        </Button>
+        {!instance.is_custom && (
+          <Button
+            disabled={
+              !['created', 'pending', 'error', 'exception'].includes(
+                values?.logistics_status,
+              )
+            }
+            onClick={handleGenLogisticsOrder}>
+            建立物流訂單
+          </Button>
+        )}
+
         {values.payment_subtype === Cart.PAYMENT_SUBTYPE.offline && (
           <>
             <Popconfirm
@@ -181,83 +184,92 @@ function CustomAdminOrderDetailForm(props) {
           </>
         )}
       </Space>
-      <Collapse defaultActiveKey={[]}>
-        <Panel header="購買人資訊" key={1}>
-          <Filed name="購買人姓名" value={instance.buyer_name} />
-          <Filed name="購買人電話" value={instance.buyer_phone} />
-          <Filed name="購買人信箱" value={instance.buyer_email} />
-          <Filed
-            name="購賣人地址"
-            value={instance.buyer_address}
-            addonBefore={
-              <span>
-                {`${instance.buyer_zip} ${instance.buyer_city} ${instance.buyer_district}`}
-              </span>
-            }
-          />
-          <Filed
-            name="市話"
-            value={instance.buyer_tel}
-            addonAfter={<span>分機號碼 {instance.buyer_tel_ext}</span>}
-          />
-        </Panel>
-        <Panel header="收件人資訊" key={2}>
-          <Filed name="收件人姓名" value={instance.receiver_name} />
-          <Filed name="收件人電話" value={instance.receiver_phone} />
-          <Filed name="收件人信箱" value={instance.receiver_email} />
-          <Filed
-            name="收件人地址"
-            value={instance.receiver_address}
-            addonBefore={
-              <span>
-                {`${instance.receiver_zip} ${instance.receiver_city} ${instance.receiver_district}`}
-              </span>
-            }
-          />
-          <Filed
-            name="市話"
-            value={instance.receiver_tel}
-            addonAfter={<span>分機號碼 {instance.receiver_tel_ext}</span>}
-          />
-        </Panel>
-        <Panel header="物流資訊" key={3}>
-          <Filed
-            name="物流方式"
-            value={Cart.LOGISTICS_TYPE_DISPLAY[instance.logistics_type].label}
-          />
-          <Filed
-            name="物流商"
-            value={
-              Cart.LOGISTICS_SUBTYPE_DISPLAY[instance.logistics_subtype].label
-            }
-          />
-          <Filed
-            name="付款方式"
-            value={Cart.PAYMENT_SUBTYPE_DISPLAY[instance.payment_subtype].label}
-          />
-          <Filed name="物流狀態" value={instance.logistics_status} />
-          {instance.logistics_type === Cart.LOGISTICS_TYPE.cvs && (
-            <Card style={{marginBottom: 10}}>
-              <Card.Meta
-                avatar={
-                  <Avatar
-                    shape="square"
-                    src={Cart.CVS_ICON[instance.logistics_subtype]}
-                  />
-                }
-                title={instance.extra_data.CVSStoreName}
-                description={instance.extra_data.CVSAddress}
-              />
-            </Card>
-          )}
-        </Panel>
-        <Panel header="訂單內容" key={4}>
-          <CartList cartItems={instance.items} disabled={true} />
-        </Panel>
-        <Panel header="更新訂單資訊" key={5}>
-          <UpdateOrderSection values={values} setValues={setValues} />
-        </Panel>
-      </Collapse>
+
+      {instance.is_custom ? (
+        <div style={{marginTop: 10}}>
+          <Filed name="客戶 id" value={instance.owner} />
+        </div>
+      ) : (
+        <Collapse defaultActiveKey={[]}>
+          <Panel header="購買人資訊" key={1}>
+            <Filed name="購買人姓名" value={instance.buyer_name} />
+            <Filed name="購買人電話" value={instance.buyer_phone} />
+            <Filed name="購買人信箱" value={instance.buyer_email} />
+            <Filed
+              name="購賣人地址"
+              value={instance.buyer_address}
+              addonBefore={
+                <span>
+                  {`${instance.buyer_zip} ${instance.buyer_city} ${instance.buyer_district}`}
+                </span>
+              }
+            />
+            <Filed
+              name="市話"
+              value={instance.buyer_tel}
+              addonAfter={<span>分機號碼 {instance.buyer_tel_ext}</span>}
+            />
+          </Panel>
+          <Panel header="收件人資訊" key={2}>
+            <Filed name="收件人姓名" value={instance.receiver_name} />
+            <Filed name="收件人電話" value={instance.receiver_phone} />
+            <Filed name="收件人信箱" value={instance.receiver_email} />
+            <Filed
+              name="收件人地址"
+              value={instance.receiver_address}
+              addonBefore={
+                <span>
+                  {`${instance.receiver_zip} ${instance.receiver_city} ${instance.receiver_district}`}
+                </span>
+              }
+            />
+            <Filed
+              name="市話"
+              value={instance.receiver_tel}
+              addonAfter={<span>分機號碼 {instance.receiver_tel_ext}</span>}
+            />
+          </Panel>
+          <Panel header="物流資訊" key={3}>
+            <Filed
+              name="物流方式"
+              value={Cart.LOGISTICS_TYPE_DISPLAY[instance.logistics_type].label}
+            />
+            <Filed
+              name="物流商"
+              value={
+                Cart.LOGISTICS_SUBTYPE_DISPLAY[instance.logistics_subtype].label
+              }
+            />
+            <Filed
+              name="付款方式"
+              value={
+                Cart.PAYMENT_SUBTYPE_DISPLAY[instance.payment_subtype].label
+              }
+            />
+            <Filed name="物流狀態" value={instance.logistics_status} />
+            {instance.logistics_type === Cart.LOGISTICS_TYPE.cvs && (
+              <Card style={{marginBottom: 10}}>
+                <Card.Meta
+                  avatar={
+                    <Avatar
+                      shape="square"
+                      src={Cart.CVS_ICON[instance.logistics_subtype]}
+                    />
+                  }
+                  title={instance.extra_data.CVSStoreName}
+                  description={instance.extra_data.CVSAddress}
+                />
+              </Card>
+            )}
+          </Panel>
+          <Panel header="訂單內容" key={4}>
+            <CartList cartItems={instance.items} disabled={true} />
+          </Panel>
+          <Panel header="更新訂單資訊" key={5}>
+            <UpdateOrderSection values={values} setValues={setValues} />
+          </Panel>
+        </Collapse>
+      )}
     </div>
   );
 }

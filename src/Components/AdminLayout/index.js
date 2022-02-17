@@ -7,6 +7,9 @@ import {Layout} from 'antd';
 import {withLoginRequired} from 'rev.sdk.js/Components/LoginRequired';
 import SiteNavBar from '../SiteNavBar';
 import LoginRequired from '../LoginRequired';
+import AdminCustomOrderModal, {
+  showAdminCustomOrderModal,
+} from '../AdminCustomOrderModal';
 
 const SiteInfo = {
   icon: '/favicon.png',
@@ -22,7 +25,7 @@ const Routes = [
   {name: '商品', path: '/admin/products'},
   {name: '優惠券', path: '/admin/coupons'},
   {name: '滿額折扣', path: '/admin/discount-list'},
-  {name: '客製化訂單', path: '/admin/custom-order'},
+  {name: '客製化訂單', path: 'admin-custom-order'},
   {name: '重設密碼', path: 'reset-password'},
   {name: '網站設定', path: '/admin/site'},
   {name: '登出', path: 'logout'},
@@ -46,6 +49,10 @@ function AdminLayout(props) {
           await User.logout(true);
           navigate('/admin');
         },
+      };
+    } else if (path === 'admin-custom-order') {
+      return {
+        onClick: () => showAdminCustomOrderModal(true),
       };
     }
     return {
@@ -89,6 +96,8 @@ function AdminLayout(props) {
           </MenuItem>
         ))}
       </Layout.Sider>
+
+      <AdminCustomOrderModal />
 
       {mobile && (
         <MobileMainMenu
