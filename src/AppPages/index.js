@@ -102,12 +102,6 @@ const pages = [
   },
 
   {
-    path: `/admin/custom-order`,
-    component: `src/Templates/AdminCustomOrder/index.js`,
-    context: {},
-  },
-
-  {
     path: `/checkout`,
     component: `src/Templates/Cart/index.js`,
     context: {},

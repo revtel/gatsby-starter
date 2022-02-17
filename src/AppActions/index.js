@@ -376,15 +376,23 @@ function getReurl({title, description, image, redirectUrl}) {
   }&redirect_url=${redirectUrl}`;
 }
 
-function createCustomOrder(payload) {
+// @sdk-next
+function createCustomOrder({user_id, name, total, description}) {
   return req(
     `${Config.apiHost}/checkout/custom?token=${UserOutlet.getValue().token}`,
     {
       method: 'POST',
-      data: payload,
+      data: {
+        user_id,
+        name,
+        total,
+        description,
+        payment_subtype: 'offline',
+      },
     },
   );
 }
+
 /**
  * **************************************************
  * init all plugins AFTER defining default actions
