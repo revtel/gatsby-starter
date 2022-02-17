@@ -185,7 +185,11 @@ function CustomAdminOrderDetailForm(props) {
         )}
       </Space>
 
-      {!instance.is_custom && (
+      {instance.is_custom ? (
+        <div style={{marginTop: 10}}>
+          <Filed name="客戶 id" value={instance.owner} />
+        </div>
+      ) : (
         <Collapse defaultActiveKey={[]}>
           <Panel header="購買人資訊" key={1}>
             <Filed name="購買人姓名" value={instance.buyer_name} />
