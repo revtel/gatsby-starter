@@ -8,11 +8,40 @@ import {
   Space,
   Switch,
   message,
+  Modal,
 } from 'antd';
 import RevForeign from 'rev.sdk.js/Generic/CustomFields/RevForeign';
 import * as AppActions from '../../AppActions';
+import {getNewOutlet, getOutlet, useOutlet} from 'reconnect.js';
 
 const {Option} = Select;
+
+getNewOutlet('custom-order-modal', null, {autoDelete: false});
+
+function showAdminCustomOrderModal(show) {
+  getOutlet('custom-order-modal').update(show);
+}
+
+function AdminCustomOrderModal(props) {
+  const [visible, setVisible] = useOutlet('custom-order-modal');
+
+  return (
+    <Modal
+      title={null}
+      footer={null}
+      bodyStyle={{padding: 0}}
+      width={720}
+      visible={visible}
+      onOk={() => {
+        setVisible(false);
+      }}
+      onCancel={() => {
+        setVisible(false);
+      }}>
+      <div style={{padding: 20}}>{visible && <AdminCustomOrder />}</div>
+    </Modal>
+  );
+}
 
 const initialValues = {
   user_id: '',
@@ -46,15 +75,6 @@ const GenericInput = ({
         ))}
       </Select>
     );
-  } else if (type === 'text') {
-    return (
-      <Input
-        disabled={disabled}
-        placeholder={placeholder}
-        onChange={onChange}
-        {...rest}
-      />
-    );
   } else if (type === 'textarea') {
     return (
       <Input.TextArea
@@ -67,44 +87,29 @@ const GenericInput = ({
   } else if (type === 'switch') {
     return <Switch disabled={disabled} onChange={onChange} {...rest} />;
   } else {
-    throw new Error('field type is required');
+    return (
+      <Input
+        disabled={disabled}
+        placeholder={placeholder}
+        onChange={onChange}
+        type={type}
+        {...rest}
+      />
+    );
   }
 };
 
-const AdminCustomOrderPage = () => {
+function AdminCustomOrder() {
   const [form] = Form.useForm();
 
   const onSubmit = async (data) => {
     try {
       AppActions.setLoading(true);
-      console.log('DBG', data);
-      // TODO: transform total to full price
-
-      /*
-      const user_info = getUserInfo(data);
       const payload = {
-        item: {
-          product: {
-            name: data.product_name,
-          },
-          config: {
-            qty: Number(data.product_qty),
-            variants: [],
-            extra_data: '',
-          },
-          price: Number(data.product_price),
-        },
-        user_id: data.user_id,
-        checkout: {
-          ...user_info,
-          payment_subtype: data.payment_subtype,
-          logistics_type: data.logistics_type,
-          logistics_subtype: data.logistics_subtype,
-          extra_data: {},
-        },
+        ...data,
+        total: parseInt(data.total),
       };
       await AppActions.createCustomOrder(payload);
-      */
       form.resetFields();
       message.success('建立訂單成功');
     } catch (e) {
@@ -143,8 +148,8 @@ const AdminCustomOrderPage = () => {
           name: field,
           rules: [{required: true, message: '必填'}],
           onChange: onChangeForInput,
-          type: 'text',
-          placeholder: '請輸入產品單價',
+          type: 'number',
+          placeholder: '',
         },
 
         description: {
@@ -229,10 +234,19 @@ const AdminCustomOrderPage = () => {
           <Button htmlType="submit" type="primary">
             送出
           </Button>
+          <Button
+            style={{marginLeft: 10}}
+            onClick={() => {
+              form.resetFields();
+            }}
+            type="dashed">
+            清除
+          </Button>
         </Form.Item>
       </Form>
     </Space>
   );
-};
+}
 
-export default AdminCustomOrderPage;
+export default AdminCustomOrderModal;
+export {showAdminCustomOrderModal};
