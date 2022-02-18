@@ -1,5 +1,6 @@
 import React from 'react';
-import {getOutlet, useOutlet} from 'reconnect.js';
+import {useOutlet} from 'reconnect.js';
+import * as User from 'rev.sdk.js/Actions/User';
 import Config from '../../../data.json';
 import AdminLayout from '../AdminLayout';
 import {Helmet} from 'react-helmet';
@@ -21,10 +22,10 @@ function Layout({children, location}) {
 
     const initialize = async (isAdmin) => {
       try {
-        await getOutlet('actions').getValue().autoLogin({admin: isAdmin});
+        await User.autoLogin({admin: isAdmin});
       } catch (ex) {
         console.log('autoLogin ex', ex);
-        getOutlet('actions').getValue().logout();
+        User.logout();
       }
 
       setInitialized(true);

@@ -41,7 +41,6 @@ function ProfileTabs(props) {
 }
 
 function ProfileMenu(props) {
-  const [actions] = useOutlet('actions');
   const [user] = useOutlet('user');
   const showResetPasswordModal = useOutletSetter('reset-password-modal');
   const {activePath} = props;
@@ -71,7 +70,7 @@ function ProfileMenu(props) {
       <Menu.Item
         key={'logout'}
         onClick={() => {
-          actions.logout();
+          User.logout();
           setTimeout(async () => {
             await navigate('/');
           }, 100);

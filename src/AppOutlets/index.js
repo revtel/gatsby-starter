@@ -36,7 +36,6 @@ const articleCategories = [
 getNewOutlet('user', null, {autoDelete: false});
 getNewOutlet('loading', false, {autoDelete: false});
 getNewOutlet('login-modal', false, {autoDelete: false});
-getNewOutlet('contact-modal', false, {autoDelete: false});
 getNewOutlet('reset-password-modal', false, {autoDelete: false});
 
 // product collection

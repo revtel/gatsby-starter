@@ -10,6 +10,12 @@ import LoginRequired from '../LoginRequired';
 import AdminCustomOrderModal, {
   showAdminCustomOrderModal,
 } from '../AdminCustomOrderModal';
+import {Font} from '@react-pdf/renderer';
+
+Font.register({
+  family: 'SourceHanSansCN',
+  src: 'https://static.revtel-api.com/common/SourceHanSansCN-Regular.ttf',
+});
 
 const SiteInfo = {
   icon: '/favicon.png',
@@ -28,6 +34,7 @@ const Routes = [
   {name: '客製化訂單', path: 'admin-custom-order'},
   {name: '重設密碼', path: 'reset-password'},
   {name: '網站設定', path: '/admin/site'},
+  {name: '超商地圖', path: '/admin/select-cvs'},
   {name: '登出', path: 'logout'},
 ];
 

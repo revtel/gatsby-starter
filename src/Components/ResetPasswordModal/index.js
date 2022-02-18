@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import {Modal, Button, Input, Form} from 'antd';
 import {useOutlet} from 'reconnect.js';
 import * as User from 'rev.sdk.js/Actions/User';
-import * as AppActions from '../AppActions';
+import * as AppActions from '../../AppActions';
 
+// @sdk-next
 function ResetPasswordModal(props) {
   const [info, setVisible] = useOutlet('reset-password-modal');
   const visible = !!info;

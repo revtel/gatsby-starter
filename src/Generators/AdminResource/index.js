@@ -7,6 +7,7 @@ import ArticleEditor from 'rev.sdk.js/Components/ArticleEditor';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as AppActions from '../../AppActions';
 import PrivateProfile from './PrivateProfile';
+import * as Cart from 'rev.sdk.js/Actions/Cart';
 
 const SITE_CONFIG = {
   landing: {display: '首頁設定', value: 'landing'},
@@ -131,6 +132,20 @@ function AdminResourcePage(props) {
       } else {
         return '';
       }
+    } else if (col.customType === 'order_status') {
+      if (record.status === 'waiting') {
+        return '未處理';
+      } else if (record.status === 'done') {
+        return '已完成';
+      } else if (record.status === 'canceled') {
+        return '已取消';
+      }
+    } else if (col.customType === 'payment_status') {
+      return Cart.PAYMENT_STATUS_DISPLAY[record.payment_status].label;
+    } else if (col.customType === 'logistics_status') {
+      return (
+        Cart.LOGISTICS_STATUS_DISPLAY[record.logistics_status]?.label || '不明'
+      );
     }
     return null;
   }

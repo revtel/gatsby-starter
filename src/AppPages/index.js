@@ -124,11 +124,16 @@ const pages = [
     component: `src/Templates/Admin/index.js`,
     context: {},
   },
+
+  {
+    path: `/admin/select-cvs`,
+    component: `src/Templates/AdminSelectCVS/index.js`,
+    context: {},
+  },
 ];
 
 const config = {
   generateAdmin: true,
-  generatePromo: false,
   generateMarkdown: true,
 };
 

@@ -1,9 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import {useOutlet} from 'reconnect.js';
 import {navigate} from 'gatsby';
 import Gtag from 'rev.sdk.js/Utils/Gtag';
+import * as User from 'rev.sdk.js/Actions/User';
 import NavUrl from 'rev.sdk.js/Utils/NavUrl';
 
 function SocialLoginPage(props) {
@@ -32,13 +33,13 @@ function SocialLoginPage(props) {
           });
           return;
         }
-        await actions.autoLogin({refresh: refresh_token});
+        await User.autoLogin({refresh: refresh_token});
         const nextRoute = window.localStorage.getItem('nextRoute');
         window.localStorage.removeItem('nextRoute');
         if (nextRoute) {
-          await navigate(nextRoute);
+          await actions.navigate(nextRoute);
         } else {
-          await navigate('/profile');
+          await actions.navigate('/profile');
         }
         setLoginResult(true);
       } catch (ex) {
