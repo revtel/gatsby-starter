@@ -18,7 +18,7 @@ import * as Cart from 'rev.sdk.js/Actions/Cart';
 import {useOutlet} from 'reconnect.js';
 import {Open} from '@styled-icons/ionicons-outline/Open';
 import {BlobProvider} from '@react-pdf/renderer';
-import OrderPDF from './OrderPDF';
+import OrderPDF from '../OrderPDF';
 
 const {Panel} = Collapse;
 

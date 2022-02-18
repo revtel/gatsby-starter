@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, message, Select, Tag, InputNumber} from 'antd';
-import * as AppActions from '../../AppActions';
+import * as AppActions from '../../../AppActions';
 import {MoneyDollarCircle} from '@styled-icons/remix-line/MoneyDollarCircle';
 
 function PrivateProfile(props) {
