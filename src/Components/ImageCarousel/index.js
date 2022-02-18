@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import {Carousel} from 'react-responsive-carousel';
-import FixedRatioImage from './FixedRatioImage';
-import {navigate} from 'gatsby';
+import FixedRatioImage from '../FixedRatioImage';
+import * as AppActions from '../../AppActions';
 
 function ImageCarousel(props) {
   const {
@@ -46,7 +46,7 @@ function ImageCarousel(props) {
             mode={'cover'}
             extraCss={itemExtraCss + `${image.link ? 'cursor: pointer;' : ''}`}
             onClick={() => {
-              image.link && navigate(image.link);
+              image.link && AppActions.navigate(image.link);
             }}
           />
         ))}
