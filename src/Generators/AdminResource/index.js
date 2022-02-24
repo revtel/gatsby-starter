@@ -105,9 +105,7 @@ function AdminResourcePage(props) {
         }
       };
       return <Button onClick={_copyShareUrl}>取得分享連結</Button>;
-    }
-    if (name === 'UserCustom' && context.position === 'top') {
-      // get private profile, display points
+    } else if (name === 'UserCustom' && context.position === 'top') {
       return <PrivateProfile context={context} />;
     }
     return null;
@@ -170,9 +168,34 @@ function AdminResourcePage(props) {
 
   return (
     <AdminResource
+      {...props}
       renderCustomAdminCol={renderCustomAdminCol}
       renderCustomAdminSection={renderCustomAdminSection}
-      {...props}
+      restructureDocuments={async (collection, jsStorageResult) => {
+        if (collection === 'user_profile') {
+          const {results: _profiles} = jsStorageResult;
+          const {results: _private_profiles} = await JStorage.fetchDocuments(
+            'private_profile',
+          );
+
+          let nextProfiles = [];
+          for (let record of _profiles) {
+            const targetPrivateProfile = _private_profiles.find(
+              (ppr) => ppr.owner === record.owner,
+            );
+            record = {
+              ...record,
+              email: targetPrivateProfile?.email || record?.email || '',
+              points: targetPrivateProfile?.points || 0,
+              provider:
+                targetPrivateProfile?.provider || record?.provider || '',
+            };
+            nextProfiles = [...nextProfiles, record];
+          }
+          jsStorageResult.results = nextProfiles;
+        }
+        return jsStorageResult;
+      }}
     />
   );
 }
