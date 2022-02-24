@@ -1,5 +1,6 @@
 import {getNewOutlet} from 'reconnect.js';
 import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
+import './featureOptions';
 
 // configurations for "product" collection
 const sortOptions = [
