@@ -13,6 +13,7 @@ import {
 import RevForeign from 'rev.sdk.js/Generic/CustomFields/RevForeign';
 import * as AppActions from '../../AppActions';
 import {getNewOutlet, getOutlet, useOutlet} from 'reconnect.js';
+import UserForeign from 'rev.sdk.js/Components/UserForeign';
 
 const {Option} = Select;
 
@@ -175,8 +176,8 @@ function AdminCustomOrder() {
         initialValues={initialValues}
         scrollToFirstError={{
           behavior: (e) => {
-            const {el, top} = e[0];
-            el.scrollTo({
+            const {el = null, top} = e[0];
+            el?.scrollTo({
               left: 0,
               top: top - 100,
               behavior: 'smooth',
@@ -188,33 +189,15 @@ function AdminCustomOrder() {
         <Form.Item
           label="客戶"
           name="user_id"
-          valuePropName="formData"
           rules={[{required: true, message: '必填'}]}>
-          <RevForeign
-            schema={{
-              extraColumns: [
-                {
-                  title: '信箱',
-                  dataIndex: 'email',
-                },
-                {
-                  title: '登入方式',
-                  dataIndex: 'provider',
-                },
-              ],
-              primaryKey: 'owner',
-              collection: 'user_profile',
-              type: 'string',
-              default: '',
-              searchFields: ['owner', 'email'],
-              searchCaseSensitive: false,
-              searchApproach: 'union',
-            }}
+          <UserForeign
             onChange={(value) => {
               form.setFieldsValue({
                 user_id: value,
               });
             }}
+            value={form.getFieldValue('user_id')}
+            multiple={false}
           />
         </Form.Item>
         <Divider orientation="center">必要資訊</Divider>

@@ -15,6 +15,7 @@ import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
 import gtagPlugin from './Plugin/gtagPlugin';
 import Gtag from 'rev.sdk.js/Utils/Gtag';
+import qs from 'query-string';
 
 /**
  * **************************************************
@@ -306,18 +307,6 @@ async function confirmOfflineOrder(id) {
   );
 }
 
-async function getUserPrivateProfile(id) {
-  return await req(
-    `${Config.apiHost}/user/admin/user_profile?user_id=${id}&token=${
-      UserOutlet.getValue().token
-    }`,
-    {
-      method: 'GET',
-      data: {},
-    },
-  );
-}
-
 async function editUserPrivateProfile(id, points) {
   return await req(
     `${Config.apiHost}/user/points?token=${UserOutlet.getValue().token}`,
@@ -376,6 +365,13 @@ function getReurl({title, description, image, redirectUrl}) {
   }&redirect_url=${redirectUrl}`;
 }
 
+async function selectCVS({logisticsSubType}) {
+  window.location.href = `${Config.apiHost}/misc/cvs-map?${qs.stringify({
+    logistic_subtype: logisticsSubType,
+    redirect_url: `${window.location.origin}${window.location.pathname}`,
+  })}`;
+}
+
 // @sdk-next
 function createCustomOrder({user_id, name, total, description}) {
   return req(
@@ -419,7 +415,7 @@ export {
   getReurl,
   confirmOfflineOrder,
   gtag,
-  getUserPrivateProfile,
   editUserPrivateProfile,
   createCustomOrder,
+  selectCVS,
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, message, Select, Tag, InputNumber} from 'antd';
 import * as AppActions from '../../../AppActions';
 import {MoneyDollarCircle} from '@styled-icons/remix-line/MoneyDollarCircle';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 
 function PrivateProfile(props) {
   const [privateProfile, setPrivateProfile] = React.useState(null);
@@ -12,7 +13,9 @@ function PrivateProfile(props) {
 
   React.useEffect(() => {
     async function getUserPrivateProfile() {
-      let resp = await AppActions.getUserPrivateProfile(instance.owner); // instance.owner: user_id
+      let resp = await JStorage.fetchOneDocument('private_profile', {
+        owner: instance.owner,
+      });
 
       setPrivateProfile(resp);
       setPoints(resp.points);
@@ -22,7 +25,7 @@ function PrivateProfile(props) {
     } catch (ex) {
       console.warn(ex);
     }
-  }, [1]);
+  }, [instance.owner]);
 
   async function editUserPrivateProfile() {
     try {

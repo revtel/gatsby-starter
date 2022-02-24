@@ -141,7 +141,7 @@
         "ui:widget": "rev-datetime-to-timestamp-picker"
       },
       "user_id": {
-        "ui:field": "rev-foreign"
+        "ui:field": "rev-user-foreign"
       }
     }
   },
