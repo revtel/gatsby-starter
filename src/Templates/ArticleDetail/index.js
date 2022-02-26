@@ -73,15 +73,15 @@ function ArticleDetail(props) {
 
         <div
           style={{display: 'flex', flexDirection: mobile ? 'column' : 'row'}}>
-          <div style={{flex: 1}}>
+          <div className="article-content">
             <PageHeader
               title={'返回所有文章'}
               onBack={() => navigate(`/articles`)}
-              style={{padding: 0}}
+              style={{padding: 0, marginBottom: 20}}
             />
             {article && (
               <>
-                <h2>{article.title || '無標題'}</h2>
+                <h2 className="article-title">{article.title || '無標題'}</h2>
                 <RichTextPreview content={article.content} />
               </>
             )}
@@ -103,6 +103,19 @@ const Wrapper = styled.div`
   margin: 0 auto;
   & > .content {
     padding: var(--basePadding);
+  }
+
+  & .article-content {
+    max-width: 800px;
+    margin: 20px auto;
+    flex: 1;
+
+    & h2.article-title {
+      font-size: 1.5rem;
+      font-weight: 200;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
   }
 `;
 
