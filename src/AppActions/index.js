@@ -14,6 +14,7 @@ import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
 import gtagPlugin from './Plugin/gtagPlugin';
+import onCartLoadedPlugin from './Plugin/onCartLoadedPlugin';
 import Gtag from 'rev.sdk.js/Utils/Gtag';
 import qs from 'query-string';
 
@@ -32,6 +33,7 @@ const Plugins = {
     'onAfterAdminFormSubmit',
   ),
   gtag: new gtagPlugin('gtag'),
+  onCartLoaded: new onCartLoadedPlugin('onCartLoaded'),
 };
 
 const req = ApiUtil.req;
@@ -214,6 +216,14 @@ function onCartLoaded(cart) {
     buyer_address:
       cart.buyer_address || UserOutlet.getValue().data.address || '',
   };
+
+  if (Plugins.onCartLoaded.shouldExecute()) {
+    return Plugins.onCartLoaded.executeSync(
+      cart,
+      checkoutFormSpec,
+      defaultUser,
+    );
+  }
 
   const updateConfig = {
     ...cart,
