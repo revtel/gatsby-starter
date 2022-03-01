@@ -377,7 +377,7 @@ function getReurl({title, description, image, redirectUrl}) {
 
 async function selectCVS({logisticsSubType}) {
   window.location.href = `${Config.apiHost}/misc/cvs-map?${qs.stringify({
-    logistic_subtype: logisticsSubType,
+    logistics_subtype: logisticsSubType,
     redirect_url: `${window.location.origin}${window.location.pathname}`,
   })}`;
 }
