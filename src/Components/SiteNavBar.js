@@ -8,12 +8,7 @@ import * as AppActions from '../AppActions';
 import {ShoppingBag} from '@styled-icons/boxicons-regular/ShoppingBag';
 import {PersonCircle} from '@styled-icons/ionicons-outline/PersonCircle';
 
-const navItems = [
-  {children: '品牌介紹', url: '/about'},
-  {children: '最新消息', url: '/articles?cat=news'},
-  {children: '商品項目', url: '/products'},
-  {children: '部落格', url: '/articles'},
-];
+const navItems = [];
 
 function _isInPath({location = {}, navItemUrl}) {
   if (navItemUrl === '/articles?cat=news') {
@@ -47,94 +42,40 @@ function SiteNavBar(props) {
 
   return (
     <>
-      <NavBar hasBorder={passBreakpoint} bgColor={'white'} style={{height: 64}}>
+      <NavBar
+        hasBorder={passBreakpoint}
+        bgColor={'#F4F5F2'}
+        style={{height: 64}}>
         <Logo style={{cursor: 'pointer'}}>
           <Link to="/" loading={true}>
             <img
-              src="/images/revicon_512.png"
+              src={
+                dimension.rwd === 'desktop'
+                  ? '/images/RevtelTechLogo-long.png'
+                  : '/images/revicon_512.png'
+              }
               alt="Logo"
               style={{
-                height: dimension.rwd === 'desktop' ? 40 : 20,
+                height: 40,
                 objectFit: 'contain',
               }}
             />
           </Link>
         </Logo>
 
-        {mobile && (
-          <>
-            <div style={{flex: 1}} />
-            <Button onClick={() => setMobileNavVisible(true)}>選單</Button>
-          </>
-        )}
-
-        {!mobile && (
-          <>
-            <div style={{display: 'flex', flex: 1, justifyContent: 'center'}}>
-              {navItems.map(({children, url}, idx) => {
-                let selected = _isInPath({
-                  location,
-                  navItemUrl: url,
-                });
-
-                let loading = true;
-                if (url === '/about') {
-                  loading = 800;
-                }
-
-                return (
-                  <Link
-                    to={url}
-                    loading={loading}
-                    className="nav-link"
-                    key={idx}
-                    extraStyle={{
-                      color: '#000',
-                      fontWeight: '400',
-                      borderBottom: selected
-                        ? '4px solid #0eb407'
-                        : '4px solid transparent',
-                      padding: '19px 10px',
-                      margin: '0px 20px',
-                    }}>
-                    {children}
-                  </Link>
-                );
-              })}
-            </div>
-
-            <Button
-              type="link"
-              onClick={() => {
-                AppActions.navigate('/checkout');
-              }}>
-              <Badge count={cart.items.length}>
-                <ShoppingBag size={24} color={'#0eb407'} />
-              </Badge>
-            </Button>
-
-            {user ? (
-              <Button
-                type="link"
-                onClick={() => {
-                  AppActions.navigate('/profile');
-                }}>
-                <Badge count={cart.items.length}>
-                  <PersonCircle size={26} color={'#0eb407'} />
-                </Badge>
-              </Button>
-            ) : (
-              <Button onClick={() => showLoginModal(true)}>登入</Button>
-            )}
-          </>
-        )}
+        <a href="#" style={{marginLeft: 20}}>
+          {dimension.rwd === 'desktop' ? '服務內容' : '服務'}
+        </a>
+        <a href="#" style={{marginLeft: 20}}>
+          {dimension.rwd === 'desktop' ? '合作方式' : '收費'}
+        </a>
+        <a href="#" style={{marginLeft: 20}}>
+          {dimension.rwd === 'desktop' ? '方案優勢' : '優勢'}
+        </a>
+        <a href="#" style={{marginLeft: 20}}>
+          {dimension.rwd === 'desktop' ? '成功案例' : '案例'}
+        </a>
       </NavBar>
-
-      <MobileNav
-        visible={mobile && mobileNavVisible}
-        setVisible={setMobileNavVisible}
-        location={location}
-      />
     </>
   );
 }
