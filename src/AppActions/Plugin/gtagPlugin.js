@@ -7,6 +7,6 @@ export default class gtagPlugin extends PluginAction {
 
   executeSync(...args) {
     //if you do anything in this , plz return false , this is very important!!!!
-    return false;
+    return true;
   }
 }

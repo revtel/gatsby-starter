@@ -14,6 +14,7 @@ import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
 import gtagPlugin from './Plugin/gtagPlugin';
+import onCartLoadedPlugin from './Plugin/onCartLoadedPlugin';
 import Gtag from 'rev.sdk.js/Utils/Gtag';
 import qs from 'query-string';
 
@@ -32,6 +33,7 @@ const Plugins = {
     'onAfterAdminFormSubmit',
   ),
   gtag: new gtagPlugin('gtag'),
+  onCartLoaded: new onCartLoadedPlugin('onCartLoaded'),
 };
 
 const req = ApiUtil.req;
@@ -215,6 +217,14 @@ function onCartLoaded(cart) {
       cart.buyer_address || UserOutlet.getValue().data.address || '',
   };
 
+  if (Plugins.onCartLoaded.shouldExecute()) {
+    return Plugins.onCartLoaded.executeSync(
+      cart,
+      checkoutFormSpec,
+      defaultUser,
+    );
+  }
+
   const updateConfig = {
     ...cart,
     ...defaultUser,
@@ -377,7 +387,7 @@ function getReurl({title, description, image, redirectUrl}) {
 
 async function selectCVS({logisticsSubType}) {
   window.location.href = `${Config.apiHost}/misc/cvs-map?${qs.stringify({
-    logistic_subtype: logisticsSubType,
+    logistics_subtype: logisticsSubType,
     redirect_url: `${window.location.origin}${window.location.pathname}`,
   })}`;
 }
