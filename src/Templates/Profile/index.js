@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button, Form, Input, message, Radio, Spin} from 'antd';
 import styled from 'styled-components';
-import {useOutlet} from 'reconnect.js';
+import {getOutlet, useOutlet} from 'reconnect.js';
 import * as JStorageActions from 'rev.sdk.js/Actions/JStorage';
 import AntdAddressSetForm from 'rev.sdk.js/Components/AntdAddressSetForm';
 import ResetEmailButton from 'rev.sdk.js/Components/ResetEmailButton';
@@ -29,6 +29,7 @@ function ProfilePage(props) {
       message.error(`API error ${ex}`);
     }
   };
+
   return (
     <Wrapper>
       <h2>個人資訊</h2>
@@ -36,8 +37,6 @@ function ProfilePage(props) {
         <Form
           name="control-hooks"
           form={form}
-          labelCol={{span: 5}}
-          wrapperCol={{span: 19}}
           initialValues={{
             ...user.data,
           }}
@@ -45,14 +44,15 @@ function ProfilePage(props) {
             setValues({...allValues, ...changedValues});
           }}
           onFinish={onFinish}>
-          {user.data.points !== undefined && (
-            <Form.Item label="我的紅利" name="name">
-              <span style={{color: '#d11d26', fontWeight: 'bold'}}>
-                {user.data.points}
-              </span>
-              <span>點</span>
-            </Form.Item>
-          )}
+          {user.data.points !== undefined &&
+            getOutlet('FeatureOptions').getValue().points && (
+              <Form.Item label="我的紅利" name="points">
+                <span style={{color: '#d11d26', fontWeight: 'bold'}}>
+                  {user.data.points}
+                </span>
+                <span>點</span>
+              </Form.Item>
+            )}
 
           <Form.Item
             label="姓名"
@@ -60,6 +60,7 @@ function ProfilePage(props) {
             rules={[{required: true, message: '請輸入您的姓名'}]}>
             <Input />
           </Form.Item>
+
           <Form.Item
             label="性別"
             name="gender"
@@ -69,6 +70,7 @@ function ProfilePage(props) {
               <Radio value={false}>小姐</Radio>
             </Radio.Group>
           </Form.Item>
+
           <Form.Item
             label="手機"
             name="phone"
@@ -94,6 +96,11 @@ function ProfilePage(props) {
             ]}>
             <Input disabled />
           </Form.Item>
+          {!user.data.email && (
+            <div style={{color: 'red', marginBottom: 5}}>
+              尚未驗證電子信箱，請點擊下方按鈕「驗證 ｜ 更改電子信箱」進行驗證。
+            </div>
+          )}
 
           <AntdAddressSetForm form={form} />
 
@@ -103,17 +110,16 @@ function ProfilePage(props) {
             </Form.Item>
           )}
 
-          <Form.Item label="動作">
-            <Button
-              htmlType="button"
-              style={{marginRight: 20}}
-              onClick={onReset}>
+          <Form.Item
+            label="動作"
+            style={{display: 'flex', alignItems: 'center'}}>
+            <Button htmlType="button" style={{margin: 5}} onClick={onReset}>
               重設
             </Button>
-            <Button htmlType="submit" type="primary">
+            <Button style={{margin: 5}} htmlType="submit" type="primary">
               儲存
             </Button>
-            <ResetEmailButton />
+            <ResetEmailButton style={{margin: 5}} />
           </Form.Item>
         </Form>
       ) : (
@@ -127,14 +133,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  & > h2 {
-    padding: 20px;
-  }
-  @media screen and (max-width: 768px) {
-    & > h2 {
-      padding: 20px 0;
-    }
-  }
+  padding: 20px;
 `;
 
 export default ProfilePage;
