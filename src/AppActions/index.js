@@ -356,6 +356,16 @@ async function onAfterAdminFormSubmit(
     });
   }
 
+  if (
+    path.indexOf('/admin/landing') > -1 ||
+    path.indexOf('/admin/product_category') > -1 ||
+    path.indexOf('/admin/article_category') > -1
+  ) {
+    await JStorage.cacheDocuments('site', {}, null, null, null, undefined, {
+      key: 'rev-site-cache.json',
+    });
+  }
+
   return null;
 }
 
