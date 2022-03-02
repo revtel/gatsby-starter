@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {Button} from 'antd';
 import {StaticImage} from 'gatsby-plugin-image';
 import ReactDelighters from 'rev.sdk.js/Components/ReactDelighters';
+import {Element} from 'react-scroll';
 
 function Landing(props) {
   return (
@@ -17,7 +18,9 @@ function Landing(props) {
 
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
-          <h2>服務內容</h2>
+          <Element name="service">
+            <h2>服務內容</h2>
+          </Element>
           <div className="content">
             <FlexItem
               style={{
@@ -87,7 +90,9 @@ function Landing(props) {
 
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
-          <h2>合作方式</h2>
+          <Element name="types">
+            <h2>合作方式</h2>
+          </Element>
           <div className="content">
             <FlexItem
               style={{
@@ -129,7 +134,9 @@ function Landing(props) {
 
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
-          <h2>方案優勢</h2>
+          <Element name="good">
+            <h2>方案優勢</h2>
+          </Element>
           <div
             style={{
               paddingRight: 10,
@@ -218,7 +225,9 @@ function Landing(props) {
 
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
-          <h2>成功案例</h2>
+          <Element name="cases">
+            <h2>成功案例</h2>
+          </Element>
           <div
             className="content"
             style={{

@@ -8,6 +8,8 @@ import * as AppActions from '../AppActions';
 import {ShoppingBag} from '@styled-icons/boxicons-regular/ShoppingBag';
 import {PersonCircle} from '@styled-icons/ionicons-outline/PersonCircle';
 
+import * as Scroll from 'react-scroll';
+
 const navItems = [];
 
 function _isInPath({location = {}, navItemUrl}) {
@@ -36,6 +38,7 @@ function SiteNavBar(props) {
   const [mobileNavVisible, setMobileNavVisible] = React.useState(false);
   const mobile = dimension.rwd !== 'desktop';
   const pathname = location?.pathname;
+
   React.useEffect(() => {
     setMobileNavVisible(false);
   }, [pathname]);
@@ -63,18 +66,57 @@ function SiteNavBar(props) {
           </a>
         </Logo>
 
-        <a href="#" style={{marginLeft: 20}}>
+        <div
+          style={{marginLeft: 20, cursor: 'pointer', color: '#B3541E'}}
+          onClick={() => {
+            Scroll.scroller.scrollTo('service', {
+              duration: 1500,
+              delay: 100,
+              smooth: 'easeInOutQuint',
+              offset: -100,
+            });
+          }}>
           {dimension.rwd === 'desktop' ? '服務內容' : '服務'}
-        </a>
-        <a href="#" style={{marginLeft: 20}}>
+        </div>
+
+        <div
+          style={{marginLeft: 20, cursor: 'pointer', color: '#B3541E'}}
+          onClick={() => {
+            Scroll.scroller.scrollTo('types', {
+              duration: 1500,
+              delay: 100,
+              smooth: 'easeInOutQuint',
+              offset: -100,
+            });
+          }}>
           {dimension.rwd === 'desktop' ? '合作方式' : '收費'}
-        </a>
-        <a href="#" style={{marginLeft: 20}}>
+        </div>
+
+        <div
+          style={{marginLeft: 20, cursor: 'pointer', color: '#B3541E'}}
+          onClick={() => {
+            Scroll.scroller.scrollTo('good', {
+              duration: 1500,
+              delay: 100,
+              smooth: 'easeInOutQuint',
+              offset: -100,
+            });
+          }}>
           {dimension.rwd === 'desktop' ? '方案優勢' : '優勢'}
-        </a>
-        <a href="#" style={{marginLeft: 20}}>
+        </div>
+
+        <div
+          style={{marginLeft: 20, cursor: 'pointer', color: '#B3541E'}}
+          onClick={() => {
+            Scroll.scroller.scrollTo('cases', {
+              duration: 1500,
+              delay: 100,
+              smooth: 'easeInOutQuint',
+              offset: -100,
+            });
+          }}>
           {dimension.rwd === 'desktop' ? '成功案例' : '案例'}
-        </a>
+        </div>
       </NavBar>
     </>
   );
