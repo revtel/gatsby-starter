@@ -47,7 +47,7 @@ function SiteNavBar(props) {
         bgColor={'#F4F5F2'}
         style={{height: 64}}>
         <Logo style={{cursor: 'pointer'}}>
-          <Link to="/" loading={true}>
+          <a href="https://www.revtel.tech" target="_blank" rel="noreferrer">
             <img
               src={
                 dimension.rwd === 'desktop'
@@ -60,7 +60,7 @@ function SiteNavBar(props) {
                 objectFit: 'contain',
               }}
             />
-          </Link>
+          </a>
         </Logo>
 
         <a href="#" style={{marginLeft: 20}}>

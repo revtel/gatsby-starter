@@ -124,6 +124,116 @@ function Landing(props) {
             </FlexItem>
           </div>
         </FlexItemSection>
+
+        <FlexItemSection
+          style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
+          <h2>方案優勢</h2>
+          <div
+            style={{
+              paddingRight: 10,
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+            }}>
+            <a
+              style={{marginRight: 20, fontSize: 24}}
+              href="https://medium.com/revtel-tech"
+              target="_blank"
+              rel="noreferrer">
+              開發分享
+            </a>
+            <a
+              style={{fontSize: 24}}
+              href="https://www.revtel.tech/project/"
+              target="_blank"
+              rel="noreferrer">
+              過往合作
+            </a>
+          </div>
+          <div className="content">
+            <FlexItem
+              style={{
+                borderRadius: 10,
+                padding: 15,
+                backgroundColor: '#EEEDDE',
+                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
+              }}>
+              <div className="description" style={{borderRadius: 10}}>
+                <h3 style={{marginBottom: 10}}>經驗來自實務</h3>
+                <p style={{color: '#3E3E3E'}}>
+                  以過往超過六十個以上方案開發協作作為資料庫
+                </p>
+              </div>
+            </FlexItem>
+
+            <FlexItem
+              style={{
+                borderRadius: 10,
+                padding: 15,
+                backgroundColor: '#EEEDDE',
+                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
+              }}>
+              <div className="description" style={{borderRadius: 10}}>
+                <h3 style={{marginBottom: 10}}>技術實力紮實</h3>
+                <p style={{color: '#3E3E3E'}}>
+                  於網頁、雲端、APP、物聯網及區塊鏈皆有成果
+                </p>
+              </div>
+            </FlexItem>
+
+            <FlexItem
+              style={{
+                borderRadius: 10,
+                padding: 15,
+                backgroundColor: '#EEEDDE',
+                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
+              }}>
+              <div className="description" style={{borderRadius: 10}}>
+                <h3 style={{marginBottom: 10}}>自有團隊協作</h3>
+                <p style={{color: '#3E3E3E'}}>
+                  規劃內容如有需要可直接對接內部工程團隊開發
+                </p>
+              </div>
+            </FlexItem>
+
+            <FlexItem
+              style={{
+                borderRadius: 10,
+                padding: 15,
+                backgroundColor: '#EEEDDE',
+                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
+              }}>
+              <div className="description" style={{borderRadius: 10}}>
+                <h3 style={{marginBottom: 10}}>領域經驗多元</h3>
+                <p style={{color: '#3E3E3E'}}>
+                  橫跨超過十個領域以上的顧問、開發及團隊經驗
+                </p>
+              </div>
+            </FlexItem>
+          </div>
+        </FlexItemSection>
+
+        <FlexItemSection
+          style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
+          <h2>成功案例</h2>
+          <div className="content">
+            <FlexItem
+              style={{
+                borderRadius: 10,
+                padding: 15,
+                backgroundColor: '#EEEDDE',
+                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
+              }}>
+              <div className="description" style={{borderRadius: 10}}>
+                <h3 style={{marginBottom: 10}}>經驗來自實務</h3>
+                <p style={{color: '#3E3E3E'}}>
+                  以過往超過六十個以上方案開發協作作為資料庫
+                </p>
+              </div>
+            </FlexItem>
+          </div>
+        </FlexItemSection>
       </Wrapper>
     </ReactDelighters>
   );

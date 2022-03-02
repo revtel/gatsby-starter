@@ -78,134 +78,6 @@ function SiteFooter(props) {
 
   return (
     <FlexItemSection isMobile={!(dimension.rwd === 'desktop')}>
-      <div
-        className="content-section"
-        style={{
-          padding: 30,
-          flexDirection: dimension.rwd === 'desktop' ? 'row' : 'column',
-        }}>
-        <div className="constrain">
-          <h2
-            onClick={() => AppActions.navigate('/', {loading: 500})}
-            style={{flex: 1, textAlign: 'center'}}>
-            <img
-              src="/images/revicon_512.png"
-              alt="Logo"
-              style={{
-                height: 150,
-                objectFit: 'contain',
-              }}
-            />
-          </h2>
-          <div style={{flex: 1}} />
-
-          <div
-            className="info"
-            style={{
-              display: 'flex',
-              flex: 1,
-              marginTop: dimension.rwd === 'desktop' ? 0 : 40,
-              justifyContent: 'space-between',
-            }}>
-            {LINK_ITEMS.map((item, idx) => (
-              <div style={{minWidth: dimension.rwd === 'desktop' ? 120 : 85}}>
-                <div
-                  className="link-title"
-                  style={{color: '#0eb407'}}
-                  onClick={() => AppActions.navigate('/', {loading: 500})}>
-                  {item.title}
-                </div>
-                {item.items.map((i) => (
-                  <div
-                    className="link-item"
-                    onClick={() =>
-                      AppActions.navigate(i.to, {loading: i.loading})
-                    }>
-                    {i.title}
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-          <div
-            className="info"
-            style={{
-              flex: 1,
-              alignSelf: 'stretch',
-              marginTop: dimension.rwd === 'desktop' ? 0 : 40,
-            }}>
-            <p className="info-text">聯絡我們</p>
-            <p className="info-text">
-              <a
-                style={{textDecoration: 'none', color: 'grey'}}
-                aria-label="email"
-                href={'mailto:' + CONTACT_INFO.email}>
-                {CONTACT_INFO.email}
-              </a>
-            </p>
-            <p className="info-text">
-              <a
-                style={{textDecoration: 'none', color: 'grey'}}
-                aria-label="email"
-                href={'tel:' + CONTACT_INFO.phone}>
-                {CONTACT_INFO.phoneDisplay}
-              </a>
-            </p>
-            <p className="info-text">
-              <a
-                style={{textDecoration: 'none', color: 'grey'}}
-                aria-label="email"
-                href={CONTACT_INFO.addressGoogleMap}
-                target="_blank"
-                rel="noreferrer">
-                {CONTACT_INFO.addressDisplay}
-              </a>
-            </p>
-            <p className="info-text">{CONTACT_INFO.workTimeDisplay}</p>
-
-            <div
-              className="info"
-              style={{
-                maxWidth: 280,
-                justifyContent:
-                  dimension.rwd === 'desktop' ? 'flex-end' : 'center',
-                // textAlign: 'right',
-                marginTop: 40,
-              }}>
-              <a
-                href="https://www.youtube.com/channel/UCXfn2Ob1iDzajn-ZzT0sEmw"
-                target="_blank"
-                rel="noreferrer">
-                <img
-                  src="/images/fb.png"
-                  alt="Logo"
-                  style={{height: 40, objectFit: 'contain'}}
-                />
-              </a>
-              <a
-                href="https://www.instagram.com/vbeauty.group/"
-                target="_blank"
-                rel="noreferrer">
-                <img
-                  src="/images/ig.png"
-                  alt="Logo"
-                  style={{height: 40, objectFit: 'contain', marginLeft: 15}}
-                />
-              </a>
-              <a
-                href="https://www.instagram.com/vbeauty.group/"
-                target="_blank"
-                rel="noreferrer">
-                <img
-                  src="/images/line.png"
-                  alt="Logo"
-                  style={{height: 40, objectFit: 'contain', marginLeft: 15}}
-                />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
       <div className="bottom-section">
         <div
           className="constrain"
@@ -214,27 +86,25 @@ function SiteFooter(props) {
             flexDirection: 'column',
             alignItems: 'center',
           }}>
-          <div>2021 Revteltech</div>
           <div style={{verticalAlign: 'middle', marginTop: 8}}>
             <div
               style={{
                 display: 'inline',
                 color: 'grey',
                 marginRight: 5,
-                fontSize: 10,
+                fontSize: 18,
               }}>
               Powered By
             </div>
             <a
               style={{
                 display: 'inline',
-                fontSize: 12,
-                color: '#14A58C',
+                fontSize: 24,
               }}
-              href="https://revteltech.pse.is/3psgrd"
+              href="https://www.revtel.tech"
               target="_blank"
               rel="noreferrer">
-              奕果雲端數位 EcultureTech
+              忻旅科技股份有限公司
             </a>
           </div>
         </div>
