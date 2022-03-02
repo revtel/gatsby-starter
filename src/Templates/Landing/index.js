@@ -217,21 +217,102 @@ function Landing(props) {
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
           <h2>成功案例</h2>
-          <div className="content">
-            <FlexItem
-              style={{
-                borderRadius: 10,
-                padding: 15,
-                backgroundColor: '#EEEDDE',
-                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
-              }}>
-              <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 10}}>經驗來自實務</h3>
-                <p style={{color: '#3E3E3E'}}>
-                  以過往超過六十個以上方案開發協作作為資料庫
-                </p>
-              </div>
-            </FlexItem>
+          <div
+            className="content"
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
+            }}>
+            {[
+              [
+                '高曼計量',
+                'https://www.revtel.tech/static/6adb281dd727e95fdd10717d07b19597/159a2/gamma.png',
+                '看盤軟體設計開發',
+                'https://medium.com/revtel-tech/兼顧互動及專業的線圖-以股票看盤-軟體為例來聊聊-web-app-的合併開發-3bed0589a233',
+              ],
+              [
+                'ADENOVO 諦諾智金',
+                'https://www.revtel.tech/static/26f601b5df8360754106e9bc404ac324/159a2/adenovo.png',
+                '產品設計開發',
+              ],
+              [
+                '二十五電訊',
+                'https://www.revtel.tech/static/b6727a870f249ca1d96013cb233cafcc/159a2/Tel25.png',
+                '產品設計開發',
+                'https://medium.com/revtel-tech/案例分享-tel-u-電信電商-8cc7a7feefb4',
+              ],
+              [
+                'DSA 達詳自動化',
+                'https://www.revtel.tech/static/70b70c828f45e0203c70fab0ed76e7e3/1d98e/dsa.png',
+                '智能產線軟體顧問開發',
+              ],
+              [
+                '奕果雲端數位',
+                'https://www.revtel.tech/static/e51af92cd09162580ad8b34c86b5309b/6258c/HiPrint.webp',
+                '印刷電商 / ERP 顧問開發',
+                'https://medium.com/revtel-tech/印刷業專屬電商-hiprint-開發分享-以-gatsbyjs-打造高速-erp-ec-9e6a3bbfbc7b',
+              ],
+              [
+                '法朋烘焙坊',
+                'https://www.revtel.tech/static/d30390f47f2d03b76a862ed34a3aef35/65e33/lr.png',
+                '烘焙電商 / ERP 顧問開發',
+                'https://medium.com/revtel-tech/三分鐘內數百萬業績的高流量電商煉成-le-ruban-pâtisserie-法朋烘焙甜點坊-6901f8694036',
+              ],
+              [
+                '寬豐工業',
+                '/images/real.png',
+                '藍牙 / NFC 智能鎖顧問開發',
+                'https://medium.com/revtel-tech/案例分享-傳產升級-藍牙電子鎖-809b39d97637',
+              ],
+              ['Pranaq', '/images/pranaq.png', '雲端系統顧問'],
+            ].map((item, idx) => {
+              const withLink = item[3]
+                ? (_) => (
+                    <a
+                      key={item[3]}
+                      href={item[3]}
+                      target="_blank"
+                      alt={item[0] + ' ' + item[1]}
+                      ariaLabel={item[0] + ' ' + item[1]}
+                      rel="noreferrer">
+                      {_}
+                    </a>
+                  )
+                : (_) => _;
+
+              return withLink(
+                <div
+                  key={idx}
+                  style={{
+                    display: 'flex',
+                    backgroundColor: 'white',
+                    borderRadius: 15,
+                    padding: 5,
+                    width: 230,
+                    height: 300,
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    marginTop: 10,
+                    marginBottom: 10,
+                    margin: 10,
+                  }}>
+                  <div
+                    style={{
+                      height: 200,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}>
+                    <img src={item[1]} style={{width: 200}} />
+                  </div>
+                  <h1>{item[0]}</h1>
+                  <p style={{color: 'black', marginTop: 10}}>{item[2]}</p>
+                </div>,
+              );
+            })}
           </div>
         </FlexItemSection>
       </Wrapper>
