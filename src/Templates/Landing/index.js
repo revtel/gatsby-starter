@@ -171,7 +171,7 @@ function Landing(props) {
               <div className="description" style={{borderRadius: 10}}>
                 <h3 style={{marginBottom: 10}}>經驗來自實務</h3>
                 <p style={{color: '#3E3E3E'}}>
-                  以過往超過六十個以上方案開發協作作為資料庫
+                  基於過往超過六十個以上方案開發協作提供協作
                 </p>
               </div>
             </FlexItem>
