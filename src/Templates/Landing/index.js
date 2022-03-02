@@ -8,9 +8,11 @@ function Landing(props) {
   return (
     <ReactDelighters>
       <Wrapper>
-        <HeroBannerSection style={{backgroundColor: '#F47730', width: '100%'}}>
-          <h2>RevConsult 軟體顧問服務</h2>
-          <p>以專業及經驗降低軟體開發風險</p>
+        <HeroBannerSection style={{backgroundColor: '#FFC300', width: '100%'}}>
+          <h1 style={{color: '#362222', fontSize: 48}}>
+            RevConsult 軟體系統顧問
+          </h1>
+          <p style={{color: 'grey'}}>顧問諮詢 / 軟體開發 / 商業模式</p>
         </HeroBannerSection>
 
         <FlexItemSection
@@ -228,20 +230,41 @@ function Landing(props) {
             }}>
             {[
               [
+                '工研院',
+                'https://www.revtel.tech/static/000c3e2dd577951ddc1d79d17888a90b/6258c/ITRI.webp',
+                '智能物流系統顧問開發',
+                'https://medium.com/revtel-tech/複雜流程的可追蹤及電子化-港區智能物流系統-ad0a30cb342b',
+              ],
+              [
+                '資策會',
+                'https://www.revtel.tech/static/e3a00e73d9db70d5ab8539602886b7d6/159a2/III.png',
+                '智能鏡顧問開發',
+              ],
+              [
+                '加密鏈科技',
+                'https://www.revtel.tech/static/b02e59ad1f3fea94f36734e735c8c9b2/6258c/inigma.webp',
+                'NFC 冷錢包顧問開發',
+              ],
+              [
+                '商業司智能商圈',
+                '/images/bizlion.png',
+                '區塊鏈點數發幣系統顧問開發',
+              ],
+              [
                 '高曼計量',
                 'https://www.revtel.tech/static/6adb281dd727e95fdd10717d07b19597/159a2/gamma.png',
                 '看盤軟體設計開發',
                 'https://medium.com/revtel-tech/兼顧互動及專業的線圖-以股票看盤-軟體為例來聊聊-web-app-的合併開發-3bed0589a233',
               ],
               [
-                'ADENOVO 諦諾智金',
+                'ADENOVO',
                 'https://www.revtel.tech/static/26f601b5df8360754106e9bc404ac324/159a2/adenovo.png',
-                '產品設計開發',
+                'FinTech 產品設計開發',
               ],
               [
                 '二十五電訊',
                 'https://www.revtel.tech/static/b6727a870f249ca1d96013cb233cafcc/159a2/Tel25.png',
-                '產品設計開發',
+                '電信產品設計開發',
                 'https://medium.com/revtel-tech/案例分享-tel-u-電信電商-8cc7a7feefb4',
               ],
               [
@@ -250,21 +273,26 @@ function Landing(props) {
                 '智能產線軟體顧問開發',
               ],
               [
+                '青田悅產後護理之家',
+                '/images/ctycare.png',
+                '月子中心系統顧問開發',
+              ],
+              [
                 '奕果雲端數位',
                 'https://www.revtel.tech/static/e51af92cd09162580ad8b34c86b5309b/6258c/HiPrint.webp',
-                '印刷電商 / ERP 顧問開發',
+                '印刷電商/ERP 顧問開發',
                 'https://medium.com/revtel-tech/印刷業專屬電商-hiprint-開發分享-以-gatsbyjs-打造高速-erp-ec-9e6a3bbfbc7b',
               ],
               [
                 '法朋烘焙坊',
                 'https://www.revtel.tech/static/d30390f47f2d03b76a862ed34a3aef35/65e33/lr.png',
-                '烘焙電商 / ERP 顧問開發',
+                '烘焙電商/ERP 顧問開發',
                 'https://medium.com/revtel-tech/三分鐘內數百萬業績的高流量電商煉成-le-ruban-pâtisserie-法朋烘焙甜點坊-6901f8694036',
               ],
               [
                 '寬豐工業',
                 '/images/real.png',
-                '藍牙 / NFC 智能鎖顧問開發',
+                '藍牙/NFC智能鎖顧問開發',
                 'https://medium.com/revtel-tech/案例分享-傳產升級-藍牙電子鎖-809b39d97637',
               ],
               ['Pranaq', '/images/pranaq.png', '雲端系統顧問'],
@@ -290,26 +318,40 @@ function Landing(props) {
                     display: 'flex',
                     backgroundColor: 'white',
                     borderRadius: 15,
-                    padding: 5,
-                    width: 230,
-                    height: 300,
+                    padding: 10,
+                    width: 250,
+                    height: 250,
                     flexDirection: 'column',
                     alignItems: 'center',
                     marginTop: 10,
                     marginBottom: 10,
                     margin: 10,
+                    position: 'relative',
                   }}>
                   <div
                     style={{
-                      height: 200,
+                      height: 150,
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
-                    <img src={item[1]} style={{width: 200}} />
+                    <img src={item[1]} style={{width: 150}} />
                   </div>
                   <h1>{item[0]}</h1>
                   <p style={{color: 'black', marginTop: 10}}>{item[2]}</p>
+                  {item[3] && (
+                    <div
+                      style={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: 10,
+                        backgroundColor: 'orange',
+                        position: 'absolute',
+                        top: 15,
+                        right: 15,
+                      }}
+                    />
+                  )}
                 </div>,
               );
             })}
