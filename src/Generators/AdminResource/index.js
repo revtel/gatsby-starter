@@ -57,6 +57,52 @@ function CreateSiteConfigButton() {
   );
 }
 
+const getPaymentStatusCustomElem = (record) => {
+  try {
+    const label = Cart.PAYMENT_STATUS_DISPLAY[record.payment_status].label;
+    const PAYMENT_STATUS_DISPLAY_ELEMENT = {
+      [Cart.PAYMENT_STATUS.pending]: <Tag color="#CBCBCB">{label}</Tag>,
+      [Cart.PAYMENT_STATUS.waiting]: <Tag color="#E59329">{label}</Tag>,
+      [Cart.PAYMENT_STATUS.success]: <Tag color="#9FD000">{label}</Tag>,
+      [Cart.PAYMENT_STATUS.failure]: <Tag color="#FF404C">{label}</Tag>,
+    };
+    return PAYMENT_STATUS_DISPLAY_ELEMENT[record.payment_status];
+  } catch (e) {
+    return <div style={{color: '#FF404C'}}>尚未定義狀態</div>;
+  }
+};
+
+const getOrderStatusCustomElem = (record) => {
+  const ORDER_STATUS_DISPLAY_ELEMENT = {
+    waiting: <div style={{color: '#767676'}}>待處理</div>,
+    processing: <div style={{color: '#E59329'}}>處理中</div>,
+    done: <div style={{color: '#76A801'}}>已完成</div>,
+    canceled: <div style={{color: '#B5B5B5'}}>已取消</div>,
+  };
+  try {
+    return ORDER_STATUS_DISPLAY_ELEMENT[record.status];
+  } catch (e) {
+    return <div style={{color: '#FF404C'}}>尚未定義狀態</div>;
+  }
+};
+
+const getLogisticsStatusCustomElem = (record) => {
+  try {
+    const label = Cart.LOGISTICS_STATUS_DISPLAY[record.logistics_status]?.label;
+    const LOGISTICS_STATUS_DISPLAY_ELEMENT = {
+      [Cart.LOGISTICS_STATUS.pending]: <Tag>{label}</Tag>,
+      [Cart.LOGISTICS_STATUS.center_delivered]: <Tag color="gold">{label}</Tag>,
+      [Cart.LOGISTICS_STATUS.in_delivery]: <Tag color="cyan">{label}</Tag>,
+      [Cart.LOGISTICS_STATUS.delivered]: <Tag color="green">{label}</Tag>,
+      [Cart.LOGISTICS_STATUS.error]: <Tag color="magenta">{label}</Tag>,
+      [Cart.LOGISTICS_STATUS.exception]: <Tag color="red">{label}</Tag>,
+    };
+    return LOGISTICS_STATUS_DISPLAY_ELEMENT[record.logistics_status];
+  } catch (e) {
+    return <div style={{color: '#FF404C'}}>尚未定義狀態</div>;
+  }
+};
+
 function AdminResourcePage(props) {
   const {path, pageContext} = props;
   const [categories] = useOutlet('categories');
@@ -131,19 +177,13 @@ function AdminResourcePage(props) {
         return '';
       }
     } else if (col.customType === 'order_status') {
-      if (record.status === 'waiting') {
-        return '未處理';
-      } else if (record.status === 'done') {
-        return '已完成';
-      } else if (record.status === 'canceled') {
-        return '已取消';
-      }
+      return getOrderStatusCustomElem(record);
     } else if (col.customType === 'payment_status') {
-      return Cart.PAYMENT_STATUS_DISPLAY[record.payment_status].label;
+      return getPaymentStatusCustomElem(record);
     } else if (col.customType === 'logistics_status') {
-      return (
-        Cart.LOGISTICS_STATUS_DISPLAY[record.logistics_status]?.label || '不明'
-      );
+      return getLogisticsStatusCustomElem(record);
+    } else if (col.customType === 'logistics_type') {
+      return Cart.LOGISTICS_TYPE_DISPLAY[record.logistics_type]?.label;
     }
     return null;
   }

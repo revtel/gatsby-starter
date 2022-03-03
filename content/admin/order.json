@@ -7,45 +7,67 @@
   "searchApproach": "union",
   "renderCreateButton": false,
   "renderDeleteButton": false,
+  "resourceTableProps":{
+    "scroll": {
+      "x": 1300
+    }
+  },
   "columns": [
     {
       "title": "訂單編號",
       "key": "order_number",
-      "dataIndex": "order_number"
+      "dataIndex": "order_number",
+      "width": 200,
+      "fixed": "left"
     },
     {
       "title": "購買人姓名",
       "key": "buyer_name",
-      "dataIndex": "buyer_name"
+      "dataIndex": "buyer_name",
+      "width": 150,
+      "fixed": "left"
     },
     {
-      "title": "購買人電話",
-      "key": "buyer_phone",
-      "dataIndex": "buyer_phone"
-    },
-    {
-      "title": "狀態",
+      "title": "訂單狀態",
       "key": "status",
       "dataIndex": "status",
-      "customType": "order_status"
+      "customType": "order_status",
+      "width": 120
     },
     {
       "title": "金流狀態",
       "key": "payment_status",
       "dataIndex": "payment_status",
-      "customType": "payment_status"
+      "customType": "payment_status",
+      "width": 120
     },
     {
       "title": "物流狀態",
       "key": "logistics_status",
       "dataIndex": "logistics_status",
-      "customType": "logistics_status"
+      "customType": "logistics_status",
+      "width": 120
+    },
+    {
+      "title": "物流方式",
+      "key": "logistics_type",
+      "dataIndex": "logistics_type",
+      "customType": "logistics_type",
+      "width": 150
+    },
+    {
+      "title": "訂單日期",
+      "key": "created",
+      "dataIndex": "created",
+      "dataType": "timestamp",
+      "width": 180
     },
     {
       "title": "客製單資訊",
       "key": "custom_name",
       "dataIndex": "custom_name",
-      "customType": "custom-order-info"
+      "customType": "custom-order-info",
+      "width": 150
     }
   ],
   "querySpec": {
@@ -68,7 +90,11 @@
         "options": [
           {
             "value": "waiting",
-            "name": "未處理"
+            "name": "待處理"
+          },
+          {
+            "value": "processing",
+            "name": "處理中"
           },
           {
             "value": "done",
@@ -171,7 +197,12 @@
             {
               "type": "string",
               "enum": ["waiting"],
-              "title": "未處理"
+              "title": "待處理"
+            },
+            {
+              "type": "string",
+              "enum": ["processing"],
+              "title": "處理中"
             },
             {
               "type": "string",
