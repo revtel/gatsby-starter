@@ -78,36 +78,59 @@ function SiteFooter(props) {
 
   return (
     <FlexItemSection isMobile={!(dimension.rwd === 'desktop')}>
-      <div className="bottom-section">
-        <div
-          className="constrain"
-          style={{
-            justifyContent: 'center',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}>
-          <div style={{verticalAlign: 'middle', marginTop: 8}}>
-            <div
-              style={{
-                display: 'inline',
-                color: 'grey',
-                marginRight: 5,
-                fontSize: 18,
-              }}>
-              Powered By
-            </div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+          backgroundColor: '#f6f6f6',
+          fontSize: 24,
+          paddingTop: 20,
+          paddingBottom: 20,
+        }}>
+        <h1 style={{marginBottom: 20}}>與我們聯繫</h1>
+
+        {[
+          [
+            '/images/internet.png',
+            '忻旅科技股份有限公司',
+            'https://wwww.revtel.tech',
+          ],
+          ['/images/phone.png', '(02)2557-8895', 'tel:+886225578895'],
+          [
+            '/images/mail.png',
+            'contact@revteltech.com',
+            'mailto:contact@revteltech.com',
+          ],
+          [
+            '/images/facebook.png',
+            'RevtelTech 忻旅科技',
+            'https://www.facebook.com/RevtelTech',
+          ],
+        ].map((item, idx) => (
+          <div
+            style={{
+              width: 300,
+              marginTop: 10,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+            }}
+            key={idx}>
+            <img src={item[0]} width="20" height="20" />
             <a
-              style={{
-                display: 'inline',
-                fontSize: 24,
-              }}
-              href="https://www.revtel.tech"
+              href={item[2]}
               target="_blank"
+              ariaLabel={item[1]}
+              alt={item[1]}
+              style={{marginLeft: 20, color: '#085E7D'}}
               rel="noreferrer">
-              忻旅科技股份有限公司
+              {item[1]}
             </a>
           </div>
-        </div>
+        ))}
       </div>
     </FlexItemSection>
   );

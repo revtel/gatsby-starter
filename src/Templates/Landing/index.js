@@ -9,7 +9,12 @@ function Landing(props) {
   return (
     <ReactDelighters>
       <Wrapper>
-        <HeroBannerSection style={{backgroundColor: '#FFC300', width: '100%'}}>
+        <HeroBannerSection
+          style={{
+            backgroundImage:
+              'linear-gradient(to left bottom, #ffb72b, #ffc226, #ffce21, #ffda1d, #ffe61b)',
+            width: '100%',
+          }}>
           <h1 style={{color: '#362222', fontSize: 48}}>
             RevConsult 軟體系統顧問
           </h1>
