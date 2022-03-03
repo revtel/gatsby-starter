@@ -137,16 +137,24 @@
             "name": "備貨中"
           },
           {
-            "value": "in_delivery",
+            "value": "center_delivered",
             "name": "已出貨"
+          },
+          {
+            "value": "in_delivery",
+            "name": "運送中"
           },
           {
             "value": "delivered",
             "name": "已送達"
           },
           {
+            "value": "error",
+            "name": "地址錯誤"
+          },
+          {
             "value": "exception",
-            "name": "不明"
+            "name": "尚未定義"
           }
         ]
       }
