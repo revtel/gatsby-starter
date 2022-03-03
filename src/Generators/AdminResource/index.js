@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminResource from 'rev.sdk.js/Generators/AdminResource';
-import {Button, message, Select, Tag} from 'antd';
+import {Button, message, Select, Tag, Form, DatePicker} from 'antd';
 import {useOutlet} from 'reconnect.js';
 import AdminOrderDetailForm from './AdminOrderDetailForm';
 import ArticleEditor from 'rev.sdk.js/Components/ArticleEditor';
@@ -8,6 +8,8 @@ import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import * as AppActions from '../../AppActions';
 import PrivateProfile from './PrivateProfile';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
+import moment from 'moment';
+const {RangePicker} = DatePicker;
 
 const SITE_CONFIG = {
   landing: {display: '首頁設定', value: 'landing'},
@@ -103,6 +105,164 @@ const getLogisticsStatusCustomElem = (record) => {
   }
 };
 
+const OrderExtraQueries = (props) => {
+  const [form] = Form.useForm();
+  const {setQueryState, queryState} = props;
+
+  const TIME_RANGE_TYPE = {
+    today: 'today',
+    yesterday: 'yesterday',
+    past_7_days: 'past_7_days',
+    past_30_days: 'past_30_days',
+    month: 'month',
+    last_month: 'last_month',
+    custom: 'custom',
+  };
+
+  const TIME_RANGE_TYPE_DISPLAY = {
+    [TIME_RANGE_TYPE.today]: {
+      label: '當天',
+      value: TIME_RANGE_TYPE.today,
+    },
+    [TIME_RANGE_TYPE.yesterday]: {
+      label: '昨天',
+      value: TIME_RANGE_TYPE.yesterday,
+    },
+    [TIME_RANGE_TYPE.past_7_days]: {
+      label: '過去 7 天',
+      value: TIME_RANGE_TYPE.past_7_days,
+    },
+    [TIME_RANGE_TYPE.past_30_days]: {
+      label: '過去 30 天',
+      value: TIME_RANGE_TYPE.past_30_days,
+    },
+    [TIME_RANGE_TYPE.month]: {
+      label: '當月',
+      value: TIME_RANGE_TYPE.month,
+    },
+    [TIME_RANGE_TYPE.last_month]: {
+      label: '上個月',
+      value: TIME_RANGE_TYPE.last_month,
+    },
+    [TIME_RANGE_TYPE.custom]: {
+      label: '自訂區間',
+      value: TIME_RANGE_TYPE.custom,
+    },
+  };
+
+  const getRange = (method, range) => {
+    const now = moment(new Date());
+    const yesterday = moment(new Date()).add(-1, 'days');
+    const past7Days = moment(new Date()).add(-7, 'days');
+    const past30Days = moment(new Date()).add(-30, 'days');
+    const lastMonth = moment(new Date()).add(-1, 'months');
+    const getBeginTimeOfDay = (_moment_date) =>
+      moment(_moment_date.format('YYYY-MM-DD 00:00:00'));
+    const getEndTimeOfDay = (_moment_date) =>
+      moment(_moment_date.format('YYYY-MM-DD 23:59:59'));
+    const getBeginDayOfMonth = (_moment_date) =>
+      moment(_moment_date.format('YYYY-MM-01'));
+    const getEndDayOfMonth = (_moment_date) =>
+      getEndTimeOfDay(
+        moment(_moment_date.add(1, 'months').format('YYYY-MM-01')).add(
+          -1,
+          'days',
+        ),
+      );
+    const TIME_RANGE = {
+      [TIME_RANGE_TYPE.today]: [getBeginTimeOfDay(now), now],
+      [TIME_RANGE_TYPE.yesterday]: [
+        getBeginTimeOfDay(yesterday),
+        getEndTimeOfDay(yesterday),
+      ],
+      [TIME_RANGE_TYPE.past_7_days]: [getBeginTimeOfDay(past7Days), now],
+      [TIME_RANGE_TYPE.past_30_days]: [getBeginTimeOfDay(past30Days), now],
+      [TIME_RANGE_TYPE.month]: [getBeginDayOfMonth(now), now],
+      [TIME_RANGE_TYPE.last_month]: [
+        getBeginDayOfMonth(lastMonth),
+        getEndDayOfMonth(lastMonth),
+      ],
+      [TIME_RANGE_TYPE.custom]: range,
+    };
+    return TIME_RANGE[method];
+  };
+
+  const onSubmit = (data) => {
+    const range = getRange(data.method, data.range);
+    const _extraQueries = {};
+    const start_date = range[0].valueOf();
+    const end_date = range[1].valueOf();
+    _extraQueries['created'] = {
+      $gte: start_date,
+      $lte: end_date,
+    };
+
+    setQueryState((prev) => {
+      const nextExtraQuery = {...prev.extraQueries, ..._extraQueries};
+      const filterOutQueryKeys = Object.keys(prev.extraQueries)
+        .map((q) => {
+          if (!Object.keys(_extraQueries).find((qk) => qk === q)) {
+            return q;
+          } else {
+            return null;
+          }
+        })
+        .filter((k) => !!k);
+      filterOutQueryKeys.forEach((k) => {
+        delete nextExtraQuery[k];
+      });
+      return {
+        ...prev,
+        extraQueries: nextExtraQuery,
+      };
+    });
+  };
+
+  return (
+    <Form
+      layout="vertical"
+      form={form}
+      initialValues={{}}
+      colon={false}
+      onFinish={onSubmit}>
+      <Form.Item label="日期區間" name="method">
+        <Select defaultValue="" allowClear style={{maxWidth: 180}}>
+          <Select.Option disabled value="">
+            請選擇日期區間
+          </Select.Option>
+          {Object.values(TIME_RANGE_TYPE_DISPLAY).map((type, index) => (
+            <Select.Option key={index} value={type.value}>
+              {type.label}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+      <Form.Item dependencies={['method']}>
+        {(form) => {
+          if (form.getFieldValue('method') === TIME_RANGE_TYPE.custom) {
+            return (
+              <Form.Item
+                rules={[{required: true, message: '請填寫查找區間'}]}
+                name="range"
+                label="自訂區間"
+                dependencies={['method']}>
+                <RangePicker showTime />
+              </Form.Item>
+            );
+          } else {
+            return null;
+          }
+        }}
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType="submit" type="primary">
+          查詢
+        </Button>
+      </Form.Item>
+    </Form>
+  );
+};
+
 function AdminResourcePage(props) {
   const {path, pageContext} = props;
   const [categories] = useOutlet('categories');
@@ -153,6 +313,12 @@ function AdminResourcePage(props) {
       return <Button onClick={_copyShareUrl}>取得分享連結</Button>;
     } else if (name === 'UserCustom' && context.position === 'top') {
       return <PrivateProfile context={context} />;
+    } else if (
+      type === 'resource' &&
+      path === '/admin/orders' &&
+      context.position === 'middle'
+    ) {
+      return <OrderExtraQueries {...context} />;
     }
     return null;
   }
