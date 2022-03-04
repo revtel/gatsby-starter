@@ -11,7 +11,7 @@ import moment from 'moment';
 import Gtag from 'rev.sdk.js/Utils/Gtag';
 
 function Landing(props) {
-  const [site, setSite] = useState(null);
+  const [landing] = useOutlet('landing');
   const [products, setProducts] = useState([]);
   const [articles, setArticles] = useState([]);
   const [dragging, setDragging] = useState(false);
@@ -21,8 +21,6 @@ function Landing(props) {
     const _fetchSite = async () => {
       try {
         actions.setLoading(true);
-        const _site = (await JStorage.fetchDocuments('site', {name: 'landing'}))
-          .results[0];
         const _product = (
           await JStorage.fetchDocuments('product', {}, ['pokemon_id'], {
             limit: 6,
@@ -31,7 +29,6 @@ function Landing(props) {
         ).results;
         const _articles = (await JStorage.fetchDocuments('Article_Default', {}))
           .results;
-        setSite(_site);
         setProducts(_product);
         setArticles(_articles);
       } catch (e) {
@@ -59,8 +56,8 @@ function Landing(props) {
           afterChange={() => {
             setDragging(false);
           }}>
-          {site ? (
-            site.hero_banner.images.map((i) => {
+          {landing ? (
+            landing.hero_banner.images.map((i) => {
               if (i.file_type.indexOf('video') > -1) {
                 return (
                   <HeroBannerSection key={i}>

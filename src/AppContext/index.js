@@ -78,6 +78,8 @@ function Provider(props) {
           getOutlet('articleCategoryDisplayMap').update(
             buildCatDisplayMap(cfg.categories || []),
           );
+        } else if (cfg.name === 'landing') {
+          getOutlet('landing').update(cfg || []);
         }
       }
     }

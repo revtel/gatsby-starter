@@ -39,6 +39,8 @@ getNewOutlet('loading', false, {autoDelete: false});
 getNewOutlet('login-modal', false, {autoDelete: false});
 getNewOutlet('reset-password-modal', false, {autoDelete: false});
 
+getNewOutlet('landing', null, {autoDelete: false});
+
 // product collection
 getNewOutlet('categories', categories, {autoDelete: false});
 getNewOutlet('categoryDisplayMap', buildCatDisplayMap(categories), {
