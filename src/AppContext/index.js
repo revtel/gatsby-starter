@@ -5,7 +5,9 @@ import ResetPasswordModal from '../Components/ResetPasswordModal';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
 import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
 import Spinner from 'rev.sdk.js/Components/Spinner';
+import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
 import LoadingGif from '../../static/loading.gif';
+import Config from '../../data.json';
 
 function Provider(props) {
   const Dimension = getOutlet('dimension');
@@ -45,30 +47,39 @@ function Provider(props) {
 
   React.useEffect(() => {
     console.log('AppCtx effect hook');
-    function onCtxRendered() {
-      JStorage.fetchDocuments('site', {}, null, null).then((configs) => {
-        for (const cfg of configs) {
-          if (cfg.name === 'product_category') {
-            getOutlet('categories').update(cfg.categories || []);
-            getOutlet('categoryDisplayMap').update(
-              buildCatDisplayMap(cfg.categories || []),
-            );
-            window.sessionStorage.setItem(
-              'categories',
-              JSON.stringify(cfg.categories || []),
-            );
-          } else if (cfg.name === 'article_category') {
-            getOutlet('articleCategories').update(cfg.categories || []);
-            getOutlet('articleCategoryDisplayMap').update(
-              buildCatDisplayMap(cfg.categories || []),
-            );
-            window.sessionStorage.setItem(
-              'articleCategories',
-              JSON.stringify(cfg.categories || []),
-            );
-          }
+    async function onCtxRendered() {
+      let configs = null;
+
+      if (Config.siteCacheUrl) {
+        try {
+          configs = await ApiUtil.req(Config.siteCacheUrl);
+        } catch (ex1) {
+          console.warn('[AppContext] siteCacheUrl is set but no data');
         }
-      });
+      }
+
+      if (!configs) {
+        try {
+          configs = await JStorage.fetchDocuments('site', {}, null, null);
+        } catch (ex2) {
+          console.warn('[AppContext] fail to fetch site collection');
+          configs = [];
+        }
+      }
+
+      for (const cfg of configs) {
+        if (cfg.name === 'product_category') {
+          getOutlet('categories').update(cfg.categories || []);
+          getOutlet('categoryDisplayMap').update(
+            buildCatDisplayMap(cfg.categories || []),
+          );
+        } else if (cfg.name === 'article_category') {
+          getOutlet('articleCategories').update(cfg.categories || []);
+          getOutlet('articleCategoryDisplayMap').update(
+            buildCatDisplayMap(cfg.categories || []),
+          );
+        }
+      }
     }
     onCtxRendered();
   }, []);
