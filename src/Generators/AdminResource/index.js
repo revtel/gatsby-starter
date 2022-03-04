@@ -1,6 +1,6 @@
 import React from 'react';
 import AdminResource from 'rev.sdk.js/Generators/AdminResource';
-import {Button, message, Select, Tag, Form, DatePicker} from 'antd';
+import {Button, DatePicker, Form, message, Popconfirm, Select, Tag} from 'antd';
 import {useOutlet} from 'reconnect.js';
 import AdminOrderDetailForm from './AdminOrderDetailForm';
 import ArticleEditor from 'rev.sdk.js/Components/ArticleEditor';
@@ -350,6 +350,12 @@ function AdminResourcePage(props) {
       return getLogisticsStatusCustomElem(record);
     } else if (col.customType === 'logistics_type') {
       return Cart.LOGISTICS_TYPE_DISPLAY[record.logistics_type]?.label;
+    } else if (col.customType === 'offline_tx') {
+      return (
+        <div style={{fontSize: 18, fontWeight: 'bold', letterSpacing: 2}}>
+          {record.offline_tx}
+        </div>
+      );
     }
     return null;
   }
@@ -368,6 +374,21 @@ function AdminResourcePage(props) {
           }}>
           編輯
         </Button>
+      );
+    };
+  } else if (path === '/admin/orders/pending-offline-order') {
+    pageContext.resource.renderDetailButton = (cfg, {refresh}) => {
+      return (
+        <Popconfirm
+          title="已經確認轉帳後五碼？"
+          onConfirm={async () => {
+            const _hide = message.loading('更新付款狀態...');
+            await AppActions.confirmOfflineOrder(cfg.id);
+            await refresh();
+            _hide();
+          }}>
+          <Button type="primary">驗證</Button>
+        </Popconfirm>
       );
     };
   }
