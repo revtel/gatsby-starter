@@ -141,13 +141,16 @@ async function clientJStorageFetch(collection, {cat, sort, search, q}) {
 
   //"q" can defined custom query by project
   const catQuery = cat ? {labels: {$regex: cat}} : {};
-  const searchQuery = search ? {searchText: {$regex: search}} : {};
+  const searchQuery = search ? {$or: [{searchText: {$regex: search}}]} : {};
   const sortValue = sort ? [sort] : ['-created'];
   const extraQueries = {};
   let projection = null;
 
   if (collection === 'product') {
     extraQueries.public = true;
+    if (search) {
+      searchQuery['$or'].push({name: {$regex: search}});
+    }
   } else if (collection === 'Article_Default') {
     delete catQuery.labels;
     if (!cat) {
