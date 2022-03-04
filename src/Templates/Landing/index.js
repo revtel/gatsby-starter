@@ -309,7 +309,7 @@ function Landing(props) {
                 '藍牙/NFC智能鎖顧問開發',
                 'https://medium.com/revtel-tech/案例分享-傳產升級-藍牙電子鎖-809b39d97637',
               ],
-              ['Pranaq', '/images/pranaq.png', '雲端系統顧問'],
+              ['Pranaq', '/images/pranaq.png', '醫療雲端系統顧問'],
             ].map((item, idx) => {
               const withLink = item[3]
                 ? (_) => (
