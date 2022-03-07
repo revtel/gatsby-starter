@@ -35,8 +35,11 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
+                <h2 style={{marginBottom: 15, color: '#603601'}}>
+                  當您要從零開發系統時
+                </h2>
                 <h3 style={{marginBottom: 10}}>系統規劃</h3>
-                <h4 style={{marginBottom: 10}}>適用於客製化系統先期調研</h4>
+                <h4 style={{marginBottom: 10}}>協助客製化系統先期調研</h4>
                 <p style={{color: '#3E3E3E'}}>
                   因軟體工程的連續性及難以分割，開發流程不易在中途隨意中止。本服務協助於先期規劃階段排除流程或功能的潛在設計不良
                 </p>
@@ -51,8 +54,11 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
+                <h2 style={{marginBottom: 15, color: '#603601'}}>
+                  當您要擴充系統或驗收時
+                </h2>
                 <h3 style={{marginBottom: 10}}>系統健檢</h3>
-                <h4 style={{marginBottom: 10}}>適用於既有系統的風險排查</h4>
+                <h4 style={{marginBottom: 10}}>協助既有系統的風險排查</h4>
                 <p style={{color: '#3E3E3E'}}>
                   軟體的複雜隨著時間成指數倍增長，在改版、升級或擴充時需要完整掌握。本服務協助評估既有系統狀態及協助驗收開發成果
                 </p>
@@ -67,8 +73,11 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
+                <h2 style={{marginBottom: 15, color: '#603601'}}>
+                  當您要規劃團隊及技術時
+                </h2>
                 <h3 style={{marginBottom: 10}}>技術佈局</h3>
-                <h4 style={{marginBottom: 10}}>適用於長期產品的技術建議</h4>
+                <h4 style={{marginBottom: 10}}>協助長期產品的技術建議</h4>
                 <p style={{color: '#3E3E3E'}}>
                   面對新的軟體框架不斷出現，長期經營的事業常常面臨技術挑選的困擾。本服務根據團隊狀態及公司方向做技術佈局規劃及建議
                 </p>
@@ -83,6 +92,9 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
+                <h2 style={{marginBottom: 15, color: '#603601'}}>
+                  當您想放大產品價值時
+                </h2>
                 <h3 style={{marginBottom: 10}}>商模建議</h3>
                 <h4 style={{marginBottom: 10}}>基於軟體產品規劃盈利模式</h4>
                 <p style={{color: '#3E3E3E'}}>
@@ -109,8 +121,10 @@ function Landing(props) {
                 maxWidth: 500,
               }}>
               <div className="description" style={{borderRadius: 10}}>
+                <h2 style={{marginBottom: 15, color: '#CEAB93'}}>
+                  量身定做適合您現況的專案計畫
+                </h2>
                 <h3 style={{marginBottom: 10, color: 'white'}}>專案式合作</h3>
-                <h4 style={{marginBottom: 10, color: 'white'}}>量身定做</h4>
                 <p style={{color: 'lightgrey'}}>
                   適用於整體需求較為清楚的用戶。合作目標為根據實際需要提供專業協助，從架構分析、技術報告到開發協作皆為可討論範圍{' '}
                 </p>
@@ -127,8 +141,10 @@ function Landing(props) {
                 maxWidth: 500,
               }}>
               <div className="description" style={{borderRadius: 10}}>
+                <h2 style={{marginBottom: 15, color: '#CEAB93'}}>
+                  提供符合您現況的彈性支援
+                </h2>
                 <h3 style={{marginBottom: 10, color: 'white'}}>時數式合作</h3>
-                <h4 style={{marginBottom: 10, color: 'white'}}>彈性支援</h4>
                 <p style={{color: 'lightgrey'}}>
                   適用於整體狀況不太明確的用戶。合作目標為協助釐清問題及健康度確認，藉以提高開發速度或及早發現潛在風險並有因應原則{' '}
                 </p>
@@ -144,6 +160,7 @@ function Landing(props) {
           </Element>
           <div
             style={{
+              margin: 25,
               paddingRight: 10,
               width: '100%',
               display: 'flex',
@@ -174,7 +191,7 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 10}}>經驗來自實務</h3>
+                <h3 style={{marginBottom: 20}}>我們的經驗來自實務</h3>
                 <p style={{color: '#3E3E3E'}}>
                   基於過往超過六十個以上方案開發協作提供協作
                 </p>
@@ -189,7 +206,7 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 10}}>技術實力紮實</h3>
+                <h3 style={{marginBottom: 20}}>我們的技術實力紮實</h3>
                 <p style={{color: '#3E3E3E'}}>
                   於網頁、雲端、APP、物聯網及區塊鏈皆有成果
                 </p>
@@ -204,7 +221,7 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 10}}>自有團隊協作</h3>
+                <h3 style={{marginBottom: 20}}>自有後勤團隊可協作</h3>
                 <p style={{color: '#3E3E3E'}}>
                   規劃內容如有需要可直接對接內部工程團隊開發
                 </p>
@@ -219,7 +236,7 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 10}}>領域經驗多元</h3>
+                <h3 style={{marginBottom: 20}}>我們的領域經驗多元</h3>
                 <p style={{color: '#3E3E3E'}}>
                   橫跨超過十個領域以上的顧問、開發及團隊經驗
                 </p>
