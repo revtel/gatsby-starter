@@ -96,27 +96,43 @@ function SiteFooter(props) {
             '/images/internet.png',
             '忻旅科技股份有限公司',
             'https://wwww.revtel.tech',
+            '#008E89',
           ],
-          ['/images/phone.png', '(02)2557-8895', 'tel:+886225578895'],
+          [
+            '/images/phone.png',
+            '(02)2557-8895',
+            'tel:+886225578895',
+            '#085E7D',
+          ],
           [
             '/images/mail.png',
             'contact@revteltech.com',
             'mailto:contact@revteltech.com',
+            '#085E7D',
           ],
           [
             '/images/facebook.png',
             'RevtelTech 忻旅科技',
             'https://www.facebook.com/RevtelTech',
+            '#085E7D',
+          ],
+
+          [
+            '/images/facebook.png',
+            '軟體開發疑難雜症交流區',
+            'https://www.facebook.com/groups/software.blablablabla',
+            '#084594',
           ],
         ].map((item, idx) => (
           <div
             style={{
-              width: 300,
+              width: 320,
               marginTop: 10,
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'flex-start',
               alignItems: 'center',
+              fontSize: 24,
             }}
             key={idx}>
             <img src={item[0]} width="20" height="20" />
@@ -125,7 +141,7 @@ function SiteFooter(props) {
               target="_blank"
               ariaLabel={item[1]}
               alt={item[1]}
-              style={{marginLeft: 20, color: '#085E7D'}}
+              style={{marginLeft: 20, color: item[3] || '#085E7D'}}
               rel="noreferrer">
               {item[1]}
             </a>
