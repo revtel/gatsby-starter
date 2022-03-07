@@ -3,12 +3,9 @@ class PluginAction {
   constructor(name, options = {}) {
     this.name = name;
     this.options = {...options};
-    console.log(`Plugin[${name}] created`);
   }
 
-  init() {
-    console.log(`Plugin[${this.name}] initialized`);
-  }
+  init() {}
 
   shouldExecute(...args) {
     return false;

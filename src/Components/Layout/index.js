@@ -12,10 +12,14 @@ import styled from 'styled-components';
 import {THEME_COLOR} from '../../constants';
 import 'antd/dist/antd.less';
 import './Layout.css';
+import useFacebookPixel from '../../Hooks/useFacebookPixel';
+import useGoogleAnalytics from '../../Hooks/useGoogleAnalytics';
 
 function Layout({children, location}) {
   const [dimension] = useOutlet('dimension');
   const [initialized, setInitialized] = React.useState(false);
+  useFacebookPixel({pixelId: Config.pixelId});
+  useGoogleAnalytics({gaId: Config.gaId, gtmId: Config.gtmId});
 
   React.useEffect(() => {
     const isAdmin = location.pathname.indexOf('admin') !== -1;
@@ -35,40 +39,6 @@ function Layout({children, location}) {
       initialize(isAdmin);
     }
   }, [location.pathname, initialized]);
-
-  React.useLayoutEffect(() => {
-    const gaScript = document.createElement('script');
-    gaScript.async = true;
-    gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${Config.gaId}`;
-    document.head.appendChild(gaScript);
-
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = function () {
-      window.dataLayer.push(arguments);
-    };
-    window.gtag('js', new Date());
-    window.gtag('config', Config.gaId, {debug_mode: true});
-
-    const gtmScriptTag = document.createElement('script');
-    gtmScriptTag.innerHTML = `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-  })(window,document,'script','dataLayer', '${Config.gtmId}');`;
-
-    const gtmNoScriptTag = document.createElement('noscript');
-    gtmNoScriptTag.innerHTML = `
-                <iframe
-            src="https://www.googletagmanager.com/ns.html?id=${Config.gtmId}"
-            height="0"
-            width="0"
-            style="display:none;visibility:hidden"
-          />
-`;
-
-    document.head.appendChild(gtmScriptTag);
-    document.body.appendChild(gtmNoScriptTag);
-  }, []);
 
   if (location.pathname.indexOf('admin') !== -1) {
     return (

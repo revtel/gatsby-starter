@@ -14,8 +14,9 @@ import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
 import gtagPlugin from './Plugin/gtagPlugin';
+import fbqPlugin from './Plugin/fbqPlugin';
 import onCartLoadedPlugin from './Plugin/onCartLoadedPlugin';
-import Gtag from 'rev.sdk.js/Utils/Gtag';
+import {gtag as Gtag, fbq as Fbq} from 'rev.sdk.js/Utils/Tracker';
 import qs from 'query-string';
 
 /**
@@ -33,6 +34,7 @@ const Plugins = {
     'onAfterAdminFormSubmit',
   ),
   gtag: new gtagPlugin('gtag'),
+  fbq: new fbqPlugin('fbq'),
   onCartLoaded: new onCartLoadedPlugin('onCartLoaded'),
 };
 
@@ -80,12 +82,18 @@ function setLoading(loading, params) {
 function gtag(eventType, event, payload) {
   let shouldContinue = true;
   if (Plugins.gtag.shouldExecute()) {
-    /* TODO: add custom gtag event and to decide
-        whether call rev.sdk.js gtag event
-        plz always do custom code in plugin */
     shouldContinue = Plugins.gtag.executeSync(eventType, event, payload);
   }
-  // when return value is true , would trigger the default ga behavior in rev.sdk.js
+  // when true , would trigger the default ga behavior in rev.sdk.js
+  return shouldContinue;
+}
+
+function fbq(eventType, event, payload) {
+  let shouldContinue = true;
+  if (Plugins.fbq.shouldExecute()) {
+    shouldContinue = Plugins.fbq.executeSync(eventType, event, payload);
+  }
+  // when true , would trigger the default fbq behavior in rev.sdk.js
   return shouldContinue;
 }
 
@@ -437,8 +445,9 @@ export {
   rebuild,
   getReurl,
   confirmOfflineOrder,
-  gtag,
   editUserPrivateProfile,
   createCustomOrder,
   selectCVS,
+  gtag,
+  fbq,
 };
