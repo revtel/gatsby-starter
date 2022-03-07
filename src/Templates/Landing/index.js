@@ -440,7 +440,7 @@ const BlogWrapper = styled.div`
   max-width: 1300px;
   width: 100%;
   min-height: 285px;
-  background-color: #ffffff;
+  background-color: var(--backgroundColor);
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   overflow: hidden;
   display: flex;

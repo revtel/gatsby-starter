@@ -12,9 +12,18 @@ import styled from 'styled-components';
 import {THEME_COLOR} from '../../constants';
 import 'antd/dist/antd.less';
 import './Layout.css';
+import Values, {
+  customize,
+  getCssVarsDeclaration,
+} from 'rev.sdk.js/Styles/Values';
+
+customize({
+  colorPrimary: THEME_COLOR,
+});
 
 function Layout({children, location}) {
   const [dimension] = useOutlet('dimension');
+  const [styleConfig, setStyleConfig] = useOutlet('style');
   const [initialized, setInitialized] = React.useState(false);
 
   React.useEffect(() => {
@@ -72,7 +81,10 @@ function Layout({children, location}) {
 
   if (location.pathname.indexOf('admin') !== -1) {
     return (
-      <AdminLayout location={location}>
+      // FIXME: add style config theme
+      <AdminLayout
+        className={styleConfig.theme === 'dark' ? 'dark' : ''}
+        location={location}>
         <Helmet>
           <title>Pokémon Center</title>
           <meta
@@ -85,7 +97,10 @@ function Layout({children, location}) {
     );
   } else if (location.pathname.indexOf('profile') !== -1) {
     return (
-      <Wrapper rwd={dimension.rwd}>
+      // FIXME: add style config theme
+      <Wrapper
+        className={styleConfig.theme === 'dark' ? 'dark' : ''}
+        rwd={dimension.rwd}>
         <SiteNavBar location={location} />
         <ProfileLayout style={{flex: 1}} location={location}>
           {children}
@@ -95,7 +110,9 @@ function Layout({children, location}) {
     );
   } else if (location.pathname.indexOf('checkout') !== -1) {
     return (
-      <Wrapper rwd={dimension.rwd}>
+      <Wrapper
+        className={styleConfig.theme === 'dark' ? 'dark' : ''}
+        rwd={dimension.rwd}>
         <SiteNavBar location={location} />
         <CheckoutLayout style={{flex: 1}} location={location}>
           {children}
@@ -136,16 +153,28 @@ function Layout({children, location}) {
           src={`https://www.googletagmanager.com/gtag/js?id=${Config.gaId}`}
         />
       </Helmet>
-      <Wrapper rwd={dimension.rwd}>
+      <Wrapper
+        className={styleConfig.theme === 'dark' ? 'dark' : ''}
+        rwd={dimension.rwd}>
         {hasSiteNavBar && <SiteNavBar bgColor="white" location={location} />}
         <div style={{flex: 1}}>{children}</div>
+        <button
+          onClick={() =>
+            setStyleConfig({
+              theme: styleConfig.theme === 'dark' ? 'light' : 'dark',
+            })
+          }>
+          換 theme({styleConfig.theme})
+        </button>
         {hasSiteFooter && <SiteFooter />}
       </Wrapper>
     </>
   );
 }
 
+// FIXME: consider a higher comp wrapper for Wrapper to apply general css for adminLayout, CheckoutLayout, Layout
 const Wrapper = styled.div`
+  ${getCssVarsDeclaration()}
   --contentMaxWidth: 1200px;
   --contentMinHeight: 840px;
   --topNavBarHeight: 64px;
@@ -153,11 +182,18 @@ const Wrapper = styled.div`
   --primaryColor: ${THEME_COLOR};
   --sectionPadding: 50px 100px;
   --sectionMobilePadding: 20px;
+  --backgroundColor: #fff;
   overflow-x: hidden;
 
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  /* transition: background-color 5s ease-in; */
+  &.dark {
+    --primaryColor: pink;
+    --backgroundColor: #444; // export #444 color to sdk
+  }
 
   .title {
     font-size: ${(props) => (props.rwd === 'desktop' ? 22 : 15)}px;

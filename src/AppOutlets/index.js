@@ -80,3 +80,11 @@ getNewOutlet(
   },
   {autoDelete: false},
 );
+
+getNewOutlet(
+  'style',
+  {
+    theme: 'light',
+  },
+  {autoDelete: false},
+);
