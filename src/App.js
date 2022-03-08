@@ -1,4 +1,5 @@
-import './AppOutlets';
+import './AppOutlets/index';
+import './AppOutlets/custom';
 import './SdkInit';
 import {getOutlet} from 'reconnect.js';
 import * as AppActions from './AppActions/index';
