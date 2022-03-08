@@ -129,13 +129,14 @@ function adminCanAccess(user, options = {}) {
  * **************************************************
  */
 
-async function clientJStorageFetch(collection, {cat, sort, search, q}) {
+async function clientJStorageFetch(collection, {cat, sort, search, q, page}) {
   if (Plugins.clientJStorageFetch.shouldExecute()) {
     return Plugins.clientJStorageFetch.executeAsync(collection, {
       cat,
       sort,
       search,
       q,
+      page,
     });
   }
 
@@ -143,6 +144,7 @@ async function clientJStorageFetch(collection, {cat, sort, search, q}) {
   const catQuery = cat ? {labels: {$regex: cat}} : {};
   const searchQuery = search ? {$or: [{searchText: {$regex: search}}]} : {};
   const sortValue = sort ? [sort] : ['-created'];
+  const pagingValue = page;
   const extraQueries = {};
   let projection = null;
 
@@ -169,7 +171,7 @@ async function clientJStorageFetch(collection, {cat, sort, search, q}) {
       ...extraQueries,
     },
     sortValue,
-    null, // no paging for now, since our EC products shouldn't be too much
+    pagingValue,
     projection, // if we're fetching Article, ignore the content
     {anonymous: true},
   );
