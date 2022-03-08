@@ -10,12 +10,13 @@ import SiteFooter from '../SiteFooter';
 import CheckoutLayout from '../CheckoutLayout';
 import styled from 'styled-components';
 import {THEME_COLOR} from '../../constants';
-import 'antd/dist/antd.less';
+import 'antd/dist/antd.variable.min.css'; // https://ant.design/docs/react/customize-theme-variable
 import './Layout.css';
 import Values, {
   customize,
   getCssVarsDeclaration,
 } from 'rev.sdk.js/Styles/Values';
+import {ConfigProvider} from 'antd';
 
 customize({
   colorPrimary: THEME_COLOR,
@@ -79,9 +80,23 @@ function Layout({children, location}) {
     document.body.appendChild(gtmNoScriptTag);
   }, []);
 
+  const onThemeChange = () => {
+    let primaryColor = styleConfig.theme === 'dark' ? 'green' : THEME_COLOR;
+    customize({
+      colorPrimary: primaryColor,
+    });
+    setStyleConfig({
+      theme: styleConfig.theme === 'dark' ? 'light' : 'dark',
+    });
+    ConfigProvider.config({
+      theme: {
+        primaryColor: primaryColor,
+      },
+    });
+  };
+
   if (location.pathname.indexOf('admin') !== -1) {
     return (
-      // FIXME: add style config theme
       <AdminLayout
         className={styleConfig.theme === 'dark' ? 'dark' : ''}
         location={location}>
@@ -97,7 +112,6 @@ function Layout({children, location}) {
     );
   } else if (location.pathname.indexOf('profile') !== -1) {
     return (
-      // FIXME: add style config theme
       <Wrapper
         className={styleConfig.theme === 'dark' ? 'dark' : ''}
         rwd={dimension.rwd}>
@@ -117,6 +131,9 @@ function Layout({children, location}) {
         <CheckoutLayout style={{flex: 1}} location={location}>
           {children}
         </CheckoutLayout>
+        <button onClick={() => onThemeChange()}>
+          換 theme({styleConfig.theme})
+        </button>
         <SiteFooter />
       </Wrapper>
     );
@@ -158,12 +175,7 @@ function Layout({children, location}) {
         rwd={dimension.rwd}>
         {hasSiteNavBar && <SiteNavBar bgColor="white" location={location} />}
         <div style={{flex: 1}}>{children}</div>
-        <button
-          onClick={() =>
-            setStyleConfig({
-              theme: styleConfig.theme === 'dark' ? 'light' : 'dark',
-            })
-          }>
+        <button onClick={() => onThemeChange()}>
           換 theme({styleConfig.theme})
         </button>
         {hasSiteFooter && <SiteFooter />}
@@ -172,7 +184,6 @@ function Layout({children, location}) {
   );
 }
 
-// FIXME: consider a higher comp wrapper for Wrapper to apply general css for adminLayout, CheckoutLayout, Layout
 const Wrapper = styled.div`
   ${getCssVarsDeclaration()}
   --contentMaxWidth: 1200px;
@@ -194,6 +205,8 @@ const Wrapper = styled.div`
     --primaryColor: pink;
     --backgroundColor: #444; // export #444 color to sdk
   }
+
+  color: var(--primaryColor);
 
   .title {
     font-size: ${(props) => (props.rwd === 'desktop' ? 22 : 15)}px;
