@@ -281,6 +281,7 @@ function Landing(props) {
                 '/images/bizlion.png',
                 '區塊鏈點數發幣系統顧問開發',
               ],
+              ['感官文化印刷', '/images/sens.png', '電商/ERP/區塊鏈設計開發'],
               [
                 '高曼計量',
                 'https://www.revtel.tech/static/6adb281dd727e95fdd10717d07b19597/159a2/gamma.png',
