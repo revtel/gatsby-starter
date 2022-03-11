@@ -1,12 +1,11 @@
 import React from 'react';
 import {getOutlet} from 'reconnect.js';
-import LoginModal from 'rev.sdk.js/Components/LoginModal';
-import ResetPasswordModal from '../Components/ResetPasswordModal';
 import * as JStorage from 'rev.sdk.js/Actions/JStorage';
-import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
-import Spinner from 'rev.sdk.js/Components/Spinner';
 import * as ApiUtil from 'rev.sdk.js/Utils/ApiUtil';
-import LoadingGif from '../../static/loading.gif';
+import LoginModal from '../Components/LoginModal';
+import ResetPasswordModal from '../Components/ResetPasswordModal';
+import GlobalSpinner from '../Components/GlobalSpinner';
+import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
 import Config from '../../data.json';
 
 function Provider(props) {
@@ -91,21 +90,10 @@ function Provider(props) {
   return (
     <>
       {props.children}
-      <LoginModal
-        canFacebookLogin={true}
-        canLineLogin={true}
-        canGoogleLogin={true}
-        canForgetPassword={true}
-        canRegister={true}
-        onForgotPasswordClick={null}
-        onRegisterClick={null}
-      />
+
+      <LoginModal />
       <ResetPasswordModal />
-      <Spinner
-        imageUrl={LoadingGif}
-        spinnerStyle={{animation: 'unset', width: 150, height: 150}}
-        style={{backgroundColor: 'transparent'}}
-      />
+      <GlobalSpinner />
     </>
   );
 }
