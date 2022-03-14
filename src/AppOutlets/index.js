@@ -1,5 +1,5 @@
 import {getNewOutlet} from 'reconnect.js';
-import {buildCatDisplayMap} from '../Utils/buildCatDisplayMap';
+import {buildCatDisplayMap} from 'rev.sdk.js/Utils/buildCatDisplayMap';
 import './featureOptions';
 
 /**
