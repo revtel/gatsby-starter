@@ -13,7 +13,7 @@ import * as AppActions from '../../AppActions';
 import Carousel from '../../Components/Carousel';
 import FixedRatioImage from '../../Components/FixedRatioImage';
 import {THEME_COLOR} from '../../constants';
-import Gtag from 'rev.sdk.js/Utils/Gtag';
+import {fbq, gtag} from 'rev.sdk.js/Utils/Tracker';
 
 function ProductDetail(props) {
   const {
@@ -44,13 +44,25 @@ function ProductDetail(props) {
         const resp = await JStorage.fetchOneDocument(collection, {id});
         setProduct(resp);
         setImgIdx(0);
-        Gtag('event', 'view_item', {
+        gtag('event', 'view_item', {
           currency: 'TWD',
           value: resp.price,
           items: [resp].map((p) => ({
             item_id: p.id,
             item_name: p.name,
           })),
+        });
+        fbq('track', 'ViewContent', {
+          content_ids: [resp.id],
+          content_category: resp.labels.join(','),
+          content_name: resp.name,
+          currency: 'TWD',
+          value: resp.price,
+          contents: [resp].map((p) => ({
+            id: resp.id,
+            quantity: 1,
+          })),
+          content_type: 'product',
         });
         AppActions.setLoading(false);
 
@@ -83,7 +95,7 @@ function ProductDetail(props) {
     });
     try {
       await navigator.clipboard.writeText(_url);
-      Gtag('event', 'share', {
+      gtag('event', 'share', {
         method: 'url',
         content_type: 'product',
         item_id: product.id,
@@ -104,13 +116,24 @@ function ProductDetail(props) {
     try {
       AppActions.setLoading(true);
       await Cart.addToCart(product.id, currItemConfig);
-      Gtag('event', 'add_to_cart', {
+      gtag('event', 'add_to_cart', {
         currency: 'TWD',
         value: product.price * currItemConfig.qty,
         items: [product].map((p) => ({
           item_id: p.id,
           item_name: p.name,
         })),
+      });
+      fbq('track', 'AddToCart', {
+        content_ids: [product].map((p) => p.id),
+        content_name: product.name,
+        content_type: 'product',
+        contents: [product].map((p) => ({
+          id: p.id,
+          quantity: currItemConfig.qty,
+        })),
+        currency: 'TWD',
+        value: product.price * currItemConfig.qty,
       });
       message.success('成功');
     } catch (ex) {

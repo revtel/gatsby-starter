@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 import Slick from 'react-slick';
 import {useOutlet} from 'reconnect.js';
 import moment from 'moment';
-import Gtag from 'rev.sdk.js/Utils/Gtag';
+import {gtag} from 'rev.sdk.js/Utils/Tracker';
 
 function Landing(props) {
   const [landing] = useOutlet('landing');
@@ -149,7 +149,7 @@ function Landing(props) {
                 <RecommendProductItem
                   key={idx}
                   onClick={() => {
-                    Gtag('event', 'select_item', {
+                    gtag('event', 'select_item', {
                       item_list_name: 'product',
                       items: [
                         {

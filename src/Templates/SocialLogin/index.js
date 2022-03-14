@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import queryString from 'query-string';
 import {useOutlet} from 'reconnect.js';
 import {navigate} from 'gatsby';
-import Gtag from 'rev.sdk.js/Utils/Gtag';
+import {fbq, gtag} from 'rev.sdk.js/Utils/Tracker';
 import * as User from 'rev.sdk.js/Actions/User';
 import NavUrl from 'rev.sdk.js/Utils/NavUrl';
 
@@ -21,9 +21,10 @@ function SocialLoginPage(props) {
       try {
         actions.setLoading(true);
         if (is_registered === 'true') {
-          Gtag('event', 'sign_up', {
+          gtag('event', 'sign_up', {
             method: provider,
           });
+          fbq('track', 'CompleteRegistration', {});
           const params = queryString.parse(window.location.search);
           delete params.is_registered;
           delete params.provider;

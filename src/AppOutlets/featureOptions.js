@@ -1,3 +1,3 @@
 import init from 'rev.sdk.js/Config/featureOptions';
 
-init({points: {}});
+init({points: {}, facebookPixel: {}, googleAnalytics: {}});
