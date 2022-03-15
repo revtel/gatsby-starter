@@ -1,6 +1,7 @@
 {
   "clientId": "pokemon-store",
   "primaryUserType": "email",
+  "um": false,
   "stage": "stg",
   "apiHost": "https://pokemon-store-api-stg.revtel2.com",
   "authHost": "https://auth-stg.revtel-api.com/v4",
@@ -9,5 +10,7 @@
   "storageHost": "https://storage-stg.revtel-api.com/v4",
   "articleEditorHost": "https://console.revtel2.com/article/editor",
   "gaId": "G-1LH69CW4Y1",
-  "gtmId": "GTM-KCRVXBN"
+  "gtmId": "GTM-KCRVXBN",
+  "siteCacheUrl": "https://pokemon-store-revtel2-com-stg.s3.ap-northeast-1.amazonaws.com/rev-site-cache.json",
+  "pixelId": 354413086572477
 }

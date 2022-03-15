@@ -31,6 +31,7 @@ const pages = [
       collection: 'Article_Default',
       features: {
         cat: false,
+        pageSize: 24,
       },
     },
   },

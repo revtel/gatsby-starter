@@ -1,0 +1,111 @@
+{
+  "path": "/admin/orders/pending-offline-order",
+  "name": "待驗訂單",
+  "collection": "order",
+  "primaryKey": "id",
+  "searchFields": [
+    "order_number",
+    "buyer_name",
+    "buyer_phone"
+  ],
+  "searchApproach": "union",
+  "renderCreateButton": false,
+  "renderDeleteButton": false,
+  "renderDetailButton": false,
+  "resourceTableProps": {
+    "scroll": {
+      "x": 1200
+    }
+  },
+  "predefinedQueries": [
+    {
+      "payment_subtype": {
+        "$eq": "offline"
+      }
+    },
+    {
+      "offline_tx": {
+        "$ne": ""
+      }
+    },
+    {
+      "payment_status": {
+        "$eq": "pending"
+      }
+    }
+  ],
+  "columns": [
+    {
+      "title": "訂單編號",
+      "key": "order_number",
+      "dataIndex": "order_number",
+      "width": 200,
+      "fixed": "left"
+    },
+    {
+      "title": "購買人姓名",
+      "key": "buyer_name",
+      "dataIndex": "buyer_name",
+      "width": 150,
+      "fixed": "left"
+    },
+    {
+      "title": "帳號後五碼",
+      "key": "offline_tx",
+      "dataIndex": "offline_tx",
+      "customType": "offline_tx",
+      "width": 150,
+      "fixed": "left"
+    },
+    {
+      "title": "訂單狀態",
+      "key": "status",
+      "dataIndex": "status",
+      "customType": "order_status",
+      "width": 120
+    },
+    {
+      "title": "物流方式",
+      "key": "logistics_type",
+      "dataIndex": "logistics_type",
+      "customType": "logistics_type",
+      "width": 150
+    },
+    {
+      "title": "訂單日期",
+      "key": "created",
+      "dataIndex": "created",
+      "dataType": "timestamp",
+      "width": 130
+    },
+    {
+      "title": "客製單資訊",
+      "key": "custom_name",
+      "dataIndex": "custom_name",
+      "customType": "custom-order-info",
+      "width": 150
+    }
+  ],
+  "querySpec": {
+    "pageSizeOptions": [
+      50
+    ],
+    "sortOptions": [
+      {
+        "name": "日期近到遠",
+        "value": "-created"
+      },
+      {
+        "name": "日期遠到近",
+        "value": "created"
+      }
+    ],
+    "canSearch": true,
+    "filters": []
+  },
+  "formSpec": {
+    "schema": {},
+    "uiSchema": {}
+  },
+  "actionBar": []
+}

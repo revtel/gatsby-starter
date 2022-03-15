@@ -1,6 +1,6 @@
 import PluginAction from '../PluginAction';
 
-export default class gtagPlugin extends PluginAction {
+export default class fbqPlugin extends PluginAction {
   shouldExecute(...args) {
     return true;
   }

@@ -14,7 +14,9 @@ import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
 import gtagPlugin from './Plugin/gtagPlugin';
-import Gtag from 'rev.sdk.js/Utils/Gtag';
+import fbqPlugin from './Plugin/fbqPlugin';
+import onCartLoadedPlugin from './Plugin/onCartLoadedPlugin';
+import {gtag as Gtag, fbq as Fbq} from 'rev.sdk.js/Utils/Tracker';
 import qs from 'query-string';
 
 /**
@@ -32,6 +34,8 @@ const Plugins = {
     'onAfterAdminFormSubmit',
   ),
   gtag: new gtagPlugin('gtag'),
+  fbq: new fbqPlugin('fbq'),
+  onCartLoaded: new onCartLoadedPlugin('onCartLoaded'),
 };
 
 const req = ApiUtil.req;
@@ -78,12 +82,18 @@ function setLoading(loading, params) {
 function gtag(eventType, event, payload) {
   let shouldContinue = true;
   if (Plugins.gtag.shouldExecute()) {
-    /* TODO: add custom gtag event and to decide
-        whether call rev.sdk.js gtag event
-        plz always do custom code in plugin */
     shouldContinue = Plugins.gtag.executeSync(eventType, event, payload);
   }
-  // when return value is true , would trigger the default ga behavior in rev.sdk.js
+  // when true , would trigger the default ga behavior in rev.sdk.js
+  return shouldContinue;
+}
+
+function fbq(eventType, event, payload) {
+  let shouldContinue = true;
+  if (Plugins.fbq.shouldExecute()) {
+    shouldContinue = Plugins.fbq.executeSync(eventType, event, payload);
+  }
+  // when true , would trigger the default fbq behavior in rev.sdk.js
   return shouldContinue;
 }
 
@@ -127,25 +137,30 @@ function adminCanAccess(user, options = {}) {
  * **************************************************
  */
 
-async function clientJStorageFetch(collection, {cat, sort, search, q}) {
+async function clientJStorageFetch(collection, {cat, sort, search, q, page}) {
   if (Plugins.clientJStorageFetch.shouldExecute()) {
     return Plugins.clientJStorageFetch.executeAsync(collection, {
       cat,
       sort,
       search,
       q,
+      page,
     });
   }
 
   //"q" can defined custom query by project
   const catQuery = cat ? {labels: {$regex: cat}} : {};
-  const searchQuery = search ? {searchText: {$regex: search}} : {};
+  const searchQuery = search ? {$or: [{searchText: {$regex: search}}]} : {};
   const sortValue = sort ? [sort] : ['-created'];
+  const pagingValue = page;
   const extraQueries = {};
   let projection = null;
 
   if (collection === 'product') {
     extraQueries.public = true;
+    if (search) {
+      searchQuery['$or'].push({name: {$regex: search}});
+    }
   } else if (collection === 'Article_Default') {
     delete catQuery.labels;
     if (!cat) {
@@ -164,7 +179,7 @@ async function clientJStorageFetch(collection, {cat, sort, search, q}) {
       ...extraQueries,
     },
     sortValue,
-    null, // no paging for now, since our EC products shouldn't be too much
+    pagingValue,
     projection, // if we're fetching Article, ignore the content
     {anonymous: true},
   );
@@ -214,6 +229,14 @@ function onCartLoaded(cart) {
     buyer_address:
       cart.buyer_address || UserOutlet.getValue().data.address || '',
   };
+
+  if (Plugins.onCartLoaded.shouldExecute()) {
+    return Plugins.onCartLoaded.executeSync(
+      cart,
+      checkoutFormSpec,
+      defaultUser,
+    );
+  }
 
   const updateConfig = {
     ...cart,
@@ -271,7 +294,7 @@ async function onLoginResult(err, result) {
           ...UserOutlet.getValue(),
           data: {
             ...profile,
-            email: privateProfile.email,
+            email: '',
             points: privateProfile.points,
             provider: privateProfile.provider,
           },
@@ -356,6 +379,16 @@ async function onAfterAdminFormSubmit(
     });
   }
 
+  if (
+    path.indexOf('/admin/landing') > -1 ||
+    path.indexOf('/admin/product_category') > -1 ||
+    path.indexOf('/admin/article_category') > -1
+  ) {
+    await JStorage.cacheDocuments('site', {}, null, null, null, undefined, {
+      key: 'rev-site-cache.json',
+    });
+  }
+
   return null;
 }
 
@@ -367,7 +400,7 @@ function getReurl({title, description, image, redirectUrl}) {
 
 async function selectCVS({logisticsSubType}) {
   window.location.href = `${Config.apiHost}/misc/cvs-map?${qs.stringify({
-    logistic_subtype: logisticsSubType,
+    logistics_subtype: logisticsSubType,
     redirect_url: `${window.location.origin}${window.location.pathname}`,
   })}`;
 }
@@ -414,8 +447,9 @@ export {
   rebuild,
   getReurl,
   confirmOfflineOrder,
-  gtag,
   editUserPrivateProfile,
   createCustomOrder,
   selectCVS,
+  gtag,
+  fbq,
 };

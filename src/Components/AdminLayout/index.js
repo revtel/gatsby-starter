@@ -3,7 +3,7 @@ import React from 'react';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import * as User from 'rev.sdk.js/Actions/User';
 import {navigate} from 'gatsby';
-import {Layout} from 'antd';
+import {Layout, Menu} from 'antd';
 import {withLoginRequired} from 'rev.sdk.js/Components/LoginRequired';
 import SiteNavBar from '../SiteNavBar';
 import LoginRequired from '../LoginRequired';
@@ -26,12 +26,13 @@ const SiteInfo = {
 const Routes = [
   {name: '首頁', path: '/admin'},
   {name: '會員', path: '/admin/users'},
-  {name: '文章', path: '/admin/articles'},
-  {name: '訂單', path: '/admin/orders'},
   {name: '商品', path: '/admin/products'},
   {name: '優惠券', path: '/admin/coupons'},
   {name: '滿額折扣', path: '/admin/discount-list'},
+  {name: '訂單首頁', path: '/admin/orders'},
+  {name: '待驗訂單', path: '/admin/orders/pending-offline-order'},
   {name: '客製化訂單', path: 'admin-custom-order'},
+  {name: '文章', path: '/admin/articles'},
   {name: '重設密碼', path: 'reset-password'},
   {name: '網站設定', path: '/admin/site'},
   {name: '超商地圖', path: '/admin/select-cvs'},
@@ -77,7 +78,6 @@ function AdminLayout(props) {
     height: '100vh',
     position: 'fixed',
     boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-    transition: 200,
     left: 0,
   };
 
@@ -97,11 +97,44 @@ function AdminLayout(props) {
           onClick={() => navigate('/')}
         />
 
-        {Routes.map(({name, path}) => (
-          <MenuItem key={path} {...getMenuProps(path)}>
-            {name}
-          </MenuItem>
-        ))}
+        <Menu>
+          {Routes.filter(({name, path}) => path.indexOf('order') <= -1)
+            .slice(0, 5)
+            .map(({name, path}) => {
+              return (
+                <Menu.Item key={path} {...getMenuProps(path)}>
+                  {name}
+                </Menu.Item>
+              );
+            })}
+
+          <Menu.SubMenu key="orders" title="訂單">
+            {Routes.filter(({name, path}) => path.indexOf('order') > -1).map(
+              ({name, path}) => {
+                return (
+                  <Menu.Item key={path} {...getMenuProps(path)}>
+                    {name}
+                  </Menu.Item>
+                );
+              },
+            )}
+          </Menu.SubMenu>
+
+          {Routes.filter(({name, path}) => path.indexOf('order') <= -1)
+            .slice(5)
+            .map(({name, path}) => {
+              return (
+                <Menu.Item key={path} {...getMenuProps(path)}>
+                  {name}
+                </Menu.Item>
+              );
+            })}
+          {/*{Routes.map(({name, path}) => (*/}
+          {/*  <MenuItem key={path} {...getMenuProps(path)}>*/}
+          {/*    {name}*/}
+          {/*  </MenuItem>*/}
+          {/*))}*/}
+        </Menu>
       </Layout.Sider>
 
       <AdminCustomOrderModal />

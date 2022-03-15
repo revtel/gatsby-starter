@@ -56,6 +56,9 @@ function UpdateOrderSection(props) {
       receiver_zip: values.receiver_zip,
       receiver_city: values.receiver_city,
       receiver_district: values.receiver_district,
+      logistics_type: values.logistics_type,
+      logistics_subtype: values.logistics_subtype,
+      logistics_cvs_store_id: values.logistics_cvs_store_id,
     });
   }, [form, values]);
 
@@ -80,11 +83,8 @@ function UpdateOrderSection(props) {
                 logistics_subtype: data.logistics_subtype,
                 logistics_cvs_store_id: data.logistics_cvs_store_id,
               };
-        const resp = await JStorage.updateDocument(
-          'order',
-          {id: values.id},
-          payload,
-        );
+        await JStorage.updateDocument('order', {id: values.id}, payload);
+
         setValues((prev) => ({
           ...prev,
           ...payload,
@@ -167,13 +167,15 @@ function UpdateOrderSection(props) {
                             type.value !== Cart.LOGISTICS_SUBTYPE.TCAT &&
                             type.value !== Cart.LOGISTICS_SUBTYPE.ECAN,
                         )
-                        .map((opt, idx) => (
-                          <Select.Option key={idx} value={opt.value}>
-                            {opt.label}{' '}
-                            {opt.value.toUpperCase().indexOf('C2C') < 0 &&
-                              '大宗'}
-                          </Select.Option>
-                        ))
+                        .map((opt, idx) => {
+                          return (
+                            <Select.Option key={idx} value={opt.value}>
+                              {opt.label}{' '}
+                              {opt.value.toUpperCase().indexOf('C2C') < 0 &&
+                                '大宗'}
+                            </Select.Option>
+                          );
+                        })
                     : Object.values(Cart.LOGISTICS_SUBTYPE_DISPLAY)
                         .filter(
                           (type) =>
@@ -199,7 +201,7 @@ function UpdateOrderSection(props) {
                 {selectLogisticsSubTypeElem}
                 <Form.Item
                   rules={[{required: true, message: '必填'}]}
-                  label="超商ID"
+                  label="超商ID (CVSStoreID)"
                   name="logistics_cvs_store_id">
                   <Input />
                 </Form.Item>
@@ -354,7 +356,7 @@ function CustomAdminOrderDetailForm(props) {
             <Filed name="購買人電話" value={instance.buyer_phone} />
             <Filed name="購買人信箱" value={instance.buyer_email} />
             <Filed
-              name="購賣人地址"
+              name="購買人地址"
               value={instance.buyer_address}
               addonBefore={
                 <span>

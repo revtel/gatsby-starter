@@ -1,5 +1,5 @@
-import React, {useMemo} from 'react';
-import styled from 'styled-components';
+import React, {useMemo, useState} from 'react';
+import styled, {keyframes} from 'styled-components';
 import {useOutlet} from 'reconnect.js';
 import empty from '../../../../static/favicon.png';
 import moment from 'moment';
@@ -19,7 +19,7 @@ function ProductGrid(props) {
       <ProductGridWrapper mobile={mobile}>
         {products.map((product, i) => (
           <ProductItem
-            key={i}
+            key={product.id}
             mobile={mobile}
             product={product}
             onClick={(evt) => onItemClick(product, evt)}
@@ -66,7 +66,7 @@ const ProductGridWrapper = styled.div`
   padding: ${(props) => (props.mobile ? 0 : 'var(--basePadding)')};
 
   & > .filler {
-    width: ${(props) => (props.mobile ? '140px' : '180px')};
+    width: ${(props) => (props.mobile ? '160px' : '200px')};
     height: 1px;
     margin: 10px;
   }
@@ -79,6 +79,7 @@ const ArticleGridWrapper = styled.div`
 
 function ProductItem(props) {
   const {product, onClick, mobile} = props;
+  const [loaded, setLoaded] = useState(false);
 
   const src = useMemo(() => {
     try {
@@ -90,11 +91,22 @@ function ProductItem(props) {
 
   return (
     <ProductWrapper mobile={mobile} onClick={onClick}>
-      <img src={src || empty} alt="product" />
+      <div className="product-img">
+        {!loaded && <img className="loading" src={empty} alt="product" />}
+        <img
+          src={src}
+          alt="product"
+          loading="lazy"
+          onLoad={() => {
+            setLoaded(true);
+          }}
+        />
+      </div>
 
       <div className="info">
         <h3>{product.name}</h3>
-        {product.price !== undefined && (
+        <div style={{flex: 1}} />
+        {!!product.price && (
           <p style={{textAlign: 'right'}}>${product.price}</p>
         )}
       </div>
@@ -142,13 +154,6 @@ const ArticleWrapper = styled.div`
       line-height: 1.57;
     }
 
-    //& > .outline {
-    //  display: -webkit-box;
-    //  -webkit-line-clamp: 3;
-    //  -webkit-box-orient: vertical;
-    //  overflow: hidden;
-    //}
-
     & > .date {
       color: var(--primaryColor);
       font-size: 13px;
@@ -169,33 +174,41 @@ const ArticleWrapper = styled.div`
   }
 `;
 
+const shaking = keyframes`
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(30deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+`;
+
 const ProductWrapper = styled.div`
-  position: relative;
   margin: 10px;
-  width: ${(props) => (props.mobile ? '140px' : '180px')};
-  height: ${(props) => (props.mobile ? '180px' : '280px')};
+  width: ${(props) => (props.mobile ? '160px' : '200px')};
   border-radius: 10px;
   overflow: hidden;
-  position: relative;
   cursor: pointer;
   transition: 300ms;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.05);
-
   &:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05), 0 6px 6px rgba(0, 0, 0, 0.2);
   }
-
   & > .info {
-    position: absolute;
     display: flex;
     flex-direction: column;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 30%;
+    max-height: 120px;
     padding: 8px 10px;
     background-color: white;
-
     & > h3 {
       flex: 1;
       font-size: 14px;
@@ -205,22 +218,31 @@ const ProductWrapper = styled.div`
       -webkit-box-orient: vertical;
       white-space: break-spaces;
     }
-
     & > p {
       font-weight: bold;
     }
   }
-
-  & > img {
-    position: absolute;
+  & > .product-img {
+    position: relative;
+    background-color: #fff;
     width: 100%;
-    height: 65%;
-    padding: 20px;
-    object-fit: contain;
-    transition: 200ms;
+    aspect-ratio: 1;
+    & > .loading {
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: ${shaking} 1000ms linear infinite;
+    }
+    & > img {
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      object-fit: contain;
+      transition: 200ms;
 
-    &:hover {
-      transform: scale(1.2);
+      &:hover {
+        transform: scale(1.2);
+      }
     }
   }
 `;

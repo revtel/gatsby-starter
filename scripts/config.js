@@ -4,6 +4,7 @@ function config() {
   const data = {
     clientId: 'pokemon-store',
     primaryUserType: 'email',
+    um: false,
   };
 
   if (process.env.REV_ENV === 'stg') {
@@ -17,6 +18,9 @@ function config() {
     data.articleEditorHost = 'https://console.revtel2.com/article/editor';
     data.gaId = 'G-1LH69CW4Y1';
     data.gtmId = 'GTM-KCRVXBN';
+    data.siteCacheUrl =
+      'https://pokemon-store-revtel2-com-stg.s3.ap-northeast-1.amazonaws.com/rev-site-cache.json';
+    data.pixelId = 354413086572477;
   } else {
     // https://pokemon.netlify.app
     data.stage = 'prod';
@@ -28,6 +32,9 @@ function config() {
     data.articleEditorHost = 'https://console-prod.netlify.com/article/editor';
     data.gaId = 'G-2324HZCWPM';
     data.gtmId = 'GTM-NJXKB4D';
+    data.siteCacheUrl =
+      'https://pokemon-store-revtel2-com-prod.s3.ap-northeast-1.amazonaws.com/rev-site-cache.json';
+    data.pixelId = 354413086572477;
   }
 
   fs.writeFileSync('./data.json', JSON.stringify(data, null, 2), 'utf8');
