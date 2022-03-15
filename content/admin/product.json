@@ -164,6 +164,19 @@
                           "single"
                         ]
                       },
+                      "displayType": {
+                        "title": "單選顯示樣式",
+                        "type": "string",
+                        "defaultValue": "radio",
+                        "enum": [
+                          "radio",
+                          "select"
+                        ],
+                        "enumNames": [
+                          "單選按鈕",
+                          "下拉選單"
+                        ]
+                      },
                       "choices": {
                         "type": "array",
                         "title": "單選選項",
