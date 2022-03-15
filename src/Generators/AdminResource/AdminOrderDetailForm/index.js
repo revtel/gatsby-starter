@@ -354,7 +354,7 @@ function CustomAdminOrderDetailForm(props) {
             <Filed name="購買人電話" value={instance.buyer_phone} />
             <Filed name="購買人信箱" value={instance.buyer_email} />
             <Filed
-              name="購賣人地址"
+              name="購買人地址"
               value={instance.buyer_address}
               addonBefore={
                 <span>

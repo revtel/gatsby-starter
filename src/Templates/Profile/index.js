@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Form, Input, message, Radio, Spin} from 'antd';
+import {Alert, Button, Form, Input, message, Radio, Spin} from 'antd';
 import styled from 'styled-components';
 import {getOutlet, useOutlet} from 'reconnect.js';
 import * as JStorageActions from 'rev.sdk.js/Actions/JStorage';
@@ -96,10 +96,14 @@ function ProfilePage(props) {
             ]}>
             <Input disabled />
           </Form.Item>
+
           {!user.data.email && (
-            <div style={{color: 'red', marginBottom: 5}}>
-              尚未驗證電子信箱，請點擊下方按鈕「驗證 ｜ 更改電子信箱」進行驗證。
-            </div>
+            <Alert
+              style={{marginBottom: 10}}
+              showIcon={true}
+              message="尚未驗證電子信箱，請點擊下方按鈕「驗證 ｜ 更改電子信箱」進行驗證。"
+              type="error"
+            />
           )}
 
           <AntdAddressSetForm form={form} />
