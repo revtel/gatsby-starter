@@ -4,6 +4,7 @@ function config() {
   const data = {
     clientId: 'pokemon-store',
     primaryUserType: 'email',
+    um: false,
   };
 
   if (process.env.REV_ENV === 'stg') {

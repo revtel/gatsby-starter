@@ -25,11 +25,27 @@ function queryJsonByDir(dirname) {
 exports.createPages = async ({graphql, actions}) => {
   const {createPage} = actions;
 
+  const _createPage = ({path: pagePath, component, context}) => {
+    if (config.um) {
+      createPage({
+        path: pagePath,
+        component: path.resolve('src/Templates/UnderMaintain/index.js'),
+        context: {...commonContext, ...context},
+      });
+    } else {
+      createPage({
+        path: pagePath,
+        component: path.resolve(component),
+        context: {...commonContext, ...context},
+      });
+    }
+  };
+
   const env = process.env.REV_ENV || 'stg';
   const commonContext = {env};
 
   for (const page of AppPages.pages) {
-    createPage({
+    _createPage({
       path: page.path,
       component: path.resolve(page.component),
       context: {...commonContext, ...page.context},
