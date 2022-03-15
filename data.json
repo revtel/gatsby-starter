@@ -1,6 +1,7 @@
 {
   "clientId": "pokemon-store",
   "primaryUserType": "email",
+  "um": true,
   "stage": "stg",
   "apiHost": "https://pokemon-store-api-stg.revtel2.com",
   "authHost": "https://auth-stg.revtel-api.com/v4",
