@@ -300,6 +300,12 @@ function Landing(props) {
                 'https://medium.com/revtel-tech/案例分享-tel-u-電信電商-8cc7a7feefb4',
               ],
               [
+                'QriticA',
+                'https://www.revtel.tech/static/938a27c4de72146887393644a7275fdd/159a2/Qritica.png',
+                '思辨教育平台顧問開發',
+                'https://medium.com/revtel-tech/案例分享-線上教育平台-qritica-b5974cf719c2',
+              ],
+              [
                 'DSA 達詳自動化',
                 'https://www.revtel.tech/static/70b70c828f45e0203c70fab0ed76e7e3/1d98e/dsa.png',
                 '智能產線軟體顧問開發',
