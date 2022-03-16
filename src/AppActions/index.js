@@ -294,7 +294,7 @@ async function onLoginResult(err, result) {
           ...UserOutlet.getValue(),
           data: {
             ...profile,
-            email: '',
+            email: privateProfile.email,
             points: privateProfile.points,
             provider: privateProfile.provider,
           },
