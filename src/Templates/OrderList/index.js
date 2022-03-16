@@ -18,7 +18,11 @@ function OrderList(props) {
 
   return (
     <Wrapper>
-      <OrderPage {...props} renderCustomComponent={renderCustomComponent} />
+      <OrderPage
+        {...props}
+        renderCustomComponent={renderCustomComponent}
+        enableInvoiceFeature
+      />
     </Wrapper>
   );
 }
