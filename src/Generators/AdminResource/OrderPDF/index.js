@@ -5,11 +5,17 @@ import {
   StyleSheet,
   Text,
   View,
+  Font,
 } from '@react-pdf/renderer';
 import moment from 'moment';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import React, {Fragment} from 'react';
 import _ from 'lodash';
+
+Font.register({
+  family: 'SourceHanSansCN',
+  src: 'https://static.revtel-api.com/common/SourceHanSansCN-Regular.ttf',
+});
 
 const styles = StyleSheet.create({
   page: {

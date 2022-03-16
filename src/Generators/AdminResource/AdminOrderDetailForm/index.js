@@ -294,15 +294,19 @@ function CustomAdminOrderDetailForm(props) {
         {!instance.is_custom && (
           <BlobProvider document={<OrderPDF order={instance} />}>
             {({...rest}) => {
-              return (
-                <Button
-                  style={{margin: '10px 0'}}
-                  onClick={() => {
-                    window.open(rest.url, '_blank');
-                  }}>
-                  下載 PDF
-                </Button>
-              );
+              if (rest.url) {
+                return (
+                  <Button
+                    style={{margin: '10px 0'}}
+                    onClick={() => {
+                      window.open(rest.url, '_blank');
+                    }}>
+                    下載 PDF
+                  </Button>
+                );
+              } else {
+                return 'loading...';
+              }
             }}
           </BlobProvider>
         )}
