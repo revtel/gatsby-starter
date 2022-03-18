@@ -282,7 +282,7 @@ function CustomAdminOrderDetailForm(props) {
         {!instance.is_custom && (
           <Button
             disabled={
-              !['created', 'pending', 'error', 'exception'].includes(
+              !['created', 'pending', 'error', 'exception', undefined].includes(
                 values?.logistics_status,
               )
             }
