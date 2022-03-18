@@ -326,7 +326,7 @@ function AdminResourcePage(props) {
   function renderCustomAdminCol(props) {
     const {col, record} = props;
     if (col.customType === 'labels') {
-      return record.labels.map((l, idx) => <Tag key={idx}>{l}</Tag>);
+      return record.labels?.map((l, idx) => <Tag key={idx}>{l}</Tag>);
     } else if (col.customType === 'label') {
       return record.label?.map((l, idx) => <Tag key={idx}>{l}</Tag>);
     } else if (col.customType === 'site-config-name') {
