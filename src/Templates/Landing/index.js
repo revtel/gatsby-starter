@@ -309,6 +309,7 @@ function Landing(props) {
                 'DSA 達詳自動化',
                 'https://www.revtel.tech/static/70b70c828f45e0203c70fab0ed76e7e3/1d98e/dsa.png',
                 '智能產線軟體顧問開發',
+                'https://revteltech.pse.is/sys-design',
               ],
               [
                 '青田悅產後護理之家',
