@@ -104,5 +104,6 @@
 			}
 		}
 	},
-	"actionBar": null
+	"actionBar": null,
+	"renderCreateButton": null
 }
