@@ -18,48 +18,7 @@ const SITE_CONFIG = {
   article_category: {display: '文章分類', value: 'article_category'},
 };
 
-function CreateSiteConfigButton() {
-  const [name, setName] = React.useState('');
-
-  async function createSiteConfig() {
-    AppActions.setLoading(true);
-    try {
-      let [cfg] = await JStorage.fetchDocuments('site', {name}, null, null);
-
-      if (!cfg) {
-        cfg = await JStorage.createDocument('site', {name});
-      }
-
-      AppActions.navigate(`/admin/${name}?action=detail&id=${cfg.id}`);
-    } catch (ex) {
-      console.warn(__filename, ex);
-    }
-    AppActions.setLoading(false);
-  }
-
-  return (
-    <div>
-      <Select value={name} onChange={setName} style={{width: 100}}>
-        <Select.Option style={{width: 100}} value="">
-          請選擇
-        </Select.Option>
-        {[
-          SITE_CONFIG.landing,
-          SITE_CONFIG.product_category,
-          SITE_CONFIG.article_category,
-          SITE_CONFIG.config,
-        ].map((opt) => (
-          <Select.Option key={opt.value} style={{width: 100}} value={opt.value}>
-            {opt.display}
-          </Select.Option>
-        ))}
-      </Select>
-      <Button type="text" disabled={name === ''} onClick={createSiteConfig}>
-        前往
-      </Button>
-    </div>
-  );
-}
+const PATH_NEED_INITIALIZE = ['/admin/site'];
 
 const getPaymentStatusCustomElem = (record) => {
   try {
@@ -269,6 +228,34 @@ function AdminResourcePage(props) {
   const {path, pageContext} = props;
   const [categories] = useOutlet('categories');
   const [actions] = useOutlet('actions');
+  const [initialized, setInitialized] = React.useState(
+    PATH_NEED_INITIALIZE.indexOf(path) === -1,
+  );
+
+  React.useEffect(() => {
+    const _initializeSiteConfig = async () => {
+      AppActions.setLoading(true);
+      try {
+        let results = await JStorage.fetchDocuments('site', {}, null, null);
+        for (let key in SITE_CONFIG) {
+          let name = SITE_CONFIG[key].value;
+          if (!results.find((r) => r.name === name)) {
+            await JStorage.createDocument('site', {name});
+          }
+        }
+      } catch (ex) {
+        message.error('設定初始化失敗');
+      }
+      AppActions.setLoading(false);
+      setInitialized(true);
+    };
+
+    if (!initialized) {
+      if (path === '/admin/site') {
+        _initializeSiteConfig();
+      }
+    }
+  }, [path, initialized]);
 
   function renderCustomAdminSection(props) {
     const {name, type, context} = props;
@@ -363,9 +350,6 @@ function AdminResourcePage(props) {
   }
 
   if (path === '/admin/site') {
-    pageContext.resource.renderCreateButton = () => {
-      return <CreateSiteConfigButton />;
-    };
     pageContext.resource.renderDetailButton = (cfg) => {
       return (
         <Button
@@ -393,6 +377,10 @@ function AdminResourcePage(props) {
         </Popconfirm>
       );
     };
+  }
+
+  if (!initialized) {
+    return <div></div>;
   }
 
   return (
