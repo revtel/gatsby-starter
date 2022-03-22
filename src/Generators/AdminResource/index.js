@@ -12,6 +12,7 @@ import moment from 'moment';
 const {RangePicker} = DatePicker;
 
 const SITE_CONFIG = {
+  config: {display: '設定', value: 'config'},
   landing: {display: '首頁設定', value: 'landing'},
   product_category: {display: '產品分類', value: 'product_category'},
   article_category: {display: '文章分類', value: 'article_category'},
@@ -46,6 +47,7 @@ function CreateSiteConfigButton() {
           SITE_CONFIG.landing,
           SITE_CONFIG.product_category,
           SITE_CONFIG.article_category,
+          SITE_CONFIG.config,
         ].map((opt) => (
           <Select.Option key={opt.value} style={{width: 100}} value={opt.value}>
             {opt.display}

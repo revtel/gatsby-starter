@@ -1,0 +1,37 @@
+{
+    "path": "/admin/config",
+    "name": "設定",
+    "backTitle": "返回網站設定",
+    "backPath": "/admin/site",
+    "collection": "site",
+    "primaryKey": "id",
+    "searchField": "",
+    "renderDeleteButton": null,
+    "columns": [
+        {
+            "title": "id",
+            "key": "id",
+            "dataIndex": "id"
+        }
+    ],
+    "formSpec": {
+        "customName": "config-form",
+        "schema": {
+            "title": "",
+            "type": "object",
+            "required": ["logistics_sender_info"],
+            "properties": {
+                "checkout_threshold": {
+                    "type": "number",
+                    "title": "最低結帳金額",
+                    "default": 33
+                }
+            }
+        },
+        "uiSchema": {
+            "checkout_threshold": {
+               "ui:help": "系統預設為 33 元"
+            }
+        }
+    }
+}
