@@ -49,6 +49,7 @@ function AdminLayout(props) {
   const [initialized, setInitialized] = React.useState(false);
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
   const mobile = !dimension.rwd || dimension.rwd === 'mobile';
+  const [user] = useOutlet('user');
 
   const getMenuProps = (path) => {
     if (path === 'reset-password') {
@@ -95,10 +96,10 @@ function AdminLayout(props) {
       setInitialized(true);
     };
 
-    if (!initialized) {
+    if (!initialized && user) {
       _initializeSiteConfig();
     }
-  }, [initialized]);
+  }, [initialized, user]);
 
   const siderStyle = {
     overflow: 'auto',
