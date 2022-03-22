@@ -24,13 +24,14 @@
                 "checkout_threshold": {
                     "type": "number",
                     "title": "最低結帳金額",
-                    "default": 33
+                    "default": 33,
+                    "minimum": 33
                 }
             }
         },
         "uiSchema": {
             "checkout_threshold": {
-               "ui:help": "系統預設為 33 元"
+               "ui:help": "系統預設為 33 元，綠界支付不可低於 33 元"
             }
         }
     }
