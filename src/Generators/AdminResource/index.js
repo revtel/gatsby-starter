@@ -9,16 +9,8 @@ import * as AppActions from '../../AppActions';
 import PrivateProfile from './PrivateProfile';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import moment from 'moment';
+import {SITE_CONFIG} from '../../constants';
 const {RangePicker} = DatePicker;
-
-const SITE_CONFIG = {
-  config: {display: '設定', value: 'config'},
-  landing: {display: '首頁設定', value: 'landing'},
-  product_category: {display: '產品分類', value: 'product_category'},
-  article_category: {display: '文章分類', value: 'article_category'},
-};
-
-const PATH_NEED_INITIALIZE = ['/admin/site'];
 
 const getPaymentStatusCustomElem = (record) => {
   try {
@@ -228,34 +220,6 @@ function AdminResourcePage(props) {
   const {path, pageContext} = props;
   const [categories] = useOutlet('categories');
   const [actions] = useOutlet('actions');
-  const [initialized, setInitialized] = React.useState(
-    PATH_NEED_INITIALIZE.indexOf(path) === -1,
-  );
-
-  React.useEffect(() => {
-    const _initializeSiteConfig = async () => {
-      AppActions.setLoading(true);
-      try {
-        let results = await JStorage.fetchDocuments('site', {}, null, null);
-        for (let key in SITE_CONFIG) {
-          let name = SITE_CONFIG[key].value;
-          if (!results.find((r) => r.name === name)) {
-            await JStorage.createDocument('site', {name});
-          }
-        }
-      } catch (ex) {
-        message.error('設定初始化失敗');
-      }
-      AppActions.setLoading(false);
-      setInitialized(true);
-    };
-
-    if (!initialized) {
-      if (path === '/admin/site') {
-        _initializeSiteConfig();
-      }
-    }
-  }, [path, initialized]);
 
   function renderCustomAdminSection(props) {
     const {name, type, context} = props;
@@ -377,10 +341,6 @@ function AdminResourcePage(props) {
         </Popconfirm>
       );
     };
-  }
-
-  if (!initialized) {
-    return <div></div>;
   }
 
   return (
