@@ -9,55 +9,8 @@ import * as AppActions from '../../AppActions';
 import PrivateProfile from './PrivateProfile';
 import * as Cart from 'rev.sdk.js/Actions/Cart';
 import moment from 'moment';
+import {SITE_CONFIG} from '../../constants';
 const {RangePicker} = DatePicker;
-
-const SITE_CONFIG = {
-  landing: {display: '首頁設定', value: 'landing'},
-  product_category: {display: '產品分類', value: 'product_category'},
-  article_category: {display: '文章分類', value: 'article_category'},
-};
-
-function CreateSiteConfigButton() {
-  const [name, setName] = React.useState('');
-
-  async function createSiteConfig() {
-    AppActions.setLoading(true);
-    try {
-      let [cfg] = await JStorage.fetchDocuments('site', {name}, null, null);
-
-      if (!cfg) {
-        cfg = await JStorage.createDocument('site', {name});
-      }
-
-      AppActions.navigate(`/admin/${name}?action=detail&id=${cfg.id}`);
-    } catch (ex) {
-      console.warn(__filename, ex);
-    }
-    AppActions.setLoading(false);
-  }
-
-  return (
-    <div>
-      <Select value={name} onChange={setName} style={{width: 100}}>
-        <Select.Option style={{width: 100}} value="">
-          請選擇
-        </Select.Option>
-        {[
-          SITE_CONFIG.landing,
-          SITE_CONFIG.product_category,
-          SITE_CONFIG.article_category,
-        ].map((opt) => (
-          <Select.Option key={opt.value} style={{width: 100}} value={opt.value}>
-            {opt.display}
-          </Select.Option>
-        ))}
-      </Select>
-      <Button type="text" disabled={name === ''} onClick={createSiteConfig}>
-        前往
-      </Button>
-    </div>
-  );
-}
 
 const getPaymentStatusCustomElem = (record) => {
   try {
@@ -361,9 +314,6 @@ function AdminResourcePage(props) {
   }
 
   if (path === '/admin/site') {
-    pageContext.resource.renderCreateButton = () => {
-      return <CreateSiteConfigButton />;
-    };
     pageContext.resource.renderDetailButton = (cfg) => {
       return (
         <Button

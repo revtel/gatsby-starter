@@ -3,7 +3,7 @@ import React from 'react';
 import {useOutlet, useOutletSetter} from 'reconnect.js';
 import * as User from 'rev.sdk.js/Actions/User';
 import {navigate} from 'gatsby';
-import {Layout, Menu} from 'antd';
+import {Layout, Menu, message} from 'antd';
 import {withLoginRequired} from 'rev.sdk.js/Components/LoginRequired';
 import SiteNavBar from '../SiteNavBar';
 import LoginRequired from '../LoginRequired';
@@ -11,6 +11,9 @@ import AdminCustomOrderModal, {
   showAdminCustomOrderModal,
 } from '../AdminCustomOrderModal';
 import {Font} from '@react-pdf/renderer';
+import * as JStorage from 'rev.sdk.js/Actions/JStorage';
+import * as AppActions from '../../AppActions';
+import {SITE_CONFIG} from '../../constants';
 
 Font.register({
   family: 'SourceHanSansCN',
@@ -43,6 +46,7 @@ function AdminLayout(props) {
   const {children, location} = props;
   const [dimension] = useOutlet('dimension');
   const showResetPasswordModal = useOutletSetter('reset-password-modal');
+  const [initialized, setInitialized] = React.useState(false);
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
   const mobile = !dimension.rwd || dimension.rwd === 'mobile';
 
@@ -73,6 +77,29 @@ function AdminLayout(props) {
     setShowMobileMenu(false);
   }, [location]);
 
+  React.useEffect(() => {
+    const _initializeSiteConfig = async () => {
+      AppActions.setLoading(true);
+      try {
+        let results = await JStorage.fetchDocuments('site', {}, null, null);
+        for (let key in SITE_CONFIG) {
+          let name = SITE_CONFIG[key].value;
+          if (!results.find((r) => r.name === name)) {
+            await JStorage.createDocument('site', {name});
+          }
+        }
+      } catch (ex) {
+        message.warn('設定初始化失敗');
+      }
+      AppActions.setLoading(false);
+      setInitialized(true);
+    };
+
+    if (!initialized) {
+      _initializeSiteConfig();
+    }
+  }, [initialized]);
+
   const siderStyle = {
     overflow: 'auto',
     height: '100vh',
@@ -88,7 +115,7 @@ function AdminLayout(props) {
   return (
     <Layout>
       <Layout style={{marginLeft: mobile ? 0 : 200, backgroundColor: 'white'}}>
-        {children}
+        {initialized && children}
       </Layout>
 
       <Layout.Sider theme="light" style={siderStyle}>
