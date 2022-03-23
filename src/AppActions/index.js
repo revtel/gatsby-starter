@@ -12,6 +12,7 @@ import setLoadingPlugin from './Plugin/setLoading';
 import navigatePlugin from './Plugin/navigate';
 import clientJStorageFetchPlugin from './Plugin/clientJStorageFetch';
 import onAdminFormSubmitPlugin from './Plugin/onAdminFormSubmitPlugin';
+import onAdminFormUpdateInstanceOverwritePlugin from './Plugin/onAdminFormUpdateInstanceOverwritePlugin';
 import onAfterAdminFormSubmitPlugin from './Plugin/onAfterAdminFormSubmitPlugin';
 import gtagPlugin from './Plugin/gtagPlugin';
 import fbqPlugin from './Plugin/fbqPlugin';
@@ -30,6 +31,9 @@ const Plugins = {
   navigate: new navigatePlugin('navigate'),
   clientJStorageFetch: new clientJStorageFetchPlugin('clientJStorageFetch'),
   onAdminFormSubmit: new onAdminFormSubmitPlugin('onAdminFormSubmit'),
+  onAdminFormUpdateInstanceOverwrite: new onAdminFormUpdateInstanceOverwritePlugin(
+    'onAdminFormUpdateInstanceOverwrite',
+  ),
   onAfterAdminFormSubmit: new onAfterAdminFormSubmitPlugin(
     'onAfterAdminFormSubmit',
   ),
@@ -364,6 +368,31 @@ async function onAdminFormSubmit({
   return false;
 }
 
+async function onAdminFormUpdateInstanceOverwrite({
+  path,
+  collection,
+  instance,
+  extValues,
+  formData,
+  formSchema,
+  formUiSchema,
+  primaryKey,
+}) {
+  if (Plugins.onAdminFormUpdateInstanceOverwrite.shouldExecute()) {
+    return await Plugins.onAdminFormUpdateInstanceOverwrite.executeAsync({
+      path,
+      collection,
+      instance,
+      extValues,
+      formData,
+      formSchema,
+      formUiSchema,
+      primaryKey,
+    });
+  }
+  return null;
+}
+
 async function onAfterAdminFormSubmit(
   {path, collection, instance, extValues, formData, primaryKey},
   updatedInstance,
@@ -441,6 +470,7 @@ export {
   fetchCustomResources,
   onLoginResult,
   onAdminFormSubmit,
+  onAdminFormUpdateInstanceOverwrite,
   onAfterAdminFormSubmit,
   onCartLoaded,
   createLogisticsOrder,
