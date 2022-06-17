@@ -55,7 +55,7 @@ function Landing(props) {
               }}>
               <div className="description" style={{borderRadius: 10}}>
                 <h2 style={{marginBottom: 15, color: '#603601'}}>
-                  當您要擴充系統或驗收時
+                  當您要擴充系統功能時
                 </h2>
                 <h3 style={{marginBottom: 10}}>系統健檢</h3>
                 <h4 style={{marginBottom: 10}}>協助既有系統的風險排查</h4>
@@ -74,7 +74,7 @@ function Landing(props) {
               }}>
               <div className="description" style={{borderRadius: 10}}>
                 <h2 style={{marginBottom: 15, color: '#603601'}}>
-                  當您要規劃團隊及技術時
+                  當您要規劃技術方向時
                 </h2>
                 <h3 style={{marginBottom: 10}}>技術佈局</h3>
                 <h4 style={{marginBottom: 10}}>協助長期產品的技術建議</h4>
@@ -517,7 +517,8 @@ const FlexItemSection = styled.section`
 const FlexItem = styled.div`
   margin: 20px 20px;
   width: 20%;
-  min-width: 300px;
+  min-width: 250px;
+  min-height: 200px;
   background-color: red;
   display: flex;
   flex-direction: column;
