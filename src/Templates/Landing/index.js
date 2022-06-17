@@ -23,6 +23,42 @@ function Landing(props) {
 
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
+          <Element name="tech">
+            <h2>技術領域</h2>
+          </Element>
+
+          <div className="content" style={{justifyContent: 'space-around'}}>
+            {[
+              '網頁網站 / WEB',
+              '手機應用 / APP',
+              '物聯網 / IOT',
+              '區塊鏈 / Blockchain',
+            ].map((item) => {
+              return (
+                <div
+                  className="description"
+                  style={{
+                    borderRadius: 110,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#5F7161',
+                    width: 220,
+                    height: 220,
+                    color: 'white',
+                    fontSize: 20,
+                    border: '0.5rem outset #7FB5FF',
+                  }}
+                  key={item}>
+                  {item}
+                </div>
+              );
+            })}
+          </div>
+        </FlexItemSection>
+
+        <FlexItemSection
+          style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
           <Element name="service">
             <h2>服務內容</h2>
           </Element>
