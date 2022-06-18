@@ -29,10 +29,10 @@ function Landing(props) {
 
           <div className="content" style={{justifyContent: 'space-around'}}>
             {[
-              '網頁網站 / WEB',
-              '手機應用 / APP',
-              '物聯網 / IOT',
-              '區塊鏈 / Blockchain',
+              ['網站系統', 'WEB'],
+              ['手機應用', 'APP'],
+              ['物聯網', 'IoT'],
+              ['區塊鏈', 'Blockchain'],
             ].map((item) => {
               return (
                 <div
@@ -43,6 +43,7 @@ function Landing(props) {
                     justifyContent: 'center',
                     alignItems: 'center',
                     backgroundColor: '#5F7161',
+                    textAlign: 'center',
                     width: 220,
                     height: 220,
                     color: 'white',
@@ -50,7 +51,10 @@ function Landing(props) {
                     border: '0.5rem outset #7FB5FF',
                   }}
                   key={item}>
-                  {item}
+                  {item[0]}
+                  <br />
+                  <br />
+                  {item[1]}
                 </div>
               );
             })}
