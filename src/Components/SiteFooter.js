@@ -95,7 +95,7 @@ function SiteFooter(props) {
           [
             '/images/internet.png',
             '忻旅科技股份有限公司',
-            'https://wwww.revtel.tech',
+            'https://www.revtel.tech',
             '#008E89',
           ],
           [
