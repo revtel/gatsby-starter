@@ -340,17 +340,25 @@ function Landing(props) {
                 'https://medium.com/revtel-tech/案例分享-tel-u-電信電商-8cc7a7feefb4',
               ],
               [
+                'HeCafe 好咖嚴選',
+                '/images/hecafe.png',
+                '咖啡相關選品平台顧問開發',
+                'https://medium.com/revtel-tech/讓享受美好變成生活習慣-hecafe-好咖嚴選-422673ddfbc5',
+              ],
+              [
                 'QriticA',
                 'https://www.revtel.tech/static/938a27c4de72146887393644a7275fdd/159a2/Qritica.png',
                 '思辨教育平台顧問開發',
                 'https://medium.com/revtel-tech/案例分享-線上教育平台-qritica-b5974cf719c2',
               ],
+              ['Merck 默克藥廠', '/images/Merck.png', '用藥追蹤系統顧問開發'],
               [
                 'DSA 達詳自動化',
                 'https://www.revtel.tech/static/70b70c828f45e0203c70fab0ed76e7e3/1d98e/dsa.png',
                 '智能產線軟體顧問開發',
                 'https://revteltech.pse.is/sys-design',
               ],
+
               [
                 '青田悅產後護理之家',
                 '/images/ctycare.png',
@@ -375,6 +383,12 @@ function Landing(props) {
                 'https://medium.com/revtel-tech/案例分享-傳產升級-藍牙電子鎖-809b39d97637',
               ],
               ['Pranaq', '/images/pranaq.png', '醫療雲端系統顧問'],
+              [
+                'HiNFT',
+                '/images/hinft-icon.png',
+                '國內外多個 NFT 項目顧問開發',
+                'https://medium.com/revtel-tech/技術的純粹與世界的不完美-web3-web2-的落地開發-60eaf0c0aac2',
+              ],
             ].map((item, idx) => {
               const withLink = item[3]
                 ? (_) => (
