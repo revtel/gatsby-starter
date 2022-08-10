@@ -320,6 +320,7 @@ function Landing(props) {
                 '商業司智能商圈',
                 '/images/bizlion.png',
                 '區塊鏈點數發幣系統顧問開發',
+                'https://medium.com/revtel-tech/智慧商圈點數及區塊鏈-點數的多種表述-c423ee46eaaf',
               ],
               ['感官文化印刷', '/images/sens.png', '電商/ERP/區塊鏈設計開發'],
               [
