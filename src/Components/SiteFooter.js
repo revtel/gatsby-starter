@@ -106,8 +106,8 @@ function SiteFooter(props) {
           ],
           [
             '/images/mail.png',
-            'contact@revteltech.com',
-            'mailto:contact@revteltech.com',
+            'contact+consult@revteltech.com',
+            'mailto:contact+consult@revteltech.com',
             '#085E7D',
           ],
           [
