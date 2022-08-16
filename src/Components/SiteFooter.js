@@ -117,12 +117,14 @@ function SiteFooter(props) {
             '#085E7D',
           ],
 
+          /*
           [
             '/images/facebook.png',
             '軟體開發疑難雜症交流區',
             'https://www.facebook.com/groups/software.blablablabla',
             '#084594',
           ],
+          */
         ].map((item, idx) => (
           <div
             style={{
