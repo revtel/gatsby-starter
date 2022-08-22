@@ -290,6 +290,23 @@ function Landing(props) {
           <Element name="cases">
             <h2>成功案例</h2>
           </Element>
+
+          <div
+            style={{
+              width: '100%',
+              marginTop: 40,
+              marginBottom: 40,
+              textAlign: 'center',
+            }}>
+            <a
+              href="https://medium.com/revtel-tech/tagged/軟體顧問"
+              target="_blank"
+              style={{textDecoratoe: 'none', color: 'brown', fontSize: '1rem'}}
+              rel="noreferrer">
+              顧問觀點紀錄
+            </a>
+          </div>
+
           <div
             className="content"
             style={{
