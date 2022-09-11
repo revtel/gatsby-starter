@@ -18,13 +18,13 @@ function Landing(props) {
           <h1 style={{color: '#362222', fontSize: 48}}>
             RevConsult 軟體系統顧問
           </h1>
-          <p style={{color: 'grey'}}>顧問諮詢 / 軟體開發 / 商業模式</p>
+          <p style={{color: 'grey'}}>顧問諮詢 / 軟體開發 / 商務協作</p>
         </HeroBannerSection>
 
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
           <Element name="tech">
-            <h2>技術領域</h2>
+            <h2>技術領域 (React / React Native / AWS)</h2>
           </Element>
 
           <div className="content" style={{justifyContent: 'space-around'}}>
@@ -296,12 +296,12 @@ function Landing(props) {
               width: '100%',
               marginTop: 40,
               marginBottom: 40,
-              textAlign: 'center',
+              textAlign: 'right',
             }}>
             <a
+              style={{marginRight: 20, fontSize: 24}}
               href="https://medium.com/revtel-tech/tagged/軟體顧問"
               target="_blank"
-              style={{textDecoratoe: 'none', color: 'brown', fontSize: '1rem'}}
               rel="noreferrer">
               顧問觀點紀錄
             </a>
