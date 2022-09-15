@@ -378,7 +378,7 @@ function Landing(props) {
               ['Merck 默克藥廠', '/images/Merck.png', '用藥追蹤系統顧問開發'],
               [
                 'DSA 達詳自動化',
-                'https://www.revtel.tech/static/70b70c828f45e0203c70fab0ed76e7e3/1d98e/dsa.png',
+                '/images/dsa.png',
                 '智能產線軟體顧問開發',
                 'https://revteltech.pse.is/sys-design',
               ],
