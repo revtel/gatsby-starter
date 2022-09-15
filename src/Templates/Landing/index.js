@@ -230,8 +230,10 @@ function Landing(props) {
                 backgroundColor: '#EEEDDE',
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
-              <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 20}}>我們的經驗來自實務</h3>
+              <div
+                className="description"
+                style={{borderRadius: 10, textAlign: 'center'}}>
+                <h3 style={{marginBottom: 20}}>經驗來自實務</h3>
                 <p style={{color: '#3E3E3E'}}>
                   基於過往超過六十個以上方案開發協作提供協作
                 </p>
@@ -245,8 +247,10 @@ function Landing(props) {
                 backgroundColor: '#EEEDDE',
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
-              <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 20}}>我們的技術實力紮實</h3>
+              <div
+                className="description"
+                style={{borderRadius: 10, textAlign: 'center'}}>
+                <h3 style={{marginBottom: 20}}>技術實力紮實</h3>
                 <p style={{color: '#3E3E3E'}}>
                   於網頁、雲端、APP、物聯網及區塊鏈皆有成果
                 </p>
@@ -260,8 +264,10 @@ function Landing(props) {
                 backgroundColor: '#EEEDDE',
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
-              <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 20}}>自有後勤團隊可協作</h3>
+              <div
+                className="description"
+                style={{borderRadius: 10, textAlign: 'center'}}>
+                <h3 style={{marginBottom: 20}}>自有後勤團隊</h3>
                 <p style={{color: '#3E3E3E'}}>
                   規劃內容如有需要可直接對接內部工程團隊開發
                 </p>
@@ -275,8 +281,10 @@ function Landing(props) {
                 backgroundColor: '#EEEDDE',
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
-              <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 20}}>我們的領域經驗多元</h3>
+              <div
+                className="description"
+                style={{borderRadius: 10, textAlign: 'center'}}>
+                <h3 style={{marginBottom: 20}}>領域經驗多元</h3>
                 <p style={{color: '#3E3E3E'}}>
                   橫跨超過十個領域以上的顧問、開發及團隊經驗
                 </p>
@@ -409,9 +417,15 @@ function Landing(props) {
               ['Pranaq', '/images/pranaq.png', '醫療雲端系統顧問'],
               [
                 'HiNFT',
-                '/images/hinft-icon.png',
+                '/images/hinft.png',
                 '國內外多個 NFT 項目顧問開發',
                 'https://medium.com/revtel-tech/技術的純粹與世界的不完美-web3-web2-的落地開發-60eaf0c0aac2',
+              ],
+              [
+                'RealiT',
+                'images/realiT-logo.png',
+                'NFT 實體化方案顧問開發',
+                'https://www.realitag.app/',
               ],
             ].map((item, idx) => {
               const withLink = item[3]
@@ -516,7 +530,7 @@ const Wrapper = styled.div`
     transform: translateX(0px);
   }
 
-  background-color: #f2f2f2;
+  background-color: #eee;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
