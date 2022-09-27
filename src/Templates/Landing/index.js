@@ -340,6 +340,7 @@ function Landing(props) {
                 '加密鏈科技',
                 'https://www.revtel.tech/static/b02e59ad1f3fea94f36734e735c8c9b2/6258c/inigma.webp',
                 'NFC 冷錢包顧問開發',
+                'https://medium.com/revtel-tech/區塊鏈實體化的技術隨想-blockchain-nfc-875ac80ba0c9',
               ],
               [
                 '商業司智能商圈',
