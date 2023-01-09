@@ -368,7 +368,7 @@ function Landing(props) {
               ],
               [
                 '二十五電訊',
-                'https://www.revtel.tech/static/b6727a870f249ca1d96013cb233cafcc/159a2/Tel25.png',
+                '/images/Tel25.png',
                 '電信產品設計開發',
                 'https://medium.com/revtel-tech/案例分享-tel-u-電信電商-8cc7a7feefb4',
               ],
@@ -405,7 +405,7 @@ function Landing(props) {
               ],
               [
                 '法朋烘焙坊',
-                'https://www.revtel.tech/static/d30390f47f2d03b76a862ed34a3aef35/65e33/lr.png',
+                '/images/lr.png',
                 '烘焙電商/ERP 顧問開發',
                 'https://medium.com/revtel-tech/三分鐘內數百萬業績的高流量電商煉成-le-ruban-pâtisserie-法朋烘焙甜點坊-6901f8694036',
               ],
