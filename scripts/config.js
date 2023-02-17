@@ -17,6 +17,7 @@ function config() {
 
     data.gaId = 'UA-127064537-1';
     data.gtagId = 'GTM-P9CS5JX';
+    data.ga4Id = 'xxx';
   } else {
     data.stage = 'prod';
     data.clientId = 'revtel-puzzlego';
@@ -29,6 +30,7 @@ function config() {
 
     data.gaId = 'UA-127064537-1';
     data.gtagId = 'GTM-P9CS5JX';
+    data.ga4Id = 'G-6V7DG5VTWY';
   }
 
   fs.writeFileSync('./data.json', JSON.stringify(data, null, 2), 'utf8');
