@@ -7,6 +7,7 @@ import Link from './NavLink';
 import * as AppActions from '../AppActions';
 import {ShoppingBag} from '@styled-icons/boxicons-regular/ShoppingBag';
 import {PersonCircle} from '@styled-icons/ionicons-outline/PersonCircle';
+import {MailOutline as Mail} from '@styled-icons/material-rounded/MailOutline';
 
 import * as Scroll from 'react-scroll';
 
@@ -67,7 +68,11 @@ function SiteNavBar(props) {
         </Logo>
 
         <div
-          style={{marginLeft: 20, cursor: 'pointer', color: '#B3541E'}}
+          style={{
+            marginLeft: 20,
+            cursor: 'pointer',
+            color: '#B3541E',
+          }}
           onClick={() => {
             Scroll.scroller.scrollTo('service', {
               duration: 1500,
@@ -76,11 +81,15 @@ function SiteNavBar(props) {
               offset: -100,
             });
           }}>
-          {dimension.rwd === 'desktop' ? '服務內容' : '服務'}
+          {dimension.rwd === 'desktop' ? '應用情境' : '情境'}
         </div>
 
         <div
-          style={{marginLeft: 20, cursor: 'pointer', color: '#B3541E'}}
+          style={{
+            marginLeft: mobile ? 10 : 20,
+            cursor: 'pointer',
+            color: '#B3541E',
+          }}
           onClick={() => {
             Scroll.scroller.scrollTo('types', {
               duration: 1500,
@@ -93,7 +102,11 @@ function SiteNavBar(props) {
         </div>
 
         <div
-          style={{marginLeft: 20, cursor: 'pointer', color: '#B3541E'}}
+          style={{
+            marginLeft: mobile ? 10 : 20,
+            cursor: 'pointer',
+            color: '#B3541E',
+          }}
           onClick={() => {
             Scroll.scroller.scrollTo('good', {
               duration: 1500,
@@ -106,7 +119,11 @@ function SiteNavBar(props) {
         </div>
 
         <div
-          style={{marginLeft: 20, cursor: 'pointer', color: '#B3541E'}}
+          style={{
+            marginLeft: mobile ? 10 : 20,
+            cursor: 'pointer',
+            color: '#B3541E',
+          }}
           onClick={() => {
             Scroll.scroller.scrollTo('cases', {
               duration: 1500,
@@ -117,6 +134,38 @@ function SiteNavBar(props) {
           }}>
           {dimension.rwd === 'desktop' ? '成功案例' : '案例'}
         </div>
+
+        <div
+          style={{
+            marginLeft: mobile ? 10 : 20,
+            cursor: 'pointer',
+            color: '#B3541E',
+          }}
+          onClick={() => {
+            Scroll.scroller.scrollTo('view', {
+              duration: 1500,
+              delay: 100,
+              smooth: 'easeInOutQuint',
+              offset: -100,
+            });
+          }}>
+          {dimension.rwd === 'desktop' ? '顧問觀點' : '觀點'}
+        </div>
+
+        <div style={{flex: 1}} />
+        <Mail
+          size={mobile ? '32' : '48'}
+          color="#3E54AC"
+          onClick={() =>
+            Scroll.scroller.scrollTo('contact', {
+              duration: 1500,
+              delay: 100,
+              smooth: 'easeInOutQuint',
+              offset: -100,
+            })
+          }
+          style={{cursor: 'pointer'}}
+        />
       </NavBar>
     </>
   );

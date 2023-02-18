@@ -4,8 +4,11 @@ import {Button} from 'antd';
 import {StaticImage} from 'gatsby-plugin-image';
 import ReactDelighters from 'rev.sdk.js/Components/ReactDelighters';
 import {Element} from 'react-scroll';
+import {useOutlet, useOutletSetter} from 'reconnect.js';
 
 function Landing(props) {
+  const [dimension] = useOutlet('dimension');
+  const mobile = dimension.rwd !== 'desktop';
   return (
     <ReactDelighters>
       <Wrapper>
@@ -15,10 +18,8 @@ function Landing(props) {
               'linear-gradient(to left bottom, #ffb72b, #ffc226, #ffce21, #ffda1d, #ffe61b)',
             width: '100%',
           }}>
-          <h1 style={{color: '#362222', fontSize: 48}}>
-            RevConsult 軟體系統顧問
-          </h1>
-          <p style={{color: 'grey'}}>顧問諮詢 / 軟體開發 / 商務協作</p>
+          <h1 style={{color: '#362222', fontSize: 48}}>忻旅科技軟體顧問</h1>
+          <p style={{color: 'grey'}}>顧問諮詢 / 系統開發 / 商務協作</p>
         </HeroBannerSection>
 
         <FlexItemSection
@@ -26,6 +27,7 @@ function Landing(props) {
           <Element name="tech">
             <h2>技術領域 (React / React Native / AWS)</h2>
           </Element>
+          <br />
 
           <div className="content" style={{justifyContent: 'space-around'}}>
             {[
@@ -64,7 +66,7 @@ function Landing(props) {
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
           <Element name="service">
-            <h2>服務內容</h2>
+            <h2>應用情境</h2>
           </Element>
           <div className="content">
             <FlexItem
@@ -75,9 +77,6 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h2 style={{marginBottom: 15, color: '#603601'}}>
-                  當您要從零開發系統時
-                </h2>
                 <h3 style={{marginBottom: 10}}>系統規劃</h3>
                 <h4 style={{marginBottom: 10}}>協助客製化系統先期調研</h4>
                 <p style={{color: '#3E3E3E'}}>
@@ -94,9 +93,6 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h2 style={{marginBottom: 15, color: '#603601'}}>
-                  當您要擴充系統功能時
-                </h2>
                 <h3 style={{marginBottom: 10}}>系統健檢</h3>
                 <h4 style={{marginBottom: 10}}>協助既有系統的風險排查</h4>
                 <p style={{color: '#3E3E3E'}}>
@@ -113,9 +109,6 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h2 style={{marginBottom: 15, color: '#603601'}}>
-                  當您要規劃技術方向時
-                </h2>
                 <h3 style={{marginBottom: 10}}>技術佈局</h3>
                 <h4 style={{marginBottom: 10}}>協助長期產品的技術建議</h4>
                 <p style={{color: '#3E3E3E'}}>
@@ -132,9 +125,6 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h2 style={{marginBottom: 15, color: '#603601'}}>
-                  當您想放大產品價值時
-                </h2>
                 <h3 style={{marginBottom: 10}}>商模建議</h3>
                 <h4 style={{marginBottom: 10}}>基於軟體產品規劃盈利模式</h4>
                 <p style={{color: '#3E3E3E'}}>
@@ -196,32 +186,9 @@ function Landing(props) {
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
           <Element name="good">
-            <h2>方案優勢</h2>
+            <h2>團隊優勢</h2>
           </Element>
-          <div
-            style={{
-              margin: 25,
-              paddingRight: 10,
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}>
-            <a
-              style={{marginRight: 20, fontSize: 24}}
-              href="https://medium.com/revtel-tech"
-              target="_blank"
-              rel="noreferrer">
-              開發分享
-            </a>
-            <a
-              style={{fontSize: 24}}
-              href="https://www.revtel.tech/project/"
-              target="_blank"
-              rel="noreferrer">
-              過往合作
-            </a>
-          </div>
+
           <div className="content">
             <FlexItem
               style={{
@@ -298,22 +265,6 @@ function Landing(props) {
           <Element name="cases">
             <h2>成功案例</h2>
           </Element>
-
-          <div
-            style={{
-              width: '100%',
-              marginTop: 40,
-              marginBottom: 40,
-              textAlign: 'right',
-            }}>
-            <a
-              style={{marginRight: 20, fontSize: 24}}
-              href="https://medium.com/revtel-tech/tagged/軟體顧問"
-              target="_blank"
-              rel="noreferrer">
-              顧問觀點紀錄
-            </a>
-          </div>
 
           <div
             className="content"
@@ -487,6 +438,87 @@ function Landing(props) {
                 </div>,
               );
             })}
+          </div>
+        </FlexItemSection>
+
+        <FlexItemSection
+          style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
+          <Element name="good">
+            <h2>顧問觀點</h2>
+          </Element>
+
+          <div
+            className="content"
+            style={{justifyContent: 'flex-start', flexDirection: 'column'}}>
+            {[
+              [
+                '語焉不詳未必不好？軟體開發合約那些要注意的地方',
+                'https://medium.com/revtel-tech/語焉不詳未必不好-軟體開發合約那些要注意的地方-9d8bc849e189',
+              ],
+              [
+                '軟體開發值多少？系統開發怎樣估成本',
+                'https://medium.com/revtel-tech/軟體開發值多少-系統開發怎樣估成本-43e7d0fbf842',
+              ],
+              [
+                '0 →1 ? 1 →100 ? 軟體顧問到底在顧什麼？',
+                'https://medium.com/revtel-tech/0-1-1-100-軟體顧問到底在顧什麼-56d3da6e02d0',
+              ],
+              [
+                '為什麼適合自己的電商系統這麼難找？',
+                'https://medium.com/revtel-tech/為什麼適合自己的電商系統這麼難找-e99bf15928a0',
+              ],
+              [
+                '電商爆單造成的悲劇？系統串接其實是風險交接',
+                'https://medium.com/revtel-tech/電商爆單造成的悲劇-系統串接其實是風險交接-1a2546ee15f4',
+              ],
+              [
+                '淺談系統設計的因地至宜：從產線監控軟體開發設計談起',
+                'https://medium.com/revtel-tech/淺談系統設計的因地至宜-從產線監控軟體開發設計談起-a90bd6658fde',
+              ],
+              [
+                '技術的純粹與世界的不完美：WEB3 →WEB2 的落地開發',
+                'https://medium.com/revtel-tech/技術的純粹與世界的不完美-web3-web2-的落地開發-60eaf0c0aac2s',
+              ],
+              [
+                'SEO 做多少 ? 客製化電商開發時的一些實踐經驗',
+                'https://medium.com/revtel-tech/seo-做多少-客製化電商開發時的一些實踐經驗-6f6a61c10f4f',
+              ],
+              [
+                '跨越不同領域的軟體開發經驗— 如何讓你的系統設計能真正解決問題',
+                'https://medium.com/revtel-tech/跨越不同領域的軟體開發經驗-如何讓你的系統設計能真正解決問題-ed3af961fbb3',
+              ],
+            ].map((item) => {
+              return (
+                <a
+                  href={item[1]}
+                  target="_blank"
+                  ariaLabel={item[0]}
+                  style={{
+                    paddingLeft: 5,
+                    color: '#443C68',
+                    fontSize: 20,
+                    marginTop: 15,
+                    marginBottom: 15,
+                  }}
+                  rel="noreferrer">
+                  {item[0]}
+                </a>
+              );
+            })}
+            <a
+              href={'https://medium.com/revtel-tech'}
+              target="_blank"
+              style={{
+                paddingLeft: 5,
+                color: '#18122B',
+                fontSize: 20,
+                marginTop: 15,
+                marginBottom: 15,
+                fontWeight: 'bold',
+              }}
+              rel="noreferrer">
+              更多資訊➚
+            </a>
           </div>
         </FlexItemSection>
       </Wrapper>

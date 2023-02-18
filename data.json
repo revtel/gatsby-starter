@@ -9,5 +9,6 @@
   "storageHost": "https://storage-stg.revtel-api.com/v4",
   "articleEditorHost": "https://console.revtel2.com/article/editor",
   "gaId": "UA-127064537-1",
-  "gtagId": "GTM-P9CS5JX"
+  "gtagId": "GTM-P9CS5JX",
+  "ga4Id": "xxx"
 }

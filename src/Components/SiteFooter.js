@@ -77,7 +77,13 @@ function SiteFooter(props) {
   const [dimension] = useOutlet('dimension');
 
   return (
-    <FlexItemSection isMobile={!(dimension.rwd === 'desktop')}>
+    <FlexItemSection
+      isMobile={!(dimension.rwd === 'desktop')}
+      style={{
+        paddingBottom: dimension.rwd === 'mobile' ? 50 : 20,
+        backgroundColor: '#F6F6F6',
+      }}
+      name="contact">
       <div
         style={{
           display: 'flex',
@@ -98,15 +104,17 @@ function SiteFooter(props) {
             'https://www.revtel.tech',
             '#008E89',
           ],
+          /*
           [
             '/images/phone.png',
             '(02)2557-8895',
             'tel:+886225578895',
             '#085E7D',
           ],
+          */
           [
             '/images/mail.png',
-            'contact+consult@revteltech.com',
+            'contact@revteltech.com',
             'mailto:contact+consult@revteltech.com',
             '#085E7D',
           ],
@@ -134,7 +142,7 @@ function SiteFooter(props) {
               flexDirection: 'row',
               justifyContent: 'flex-start',
               alignItems: 'center',
-              fontSize: 24,
+              fontSize: 20,
             }}
             key={idx}>
             <img src={item[0]} width="20" height="20" />
