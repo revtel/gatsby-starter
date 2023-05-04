@@ -50,7 +50,7 @@ function Layout({children, location}) {
         <title>忻旅科技顧問服務</title>
         <meta
           name="description"
-          content="Web2/Web3。系統規劃/系統健檢/技術佈局/商模建議。經驗來自實務/技術實力紮實/自有團隊協作/領域經驗多元。忻旅科技。軟體顧問。"
+          content="系統規劃/系統健檢/技術佈局/商模建議。經驗來自實務/技術實力紮實/自有團隊協作/領域經驗多元。忻旅科技。軟體顧問。Web2/Web3。"
         />
 
         <meta property="og:title" content="RevConsult 忻旅科技顧問服務" />
@@ -58,7 +58,7 @@ function Layout({children, location}) {
         <meta property="og:url" content="https://consult.revtel.tech" />
         <meta
           property="og:description"
-          content="Web2 / Web3。系統規劃 / 系統健檢 / 技術佈局 / 商模建議。經驗來自實務 / 技術實力紮實 / 自有團隊協作 / 領域經驗多元"
+          content="系統規劃 / 系統健檢 / 技術佈局 / 商模建議。經驗來自實務 / 技術實力紮實 / 自有團隊協作 / 領域經驗多元"
         />
 
         <meta property="og:type" content="website" />
