@@ -142,7 +142,7 @@ function SiteNavBar(props) {
             color: '#B3541E',
           }}
           onClick={() => {
-            Scroll.scroller.scrollTo('view', {
+            Scroll.scroller.scrollTo('concept', {
               duration: 1500,
               delay: 100,
               smooth: 'easeInOutQuint',

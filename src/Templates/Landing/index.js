@@ -443,7 +443,7 @@ function Landing(props) {
 
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
-          <Element name="good">
+          <Element name="concept">
             <h2>顧問觀點</h2>
           </Element>
 

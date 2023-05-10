@@ -5,6 +5,7 @@ const pages = [
     context: {},
   },
 
+  /*
   {
     path: `/products`,
     component: `src/Templates/ProductList/index.js`,
@@ -112,6 +113,7 @@ const pages = [
     component: `src/Templates/Admin/index.js`,
     context: {},
   },
+  */
 ];
 
 const config = {
