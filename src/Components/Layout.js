@@ -44,6 +44,11 @@ function Layout({children, location}) {
     hasSiteFooter = false;
   }
 
+  let isSimple = true;
+  if (location.pathname === '/') {
+    isSimple = false;
+  }
+
   return (
     <>
       <Helmet>
@@ -70,7 +75,9 @@ function Layout({children, location}) {
         <meta name="author" content="RevtelTech 忻旅科技股份有限公司" />
       </Helmet>
       <Wrapper rwd={dimension.rwd}>
-        {hasSiteNavBar && <SiteNavBar bgColor="white" location={location} />}
+        {hasSiteNavBar && (
+          <SiteNavBar bgColor="white" location={location} isSimple={isSimple} />
+        )}
         <div style={{flex: 1}}>{children}</div>
         {hasSiteFooter && <SiteFooter />}
       </Wrapper>

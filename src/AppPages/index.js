@@ -5,6 +5,12 @@ const pages = [
     context: {},
   },
 
+  {
+    path: '/dashboard-system',
+    component: 'src/Templates/ConsultDashboard/index.js',
+    context: {},
+  },
+
   /*
   {
     path: `/products`,
