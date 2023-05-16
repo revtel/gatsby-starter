@@ -65,7 +65,7 @@ function Landing(props) {
             <br />
             <br />
             對企業來說，除了思考 Web3 能帶來的優勢之外，如何從 Web2 到 Web3
-            進行平滑過渡更是重中之重。
+            平順的過渡更是轉型的重中之重。
             <br />
             <br />
             忻旅結合過往在 Web2 及 Web3
