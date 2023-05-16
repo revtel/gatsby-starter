@@ -10,6 +10,26 @@ import CheckoutLayout from './CheckoutLayout';
 import SiteNavBar from './SiteNavBar';
 import SiteFooter from './SiteFooter';
 
+const SEO_DATA = {
+  '/': {
+    title: '忻旅科技顧問服務',
+    descriytion:
+      '系統規劃/系統健檢/技術佈局/商模建議。經驗來自實務/技術實力紮實/自有團隊協作/領域經驗多元。忻旅科技。軟體顧問。Web2/Web3。',
+
+    image: 'https://consult.revtel.tech/images/revteltech.jpg',
+  },
+  'dashboard-system': {
+    title: '客製化後台及雲端資料庫',
+    descriytion: '透過客製化後台及雲端資料庫打造強大商業價值',
+    image: 'https://consult.revtel.tech/images/network.jpg',
+  },
+  'web2-to-web3': {
+    title: '區塊鏈整合服務開發 Web2 to Web3',
+    descriytion: '開啟服務新未來，實現Web2到Web3的無限可能',
+    image: 'https://consult.revtel.tech/images/bk.jpg',
+  },
+};
+
 function Layout({children, location}) {
   const [dimension] = useOutlet('dimension');
 
@@ -49,28 +69,29 @@ function Layout({children, location}) {
     isSimple = false;
   }
 
+  let seoData = SEO_DATA['/'];
+  if (location.pathname.indexOf('dashboard-system') >= 0) {
+    seoData = SEO_DATA['dashboard-system'];
+  } else if (location.pathname.indexOf('web2-to-web3') >= 0) {
+    seoData = SEO_DATA['web2-to-web3'];
+  }
+
   return (
     <>
       <Helmet>
-        <title>忻旅科技顧問服務</title>
-        <meta
-          name="description"
-          content="系統規劃/系統健檢/技術佈局/商模建議。經驗來自實務/技術實力紮實/自有團隊協作/領域經驗多元。忻旅科技。軟體顧問。Web2/Web3。"
-        />
+        <title>{seoData.title}</title>
+        <meta name="description" content={seoData.descriytion} />
 
-        <meta property="og:title" content="RevConsult 忻旅科技顧問服務" />
-        <meta property="og:site_name" content="RevConsult" />
-        <meta property="og:url" content="https://consult.revtel.tech" />
+        <meta property="og:title" content={seoData.title} />
+        <meta property="og:site_name" content="RevConsult 忻旅科技顧問服務" />
         <meta
-          property="og:description"
-          content="系統規劃 / 系統健檢 / 技術佈局 / 商模建議。經驗來自實務 / 技術實力紮實 / 自有團隊協作 / 領域經驗多元"
+          property="og:url"
+          content={'https://consult.revtel.tech' + location.pathname}
         />
+        <meta property="og:description" content={seoData.descriytion} />
 
         <meta property="og:type" content="website" />
-        <meta
-          property="og:image"
-          content="https://consult.revtel.tech/images/revteltech.jpg"
-        />
+        <meta property="og:image" content={seoData.image} />
 
         <meta name="author" content="RevtelTech 忻旅科技股份有限公司" />
       </Helmet>

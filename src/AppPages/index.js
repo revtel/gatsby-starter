@@ -11,6 +11,12 @@ const pages = [
     context: {},
   },
 
+  {
+    path: '/web2-to-web3',
+    component: 'src/Templates/Web2Web3/index.js',
+    context: {},
+  },
+
   /*
   {
     path: `/products`,
