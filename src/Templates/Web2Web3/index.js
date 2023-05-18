@@ -68,7 +68,7 @@ function Landing(props) {
             平順的過渡更是轉型的重中之重。
             <br />
             <br />
-            忻旅結合過往在 Web2 及 Web3
+            忻旅科技結合過往在 Web2 及 Web3
             的豐富經驗，能深入了解業務需求，並根據行業特點和發展趨勢提供量身定制的解決方案。
           </h2>
         </FlexItemSection>
