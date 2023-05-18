@@ -83,6 +83,8 @@ function Landing(props) {
                 <FlexItem
                   key={item[0]}
                   style={{
+                    width: mobile ? '80%' : '20%',
+
                     borderRadius: 10,
                     padding: 5,
                     backgroundColor: 'white',
