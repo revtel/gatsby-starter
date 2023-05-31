@@ -185,6 +185,63 @@ function Landing(props) {
 
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
+          <Element name="expertise">
+            <h2>特殊專業</h2>
+          </Element>
+
+          <div className="content">
+            <FlexItem
+              onClick={() => window.open('/dashboard-system', '_blank')}
+              style={{
+                borderRadius: 10,
+                padding: 15,
+                backgroundColor: '#F9E0BB',
+                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
+                width: '45%',
+                maxWidth: 500,
+                cursor: 'pointer',
+              }}>
+              <div
+                className="description"
+                style={{borderRadius: 10, marginBottom: 10}}>
+                <h2 style={{marginBottom: 15, color: '#884A39'}}>
+                  客製化後台/雲端資料庫
+                </h2>
+                <p style={{color: '#C38154'}}>
+                  通過顧問服務對業務需求的深入了解，我們可以提供量身定制的後台和雲端資料庫解決方案。相比於傳統的本地資料庫或套裝系統，這可以幫助企業更好地管理其數據和資源，進一步提高生產力和效率。
+                </p>
+              </div>
+              Read More
+            </FlexItem>
+            <FlexItem
+              onClick={() => window.open('/web2-to-web3', '_blank')}
+              style={{
+                borderRadius: 10,
+                padding: 15,
+                backgroundColor: '#F9E0BB',
+                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
+                width: '45%',
+                maxWidth: 500,
+                cursor: 'pointer',
+              }}>
+              <div
+                className="description"
+                style={{borderRadius: 10, marginBottom: 10}}>
+                <h2 style={{marginBottom: 15, color: '#884A39'}}>
+                  Web2/Web3 整合升級開發
+                </h2>
+                <p style={{color: '#C38154'}}>
+                  從 Web2 到 Web3 平順的過渡並不容易。結合過往在 Web2 及 Web3
+                  的豐富經驗，深入了解業務需求，並根據行業特點和發展趨勢提供量身定制的解決方案。
+                </p>
+              </div>
+              Read More
+            </FlexItem>
+          </div>
+        </FlexItemSection>
+
+        <FlexItemSection
+          style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
           <Element name="good">
             <h2>團隊優勢</h2>
           </Element>

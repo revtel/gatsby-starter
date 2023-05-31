@@ -111,6 +111,23 @@ function SiteNavBar(props) {
                 color: '#B3541E',
               }}
               onClick={() => {
+                Scroll.scroller.scrollTo('expertise', {
+                  duration: 1500,
+                  delay: 100,
+                  smooth: 'easeInOutQuint',
+                  offset: -100,
+                });
+              }}>
+              {dimension.rwd === 'desktop' ? '特殊專業' : '特長'}
+            </div>
+
+            <div
+              style={{
+                marginLeft: mobile ? 10 : 20,
+                cursor: 'pointer',
+                color: '#B3541E',
+              }}
+              onClick={() => {
                 Scroll.scroller.scrollTo('good', {
                   duration: 1500,
                   delay: 100,
