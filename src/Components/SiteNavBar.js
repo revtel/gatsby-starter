@@ -118,7 +118,7 @@ function SiteNavBar(props) {
                   offset: -100,
                 });
               }}>
-              {dimension.rwd === 'desktop' ? '特殊專業' : '特長'}
+              {dimension.rwd === 'desktop' ? '專長領域' : '領域'}
             </div>
 
             <div
