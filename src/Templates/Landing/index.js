@@ -370,7 +370,7 @@ function Landing(props) {
               [
                 '高曼計量',
                 'https://www.revtel.tech/static/6adb281dd727e95fdd10717d07b19597/159a2/gamma.png',
-                '看盤軟體設計開發',
+                '美股看盤 APP 設計開發',
                 'https://medium.com/revtel-tech/兼顧互動及專業的線圖-以股票看盤-軟體為例來聊聊-web-app-的合併開發-3bed0589a233',
               ],
               [
