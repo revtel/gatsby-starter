@@ -13,6 +13,7 @@ function Landing(props) {
     <ReactDelighters>
       <Wrapper>
         <HeroBannerSection
+          id="header"
           style={{
             /*
             backgroundImage:
@@ -23,7 +24,9 @@ function Landing(props) {
             height: '60vh',
           }}>
           <h1 style={{color: '#362222', fontSize: 48}}>忻旅科技軟體顧問</h1>
-          <p style={{color: 'grey'}}>顧問諮詢 / 系統開發 / 商務協作</p>
+          <h2 style={{color: 'grey', fontSize: 18, fontWeight: 400}}>
+            顧問諮詢 / 系統開發 / 商務協作
+          </h2>
         </HeroBannerSection>
 
         <FlexItemSection
@@ -47,9 +50,9 @@ function Landing(props) {
               <div
                 className="description"
                 style={{borderRadius: 10, marginBottom: 10}}>
-                <h2 style={{marginBottom: 15, color: '#884A39'}}>
+                <h3 style={{marginBottom: 15, color: '#884A39'}}>
                   客製化後台/雲端資料庫
-                </h2>
+                </h3>
                 <p style={{color: '#C38154'}}>
                   通過顧問服務對業務需求的深入了解，我們可以提供量身定制的後台和雲端資料庫解決方案。相比於傳統的本地資料庫或套裝系統，這可以幫助企業更好地管理其數據和資源，進一步提高生產力和效率。
                 </p>
@@ -70,9 +73,9 @@ function Landing(props) {
               <div
                 className="description"
                 style={{borderRadius: 10, marginBottom: 10}}>
-                <h2 style={{marginBottom: 15, color: '#884A39'}}>
+                <h3 style={{marginBottom: 15, color: '#884A39'}}>
                   Web2/Web3 整合升級開發
-                </h2>
+                </h3>
                 <p style={{color: '#C38154'}}>
                   從 Web2 到 Web3 平順的過渡並不容易。結合過往在 Web2 及 Web3
                   的豐富經驗，深入了解業務需求，並根據行業特點和發展趨勢提供量身定制的解決方案。
@@ -86,7 +89,7 @@ function Landing(props) {
         <FlexItemSection
           style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
           <Element name="tech">
-            <h2>技術領域 (React / React Native / AWS)</h2>
+            <h2>技術領域</h2>
           </Element>
           <br />
 
@@ -121,6 +124,25 @@ function Landing(props) {
                 </div>
               );
             })}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              marginTop: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <div
+              style={{
+                maxWidth: 500,
+                minWidth: 200,
+                padding: 20,
+              }}>
+              <h3 style={{color: '#6C3428'}}>網站開發：React / GatsbyJS</h3>
+              <h3 style={{color: '#6C3428'}}>APP開發：React Native</h3>
+              <h3 style={{color: '#6C3428'}}>通訊技術：NFC / BLE</h3>
+              <h3 style={{color: '#6C3428'}}>區塊鏈：智能合約 / 冷錢包</h3>
+            </div>
           </div>
         </FlexItemSection>
 
@@ -212,10 +234,10 @@ function Landing(props) {
                 maxWidth: 500,
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h2 style={{marginBottom: 15, color: '#CEAB93'}}>
+                <h3 style={{marginBottom: 15, color: '#CEAB93'}}>
                   量身定做適合您現況的專案計畫
-                </h2>
-                <h3 style={{marginBottom: 10, color: 'white'}}>專案式合作</h3>
+                </h3>
+                <h4 style={{marginBottom: 10, color: 'white'}}>專案式合作</h4>
                 <p style={{color: 'lightgrey'}}>
                   適用於整體需求較為清楚的用戶。合作目標為根據實際需要提供專業協助，從架構分析、技術報告到開發協作皆為可討論範圍{' '}
                 </p>
@@ -232,10 +254,10 @@ function Landing(props) {
                 maxWidth: 500,
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h2 style={{marginBottom: 15, color: '#CEAB93'}}>
+                <h3 style={{marginBottom: 15, color: '#CEAB93'}}>
                   提供符合您現況的彈性支援
-                </h2>
-                <h3 style={{marginBottom: 10, color: 'white'}}>時數式合作</h3>
+                </h3>
+                <h4 style={{marginBottom: 10, color: 'white'}}>時數式合作</h4>
                 <p style={{color: 'lightgrey'}}>
                   適用於整體狀況不太明確的用戶。合作目標為協助釐清問題及健康度確認，藉以提高開發速度或及早發現潛在風險並有因應原則{' '}
                 </p>
@@ -479,10 +501,22 @@ function Landing(props) {
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
-                    <img src={item[1]} style={{width: 150}} />
+                    <img
+                      src={item[1]}
+                      style={{width: 150}}
+                      alt={item[0] + ' ' + item[2]}
+                    />
                   </div>
-                  <h1>{item[0]}</h1>
-                  <p style={{color: 'black', marginTop: 10}}>{item[2]}</p>
+                  <h4 style={{fontSize: 18}}>{item[0]}</h4>
+                  <h3
+                    style={{
+                      color: 'black',
+                      marginTop: 10,
+                      fontSize: 14,
+                      fontWeight: 400,
+                    }}>
+                    {item[2]}
+                  </h3>
                   {item[3] && (
                     <div
                       style={{

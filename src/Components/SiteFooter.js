@@ -95,7 +95,7 @@ function SiteFooter(props) {
           paddingTop: 20,
           paddingBottom: 20,
         }}>
-        <h1 style={{marginBottom: 20}}>與我們聯繫</h1>
+        <h2 style={{marginBottom: 20}}>與我們聯繫</h2>
 
         {[
           [
