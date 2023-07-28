@@ -583,6 +583,18 @@ function Landing(props) {
                 '跨越不同領域的軟體開發經驗— 如何讓你的系統設計能真正解決問題',
                 'https://medium.com/revtel-tech/跨越不同領域的軟體開發經驗-如何讓你的系統設計能真正解決問題-ed3af961fbb3',
               ],
+              [
+                'NFC 該如何使用？寫在 iphone 終於完整支援 NFC 讀寫的今天',
+                'https://medium.com/revtel-tech/nfc-怎麼用-寫在-iphone-終於完整支援-nfc-讀寫的今天-3b88ed308a38',
+              ],
+              [
+                '為什麼 NFC 技術值得你注意？從蘋果推出「Tap to Pay」說起',
+                'https://medium.com/revtel-tech/為什麼-nfc-技術值得你注意-從蘋果推出-tap-to-pay-說起-323733adeaee',
+              ],
+              [
+                '功能的厚度？— 從社群登入及推播說起',
+                'https://medium.com/revtel-tech/功能的厚度-從社群登入及推播說起-bfc178c9a662',
+              ],
             ].map((item) => {
               return (
                 <a
