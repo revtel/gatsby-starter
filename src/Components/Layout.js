@@ -19,13 +19,15 @@ const SEO_DATA = {
     image: 'https://consult.revtel.tech/images/revteltech.jpg',
   },
   'dashboard-system': {
-    title: '客製化後台及雲端資料庫',
-    descriytion: '透過客製化後台及雲端資料庫打造強大商業價值',
+    title: '客製化後台及雲端資料庫 | 忻旅科技顧問開發服務',
+    descriytion:
+      '通過顧問服務對業務需求的深入了解，我們可以提供量身定制的後台和雲端資料庫解決方案。相比於傳統的本地資料庫或套裝系統，這可以幫助企業更好地管理其數據和資源，進一步提高生產力和效率。',
     image: 'https://consult.revtel.tech/images/network.jpg',
   },
   'web2-to-web3': {
-    title: '區塊鏈整合服務開發 Web2 to Web3',
-    descriytion: '開啟服務新未來，實現Web2到Web3的無限可能',
+    title: '區塊鏈整合服務開發 Web2 to Web3 | 忻旅科技顧問開發服務',
+    descriytion:
+      '結合過往在 Web2 及 Web3 的豐富經驗，能深入了解業務需求，並根據行業特點和發展趨勢提供量身定制的解決方案。',
     image: 'https://consult.revtel.tech/images/bk.jpg',
   },
 };

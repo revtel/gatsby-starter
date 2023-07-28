@@ -140,6 +140,7 @@ function Landing(props) {
               }}>
               <h3 style={{color: '#6C3428'}}>網站開發：React / GatsbyJS</h3>
               <h3 style={{color: '#6C3428'}}>APP開發：React Native</h3>
+              <h3 style={{color: '#6C3428'}}>雲端開發：AWS / MongoDB</h3>
               <h3 style={{color: '#6C3428'}}>通訊技術：NFC / BLE</h3>
               <h3 style={{color: '#6C3428'}}>區塊鏈：智能合約 / 冷錢包</h3>
             </div>
