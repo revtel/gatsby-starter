@@ -355,7 +355,7 @@ function Landing(props) {
             style={{
               display: 'flex',
               flexDirection: 'row',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               alignItems: 'center',
               width: '100%',
             }}>
@@ -463,6 +463,8 @@ function Landing(props) {
                 'NFT 實體化方案顧問開發',
                 'https://www.realitag.app/',
               ],
+              ['拉亞漢堡', '/images/laya.png', '網站 & APP 點餐系統'],
+              ['台北市律師公會', '/images/tba.png', '網站 & APP 系統'],
             ].map((item, idx) => {
               const withLink = item[3]
                 ? (_) => (
@@ -470,8 +472,8 @@ function Landing(props) {
                       key={item[3]}
                       href={item[3]}
                       target="_blank"
-                      alt={item[0] + ' ' + item[1]}
-                      ariaLabel={item[0] + ' ' + item[1]}
+                      alt={item[0] + ':' + item[2]}
+                      ariaLabel={item[0] + ':' + item[2]}
                       rel="noreferrer">
                       {_}
                     </a>
@@ -505,7 +507,7 @@ function Landing(props) {
                     <img
                       src={item[1]}
                       style={{width: 150}}
-                      alt={item[0] + ' ' + item[2]}
+                      alt={item[0] + ':' + item[2]}
                     />
                   </div>
                   <h4 style={{fontSize: 18}}>{item[0]}</h4>
