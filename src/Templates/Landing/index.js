@@ -602,7 +602,8 @@ function Landing(props) {
                 <a
                   href={item[1]}
                   target="_blank"
-                  ariaLabel={item[0]}
+                  aria-label={item[0]}
+                  alt={item[0]}
                   style={{
                     paddingLeft: 5,
                     color: '#443C68',
