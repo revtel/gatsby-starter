@@ -161,10 +161,10 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 10}}>系統規劃</h3>
-                <h4 style={{marginBottom: 10}}>協助客製化系統先期調研</h4>
+                <h3 style={{marginBottom: 10}}>數位轉型</h3>
+                <h4 style={{marginBottom: 10}}>協助產業及系統轉型升級</h4>
                 <p style={{color: '#3E3E3E'}}>
-                  因軟體工程的連續性及難以分割，開發流程不易在中途隨意中止。本服務協助於先期規劃階段排除流程或功能的潛在設計不良
+                  數位轉型過程往往牽涉系統的升級及擴充。本服務協助自既有系統及未來視角做通盤規劃及排除流程或功能的設計不良
                 </p>
               </div>
             </FlexItem>
@@ -177,10 +177,10 @@ function Landing(props) {
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
               }}>
               <div className="description" style={{borderRadius: 10}}>
-                <h3 style={{marginBottom: 10}}>系統健檢</h3>
-                <h4 style={{marginBottom: 10}}>協助既有系統的風險排查</h4>
+                <h3 style={{marginBottom: 10}}>系統規劃</h3>
+                <h4 style={{marginBottom: 10}}>協助系統進行應用規劃</h4>
                 <p style={{color: '#3E3E3E'}}>
-                  軟體的複雜隨著時間成指數倍增長，在改版、升級或擴充時需要完整掌握。本服務協助評估既有系統狀態及協助驗收開發成果
+                  軟體的複雜會隨時間及需求成指數增長，好的規劃至關重要。本服務協助評估既有系統狀態、協助驗收成果及規劃未來架構方向
                 </p>
               </div>
             </FlexItem>

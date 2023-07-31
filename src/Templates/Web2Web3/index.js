@@ -21,7 +21,7 @@ function Landing(props) {
 
             //height: 300,
           }}>
-          <h1
+          <h2
             style={{
               color: '#1D267D',
               fontSize: '2.5rem',
@@ -30,10 +30,16 @@ function Landing(props) {
               padding: '5px 10px',
             }}>
             開啟服務新未來，實現Web2到Web3的無限可能
+          </h2>
+          <h1
+            style={{
+              //color: '#ACB1D6',
+              marginTop: 20,
+              fontWeight: 400,
+              color: 'lightgrey',
+            }}>
+            RevtelTech Web2 / Web3 數位轉型
           </h1>
-          <p style={{color: '#ACB1D6', marginTop: 20}}>
-            顧問諮詢 / 系統開發 / 商務協作
-          </p>
         </HeroBannerSection>
 
         <FlexItemSection
@@ -46,7 +52,7 @@ function Landing(props) {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <h2
+          <p
             style={{
               borderRadius: 10,
               backgroundColor: '#DBDFEA',
@@ -58,6 +64,7 @@ function Landing(props) {
               alignItems: 'center',
               padding: 30,
               color: '#393E46',
+              fontSize: 16,
             }}>
             Web3
             作為下一代互聯網的重要發展方向，為企業帶來了全新的機遇和挑戰。我們致力於成為企業的轉型夥伴，幫助企業從傳統的
@@ -70,11 +77,20 @@ function Landing(props) {
             <br />
             忻旅科技結合過往在 Web2 及 Web3
             的豐富經驗，能深入了解業務需求，並根據行業特點和發展趨勢提供量身定制的解決方案。
-          </h2>
+          </p>
         </FlexItemSection>
 
         <FlexItemSection
-          style={{backgroundColor: '#eee', width: '100%', maxWidth: 1500}}>
+          style={{
+            backgroundColor: '#eee',
+            width: '100%',
+            maxWidth: 1500,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <h3 style={{alignSelf: 'center', fontSize: 24}}>進行步驟</h3>
           <div className="content">
             {[
               ['STEP 1', '顧問評估', '釐清業務範圍及真實需求'],
@@ -116,7 +132,7 @@ function Landing(props) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <h2 style={{alignSelf: 'center'}}>優勢&特色</h2>
+            <h3 style={{alignSelf: 'center', fontSize: 24}}>優勢&特色</h3>
             <div className="content">
               {[
                 ['顧問先行', '透過需求分析確保系統真正解決問題'],
@@ -137,7 +153,7 @@ function Landing(props) {
                   <div
                     className="description"
                     style={{borderRadius: 10, textAlign: 'center'}}>
-                    <h3 style={{marginBottom: 20}}>{item[0]}</h3>
+                    <h4 style={{marginBottom: 20, fontSize: 20}}>{item[0]}</h4>
                     <p style={{color: '#3E3E3E'}}>{item[1]}</p>
                   </div>
                 </FlexItem>
@@ -216,7 +232,7 @@ function CaseSection({}) {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <h2 style={{alignSelf: 'center'}}>案例分享</h2>
+      <h3 style={{alignSelf: 'center', fontSize: 24}}>案例分享</h3>
 
       <div
         className="content"
@@ -250,7 +266,7 @@ function CaseSection({}) {
               color: _idx === idx ? 'white' : '#EAEAEA',
               border: _idx === idx ? '2px solid #7D5A50' : null,
             }}>
-            {name}
+            <h4 style={{fontSize: 20}}>{name}</h4>
           </div>
         ))}
       </div>
@@ -277,7 +293,7 @@ function CaseSection({}) {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <h2 style={{marginBottom: 20}}>{item[1]}</h2>
+            <h4 style={{marginBottom: 20, fontSize: 20}}>{item[1]}</h4>
             <div
               style={{
                 display: 'flex',
