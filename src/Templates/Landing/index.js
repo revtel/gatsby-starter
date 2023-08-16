@@ -454,7 +454,7 @@ function Landing(props) {
                 '法朋烘焙坊',
                 '/images/lr.png',
                 '烘焙電商/ERP 顧問開發',
-                'https://medium.com/revtel-tech/三分鐘內數百萬業績的高流量電商煉成-le-ruban-pâtisserie-法朋烘焙甜點坊-6901f8694036',
+                'https://www.revtel.tech/project/lerubanpatisserie',
               ],
               [
                 '寬豐工業',
@@ -475,7 +475,12 @@ function Landing(props) {
                 'NFT 實體化方案顧問開發',
                 'https://www.realitag.app/',
               ],
-              ['拉亞漢堡', '/images/laya.png', '網站 & APP 點餐系統'],
+              [
+                '拉亞漢堡',
+                '/images/laya.png',
+                '網站 & APP 點餐系統',
+                'https://www.revtel.tech/project/laya-order-web-and-app',
+              ],
               ['台北市律師公會', '/images/tba.png', '網站 & APP 系統'],
             ].map((item, idx) => {
               const withLink = item[3]
