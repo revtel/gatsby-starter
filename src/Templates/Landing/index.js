@@ -367,7 +367,7 @@ function Landing(props) {
             style={{
               display: 'flex',
               flexDirection: 'row',
-              justifyContent: 'flex-start',
+              justifyContent: 'center', //'flex-start',
               alignItems: 'center',
               width: '100%',
             }}>
@@ -500,8 +500,8 @@ function Landing(props) {
                     backgroundColor: 'white',
                     borderRadius: 15,
                     padding: 10,
-                    width: 250,
-                    height: 250,
+                    width: 230,
+                    height: 230,
                     flexDirection: 'column',
                     alignItems: 'center',
                     marginTop: 10,
