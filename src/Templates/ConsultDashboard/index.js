@@ -258,7 +258,7 @@ function CaseSection({}) {
               verticalAlign: 'middle',
               borderRadius: 10,
               //padding: 5,
-              height: 50,
+              height: 100,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

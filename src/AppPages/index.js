@@ -17,6 +17,12 @@ const pages = [
     context: {},
   },
 
+  {
+    path: '/digital-transformation',
+    component: 'src/Templates/DigitalTransformation/index.js',
+    context: {},
+  },
+
   /*
   {
     path: `/products`,

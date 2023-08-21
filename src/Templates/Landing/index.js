@@ -42,9 +42,10 @@ function Landing(props) {
                 padding: 15,
                 backgroundColor: '#F9E0BB',
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
-                width: '65%',
+                width: '30%',
                 maxWidth: 500,
                 cursor: 'pointer',
+                minWidth: 300,
               }}>
               <a
                 href="/dashboard-system"
@@ -59,7 +60,7 @@ function Landing(props) {
                     客製化後台/雲端資料庫
                   </h3>
                   <p style={{color: '#C38154', fontSize: 18}}>
-                    通過顧問服務對業務需求的深入了解，我們可以提供量身定制的後台和雲端資料庫解決方案。相比於傳統的本地資料庫或套裝系統，這可以幫助企業更好地管理其數據和資源，進一步提高生產力和效率。
+                    通過顧問服務對業務需求的深入了解，提供量身定制的後台和雲端資料庫。相比於傳統的套裝系統，這能幫助企業更好地管理其資料和資源並提高生產力和效率。
                   </p>
                 </div>
                 <div style={{color: 'black', float: 'right'}}>Read More</div>
@@ -72,8 +73,9 @@ function Landing(props) {
                 padding: 15,
                 backgroundColor: '#F9E0BB',
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
-                width: '65%',
+                width: '30%',
                 maxWidth: 500,
+                minWidth: 300,
               }}>
               <a
                 href="/web2-to-web3"
@@ -90,6 +92,36 @@ function Landing(props) {
                   <p style={{color: '#C38154', fontSize: 18}}>
                     從 Web2 到 Web3 平順的過渡並不容易。結合過往在 Web2 及 Web3
                     的豐富經驗，深入了解業務需求，並根據行業特點和發展趨勢提供量身定制的解決方案。
+                  </p>
+                </div>
+                <div style={{color: 'black', float: 'right'}}>Read More</div>
+              </a>
+            </FlexItem>
+
+            <FlexItem
+              style={{
+                borderRadius: 10,
+                padding: 15,
+                backgroundColor: '#F9E0BB',
+                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
+                width: '30%',
+                maxWidth: 500,
+                minWidth: 300,
+              }}>
+              <a
+                href="/digital-transformation"
+                target="_blank"
+                alt="數位轉型技術陪跑"
+                aria-label="數位轉型技術陪跑">
+                <div
+                  className="description"
+                  style={{borderRadius: 10, marginBottom: 10}}>
+                  <h3
+                    style={{marginBottom: 15, color: '#884A39', fontSize: 24}}>
+                    數位轉型技術陪跑
+                  </h3>
+                  <p style={{color: '#C38154', fontSize: 18}}>
+                    在既有系統上引入新技術來拓展業務方向及發展可能是企業長期營運需要的。透過技術陪跑能最大程度確保系統開發能平安過渡
                   </p>
                 </div>
                 <div style={{color: 'black', float: 'right'}}>Read More</div>
