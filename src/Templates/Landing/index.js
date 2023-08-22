@@ -111,14 +111,14 @@ function Landing(props) {
               <a
                 href="/digital-transformation"
                 target="_blank"
-                alt="數位轉型技術陪跑"
-                aria-label="數位轉型技術陪跑">
+                alt="數位轉型技術顧問"
+                aria-label="數位轉型技術顧問">
                 <div
                   className="description"
                   style={{borderRadius: 10, marginBottom: 10}}>
                   <h3
                     style={{marginBottom: 15, color: '#884A39', fontSize: 24}}>
-                    數位轉型技術陪跑
+                    數位轉型技術顧問
                   </h3>
                   <p style={{color: '#C38154', fontSize: 18}}>
                     在既有系統上引入新技術來拓展業務方向及發展可能是企業長期營運需要的。透過技術陪跑能最大程度確保系統開發能平安過渡
