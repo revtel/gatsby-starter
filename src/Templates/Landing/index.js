@@ -428,17 +428,23 @@ function Landing(props) {
                 'https://medium.com/revtel-tech/智慧商圈點數及區塊鏈-點數的多種表述-c423ee46eaaf',
               ],
               [
+                '台北設計城市展',
+                '/images/taipeidesigncity2018.png',
+                '導覽 APP 顧問開發',
+                'https://www.revtel.tech/project/taipeidesigncity2018',
+              ],
+              [
                 'BakerShell 烘焙電商',
                 '/images/bakey.png',
-                '烘焙產業 SAAS 電商顧問開發',
-                'https://www.bakershell.com.tw/',
+                '烘焙業 SAAS 電商顧問開發',
+                'https://www.revtel.tech/project/bakershell-line-ec',
               ],
               ['感官文化印刷', '/images/sens.png', '電商/ERP/區塊鏈設計開發'],
               [
                 '高曼計量',
                 'https://www.revtel.tech/static/6adb281dd727e95fdd10717d07b19597/159a2/gamma.png',
                 '美股看盤 APP 設計開發',
-                'https://medium.com/revtel-tech/兼顧互動及專業的線圖-以股票看盤-軟體為例來聊聊-web-app-的合併開發-3bed0589a233',
+                'https://www.revtel.tech/project/gp-stock',
               ],
               [
                 'ADENOVO',
@@ -449,13 +455,19 @@ function Landing(props) {
                 '二十五電訊',
                 '/images/Tel25.png',
                 '電信產品設計開發',
-                'https://medium.com/revtel-tech/案例分享-tel-u-電信電商-8cc7a7feefb4',
+                'https://www.revtel.tech/project/tel25-telecom',
+              ],
+              [
+                '讀樂樂',
+                '/images/babyvoice.png',
+                '繪本互動 APP 顧問開發',
+                'https://www.revtel.tech/project/babyvoice',
               ],
               [
                 'HeCafe 好咖嚴選',
                 '/images/hecafe.png',
                 '咖啡相關選品平台顧問開發',
-                'https://medium.com/revtel-tech/讓享受美好變成生活習慣-hecafe-好咖嚴選-422673ddfbc5',
+                'https://www.revtel.tech/project/hecafe',
               ],
               [
                 'QriticA',
@@ -475,12 +487,13 @@ function Landing(props) {
                 '青田悅產後護理之家',
                 '/images/ctycare.png',
                 '月子中心系統顧問開發',
+                'https://www.revtel.tech/project/momcenter',
               ],
               [
                 '奕果雲端數位',
                 'https://www.revtel.tech/static/e51af92cd09162580ad8b34c86b5309b/6258c/HiPrint.webp',
                 '印刷電商/ERP 顧問開發',
-                'https://medium.com/revtel-tech/印刷業專屬電商-hiprint-開發分享-以-gatsbyjs-打造高速-erp-ec-9e6a3bbfbc7b',
+                'https://www.revtel.tech/project/hiprint-ec',
               ],
               [
                 '法朋烘焙坊',
@@ -492,7 +505,7 @@ function Landing(props) {
                 '寬豐工業',
                 '/images/real.png',
                 '藍牙/NFC智能鎖顧問開發',
-                'https://medium.com/revtel-tech/案例分享-傳產升級-藍牙電子鎖-809b39d97637',
+                'https://www.revtel.tech/project/blelock',
               ],
               ['Pranaq', '/images/pranaq.png', '醫療雲端系統顧問'],
               [
@@ -506,6 +519,12 @@ function Landing(props) {
                 'images/realiT-logo.png',
                 'NFT 實體化方案顧問開發',
                 'https://www.realitag.app/',
+              ],
+              [
+                '幫農事',
+                '/images/buydirectlyfromfarmers.png',
+                '網站 & APP 理單系統',
+                'https://www.revtel.tech/project/buydirectlyfromfarmers',
               ],
               [
                 '拉亞漢堡',
