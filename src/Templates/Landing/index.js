@@ -407,132 +407,132 @@ function Landing(props) {
               [
                 '工研院',
                 'https://www.revtel.tech/static/000c3e2dd577951ddc1d79d17888a90b/6258c/ITRI.webp',
-                '智能物流系統顧問開發',
+                ['智能物流系統顧問開發', '物聯網 IoT 數位轉型'],
                 'https://medium.com/revtel-tech/複雜流程的可追蹤及電子化-港區智能物流系統-ad0a30cb342b',
               ],
               [
                 '資策會',
                 'https://www.revtel.tech/static/e3a00e73d9db70d5ab8539602886b7d6/159a2/III.png',
-                '智能鏡顧問開發',
+                ['智能鏡顧問開發', '物聯網 IoT 數位轉型'],
               ],
               [
                 '加密鏈科技',
                 'https://www.revtel.tech/static/b02e59ad1f3fea94f36734e735c8c9b2/6258c/inigma.webp',
-                'NFC 冷錢包顧問開發',
+                ['NFC 冷錢包顧問開發', 'web3 區塊鏈新創技術'],
                 'https://medium.com/revtel-tech/區塊鏈實體化的技術隨想-blockchain-nfc-875ac80ba0c9',
               ],
               [
                 '商業司智能商圈',
                 '/images/bizlion.png',
-                '區塊鏈點數發幣系統顧問開發',
+                ['區塊鏈點數發幣系統顧問開發', 'web3 區塊鏈新創技術'],
                 'https://medium.com/revtel-tech/智慧商圈點數及區塊鏈-點數的多種表述-c423ee46eaaf',
               ],
               [
                 '台北設計城市展',
                 '/images/taipeidesigncity2018.png',
-                '導覽 APP 顧問開發',
+                ['導覽 APP 顧問開發'],
                 'https://www.revtel.tech/project/taipeidesigncity2018',
               ],
               [
                 'BakerShell 烘焙電商',
                 '/images/bakey.png',
-                '烘焙業 SAAS 電商顧問開發',
+                ['烘焙業 SAAS 電商顧問開發'],
                 'https://www.revtel.tech/project/bakershell-line-ec',
               ],
-              ['感官文化印刷', '/images/sens.png', '電商/ERP/區塊鏈設計開發'],
+              ['感官文化印刷', '/images/sens.png', ['電商/ERP/區塊鏈設計開發']],
               [
                 '高曼計量',
                 'https://www.revtel.tech/static/6adb281dd727e95fdd10717d07b19597/159a2/gamma.png',
-                '美股看盤 APP 設計開發',
+                ['美股看盤 APP 設計開發'],
                 'https://www.revtel.tech/project/gp-stock',
               ],
               [
                 'ADENOVO',
                 'https://www.revtel.tech/static/26f601b5df8360754106e9bc404ac324/159a2/adenovo.png',
-                'FinTech 產品設計開發',
+                ['FinTech 產品設計開發'],
               ],
               [
                 '二十五電訊',
                 '/images/Tel25.png',
-                '電信產品設計開發',
+                ['電信產品設計開發'],
                 'https://www.revtel.tech/project/tel25-telecom',
               ],
               [
                 '讀樂樂',
                 '/images/babyvoice.png',
-                '繪本互動 APP 顧問開發',
+                ['繪本互動 APP 顧問開發'],
                 'https://www.revtel.tech/project/babyvoice',
               ],
               [
                 'HeCafe 好咖嚴選',
                 '/images/hecafe.png',
-                '咖啡相關選品平台顧問開發',
+                ['咖啡相關選品平台顧問開發'],
                 'https://www.revtel.tech/project/hecafe',
               ],
               [
                 'QriticA',
                 'https://www.revtel.tech/static/938a27c4de72146887393644a7275fdd/159a2/Qritica.png',
-                '思辨教育平台顧問開發',
+                ['思辨教育平台顧問開發'],
                 'https://medium.com/revtel-tech/案例分享-線上教育平台-qritica-b5974cf719c2',
               ],
-              ['Merck 默克藥廠', '/images/Merck.png', '用藥追蹤系統顧問開發'],
+              ['Merck 默克藥廠', '/images/Merck.png', ['用藥追蹤系統顧問開發']],
               [
                 'DSA 達詳自動化',
                 '/images/dsa.png',
-                '智能產線軟體顧問開發',
+                ['智能產線軟體顧問開發'],
                 'https://revteltech.pse.is/sys-design',
               ],
 
               [
                 '青田悅產後護理之家',
                 '/images/ctycare.png',
-                '月子中心系統顧問開發',
+                ['月子中心系統顧問開發'],
                 'https://www.revtel.tech/project/momcenter',
               ],
               [
                 '奕果雲端數位',
                 'https://www.revtel.tech/static/e51af92cd09162580ad8b34c86b5309b/6258c/HiPrint.webp',
-                '印刷電商/ERP 顧問開發',
+                ['印刷電商/ERP 顧問開發'],
                 'https://www.revtel.tech/project/hiprint-ec',
               ],
               [
                 '法朋烘焙坊',
                 '/images/lr.png',
-                '烘焙電商/ERP 顧問開發',
+                ['烘焙電商/ERP 顧問開發'],
                 'https://www.revtel.tech/project/lerubanpatisserie',
               ],
               [
                 '寬豐工業',
                 '/images/real.png',
-                '藍牙/NFC智能鎖顧問開發',
+                ['藍牙/NFC智能鎖顧問開發'],
                 'https://www.revtel.tech/project/blelock',
               ],
-              ['Pranaq', '/images/pranaq.png', '醫療雲端系統顧問'],
+              ['Pranaq', '/images/pranaq.png', ['醫療雲端系統顧問']],
               [
                 'HiNFT',
                 '/images/hinft.png',
-                '國內外多個 NFT 項目顧問開發',
+                ['國內外 NFT 項目顧問開發'],
                 'https://medium.com/revtel-tech/技術的純粹與世界的不完美-web3-web2-的落地開發-60eaf0c0aac2',
               ],
               [
                 'RealiT',
                 'images/realiT-logo.png',
-                'NFT 實體化方案顧問開發',
+                ['NFT 實體化方案顧問開發'],
                 'https://www.realitag.app/',
               ],
               [
                 '幫農事',
                 '/images/buydirectlyfromfarmers.png',
-                '網站 & APP 理單系統',
+                ['網站 & APP 理單系統'],
                 'https://www.revtel.tech/project/buydirectlyfromfarmers',
               ],
               [
                 '拉亞漢堡',
                 '/images/laya.png',
-                '網站 & APP 點餐系統',
+                ['網站 & APP 點餐系統'],
                 'https://www.revtel.tech/project/laya-order-web-and-app',
               ],
-              ['台北市律師公會', '/images/tba.png', '網站 & APP 系統'],
+              ['台北市律師公會', '/images/tba.png', ['會員網站 & APP 系統']],
             ].map((item, idx) => {
               const withLink = item[3]
                 ? (_) => (
@@ -540,13 +540,19 @@ function Landing(props) {
                       key={item[3]}
                       href={item[3]}
                       target="_blank"
-                      alt={item[0] + ':' + item[2]}
-                      ariaLabel={item[0] + ':' + item[2]}
+                      alt={
+                        item[0] + ':' + title + (seoType ? ',' + seoType : '')
+                      }
+                      aria-label={
+                        item[0] + ':' + title + (seoType ? ',' + seoType : '')
+                      }
                       rel="noreferrer">
                       {_}
                     </a>
                   )
                 : (_) => _;
+
+              const [title, seoType] = item[2];
 
               return withLink(
                 <div
@@ -575,7 +581,9 @@ function Landing(props) {
                     <img
                       src={item[1]}
                       style={{width: 150}}
-                      alt={item[0] + ':' + item[2]}
+                      alt={
+                        item[0] + ':' + title + (seoType ? ',' + seoType : '')
+                      }
                     />
                   </div>
                   <h4 style={{fontSize: 18}}>{item[0]}</h4>
@@ -586,7 +594,7 @@ function Landing(props) {
                       fontSize: 14,
                       fontWeight: 400,
                     }}>
-                    {item[2]}
+                    {title}
                   </h3>
                   {item[3] && (
                     <div
