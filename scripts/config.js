@@ -28,9 +28,9 @@ function config() {
     data.storageHost = 'https://storage.revtel-api.com/v4';
     data.articleEditorHost = 'https://console-prod.netlify.com/article/editor';
 
-    data.gaId = 'UA-127064537-1';
-    data.gtagId = 'GTM-P9CS5JX';
-    data.ga4Id = 'G-6V7DG5VTWY';
+    data.gaId = 'xxx';
+    data.gtagId = 'xxx';
+    data.ga4Id = 'G-NPQY1PGVWY';
   }
 
   fs.writeFileSync('./data.json', JSON.stringify(data, null, 2), 'utf8');

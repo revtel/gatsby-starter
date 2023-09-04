@@ -5,6 +5,7 @@ const pages = [
     context: {},
   },
 
+  /*
   {
     path: '/dashboard-system',
     component: 'src/Templates/ConsultDashboard/index.js',
@@ -23,7 +24,6 @@ const pages = [
     context: {},
   },
 
-  /*
   {
     path: `/products`,
     component: `src/Templates/ProductList/index.js`,

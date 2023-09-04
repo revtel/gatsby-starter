@@ -12,12 +12,13 @@ import SiteFooter from './SiteFooter';
 
 const SEO_DATA = {
   '/': {
-    title: '忻旅科技顧問服務 | 系統規劃/系統健檢/技術佈局/商模建議',
+    title: 'RevB2B：B2B 採購下單系統 | 忻旅科技',
     descriytion:
-      '擅長客製化後台、雲端資料庫及Web2/Web3開發。提供軟體產品全生命週期所需的一站式服務，顧問諮詢(協助技術佈局及產品規劃)、開發協力(助軟體開發及後續維運）及商模合作(協助擴展及增強商業模式)。技術擅長 React、React Native、AWS 及 MongoDB。',
+      '「RevB2B 採購下單系統」是一個專為企業設計的流程工具，能有效簡化和優化企業間的採購流程。系統全線上化，透過雲端技術讓客戶能輕易選取供應商提供的商品，並能針對不同等級的客戶提供不同報價。客戶更可輕易建立不同需求之選購單，降低採購流程的人為錯誤及溝通失誤。',
 
     image: 'https://consult.revtel.tech/images/revteltech.jpg',
   },
+  /*
   'dashboard-system': {
     title: '客製化後台及雲端資料庫 | 忻旅科技顧問開發服務',
     descriytion:
@@ -30,6 +31,7 @@ const SEO_DATA = {
       '結合過往在 Web2 及 Web3 的豐富經驗，能深入了解業務需求，並根據行業特點和發展趨勢提供量身定制的解決方案。',
     image: 'https://consult.revtel.tech/images/bk.jpg',
   },
+  */
 };
 
 function Layout({children, location}) {
