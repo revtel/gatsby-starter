@@ -14,7 +14,7 @@ const SEO_DATA = {
   '/': {
     title: '忻旅科技顧問服務 | 系統規劃/系統健檢/技術佈局/商模建議',
     descriytion:
-      '擅長客製化後台、雲端資料庫及Web2/Web3開發。提供軟體產品全生命週期所需的一站式服務，顧問諮詢(協助技術佈局及產品規劃)、開發協力(助軟體開發及後續維運）及商模合作(協助擴展及增強商業模式)。技術擅長 React、React Native、AWS 及 MongoDB。',
+      '擅長客製化後台、雲端資料庫及Web2/Web3開發。提供軟體產品全生命週期所需的一站式服務，顧問諮詢(協助技術佈局及產品規劃)、開發協力(助軟體開發及後續維運）及商模合作(協助擴展及增強商業模式)。技術擅長 React、React Native、AWS 及 MongoDB。APP 顧問 / 網站顧問 / React Native 顧問 / 數位轉型顧問 / 區塊鏈顧問 / NFC 顧問',
 
     image: 'https://consult.revtel.tech/images/revteltech.jpg',
   },
