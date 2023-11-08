@@ -452,7 +452,7 @@ function Landing(props) {
               ],
               [
                 'ADENOVO',
-                'https://www.revtel.tech/static/26f601b5df8360754106e9bc404ac324/159a2/adenovo.png',
+                '/images/adenovo-2.png',
                 ['FinTech 產品設計開發', '金融新創 FinTech 技術顧問'],
               ],
               [
@@ -641,6 +641,10 @@ function Landing(props) {
             className="content"
             style={{justifyContent: 'flex-start', flexDirection: 'column'}}>
             {[
+              [
+                '你的軟體怎麼可以有 bug ! 聊聊軟體維護的成本及觀念',
+                'https://medium.com/revtel-tech/你的軟體怎麼可以有-bug-聊聊軟體維護的成本及觀念-fa38f39cb28e',
+              ],
               [
                 '語焉不詳未必不好？軟體開發合約那些要注意的地方',
                 'https://medium.com/revtel-tech/語焉不詳未必不好-軟體開發合約那些要注意的地方-9d8bc849e189',
