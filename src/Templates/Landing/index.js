@@ -642,6 +642,10 @@ function Landing(props) {
             style={{justifyContent: 'flex-start', flexDirection: 'column'}}>
             {[
               [
+                'Workaround 一定是十惡不赦的嗎？',
+                'https://medium.com/revtel-tech/workaround-一定是十惡不赦的嗎-7c89e7739370',
+              ],
+              [
                 '你的軟體怎麼可以有 bug ! 聊聊軟體維護的成本及觀念',
                 'https://medium.com/revtel-tech/你的軟體怎麼可以有-bug-聊聊軟體維護的成本及觀念-fa38f39cb28e',
               ],
