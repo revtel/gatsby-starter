@@ -184,7 +184,9 @@ function Landing(props) {
               }}>
               <h3 style={{color: '#6C3428'}}>網站開發：React / GatsbyJS</h3>
               <h3 style={{color: '#6C3428'}}>APP開發：React Native</h3>
-              <h3 style={{color: '#6C3428'}}>雲端開發：AWS / MongoDB</h3>
+              <h3 style={{color: '#6C3428'}}>
+                雲端開發：AWS ( Lambda 無伺服器架構 ) / MongoDB{' '}
+              </h3>
               <h3 style={{color: '#6C3428'}}>通訊技術：NFC / BLE</h3>
               <h3 style={{color: '#6C3428'}}>區塊鏈：智能合約 / 冷錢包</h3>
             </div>
@@ -641,6 +643,10 @@ function Landing(props) {
             className="content"
             style={{justifyContent: 'flex-start', flexDirection: 'column'}}>
             {[
+              [
+                'JAMSTACK 數年實踐回望：一個管理及開發的平衡',
+                'https://medium.com/revtel-tech/jamstack-數年實踐回望-一個管理及開發的平衡-85486f33de47',
+              ],
               [
                 'Workaround 一定是十惡不赦的嗎？',
                 'https://medium.com/revtel-tech/workaround-一定是十惡不赦的嗎-7c89e7739370',
