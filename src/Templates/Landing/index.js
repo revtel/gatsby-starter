@@ -550,6 +550,7 @@ function Landing(props) {
                 '台北市律師公會',
                 '/images/tba.png',
                 ['會員網站 & APP 系統', '內部流程系統數位轉型顧問'],
+                'https://www.revtel.tech/project/taipei-bar-association-web-app',
               ],
             ].map((item, idx) => {
               const withLink = item[3]
