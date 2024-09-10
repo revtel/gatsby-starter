@@ -448,7 +448,7 @@ function Landing(props) {
               ],
               [
                 '高曼計量',
-                'https://www.revtel.tech/static/6adb281dd727e95fdd10717d07b19597/159a2/gamma.png',
+                '/images/gamma.png',
                 ['美股看盤 APP 設計開發', '金融新創 FinTech 技術顧問'],
                 'https://www.revtel.tech/project/gp-stock',
               ],
