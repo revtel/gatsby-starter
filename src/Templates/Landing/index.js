@@ -552,6 +552,12 @@ function Landing(props) {
                 ['會員網站 & APP 系統', '內部流程系統數位轉型顧問'],
                 'https://www.revtel.tech/project/taipei-bar-association-web-app',
               ],
+              [
+                '全國律師聯合會',
+                '/images/twba.png',
+                ['會員 APP', '內部流程系統數位轉型顧問'],
+                'https://www.revtel.tech/project/taiwan-bar-association-app',
+              ],
             ].map((item, idx) => {
               const withLink = item[3]
                 ? (_) => (
