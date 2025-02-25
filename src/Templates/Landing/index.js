@@ -537,9 +537,16 @@ function Landing(props) {
               [
                 '幫農事',
                 '/images/buydirectlyfromfarmers.png',
-                ['網站 & APP 理單系統', '內部流程系統數位轉型顧問'],
+                ['網站 & APP 理單系統', '內部流程系統數位轉型顧問開發'],
                 'https://www.revtel.tech/project/buydirectlyfromfarmers',
               ],
+              [
+                '三久建材 MES',
+                '/images/sj.png',
+                ['MES 流程系統', '智慧產線系統數位轉型顧問開發'],
+                'https://www.revtel.tech/project/smart-factory-mes',
+              ],
+
               [
                 '拉亞漢堡',
                 '/images/laya.png',
@@ -549,7 +556,7 @@ function Landing(props) {
               [
                 '台北市律師公會',
                 '/images/tba.png',
-                ['會員網站 & APP 系統', '內部流程系統數位轉型顧問'],
+                ['會員網站 & APP / 會務系統', '內部流程系統數位轉型顧問'],
                 'https://www.revtel.tech/project/taipei-bar-association-web-app',
               ],
               [
@@ -557,6 +564,11 @@ function Landing(props) {
                 '/images/twba.png',
                 ['會員 APP', '內部流程系統數位轉型顧問'],
                 'https://www.revtel.tech/project/taiwan-bar-association-app',
+              ],
+              [
+                '中華民國專利師公會',
+                '/images/twpaa.png',
+                ['會員網站 / 會務系統', '內部流程系統數位轉型顧問'],
               ],
             ].map((item, idx) => {
               const withLink = item[3]
