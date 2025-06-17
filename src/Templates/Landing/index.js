@@ -42,7 +42,7 @@ function Landing(props) {
                 padding: 15,
                 backgroundColor: '#F9E0BB',
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
-                width: '30%',
+                width: '24%',
                 maxWidth: 500,
                 cursor: 'pointer',
                 minWidth: 300,
@@ -73,7 +73,7 @@ function Landing(props) {
                 padding: 15,
                 backgroundColor: '#F9E0BB',
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
-                width: '30%',
+                width: '24%',
                 maxWidth: 500,
                 minWidth: 300,
               }}>
@@ -104,7 +104,7 @@ function Landing(props) {
                 padding: 15,
                 backgroundColor: '#F9E0BB',
                 boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
-                width: '30%',
+                width: '24%',
                 maxWidth: 500,
                 minWidth: 300,
               }}>
@@ -122,6 +122,38 @@ function Landing(props) {
                   </h3>
                   <p style={{color: '#C38154', fontSize: 18}}>
                     在既有系統上引入新技術來拓展業務方向及發展可能是企業長期營運需要的。透過技術陪跑能最大程度確保系統開發能平安過渡
+                  </p>
+                </div>
+                <div style={{color: 'black', float: 'right'}}>Read More</div>
+              </a>
+            </FlexItem>
+
+            <FlexItem
+              style={{
+                borderRadius: 10,
+                padding: 15,
+                backgroundColor: '#F9E0BB',
+                boxShadow: 'rgb(204 204 204) 0.125rem 0.125rem 0px 0.125rem',
+                width: '24%',
+                maxWidth: 500,
+                minWidth: 300,
+              }}>
+              <a
+                href="/ai-integration"
+                target="_blank"
+                alt="AI 整合顧問"
+                aria-label="AI 整合顧問">
+                <div
+                  className="description"
+                  style={{borderRadius: 10, marginBottom: 10}}>
+                  <h3
+                    style={{marginBottom: 15, color: '#884A39', fontSize: 24}}>
+                    AI 整合顧問
+                  </h3>
+                  <p style={{color: '#C38154', fontSize: 18}}>
+                    AI
+                    技術的快速發展為企業帶來了新的機遇和挑戰。通過顧問服務，企業可以更好地理解
+                    AI 技術的潛力，並根據自身需求進行整合和應用。
                   </p>
                 </div>
                 <div style={{color: 'black', float: 'right'}}>Read More</div>

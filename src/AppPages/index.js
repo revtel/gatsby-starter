@@ -23,6 +23,12 @@ const pages = [
     context: {},
   },
 
+  {
+    path: '/ai-integration',
+    component: 'src/Templates/AIIntegration/index.js',
+    context: {},
+  },
+
   /*
   {
     path: `/products`,
