@@ -5,7 +5,7 @@ const xml2js = require('xml2js');
 // === 必填設定（請替換為你自己的 domain 與 key） ===
 const INDEXNOW_ENDPOINT = 'https://api.indexnow.org/indexnow';
 const HOST = 'consult.revtel.tech'; // 你要提交的網站 domain
-const KEY = 'e051cb45870f4e0e9020e4250cc2589c'; // IndexNow 金鑰
+const KEY = '2d49c6a941954e6b856e48c7e7f4827e'; // IndexNow 金鑰
 const SITEMAP_PATH = './public/sitemap.xml'; // 你要讀取的 sitemap 路徑
 
 // ======================================================
